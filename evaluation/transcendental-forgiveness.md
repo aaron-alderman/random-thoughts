@@ -1,5 +1,7 @@
 # Transcendental Forgiveness: Cross-Traditional Convergence and the Structure of Resolution
 
+*Draws on: [The Forgiveness Analysis](../analysis/forgiveness.md)*
+
 ---
 
 ## I. Purpose and Scope

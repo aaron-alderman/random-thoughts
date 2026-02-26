@@ -1,5 +1,7 @@
 # Forgiveness as Structural Necessity: The Field, Self-Deception, and the Limits of Finite Resolution
 
+*Draws on: [The Pure Love Derivation](../foundation/love.md) · [The Relational Field](../foundation/relational-field.md)*
+
 ---
 
 ## I. Purpose and Scope

@@ -1,5 +1,7 @@
 # Relational Field: The Structure of Relation Between Two Agents of Pure Love
 
+*Draws on: [The Pure Love Derivation](love.md)*
+
 ---
 
 ## I. The Starting Point

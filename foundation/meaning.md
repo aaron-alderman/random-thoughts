@@ -1,5 +1,7 @@
 # Constraints, Agency, and Love: The Structure of a World in Which Meaning Is Possible
 
+*Draws on: [The Pure Love Derivation](love.md)*
+
 ---
 
 ## I. Purpose and Position

@@ -1,5 +1,7 @@
 # Structural Correspondence Between the Relational Field and Christian Theology
 
+*Draws on: [The Pure Love Derivation](../foundation/love.md) · [The Relational Field](../foundation/relational-field.md)*
+
 ---
 
 ## I. Purpose and Scope of This Document

@@ -1,5 +1,7 @@
 # Resolution: Christian Forgiveness and the Closure of the Structural Thread
 
+*Draws on: [The Forgiveness Analysis](../analysis/forgiveness.md) · [Cross-Traditional Survey](transcendental-forgiveness.md)*
+
 ---
 
 ## I. Purpose and Position in the Sequence

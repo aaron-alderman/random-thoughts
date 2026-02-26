@@ -1,5 +1,7 @@
 # Radical Kenosis: The Christian Account as the Naming of the Structure
 
+*Draws on: [Love](../foundation/love.md) · [Relational Field](../foundation/relational-field.md) · [Meaning](../foundation/meaning.md) · [Forgiveness](../analysis/forgiveness.md) · [Correspondence](../analysis/correspondence.md) · [Cross-Traditional Survey](../evaluation/transcendental-forgiveness.md) · [Christian Forgiveness](../evaluation/christian-forgiveness.md)*
+
 ---
 
 ## I. Purpose and Position

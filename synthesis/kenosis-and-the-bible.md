@@ -1,5 +1,7 @@
 # Kenosis and the Biblical Narrative: The Governing Logic of the Whole
 
+*Draws on: [Radical Kenosis](radical-kenosis.md) — presupposes the complete preceding sequence*
+
 ---
 
 ## I. Purpose and Position
