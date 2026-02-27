@@ -1,3 +1,9 @@
+# **Pentecost, Election, and the Distribution of Witness**
+
+*A Radical Kenosis Analysis*
+
+---
+
 ## 1. What Pentecost Actually Is (Structurally)
 
 Pentecost (Acts 2) is often described as:
@@ -25,7 +31,7 @@ It is:
 
 ## 2. Why This Does NOT Undo Election
 
-Recall the structural definition we established:
+Election in Radical Kenosis is defined as:
 
 > **Election = concentration of responsibility where irreducible cost must be borne.**
 
@@ -78,7 +84,7 @@ If Pentecost were privilege, this would not follow.
 
 ## 4. Why Pentecost Does Not Create a New Proxy
 
-This is critical for your framework.
+This is critical for Radical Kenosis.
 
 Pentecost does **not**:
 
@@ -127,7 +133,7 @@ This is **anti-Babel**.
 Pentecost does not reverse plurality into sameness.
 It **inhabits plurality without domination**.
 
-That preserves your pluralism insight:
+That preserves the pluralism analysis:
 
 > unity without shared metaphysics collapses —
 > unless cost-bearing love underwrites it.
@@ -157,7 +163,7 @@ Knowledge remains:
 * non-coercive
 * non-scalable
 
-Which is exactly what your framework predicts.
+Which is exactly what Radical Kenosis predicts.
 
 ---
 
@@ -187,7 +193,7 @@ Never privilege.
 
 ## 8. Where Pentecost *Would* Contradict the Framework (But Doesn’t)
 
-Pentecost would contradict your framework **if** it resulted in:
+Pentecost would contradict Radical Kenosis **if** it resulted in:
 
 * reduced suffering
 * increased control
@@ -200,9 +206,7 @@ That failure actually **confirms** the framework.
 
 ---
 
-## 9. Clean Resolution Statement
-
-You can state this without hedging:
+## 9. Resolution
 
 > Pentecost does not abolish election; it presupposes its completion.
 > Once irreducible cost has been fully absorbed, responsibility can be distributed without becoming scapegoating.

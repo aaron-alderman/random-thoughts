@@ -1,6 +1,6 @@
 # Radical Kenosis: Frequently Asked Questions by Audience
 
-*Each answer applies the framework's structural logic directly. Answers are intentionally compact — sufficient to orient, not to exhaust.*
+*Each answer applies Radical Kenosis's structural logic directly. Answers are intentionally compact — sufficient to orient, not to exhaust.*
 
 ---
 
@@ -52,7 +52,7 @@ The question the framework poses is different: is irreducible cost ultimately *b
 
 Pascal's Wager is a bet under uncertainty weighted by asymmetric consequences — believe because the downside of being wrong is infinite. The framework is structurally prior to any such bet. It makes claims that are evaluable on their own terms: whether the logical type specification is derived correctly, whether alternatives genuinely fail by logical type, whether one historical claim uniquely fits.
 
-You can reject those structural claims. But if you can't, the question "did this occur?" becomes non-arbitrary — not because of consequence-weighting but because the prior analysis has constrained the field. The Wager says "you might as well." The framework says "the structure of finitude and trust points here — now evaluate the historical claim on its merits."
+You can reject those structural claims. But if you can't, the question "did this occur?" becomes non-arbitrary — not because of consequence-weighting but because the structural analysis has constrained the field. The Wager says "you might as well." Radical Kenosis says "the structure of finitude and trust points here — now evaluate the historical claim on its merits."
 
 ---
 
@@ -316,7 +316,7 @@ The condition of possibility for the vulnerable is not that they achieve interio
 
 **39. Is intelligibility itself kenotic? What is the relationship between Logos and the framework?**
 
-The Constitution document grounds the framework in Logos — reality as personal, relational, and accessible, made known as incarnate life. The extension the framework suggests: if the deepest structure of reality is self-giving love, and if Logos is the intelligibility of that structure, then intelligibility itself participates in the kenotic character of being.
+Radical Kenosis grounds the structural analysis in Logos — reality as personal, relational, and accessible, made known as incarnate life. The extension this reading suggests: if the deepest structure of reality is self-giving love, and if Logos is the intelligibility of that structure, then intelligibility itself participates in the kenotic character of being.
 
 Truth is accessible but not ownable, gives itself to be known without coercing knowing, remains available under resistance. Just as the Father gives all to the Son without remainder, truth gives itself to be known without controlling the knower. This is why the framework predicts that coercive epistemology — forcing assent through power — destroys the very thing it claims to preserve, just as coercive authority destroys trust.
 
@@ -394,7 +394,7 @@ The non-obvious contribution: forgiveness is structurally *prior* to repentance,
 
 The framework is structurally silent on the mechanism of prayer — that is an experiential and historical claim, not a structural one. What it does say: if the sufficient source is genuinely non-depletable and personally present, then ongoing participation with that source through prayer is structurally coherent. The framework predicts that prayer cannot be optimized, guaranteed, or turned into a repeatable technique — not because it's irrational but because the relational character of the encounter resists becoming a mechanism.
 
-The encounter documents are relevant: knowledge of God is participatory, not observational; encounter cannot be engineered; silence and absence are as characteristic as voice. Prayer on this reading is the practice of remaining oriented within a rightly ordered relational field — not extracting outcomes from a system.
+Knowledge of God is participatory, not observational; encounter cannot be engineered; silence and absence are as characteristic as voice. Prayer on this reading is the practice of remaining oriented within a rightly ordered relational field — not extracting outcomes from a system.
 
 ---
 
@@ -418,7 +418,7 @@ The resurrection is not a miracle among miracles. It is the verification of the 
 
 The framework terminates precisely where personal encounter must begin. Its function is to show that the question "did this occur?" is non-arbitrary and structurally inevitable — not to substitute analysis for encounter.
 
-What the framework does for personal relationship is protect it from substitutes: by showing encounter cannot be optimized, guaranteed by procedure, or replaced by intellectual assent. The encounter documents are explicit — knowledge of God is participatory, not observational; encounter happens when systems are stripped away, not when they're functioning. The framework explains why personal relationship is necessary, fragile, and cannot be institutionalized — which is the opposite of making it abstract.
+What Radical Kenosis does for personal relationship is protect it from substitutes: by showing encounter cannot be optimized, guaranteed by procedure, or replaced by intellectual assent. Knowledge of God is participatory, not observational; encounter happens when systems are stripped away, not when they're functioning. This framework explains why personal relationship is necessary, fragile, and cannot be institutionalized — which is the opposite of making it abstract.
 
 ---
 
@@ -490,7 +490,7 @@ Covenant creates the container where children are not scapegoated and cost becom
 
 The framework creates structural pressure in specific directions without resolving all denominational questions. Against ecclesial absolutism in any form: no articulation of truth is final; no institution exhausts what Christ reveals. In favor of the Catholic Church's institutional memory: without the continuity system it preserved, the witness likely fragments and the event-claim disappears from history. The Orthodox tradition's theosis framework maps cleanly onto participation in Trinitarian life. Protestant reforming instincts — repentance as primary mode of correction, authority answerable rather than self-certifying, resistance to sacralizing institutional power — are structurally required rather than optional.
 
-The framework's ecclesiology as laid out in the Constitution document is most fully expressed as: decentralized witness, many-witnesses-one-referent, unity through convergence over time. No existing denomination fully satisfies all of it; each embodies part of it under specific historical conditions.
+Radical Kenosis's ecclesiology is most fully expressed as: decentralized witness, many-witnesses-one-referent, unity through convergence over time. No existing denomination fully satisfies all of it; each embodies part of it under specific historical conditions.
 
 ---
 
@@ -610,7 +610,7 @@ Named failure modes: Christ replaced by institution, growth substituting for fru
 
 **75. What does the framework say about eschatology and the Book of Revelation?**
 
-The eschatology documents make a specific structural claim. Revelation is best read as *reflexive prophecy*: not a forecast of inevitable events but a revelation of the terminal form of displacement-based civilization — what happens when kenosis fails completely, coercion is total, power fully sanctifies itself. Its function is behavior-shaping, not calendar-setting: "the one who has ears, let them hear" is not predictive language. It is a negative feedback loop.
+Revelation is best read as *reflexive prophecy*: not a forecast of inevitable events but a revelation of the terminal form of displacement-based civilization — what happens when kenosis fails completely, coercion is total, power fully sanctifies itself. Its function is behavior-shaping, not calendar-setting: "the one who has ears, let them hear" is not predictive language. It is a negative feedback loop.
 
 This explains why every generation believes Revelation is about them — structurally, it is. Whenever displacement accelerates, power sanctifies itself, truth becomes instrumental, sacrifice is extracted rather than offered — the system approaches the same attractor. Revelation describes where all such systems tend if unchecked. History is not scripted; the future remains genuinely open. The greatest danger is no longer believing apocalypse is possible — because then the feedback loop breaks.
 
@@ -650,7 +650,7 @@ More specifically: the source must face every available escape route — denial,
 
 **80. What about apophatic theology? Can the framework accommodate divine unknowability?**
 
-The framework's Constitution document builds in epistemic humility: no articulation exhausts the truth revealed in Christ; knowledge is participatory and non-ownable; encounter is non-coercive and unmanageable. This is structurally apophatic in important ways. But the framework also insists on kataphatic content: the sufficient source is personal, historically present, and structurally specifiable.
+Radical Kenosis builds in epistemic humility: no articulation exhausts the truth revealed in Christ; knowledge is participatory and non-ownable; encounter is non-coercive and unmanageable. This is structurally apophatic in important ways. But this framework also insists on kataphatic content: the sufficient source is personal, historically present, and structurally specifiable.
 
 The tension is not a contradiction but a structural feature: the source is specifiable enough to rule out alternatives and identify a convergence, but not exhaustible by any articulation, institution, or system. What the framework resists is apophaticism that insulates claims from the criterion of the Cross — using "divine mystery" to protect institutional power from accountability.
 
@@ -700,7 +700,7 @@ Divine wrath in the framework is not retaliatory displacement but the character 
 
 Directly addressed by the framework. Heaven and hell as trajectories *now* is the framework's account of the already. The Kingdom is genuinely present wherever cost is voluntarily absorbed, trust is sustained, and the relational field remains open — not perfectly or fully, but really. It is not yet present in the sense that the full expression of absorption vs. displacement across all persons and systems remains open and genuinely undetermined.
 
-The eschatology documents are relevant: history is not scripted toward a fixed end but genuinely open within structural constraints. The "not yet" is not merely temporal delay but the real openness of the fork — persons and civilizations are still choosing. This produces strongly inaugurated Kingdom theology (genuinely present now) that is genuinely eschatological (not yet fully expressed, and whether it is depends on what is freely chosen).
+History is not scripted toward a fixed end but genuinely open within structural constraints. The "not yet" is not merely temporal delay but the real openness of the fork — persons and civilizations are still choosing. This produces strongly inaugurated Kingdom theology (genuinely present now) that is genuinely eschatological (not yet fully expressed, and whether it is depends on what is freely chosen).
 
 ---
 
@@ -716,13 +716,13 @@ Power grounded in self-giving is not less power but a different kind of power �
 
 The framework provides a structural account of hiddenness. Encounter that is optimizable, manipulable, or guaranteed on demand cannot be genuine relational encounter — it becomes a technique, a mechanism, a proxy. The very structure of non-coercive love requires that encounter remain fragile, unmanageable, and non-engineerable.
 
-If God were maximally obvious, the relational field would be replaced by overwhelming presence — which is not encounter but a kind of coercion. The encounter documents make this explicit: God "withdraws presence to preserve agency." Encounter occurs when proxies fail, not when systems function. Divine hiddenness is thus not evidence against the relational God; it is structurally *required* by what non-coercive love must be. The silence is part of the specification, not a failure of the candidate.
+If God were maximally obvious, the relational field would be replaced by overwhelming presence — which is not encounter but a kind of coercion. Radical Kenosis holds that God "withdraws presence to preserve agency." Encounter occurs when proxies fail, not when systems function. Divine hiddenness is thus not evidence against the relational God; it is structurally *required* by what non-coercive love must be. The silence is part of the specification, not a failure of the candidate.
 
 ---
 
 **89. What about the Logos doctrine — John 1:1 and the broader Logos tradition?**
 
-The Constitution document grounds the framework explicitly in Logos: reality as intelligible, personal, and relational, made known not as abstraction but as incarnate life. The Logos tradition's claim — that the same Logos operative in Greek philosophical reason is incarnate in Jesus — maps directly onto the framework's structure-to-convergence movement: the same structural analysis philosophy can conduct, tracking the requirements of meaning, cost, and relational truth, terminates in the same historical claim that revelation makes.
+Radical Kenosis grounds the analysis explicitly in Logos: reality as intelligible, personal, and relational, made known not as abstraction but as incarnate life. The Logos tradition's claim — that the same Logos operative in Greek philosophical reason is incarnate in Jesus — maps directly onto Radical Kenosis's structure-to-convergence movement: the same structural analysis philosophy can conduct, tracking the requirements of meaning, cost, and relational truth, terminates in the same historical claim that revelation makes.
 
 The Logos is not just the cosmic principle of intelligibility but the structurally necessary source — personal, relational, historically entering finitude. The framework is, in this sense, an extended Logos argument: showing through structural analysis what the Logos tradition asserted more briefly.
 
@@ -772,13 +772,13 @@ The Eastern concern (double causality risks loss of monarchy) and the Western co
 
 The framework points toward but doesn't fully derive these claims. The resurrection of the body: the framework's embodiment emphasis is relevant — the source absorbs cost from within finitude, and the resurrection is the resurrection of the embodied, historical person, not escape from matter into pure spirit. Matter, embodiment, and historical particularity are not incidental.
 
-New creation: the eschatology documents describe Revelation as the terminal state of displacement-based civilization made visible. New creation corresponds to the full realization of the absorption path — a relational field where cost is received rather than displaced, self-giving love fully expressed rather than partially instantiated. The framework derives the *shape* of eschatological hope (bodily, relational, concrete, genuinely open) without deriving the mechanism.
+New creation: Revelation names the terminal state of displacement-based civilization made visible. New creation corresponds to the full realization of the absorption path — a relational field where cost is received rather than displaced, self-giving love fully expressed rather than partially instantiated. Radical Kenosis derives the *shape* of eschatological hope (bodily, relational, concrete, genuinely open) without deriving the mechanism.
 
 ---
 
 **96. What about the role of memory and tradition in preserving theological truth across time?**
 
-The election and covenant documents address this. Tradition functions as memory, not command — the relational visibility of sacrifice across generations. The Cross as civilizational center becomes durably visible through shared narrative, transmitted memory, and enduring witness — which is the mechanism by which sacrifice at civilizational scale interrupts displacement cycles.
+Tradition functions as memory, not command — the relational visibility of sacrifice across generations. The Cross as civilizational center becomes durably visible through shared narrative, transmitted memory, and enduring witness — which is the mechanism by which sacrifice at civilizational scale interrupts displacement cycles.
 
 The risk of tradition: memory can become command, preserving the form while losing the living orientation to Christ that constitutes its substance. The safeguard is the Constitution's principle: interpretation is always provisional; allegiance is to Christ, not to his mediators. No generation completes interpretation. No articulation may declare itself final. Tradition is the hearth; Christ remains the fire.
 

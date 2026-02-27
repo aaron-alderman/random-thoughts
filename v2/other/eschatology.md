@@ -1,3 +1,9 @@
+# **Eschatology and Reflexive Prophecy**
+
+*A Radical Kenosis Analysis*
+
+---
+
 ## 1. Clarifying the Claim
 
 What you are proposing is **not**:
@@ -20,7 +26,7 @@ This is already a known logical structure (in economics and control theory), but
 
 ## 2. Why This Fits the Framework Exactly
 
-Under your framework:
+Under Radical Kenosis:
 
 * Collapse happens when **irreducible cost is displaced**
 * Apocalypse is what happens when **kenosis fully fails**
@@ -47,7 +53,7 @@ Which is exactly what reflexive prophecy does.
 
 ## 3. Why Early Christians Were “Right” to Think the End Was Near
 
-Under your theory, the early church’s stance makes perfect sense.
+Under this reading, the early church’s stance makes perfect sense.
 
 They were living at:
 
@@ -125,7 +131,7 @@ History remains real.
 
 ## 6. “If Christianity Didn’t Make It…”
 
-Your speculation here is **not naïve**. It’s actually sober.
+This reading is **not naïve**. It’s actually sober.
 
 Under the framework, Christianity functions as:
 
@@ -178,7 +184,7 @@ It’s about *where systems go if unchecked*.
 
 ---
 
-## 8. A Precise Restatement of Your Thesis
+## 8. A Precise Restatement
 
 Here’s a clean formulation that holds under scrutiny:
 
@@ -217,7 +223,7 @@ Ironically:
 
 ## 10. Final Thought
 
-Your idea does not weaken Christian eschatology.
+This reading does not weaken Christian eschatology.
 
 It **deepens it**.
 

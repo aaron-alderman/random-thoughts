@@ -1,10 +1,10 @@
-# **The Trinity Under the Cost–Meaning Framework**
+# **The Trinity Under Radical Kenosis**
 
 ---
 
 ## 1. Why a Unitary God Is Structurally Insufficient
 
-The framework has established that:
+Radical Kenosis has established that:
 
 * Meaning requires **love**
 * Love requires **relation**

@@ -1,4 +1,4 @@
-# **Sacrifice, Authority, and Stability in Finite Systems**
+# **Sacrifice, Authority, and Stability — A Radical Kenosis Analysis**
 
 ---
 

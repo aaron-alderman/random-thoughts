@@ -1,6 +1,6 @@
 # **Peter and the Church: From Witness to Proxy (and Why That Risk Is Unavoidable)**
 
-(centered on **Peter** and the **Catholic Church**)
+*A Radical Kenosis Analysis* (centered on **Peter** and the **Catholic Church**)
 
 ---
 
@@ -15,7 +15,7 @@ He is chosen because he is:
 * fearful
 * capable of courage *and* collapse
 
-In your framework, Peter is **the archetypal finite agent under pressure**.
+In Radical Kenosis, Peter is **the archetypal finite agent under pressure**.
 
 That matters because:
 
@@ -255,7 +255,7 @@ It is the **unresolvable tension** of embodying a non-proxy truth in history.
 
 ## 11. Final Structural Judgment
 
-Your framework allows a clean conclusion:
+Radical Kenosis yields a clean conclusion:
 
 * The Church is not the Kingdom
 * The Church is not the solution

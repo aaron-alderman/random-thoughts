@@ -1,3 +1,7 @@
+# **The Filioque Dispute: A Radical Kenosis Analysis**
+
+---
+
 # 1. What the Filioque Is
 
 The **Filioque** (“and the Son”) was added in the Western Church to the Nicene Creed, so that it read:
@@ -16,9 +20,9 @@ The disagreement is not semantic — it concerns:
 
 ---
 
-# 2. What Your Framework Requires
+# 2. What Radical Kenosis Requires
 
-From your structure, the Trinity must satisfy:
+From this structure, the Trinity must satisfy:
 
 1. **Non-coercive unity**
 2. **Distinction without hierarchy**
@@ -87,9 +91,9 @@ Structurally, this guards against:
 
 ---
 
-# 5. Structural Clarification Under Your Framework
+# 5. Structural Clarification Under Radical Kenosis
 
-Under your relational-field model:
+Under the relational-field model:
 
 When two agents instantiate pure love:
 
@@ -108,7 +112,7 @@ vs.
 
 (through whom does relational life manifest?)
 
-Under your structure:
+Under this structure:
 
 * The **Father** remains the sole unoriginate source.
 * The **Son** eternally receives from the Father.
@@ -125,7 +129,7 @@ This is actually a classical Eastern formulation.
 
 # 6. A Structural Resolution
 
-Under your framework, a coherent synthesis would be:
+Under Radical Kenosis, a coherent synthesis would be:
 
 1. The Father is the sole source (monarchy preserved).
 2. The Son is eternally begotten, not co-source.
@@ -152,7 +156,7 @@ That position is extremely close to what many modern Orthodox and Catholic theol
 
 ---
 
-# 7. Why This Matters for Your Framework
+# 7. Why This Matters for Radical Kenosis
 
 If you get this wrong structurally:
 
@@ -162,7 +166,7 @@ If you get this wrong structurally:
 
 But if you get it right:
 
-* The Trinity perfectly models your relational field
+* The Trinity perfectly models the relational field
 * Love is constitutive
 * Origin is preserved
 * Unity is non-coercive
@@ -187,7 +191,7 @@ The Filioque dispute, at root, is about:
 
 > How do we preserve kenosis inside God?
 
-Your framework actually makes that question visible.
+Radical Kenosis makes that question visible.
 
 ---
 

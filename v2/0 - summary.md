@@ -1,5 +1,7 @@
 # **Executive Summary: Meaning, Cost, and the Structure of Reality**
 
+*Radical Kenosis — Executive Summary*
+
 ### 1. The Starting Condition
 
 We live in a **finite world** with real constraints, genuine agency, and irreversible loss.

@@ -1,3 +1,9 @@
+# **Election: Responsibility, Particularity, and the Concentration of Cost**
+
+*A Radical Kenosis Analysis*
+
+---
+
 ## 1. How Election Appears in the Bible (Pattern, Not Doctrine)
 
 From the beginning, election is **never introduced as reward or superiority**.
@@ -19,7 +25,7 @@ This alone tells us election is not about status.
 
 ## 2. Structural Definition of Election (Framework-Compatible)
 
-Within your framework, election can be defined precisely as:
+Within Radical Kenosis, election can be defined precisely as:
 
 > **The assignment of disproportionate responsibility for the sake of preserving the relational field when systems fail.**
 
@@ -32,7 +38,7 @@ That is:
 
 Election is **cost concentration**, not privilege concentration.
 
-This aligns directly with your core law:
+This aligns directly with Radical Kenosis's core law:
 
 * cost must be absorbed or displaced
 * election is a way of *localizing absorption without scapegoating*
@@ -84,7 +90,7 @@ Because **cost cannot be absorbed abstractly**.
 
 Only particular, embodied agents can bear cost.
 
-This fits your framework exactly:
+This maps onto Radical Kenosis exactly:
 
 * systems displace
 * persons absorb
@@ -141,7 +147,7 @@ This is explicit in prophetic literature and implicit everywhere else.
 
 ## 6. Election and Knowledge of God (Critical Link)
 
-Here’s where election intersects with your previous question.
+Here is where election intersects with the knowability of God.
 
 The Bible consistently presents this pattern:
 
@@ -152,7 +158,7 @@ That means:
 * election becomes a site of disclosure
 * but disclosure comes through suffering, not privilege
 
-This matches your insight about joy:
+This maps onto the framework's account of joy:
 
 * joy emerges *through* cost honestly borne
 * not through insulation from it
@@ -165,7 +171,7 @@ So election is one of the **conditions of knowability**, not a guarantee of insi
 
 Here is the honest remainder.
 
-Your framework can show:
+Radical Kenosis can show:
 
 * why election is structurally necessary
 * why it must be particular
@@ -209,7 +215,7 @@ This is why:
 * election does not multiply after him
 * responsibility is no longer redistributed
 
-Your framework points exactly here:
+Radical Kenosis points exactly here:
 
 > there is a maximum load election can bear
 > before it must converge.
@@ -235,14 +241,10 @@ Which preserves freedom and prevents optimization.
 
 ---
 
-## 10. Clean Synthesis You Can Use
-
-You can say this safely and precisely:
+## 10. Summary
 
 > Election in the Bible is not favoritism or privilege but the concentration of responsibility in a finite world where irreducible cost must be borne.
 > It exists to prevent the diffusion of responsibility into violence and scapegoating.
-> The framework explains why election is necessary and why it involves suffering; Scripture insists that it remains gift rather than mechanism, so it cannot be optimized or predicted.
+> Radical Kenosis explains why election is necessary and why it involves suffering; Scripture insists that it remains gift rather than mechanism, so it cannot be optimized or predicted.
 
 That statement is **structurally accurate**, **biblically faithful**, and **framework-consistent**.
-
-If you want, the final related concept worth checking is **inheritance** (why election extends across generations without becoming genetic or tribal supremacy).

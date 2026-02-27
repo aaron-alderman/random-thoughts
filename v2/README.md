@@ -1,4 +1,4 @@
-# **A Top-Down View: Meaning, Cost, and the Structure of Reality**
+# **A Top-Down View: Radical Kenosis — Meaning, Cost, and the Structure of Reality**
 
 ---
 

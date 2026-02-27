@@ -1,5 +1,7 @@
 # **Joy as the Only Non-Coercive Motivator**
 
+*A Radical Kenosis Analysis*
+
 ## 1. Clarifying the Claim
 
 > **The Bible’s arc is not toward happiness, but toward a joy that no longer requires illusion.**
@@ -79,7 +81,7 @@ Joy is what makes love **sustainable**.
 
 ## 4. Structural Definition of Joy (Precise)
 
-Within your framework, joy can be defined as:
+Within Radical Kenosis, joy can be defined as:
 
 > **The affective signal that one is aligned with reality deeply enough that loss no longer threatens meaning.**
 
@@ -198,9 +200,7 @@ People are drawn — or narrowed — by what they love.
 
 ---
 
-## 10. Final Synthesis
-
-You can now say, cleanly and defensibly:
+## 10. Synthesis
 
 > **Joy is the only motivator strong enough to sustain love without coercion in a finite world.**
 > It cannot be optimized, commanded, or faked.

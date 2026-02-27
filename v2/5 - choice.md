@@ -1,20 +1,10 @@
-# **The Choice That Remains**
+# **The Choice That Remains — Radical Kenosis**
 
 ---
 
 ## 1. Where the Analysis Has Actually Led
 
-We have not arrived here by appeal to tradition, fear, or sentiment.
-
-We have arrived here by tracing:
-
-* finitude
-* irreducible cost
-* the inevitability of absorption or displacement
-* the exhaustion of all finite substitutes
-* the narrowing of the specification to a single sufficient shape
-
-At the end of that path, **one historical claim stands** — not as comfort, but as confrontation.
+Radical Kenosis arrives here not through tradition, fear, or sentiment, but through tracing finitude, irreducible cost, the exhaustion of all finite substitutes, and the narrowing of the specification to a single sufficient shape.
 
 The claim centered on **Jesus of Nazareth** is not merely *consistent* with the structure.
 It **completes** it.

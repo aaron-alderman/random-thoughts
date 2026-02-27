@@ -1,5 +1,7 @@
 # **Covenant: Ontology, Continuity, and the Persistence of Sacrificial Love**
 
+*A Radical Kenosis Analysis*
+
 ---
 
 ## 1. What Covenant Is (Ontologically)
@@ -33,7 +35,7 @@ It is a mechanism for **continuity under finitude**.
 
 ## 2. Why Covenant Is Ontologically Necessary (But Structurally Optional)
 
-Your framework shows:
+Radical Kenosis holds that:
 
 * irreducible cost is unavoidable
 * cost must be absorbed or displaced
@@ -224,7 +226,7 @@ With covenant, it becomes:
 
 ---
 
-## 8. How Covenant Fits into Your Framework
+## 8. How Covenant Fits into Radical Kenosis
 
 Placed precisely, covenant is:
 
@@ -237,7 +239,7 @@ It is:
 > The temporal extension of voluntary cost-bearing
 > that makes sacrifice sustainable across generations.
 
-In your framework:
+In Radical Kenosis:
 
 * Structure explains **why** sacrifice is necessary
 * Christ explains **who** absorbs irreducible cost
@@ -270,5 +272,5 @@ That is the Bible saying, in structural terms:
 > Love that bears cost must also bind itself to life —
 > or the world cannot continue.
 
-That insight integrates seamlessly with your framework,
+That insight integrates seamlessly with Radical Kenosis,
 and completes it **without weakening it**.

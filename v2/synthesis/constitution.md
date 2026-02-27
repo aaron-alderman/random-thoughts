@@ -1,6 +1,6 @@
 # **A Constitution for Decentralized Meaning Grounded in the Incarnate Logos**
 
-## *A Framework for Faithful Meaning Formation, Discernment, and Correction*
+## *A Radical Kenosis Application: Faithful Meaning Formation, Discernment, and Correction*
 
 ---
 

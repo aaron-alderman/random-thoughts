@@ -1,4 +1,4 @@
-# **Therefore: Implications for Meaning, Governance, and Action in Finite Systems**
+# **Therefore: Implications of Radical Kenosis for Meaning, Governance, and Action**
 
 ---
 

@@ -1,10 +1,10 @@
-# **The Fork in the Road: Acceptance or Denial**
+# **The Fork in the Road: Radical Kenosis — Acceptance or Denial**
 
 ---
 
 ## 1. The Situation We Are In
 
-The prior analysis has established:
+Radical Kenosis has established:
 
 * Finite systems generate irreducible cost
 * Cost must be absorbed or displaced

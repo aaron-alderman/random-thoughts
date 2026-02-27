@@ -4,7 +4,7 @@
 
 ## 1. The Remaining Pressure Point
 
-Your framework has already established something severe:
+Radical Kenosis has already established something severe:
 
 * Coercive power destroys trust
 * Assigned sacrifice collapses into scapegoating
@@ -43,7 +43,7 @@ But if monarchy is misunderstood as:
 * retained power
 * authority that *could* coerce but chooses not to
 
-then the Trinity quietly smuggles in the very structure your framework has ruled out.
+then the Trinity quietly smuggles in the very structure Radical Kenosis rules out.
 
 That would mean:
 
@@ -51,7 +51,7 @@ That would mean:
 * self-giving is optional
 * coercion is only contingently refused
 
-Under your framework, that cannot stand.
+Under Radical Kenosis, that cannot stand.
 
 ---
 
@@ -192,7 +192,7 @@ It is refusal of that participation.
 
 ## 8. Final Convergence
 
-Under your framework, the Trinity is not:
+Under Radical Kenosis, the Trinity is not:
 
 * a logical puzzle
 * a revealed oddity

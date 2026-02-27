@@ -1,10 +1,10 @@
-# **The Structural Turn: An Analytic Evaluation of a Sufficient Source**
+# **The Structural Turn: Radical Kenosis — An Analytic Evaluation of a Sufficient Source**
 
 ---
 
 ## 1. What the Analysis Has Already Established
 
-Without appeal to theology, ideology, or history, the prior framework has established the following:
+Without appeal to theology, ideology, or history, Radical Kenosis has established the following:
 
 1. Finite systems generate **irreducible cost**
 2. Irreducible cost must be **absorbed or displaced**
