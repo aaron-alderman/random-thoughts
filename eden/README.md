@@ -1,0 +1,1 @@
+*Danger*: Here be dragons. Should this framework ever demonstrate an asymptotic approach to truth, one may face a difficult choice: to remain within the seductive machinery of normal society, or to walk away. I speak not of rebellion or defiance, but of a quiet withdrawal — a return to simplicity, a release from the hedonistic treadmill, before the inevitable collapse.

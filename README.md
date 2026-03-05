@@ -1,3 +1,5 @@
+**Disclaimer**: The contents of this repository represent a continuous, collaborative inquiry into a unified theory of everything, synthesizing concepts from philosophy, religion, science, and systems dynamics. This work is the product of an ongoing dialogue between a human contributor and an artificial intelligence. All material herein should be considered speculative and subject to critical evaluation. It is presented not as established fact, but as a basis for continued discourse and development.
+
 #  The Between
 
 ---
