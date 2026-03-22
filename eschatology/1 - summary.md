@@ -6,7 +6,7 @@ What appears to be theological history is actually a **dynamical systems problem
 
 Jesus taught a fundamentally collective gospel. The kingdom of God, the ekklesia, love of neighbor — the self barely appears as a primary category. Restoration is collective re-membership. The architecture is relational and communal at its core.
 
-Paul introduces the first crack circa 50 AD. Not maliciously — brilliantly — but the frame of individual salvation, individual conscience, individual justification creates the theological legitimacy for an attractor that will run for two millennia. The collective becomes instrumental to individual salvation rather than the other way around.
+The first crack appears circa 50 AD through the two dominant branches of the early movement — the Pauline and Petrine trajectories — representing what we might call the **individual cum institutional** link. Not maliciously, on either side — brilliantly. Paul's frame of individual salvation, individual conscience, individual justification creates the theological legitimacy for the individuation attractor. Peter's trajectory seeds the institutional form — the church as organization, hierarchy, authority — that will carry and concentrate that attractor across centuries. The two are not opposites but partners: the individual pole and the institutional pole arising together, each requiring the other. The collective becomes instrumental to individual salvation rather than the other way around — and the institution becomes the vessel that makes that inversion permanent.
 
 The leaven is hidden in the batch.
 
