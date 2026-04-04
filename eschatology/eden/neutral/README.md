@@ -1,1 +1,0 @@
-The future depends on all of us — together. This framework holds that we are always on a knife edge: the outcomes that matter most are never guaranteed, and never impossible. The question this work sits with is not triumphant but honest — if we don't collectively make it, can we at least keep going?
