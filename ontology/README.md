@@ -67,11 +67,17 @@ An invitation addressed to those who have retreated into scientific materialism 
 **[8 - geometry - expt.md](8%20-%20geometry%20-%20expt.md)** — *Geometric Curvature from Structured Matter: A Complete Research Program*
 A speculative experimental research program exploring whether low-entropy, geometrically organized matter (specifically icosahedral quasicrystals with octonionic symmetry) couples to spacetime curvature beyond energy density alone. Not "antigravity" — a claim about which components of the stress-energy tensor are activated by structured matter. Covers: first principles, the target material (Al-Pd-Mn icosahedral quasicrystals), anomalous properties, the octonionic connection, growth methods (acoustic electrodeposition), experimental apparatus design, and the possibility of accidental discovery of room-temperature superconductivity.
 
+**[9 - physics.md](9%20-%20physics.md)** — *The Complete Framework: Physics, Geometry, and the Stress-Energy Tensor*
+A technical extension of the framework into the full stress-energy tensor. Standard physics concentrates on energy density (T⁰⁰), leaving nine tensor components largely unexplored. The CHO hierarchy maps to known forces; octonionic non-associativity forces Lorentzian signature. A chiral icosahedral quasicrystal instantiating this structure in condensed matter could reveal quantum gravity-level coupling if the geometric coupling constant λ ≠ 0.
+
+**[9a - physics (accessible).md](9a%20-%20physics%20%28accessible%29.md)** — *What If the Shape of Matter Matters? (Accessible Version)*
+The accessible form of document 9. Einstein's equations respond to the full stress-energy organization of matter, not just mass. Instead of more energy (accelerators), this program bets on more order (organized matter). A quasicrystal combining multiple symmetry breakings could couple to spacetime geometry through off-diagonal stress tensor components. The measurement is feasible; the result is genuinely open.
+
 ---
 
 ## Reading Order
 
-The documents are numbered for a reason. The natural order is 1 → 2 → 3 → 4 → 4a → 5 → 6 → 6a → 7 → 8.
+The documents are numbered for a reason. The natural order is 1 → 2 → 3 → 4 → 4a → 5 → 6 → 6a → 7 → 8 → 9.
 
 For a first encounter, start with **1 - summary (accessible)** rather than **1 - summary**. They cover the same ground; the accessible version is the better entry point.
 
@@ -79,4 +85,4 @@ Documents 2 and 3 are companions to the framework — they approach the same str
 
 Documents 4 and 4a form a pair: 4 establishes the ladder, 4a applies it to AI. Document 5 then asks what agency and experience are at the level the ladder has reached. Documents 6 and 6a are the civilizational turn. Document 7 is addressed to a specific audience and can be read at any point after 1.
 
-Document 8 is an experiment derived from the framework, not a development of it. It can be read independently.
+Documents 8, 9, and 9a are experiments derived from the framework, not developments of it. Document 8 is the full technical research program; document 9 provides the complete framework connecting physics and geometry; document 9a is the accessible version of document 9. All three can be read independently.
