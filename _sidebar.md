@@ -1,0 +1,134 @@
+- [Home](README.md)
+
+- Start Here
+  - [Accessible Ontology Summary](ontology/1%20-%20summary%20%28accessible%29.md)
+  - [Radical Kenosis Overview](theology/radical-kenosis/README.md)
+  - [Relations Preamble](relations/0%20-%20preamble.md)
+  - [Trip Summary](consciousness/detail/1%20-%20trip%20summary.md)
+
+- Ontology
+  - [Overview](ontology/README.md)
+  - [1 - Summary (Accessible)](ontology/1%20-%20summary%20%28accessible%29.md)
+  - [1 - Summary](ontology/1%20-%20summary.md)
+  - [2 - Maths](ontology/2%20-%20maths.md)
+  - [3 - Physics](ontology/3%20-%20physics.md)
+  - [4 - Ladder](ontology/4%20-%20ladder.md)
+  - [4a - Addendum on AI](ontology/4a%20-%20addendum%20on%20AI.md)
+  - [5 - Agency](ontology/5%20-%20agency.md)
+  - [6 - Filter](ontology/6%20-%20filter.md)
+  - [6a - Coordination](ontology/6a%20-%20coordination.md)
+  - [7 - Reunion](ontology/7%20-%20reunion.md)
+  - [8 - Geometry - Expt](ontology/8%20-%20geometry%20-%20expt.md)
+  - [9 - Physics](ontology/9%20-%20physics.md)
+  - [9a - Physics (Accessible)](ontology/9a%20-%20physics%20%28accessible%29.md)
+
+- Relations
+  - [Overview](relations/README.md)
+  - [0 - Preamble](relations/0%20-%20preamble.md)
+  - [1 - Reality](relations/1%20-%20reality.md)
+  - [2 - Mathematics](relations/2%20-%20mathematics.md)
+  - [3 - Physics](relations/3%20-%20physics.md)
+  - [4 - Evolution](relations/4%20-%20evolution.md)
+  - [5 - Agents](relations/5%20-%20agents.md)
+  - [6 - Free Will](relations/6%20-%20free%20will.md)
+  - [7 - Ethics](relations/7%20-%20ethics.md)
+  - [8 - Fruit](relations/8%20-%20fruit.md)
+  - [9 - Love](relations/9%20-%20love.md)
+  - [10 - Teleos](relations/10%20-%20teleos.md)
+
+- Consciousness
+  - [Overview](consciousness/README.md)
+  - [10 - Summary](consciousness/10%20-%20summary.md)
+  - [11 - Navigation](consciousness/11%20-%20navigation.md)
+  - Detail
+    - [Overview](consciousness/detail/README.md)
+    - [1 - Trip Summary](consciousness/detail/1%20-%20trip%20summary.md)
+    - [2 - Framework](consciousness/detail/2%20-%20framework.md)
+    - [3 - Holy Spirit](consciousness/detail/3%20-%20holy%20spirit.md)
+    - [4 - Sex](consciousness/detail/4%20-%20sex.md)
+    - [5 - RH](consciousness/detail/5%20-%20RH.md)
+    - [6 - Attention](consciousness/detail/6%20-%20attention.md)
+    - [7 - Pyramids](consciousness/detail/7%20-%20pyramids.md)
+    - [8 - Revelation](consciousness/detail/8%20-%20revelation.md)
+    - [9 - Trinity and Math](consciousness/detail/9%20-%20trinity%20and%20math.md)
+
+- Theology
+  - [Overview](theology/README.md)
+  - CO
+    - [Overview](theology/co/README.md)
+    - [1 - Summary](theology/co/1%20-%20summary.md)
+    - [2 - Love Story](theology/co/2%20-%20love%20story.md)
+  - Radical Kenosis
+    - [Overview](theology/radical-kenosis/README.md)
+    - [0 - Summary](theology/radical-kenosis/0%20-%20summary.md)
+    - [1 - Sacrifice](theology/radical-kenosis/1%20-%20sacrifice.md)
+    - [2 - Therefore](theology/radical-kenosis/2%20-%20therefore.md)
+    - [3 - Turn](theology/radical-kenosis/3%20-%20turn.md)
+    - [4 - Fork](theology/radical-kenosis/4%20-%20fork.md)
+    - [5 - Choice](theology/radical-kenosis/5%20-%20choice.md)
+    - [Distillation](theology/radical-kenosis/distillation.md)
+    - [FAQ](theology/radical-kenosis/faq.md)
+    - Bible
+      - [1 - Creation](theology/radical-kenosis/bible/1%20-%20creation.md)
+      - [2 - Post Eden](theology/radical-kenosis/bible/2%20-%20post%20eden.md)
+      - [3 - Abraham](theology/radical-kenosis/bible/3%20-%20abraham.md)
+      - [4 - Moses](theology/radical-kenosis/bible/4%20-%20moses.md)
+      - [5 - Other](theology/radical-kenosis/bible/5%20-%20other.md)
+      - [6 - Kingdom](theology/radical-kenosis/bible/6%20-%20kingdom.md)
+      - [7 - Temple](theology/radical-kenosis/bible/7%20-%20temple.md)
+      - [8 - Prophets](theology/radical-kenosis/bible/8%20-%20prophets.md)
+      - [9 - Exile](theology/radical-kenosis/bible/9%20-%20exile.md)
+      - [10 - Second Temple](theology/radical-kenosis/bible/10%20-%20second%20temple.md)
+      - [11 - Jesus](theology/radical-kenosis/bible/11%20-%20jesus.md)
+      - [12 - Jesus Death Resurrection](theology/radical-kenosis/bible/12%20-%20jesus%20death%20resurrection.md)
+    - Essays
+      - [Authority](theology/radical-kenosis/essays/authority.md)
+      - [Finitude](theology/radical-kenosis/essays/finitude.md)
+      - [Forgiveness](theology/radical-kenosis/essays/forgiveness.md)
+      - [Love](theology/radical-kenosis/essays/love.md)
+      - [Meaning](theology/radical-kenosis/essays/meaning.md)
+      - [Sacrifice](theology/radical-kenosis/essays/sacrifice.md)
+      - [TODO](theology/radical-kenosis/essays/TODO.md)
+      - [Tragedy](theology/radical-kenosis/essays/tragedy.md)
+      - [Trust](theology/radical-kenosis/essays/trust.md)
+    - Other
+      - [Church](theology/radical-kenosis/other/church.md)
+      - [Covenant](theology/radical-kenosis/other/covenant.md)
+      - [Election](theology/radical-kenosis/other/election.md)
+      - [Encounter](theology/radical-kenosis/other/encounter.md)
+      - [Eschatology](theology/radical-kenosis/other/eschatology.md)
+      - [Filioque](theology/radical-kenosis/other/filioque.md)
+      - [Joy](theology/radical-kenosis/other/joy.md)
+      - [Kenotic Monarchy](theology/radical-kenosis/other/kenotic%20monarchy.md)
+      - [Pentecost](theology/radical-kenosis/other/pentecost.md)
+      - [Trinity](theology/radical-kenosis/other/trinity.md)
+    - Synthesis
+      - [Constitution](theology/radical-kenosis/synthesis/constitution.md)
+
+- Systems
+  - [Overview](systems/README.md)
+  - [1 - Legibility Trap](systems/1%20-%20legibility%20trap.md)
+  - [2 - Civilization](systems/2%20-%20civilization.md)
+  - [3 - Drift](systems/3%20-%20drift.md)
+
+- AI
+  - [Overview](ai/README.md)
+  - [1 - Summary](ai/1%20-%20summary.md)
+  - [2 - Problem](ai/2%20-%20problem.md)
+  - [3 - Framing](ai/3%20-%20framing.md)
+
+- Geometric Crystals
+  - [Overview](geometric-crystals/README.md)
+  - [0 - Background](geometric-crystals/0%20-%20background.md)
+  - [1 - Summary](geometric-crystals/1%20-%20summary.md)
+  - Experiments
+    - [Overview](geometric-crystals/experiments/README.md)
+    - [Additional Fields](geometric-crystals/experiments/additional_fields.md)
+    - [Antigravity](geometric-crystals/experiments/antigravity.md)
+    - [Biology](geometric-crystals/experiments/biology.md)
+    - [Fusion](geometric-crystals/experiments/fusion.md)
+    - [Quantum Computing](geometric-crystals/experiments/quantum_computing.md)
+    - [Superconductivity](geometric-crystals/experiments/superconductivity.md)
+
+- Programming
+  - [0 - Summary](programming/0%20-%20summary.md)

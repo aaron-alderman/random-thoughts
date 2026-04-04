@@ -1,0 +1,132 @@
+:root {
+  --site-bg: #f7f1e8;
+  --surface: rgba(255, 252, 247, 0.82);
+  --surface-strong: rgba(255, 250, 242, 0.96);
+  --text: #2f241d;
+  --text-soft: #65544a;
+  --line: rgba(74, 49, 33, 0.14);
+  --accent: #a3492c;
+  --accent-soft: #d28a5e;
+  --sidebar-width: 20rem;
+}
+
+html,
+body {
+  background:
+    radial-gradient(circle at top left, rgba(210, 138, 94, 0.18), transparent 28%),
+    radial-gradient(circle at top right, rgba(68, 105, 92, 0.12), transparent 24%),
+    linear-gradient(180deg, #f8f3eb 0%, var(--site-bg) 100%);
+  color: var(--text);
+  font-family: "Literata", Georgia, serif;
+}
+
+body {
+  font-size: 17px;
+}
+
+.app-name,
+.sidebar-nav,
+.search input,
+.markdown-section code,
+.pagination-item-title,
+.cover-main > p:last-child a {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--surface);
+  backdrop-filter: blur(18px);
+  border-right: 1px solid var(--line);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+}
+
+.content {
+  left: var(--sidebar-width);
+}
+
+.markdown-section {
+  max-width: 900px;
+  padding: 3rem 3rem 6rem;
+}
+
+.markdown-section h1,
+.markdown-section h2,
+.markdown-section h3,
+.markdown-section h4,
+.app-name-link {
+  color: #1d4f4f;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.markdown-section a,
+.sidebar-nav a {
+  color: var(--accent);
+}
+
+.sidebar-nav a:hover,
+.markdown-section a:hover {
+  color: #7b331d;
+}
+
+.sidebar-nav > ul > li > a {
+  font-weight: 700;
+}
+
+.markdown-section strong {
+  color: #49362a;
+}
+
+.markdown-section blockquote {
+  background: var(--surface-strong);
+  border-left: 4px solid var(--accent-soft);
+  border-radius: 0 10px 10px 0;
+  color: var(--text-soft);
+  padding: 0.8rem 1rem;
+}
+
+.markdown-section code {
+  background: rgba(163, 73, 44, 0.09);
+  border-radius: 6px;
+  color: #6f2612;
+}
+
+.markdown-section pre > code {
+  background: #fffaf4;
+  border: 1px solid var(--line);
+  color: var(--text);
+}
+
+.search {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.search input {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text);
+  padding: 0.75rem 1rem;
+}
+
+.search input::placeholder {
+  color: #8c7668;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 18rem;
+  }
+
+  .content {
+    left: 0;
+  }
+
+  .markdown-section {
+    padding: 2.5rem 1.25rem 4rem;
+  }
+}
