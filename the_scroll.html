@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Scroll — Assumptions, False Turns, and the Geometric Path Through</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1814;
+    --ink-light: #3d3830;
+    --ink-faint: #7a7168;
+    --parchment: #f7f3ec;
+    --parchment-dark: #ede8df;
+    --parchment-darker: #e0d9cc;
+    --accent: #8b3a1a;
+    --accent-light: #b85c35;
+    --gold: #9a7b2e;
+    --gold-light: #c4a24e;
+    --flag-bg: #fdf6f0;
+    --flag-border: #c4714a;
+    --insight-bg: #f0f4f8;
+    --insight-border: #4a7090;
+    --resolution-color: #2d5a3d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.85;
+    min-height: 100vh;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 240px;
+    background: var(--ink);
+    padding: 2.5rem 1.5rem;
+    overflow-y: auto;
+    z-index: 100;
+  }
+
+  .sidebar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #333;
+  }
+
+  .nav-link {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: #888;
+    text-decoration: none;
+    padding: 0.3rem 0.5rem;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    transition: color 0.2s, background 0.2s;
+    line-height: 1.4;
+  }
+
+  .nav-link:hover { color: var(--gold-light); background: rgba(255,255,255,0.05); }
+  .nav-link.part { color: #bbb; font-size: 0.7rem; margin-top: 0.8rem; font-weight: 400; }
+  .nav-link.part:hover { color: var(--gold-light); }
+
+  /* MAIN */
+  .main { margin-left: 240px; min-height: 100vh; }
+
+  /* HERO */
+  .hero {
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 8rem 6rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -10%;
+    width: 60%; height: 200%;
+    background: radial-gradient(ellipse, rgba(138,90,30,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-title em { font-style: italic; color: var(--gold-light); }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    color: #aaa;
+    max-width: 600px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #666;
+    letter-spacing: 0.1em;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 5rem 4rem;
+  }
+
+  /* PART HEADER */
+  .part-header {
+    margin: 5rem 0 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--ink);
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+  }
+
+  .part-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .part-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  /* SECTION */
+  .section-header { margin: 3rem 0 1.2rem; }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--ink-light);
+  }
+
+  p { margin-bottom: 1.3rem; color: var(--ink-light); }
+
+  blockquote {
+    margin: 2.5rem 0;
+    padding: 1.5rem 2rem 1.5rem 2.5rem;
+    border-left: 3px solid var(--gold);
+    background: var(--parchment-dark);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink);
+    position: relative;
+  }
+
+  blockquote::before {
+    content: '\201C';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    color: var(--gold);
+    opacity: 0.3;
+    position: absolute;
+    top: -0.5rem;
+    left: 0.8rem;
+    line-height: 1;
+  }
+
+  /* FLAG BOX */
+  .flag {
+    margin: 2.5rem 0;
+    border: 1px solid var(--flag-border);
+    border-left: 4px solid var(--flag-border);
+    background: var(--flag-bg);
+    border-radius: 0 4px 4px 0;
+    overflow: hidden;
+  }
+
+  .flag-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.9rem 1.4rem;
+    background: rgba(196,113,74,0.08);
+    border-bottom: 1px solid rgba(196,113,74,0.2);
+  }
+
+  .flag-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--flag-border);
+    text-transform: uppercase;
+  }
+
+  .flag-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .flag-body { padding: 1.2rem 1.4rem; }
+  .flag-body p { font-size: 0.92rem; line-height: 1.75; margin-bottom: 0.8rem; }
+  .flag-body p:last-child { margin-bottom: 0; }
+
+  .flag-resolution {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed rgba(45,90,61,0.3);
+  }
+
+  .flag-resolution-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--resolution-color);
+    margin-bottom: 0.4rem;
+  }
+
+  .flag-resolution p { font-size: 0.92rem; color: var(--resolution-color); font-style: italic; }
+
+  /* INSIGHT BOX */
+  .insight {
+    margin: 2.5rem 0;
+    border: 1px solid var(--insight-border);
+    border-left: 4px solid var(--insight-border);
+    background: var(--insight-bg);
+    border-radius: 0 4px 4px 0;
+    overflow: hidden;
+  }
+
+  .insight-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.9rem 1.4rem;
+    background: rgba(74,112,144,0.08);
+    border-bottom: 1px solid rgba(74,112,144,0.2);
+  }
+
+  .insight-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--insight-border);
+    text-transform: uppercase;
+  }
+
+  .insight-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--insight-border);
+  }
+
+  .insight-body { padding: 1.2rem 1.4rem; }
+  .insight-body p { font-size: 0.92rem; line-height: 1.75; margin-bottom: 0; }
+
+  /* MASTER TABLE */
+  .master-table-wrap {
+    margin: 2.5rem 0;
+    overflow-x: auto;
+    border: 1px solid var(--parchment-darker);
+    border-radius: 4px;
+  }
+
+  .master-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+
+  .master-table th {
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.9rem 1rem;
+    text-align: left;
+    font-weight: 400;
+  }
+
+  .master-table td {
+    padding: 0.75rem 1rem;
+    vertical-align: top;
+    border-bottom: 1px solid var(--parchment-darker);
+    line-height: 1.5;
+  }
+
+  .master-table tr:last-child td { border-bottom: none; }
+  .master-table tr:hover td { background: var(--parchment-dark); }
+  .master-table td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent); white-space: nowrap; }
+  .master-table td:nth-child(2) { color: var(--ink-light); }
+  .master-table td:nth-child(3) { color: var(--accent); font-style: italic; }
+  .master-table td:nth-child(4) { color: var(--resolution-color); }
+
+  /* EQUATION */
+  .equation {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    background: var(--parchment-dark);
+    border: 1px solid var(--parchment-darker);
+    padding: 1.2rem 1.8rem;
+    margin: 1.8rem 0;
+    text-align: center;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    border-radius: 2px;
+    overflow-x: auto;
+  }
+
+  /* LIST */
+  ul.scroll-list { margin: 1rem 0 1.5rem 1.5rem; list-style: none; }
+  ul.scroll-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+    color: var(--ink-light);
+    line-height: 1.7;
+  }
+  ul.scroll-list li::before { content: '\2014'; position: absolute; left: 0; color: var(--gold); font-family: 'Cormorant Garamond', serif; }
+
+  /* CLOSING */
+  .closing {
+    margin: 5rem 0 2rem;
+    padding: 3rem;
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(154,123,46,0.1) 0%, transparent 70%);
+  }
+
+  .closing-main {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    color: var(--parchment);
+    position: relative;
+  }
+
+  .closing-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    position: relative;
+  }
+
+  .divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--parchment-darker), transparent);
+    margin: 3rem 0;
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .hero { padding: 4rem 2rem 3rem; }
+    .content { padding: 3rem 1.5rem; }
+    .hero-title { font-size: 3.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-title">The Scroll</div>
+  <a href="#preface" class="nav-link part">Preface</a>
+  <a href="#part1" class="nav-link part">I. Geometry of Motion</a>
+  <a href="#flag1" class="nav-link">&#9873; Absolute Time</a>
+  <a href="#flag2" class="nav-link">&#9873; Fixed Background</a>
+  <a href="#flag3" class="nav-link">&#9873; Force as Fundamental</a>
+  <a href="#part2" class="nav-link part">II. The Field Equations</a>
+  <a href="#flag4" class="nav-link">&#9873; Vacuum Energy</a>
+  <a href="#part3" class="nav-link part">III. Gauge Theory</a>
+  <a href="#flag5" class="nav-link">&#9873; Why Complex?</a>
+  <a href="#flag6" class="nav-link">&#9873; Action Universal</a>
+  <a href="#flag7" class="nav-link">&#9873; Local Gauge Demand</a>
+  <a href="#flag8" class="nav-link">&#9873; Aharonov&#8211;Bohm</a>
+  <a href="#flag9" class="nav-link">&#9873; Repeated Leap</a>
+  <a href="#flag10" class="nav-link">&#9873; Renormalizability</a>
+  <a href="#part4" class="nav-link part">IV. Division Algebras</a>
+  <a href="#flag11" class="nav-link">&#9873; Time as Parameter</a>
+  <a href="#flag12" class="nav-link">&#9873; Higgs Separate</a>
+  <a href="#part5" class="nav-link part">V. Fiber Bundle</a>
+  <a href="#flag13" class="nav-link">&#9873; Gravity as Force</a>
+  <a href="#flag14" class="nav-link">&#9873; Background Dependence</a>
+  <a href="#part6" class="nav-link part">VI. Quantum Gravity</a>
+  <a href="#flag15" class="nav-link">&#9873; Background Split</a>
+  <a href="#flag16" class="nav-link">&#9873; Non-Renormalizability</a>
+  <a href="#flag17" class="nav-link">&#9873; Time Incompatibility</a>
+  <a href="#part7" class="nav-link part">VII. High Geometry</a>
+  <a href="#flag18" class="nav-link">&#9873; Fundamental/Emergent</a>
+  <a href="#flag19" class="nav-link">&#9873; Exotic Matter</a>
+  <a href="#part8" class="nav-link part">VIII. Civilisation</a>
+  <a href="#flag20" class="nav-link">&#9873; More Force</a>
+  <a href="#master" class="nav-link part">Master Table</a>
+</nav>
+
+<div class="main">
+
+  <div class="hero">
+    <div class="hero-eyebrow">A record of what physics closed too soon</div>
+    <h1 class="hero-title">The <em>Scroll</em></h1>
+    <p class="hero-subtitle">Assumptions, false turns, and the geometric path through</p>
+    <div class="hero-tagline">Start with geometry. Follow it wherever it goes. Don't drop the scroll.</div>
+  </div>
+
+  <div class="content">
+
+    <div id="preface" class="part-header reveal">
+      <div class="part-number">Preface</div>
+      <h2 class="part-title">The Methodology Error</h2>
+    </div>
+
+    <p class="reveal">There is a story that physics tells about itself. We started knowing nothing, did experiments, found particles and forces, wrote equations, and built upward &#8212; brick by brick &#8212; until we had the Standard Model and General Relativity.</p>
+    <p class="reveal">It is a good story. It is also, in a deep sense, backwards.</p>
+    <p class="reveal">Physics built itself bottom-up. Each discovery was boxed, labeled, and set aside. Each closure was locally correct. Each closure also dropped the scroll.</p>
+    <p class="reveal">The scroll is the thread that connects each piece to a larger structure. It is the question behind the answer. Every time physics said &#8220;it just is&#8221; &#8212; it dropped the scroll.</p>
+    <p class="reveal">This document is a record of those drops: the assumptions made, the directions they led, the walls they eventually hit, and &#8212; where visible &#8212; the geometric view that makes each one unnecessary.</p>
+    <blockquote class="reveal">Add more burden, not less. Don&#8217;t assume things away because the math is too big. Hold it and see what happens. Look at it from different angles. Like a crystal.</blockquote>
+
+    <hr class="divider">
+
+    <div id="part1" class="part-header reveal">
+      <div class="part-number">Part One</div>
+      <h2 class="part-title">The Geometry of Motion</h2>
+    </div>
+
+    <div class="section-header reveal"><h3 class="section-title">1.1 &#8212; Newton&#8217;s Absolute Time and Space</h3></div>
+    <p class="reveal">Newton&#8217;s mechanics rests on two foundational assumptions so natural they were invisible for two centuries.</p>
+    <p class="reveal"><strong>Assumption 1:</strong> There exists a universal clock ticking at the same rate everywhere. All observers share a single &#8220;now.&#8221; Simultaneity is absolute.</p>
+    <p class="reveal"><strong>Assumption 2:</strong> Space is a fixed, flat, three-dimensional stage. It does not bend, stretch, or respond to its contents. Gravity acts across it instantaneously.</p>
+    <p class="reveal">These assumptions are not wrong in the everyday regime. The false turn was treating approximations as foundations.</p>
+
+    <div id="flag1" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 1</span><span class="flag-title">Absolute Time</span></div>
+      <div class="flag-body">
+        <p>Time was assumed to be a universal background parameter, the same for all observers. This is false. It is an excellent approximation at low velocities but breaks down at relativistic speeds and in strong gravitational fields.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>Proper time &#964; is the invariant &#8212; the time ticked by a clock on a specific worldline. The spacetime interval ds&#178; = g&#956;&#957; dx&#956; dx&#957; is the geometric object all observers agree on.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="flag2" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 2</span><span class="flag-title">Fixed Flat Background</span></div>
+      <div class="flag-body">
+        <p>Space was assumed to be a passive stage on which physics occurs. This is false. Spacetime is dynamical &#8212; it curves in response to energy and momentum, and that curvature tells matter how to move.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>The metric tensor g&#956;&#957; is the master object. Gravity is not a force acting across space &#8212; it is the curvature of spacetime itself.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header reveal"><h3 class="section-title">1.2 &#8212; The Geodesic and the Action Principle</h3></div>
+    <p class="reveal">A geodesic is the straightest possible path through curved spacetime. A free particle extremizes its proper time: &#948;&#8747;d&#964; = 0. This is the same variational logic that produces the field equations, the equations of motion for matter, and the geodesic equation. One principle at every level.</p>
+
+    <div class="insight reveal">
+      <div class="insight-header"><span class="insight-label">Geometric clarity</span><span class="insight-title">What Potential Energy Actually Is</span></div>
+      <div class="insight-body"><p>When you expand the proper time action in the weak-field, slow-motion limit, the Lagrangian becomes L = &#189;mv&#178; &#8722; m&#934;. The potential energy term comes from g&#8348;&#8348; &#8212; the time-time component of the metric. Gravitational potential energy is the contribution to the action from the curvature of time. The &#189;at&#178; of introductory physics is a shadow of geometry.</p></div>
+    </div>
+
+    <div id="flag3" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 3</span><span class="flag-title">Force as the Fundamental Concept</span></div>
+      <div class="flag-body">
+        <p>Newton built mechanics around forces. This required gravity to act instantaneously across arbitrary distances, which Newton himself found troubling. It also required the mysterious equality of inertial and gravitational mass, which was observed but never explained.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>In GR there are no gravitational forces. The equality of inertial and gravitational mass is automatic &#8212; both come from the same proper time integral. What we call a gravitational force is the Christoffel symbol contribution to the geodesic equation &#8212; a coordinate artifact, not a physical force.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div id="part2" class="part-header reveal">
+      <div class="part-number">Part Two</div>
+      <h2 class="part-title">The Field Equations and Their Hidden Structure</h2>
+    </div>
+
+    <div class="section-header reveal"><h3 class="section-title">2.1 &#8212; The Einstein-Hilbert Action</h3></div>
+    <p class="reveal">The Einstein field equations are not postulated. They are derived by extremizing the Einstein-Hilbert action:</p>
+    <div class="equation reveal">S = (1/2&#954;) &#8747; R &#8730;(&#8722;g) d&#8308;x + S&#8347;&#8346;&#8348;&#8348;&#8347;&#8345;</div>
+    <p class="reveal">R is the Ricci scalar &#8212; the trace of spacetime curvature. The entire content of General Relativity emerges from extremizing one integral. The stress-energy tensor T&#956;&#957; is defined by this variation &#8212; not postulated separately.</p>
+
+    <div class="insight reveal">
+      <div class="insight-header"><span class="insight-label">Geometric clarity</span><span class="insight-title">The Two Dials</span></div>
+      <div class="insight-body"><p>The EFE G&#956;&#957; + &#923;g&#956;&#957; = (8&#960;G/c&#8308;)T&#956;&#957; has two sides. Physics has overwhelmingly explored this equation by increasing energy &#8212; higher colliders, heavier particles, shorter distances. The left-hand dial &#8212; geometry &#8212; has been largely left untouched as an experimental instrument. This is the false turn that the crystal program corrects.</p></div>
+    </div>
+
+    <div id="flag4" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 4</span><span class="flag-title">The Vacuum Energy Catastrophe</span></div>
+      <div class="flag-body">
+        <p>Quantum field theory predicts that the vacuum should have an enormous energy density from zero-point fluctuations. The calculated value is approximately 10&#178;&#8304; times larger than the observed cosmological constant. The worst prediction in physics.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>The cosmological constant may be an intrinsic property of the base manifold &#8212; its curvature in the absence of matter &#8212; rather than a vacuum energy to be calculated from quantum fields. The right question may not be &#8220;why is &#923; so small&#8221; but &#8220;what determines the intrinsic curvature of the base.&#8221;</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div id="part3" class="part-header reveal">
+      <div class="part-number">Part Three</div>
+      <h2 class="part-title">Gauge Theory and Its Flags</h2>
+    </div>
+
+    <div class="section-header reveal"><h3 class="section-title">3.1 &#8212; The Complex Wavefunction</h3></div>
+    <p class="reveal">Quantum mechanics describes particles with complex-valued wavefunctions &#968;. The magnitude squared |&#968;|&#178; is the probability density. The phase of &#968; is not directly observable. This is where the gauge story begins &#8212; and where the flags accumulate fastest.</p>
+
+    <div id="flag5" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 5</span><span class="flag-title">Why Complex?</span></div>
+      <div class="flag-body">
+        <p>The complex structure of quantum mechanics is introduced as a mathematical tool. Its deeper justification is rarely given in standard presentations.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>The complex numbers &#8450; are the unique two-dimensional normed division algebra. Hurwitz&#8217;s theorem proves there are exactly four: &#8477;, &#8450;, &#8461;, &#120134;. If physical states must be described by a normed division algebra, complex quantum mechanics is not assumed. It is forced.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="flag6" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 6</span><span class="flag-title">The Action Principle as Universal</span></div>
+      <div class="flag-body">
+        <p>The action principle is applied to particles, fields, spacetime geometry, and quantum amplitudes. Its universality is assumed &#8212; it works, so it is used everywhere. Why it works is not derived.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>The action principle may be the statement that nature extremizes proper time &#8212; geometric length along worldlines. Applied at every level, it is a single geometric statement wearing different mathematical clothes depending on the domain.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header reveal"><h3 class="section-title">3.2 &#8212; The Gauge Demand</h3></div>
+    <p class="reveal">The electron wavefunction &#968; has a global U(1) symmetry &#8212; multiplying by a constant phase e&#8305;&#945; changes nothing observable. This is almost trivially true. Then comes the suspicious step: demand that this phase freedom holds <em>locally</em>. This breaks the free electron action. To restore invariance, a new field A&#956; must be introduced. That field is the photon.</p>
+
+    <div id="flag7" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 7</span><span class="flag-title">The Unjustified Leap: Local Gauge Invariance</span></div>
+      <div class="flag-body">
+        <p>The demand for local phase invariance is the engine of the entire gauge theory edifice. It is justified by appeals to locality. This is reasonable. It is not a derivation. It is an assumption elevated to a principle. The photon is summoned by a mathematical demand whose physical justification is: locality. Which was assumed.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>In the division algebra picture, the local phase freedom is not demanded &#8212; it emerges from the fiber bundle structure. The &#8450; fiber at each point has a natural U(1) symmetry. The gauge freedom is the automorphism group of the fiber. The photon is the connection on that fiber &#8212; forced by geometry, not by a demand.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="flag8" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 8</span><span class="flag-title">The Aharonov&#8211;Bohm Crack</span></div>
+      <div class="flag-body">
+        <p>An electron traveling through a region where E = 0 and B = 0 has its interference pattern shifted by the gauge potential A&#956; outside the region. The potential &#8212; supposedly just a mathematical convenience &#8212; is physically real in a way the field is not. The local field description was always inadequate.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>The fundamental object is the Wilson loop: &#8750;A&#956;dx&#956; around a closed path. This is gauge-invariant and nonlocal. The entire framework was built on locality, and locality was already failing. The holonomy of the connection around a loop is the gauge-invariant quantity.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header reveal"><h3 class="section-title">3.3 &#8212; Yang-Mills and Non-Abelian Structure</h3></div>
+    <p class="reveal">Yang-Mills theory generalizes the U(1) gauge principle to non-abelian groups. For SU(2) &#8212; the weak force &#8212; three generators, three gauge bosons. For SU(3) &#8212; the strong force &#8212; eight generators, eight gluons. The self-interaction of gauge bosons comes entirely from the non-commutativity of the group.</p>
+
+    <div id="flag9" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 9</span><span class="flag-title">The Same Unjustified Leap, Repeated</span></div>
+      <div class="flag-body">
+        <p>The demand for local SU(2) and local SU(3) invariance is made with the same justification as local U(1) invariance &#8212; and the same lack of derivation. Three separate demands produce three separate forces.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>In the division algebra picture, the three gauge groups are not demanded separately. They are the automorphism groups of &#8450;, &#8461;, and the residual symmetry of &#120134; after one choice is made. U(1), SU(2), SU(3) are not three demands. They are three facets of one structure.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="flag10" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 10</span><span class="flag-title">Renormalizability as a Selection Criterion</span></div>
+      <div class="flag-body">
+        <p>The requirement that a theory be renormalizable was used to restrict allowed terms in the action. It worked brilliantly for the Standard Model. It also excluded gravity, creating the impression that renormalizability is a fundamental physical principle rather than a mathematical convenience.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>Renormalizability is a property of the perturbative expansion around a fixed background. Yang-Mills theories are renormalizable because gauge symmetry closes off the cascade of counterterms. Gravity&#8217;s diffeomorphism invariance does not close this cascade &#8212; the gauge group acts on spacetime itself rather than an internal fiber.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div id="part4" class="part-header reveal">
+      <div class="part-number">Part Four</div>
+      <h2 class="part-title">The Division Algebras</h2>
+    </div>
+
+    <div class="section-header reveal"><h3 class="section-title">4.1 &#8212; Hurwitz&#8217;s Theorem</h3></div>
+    <p class="reveal">There are exactly four normed division algebras: &#8477;, &#8450;, &#8461;, &#120134;. This is a theorem &#8212; proven, complete. No others exist. Each is the previous one doubled by the Cayley-Dickson construction, and each doubling costs something:</p>
+    <ul class="scroll-list reveal">
+      <li>&#8477; &#8594; &#8450;: lose ordering</li>
+      <li>&#8450; &#8594; &#8461;: lose commutativity (ab &#8800; ba)</li>
+      <li>&#8461; &#8594; &#120134;: lose associativity ((ab)c &#8800; a(bc))</li>
+    </ul>
+
+    <div class="insight reveal">
+      <div class="insight-header"><span class="insight-label">Geometric clarity</span><span class="insight-title">What Each Algebra Encodes</span></div>
+      <div class="insight-body"><p><strong>&#8477;</strong> encodes magnitude &#8212; bare scale. <strong>&#8450;</strong> encodes orientation &#8212; phase, the compass. The photon is a propagating compass needle. Wave-particle duality dissolves: it was always quantized phase propagation. <strong>&#8461;</strong> encodes relationships between orientations. The W and Z bosons carry relationship information between isospin partners. <strong>&#120134;</strong> encodes path dependency &#8212; the result depends on order, so the history of the path is baked into the algebra. Gluons carry path memory. Confinement exists because you cannot isolate a path history.</p></div>
+    </div>
+
+    <div class="section-header reveal"><h3 class="section-title">4.2 &#8212; The Octonions and Time</h3></div>
+    <p class="reveal">The non-associativity of the octonions is the most profound algebraic loss. (ab)c &#8800; a(bc) means the result depends on order. Order requires a distinction between before and after. Before and after is time. In &#8477;, &#8450;, &#8461; &#8212; all associative &#8212; there is no intrinsic ordering. In &#120134;, order matters fundamentally. The algebra itself encodes the arrow of time.</p>
+
+    <div id="flag11" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 11</span><span class="flag-title">Time as a Background Parameter</span></div>
+      <div class="flag-body">
+        <p>In quantum mechanics and quantum field theory, time is a fixed external parameter &#8212; the stage on which dynamics unfold. It is not quantized. The asymmetry between time and space is deeply uncomfortable and has never been resolved satisfactorily.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>If the arrow of time emerges from the non-associativity of &#120134; &#8212; from path dependency in the fiber &#8212; then time is not a background parameter. It is a consequence of the octonion fiber structure. The asymmetry between time and space reflects the asymmetry between associative (&#8477;, &#8450;, &#8461;) and non-associative (&#120134;) algebras.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header reveal"><h3 class="section-title">4.3 &#8212; G&#8322; and the Single Choice</h3></div>
+    <p class="reveal">The automorphism group of the octonions is G&#8322;, a 14-dimensional exceptional Lie group. Make one choice: pick a preferred imaginary unit in &#120134;. This breaks G&#8322;. The subgroup that fixes your chosen direction is SU(3) &#8212; the gauge group of the strong force. Eight generators. Eight gluons. Three colors. SU(3) is not assumed. It is the residue of a symmetry broken by a single geometric act.</p>
+
+    <div class="insight reveal">
+      <div class="insight-header"><span class="insight-label">Geometric clarity</span><span class="insight-title">The Cascade of Symmetry Breaking</span></div>
+      <div class="insight-body"><p>Continue: choose a vacuum expectation value in the remaining SU(2)&#215;U(1) structure. It breaks to U(1). The W and Z bosons acquire mass. The photon remains massless. The Higgs mechanism is now not a separate piece of physics bolted on &#8212; it is the same operation: choosing a preferred direction in a field space. The Higgs mechanism, the octonion unit vector choice, and the choice of a local inertial frame are the same geometric act in three different languages.</p></div>
+    </div>
+
+    <div id="flag12" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 12</span><span class="flag-title">The Higgs as a Separate Mechanism</span></div>
+      <div class="flag-body">
+        <p>The Higgs mechanism was introduced as an independent piece of physics &#8212; a scalar field with a Mexican hat potential. Its connection to the deeper algebraic structure was not recognized.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>The Higgs vacuum choice is the octonion unit vector choice at a different level of the cascade. Both are instances of spontaneous symmetry breaking &#8212; a continuous symmetry broken by a choice of preferred direction, leaving a smaller residual symmetry. The scroll connects them.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div id="part5" class="part-header reveal">
+      <div class="part-number">Part Five</div>
+      <h2 class="part-title">The Fiber Bundle Architecture</h2>
+    </div>
+
+    <div class="section-header reveal"><h3 class="section-title">5.1 &#8212; The Wrong Unification Attempt</h3></div>
+    <p class="reveal">The standard unification program attempts to embed SU(3)&#215;SU(2)&#215;U(1) into a larger gauge group &#8212; SU(5), SO(10), E&#8328; &#8212; and then incorporate gravity. This program has produced beautiful mathematics and zero confirmed predictions. Proton decay has not been observed. Supersymmetric partners have not been found.</p>
+
+    <div id="flag13" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 13</span><span class="flag-title">Gravity as Just Another Gauge Force</span></div>
+      <div class="flag-body">
+        <p>The unification program treats gravity as one force among others. The goal is to find a group large enough to contain gravity alongside the Standard Model forces. This has never worked.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>Gravity is not another gauge force in the fiber. It is the curvature of the base &#8212; the spacetime manifold itself. The gauge forces are curvatures of connections on the fiber. They are different kinds of objects. Gravity is a cross-cutting concern: it touches every layer without belonging to any of them.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header reveal"><h3 class="section-title">5.2 &#8212; The Fiber Bundle</h3></div>
+    <p class="reveal">The correct picture: take spacetime as the base manifold, curved by the EFE. At every point, attach a fiber carrying the division algebra structure &#8477;&#8855;&#8450;&#8855;&#8461;&#8855;&#120134;. The gauge fields are connections on this fiber. Their field strengths are the curvature of those connections. Gravity is the curvature of the base. Both are curvatures. Both follow action principles. But they live at different levels of the bundle.</p>
+
+    <div id="flag14" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 14</span><span class="flag-title">Background Dependence in Quantum Field Theory</span></div>
+      <div class="flag-body">
+        <p>Quantum field theory is formulated on a fixed background spacetime. The vacuum, the particle content, the Hamiltonian &#8212; all depend on the background. This is incompatible with General Relativity, where spacetime is dynamical and there is no fixed background.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>Background independence requires physics without reference to a preferred background. The fiber bundle picture points toward this: the geometry of the base is determined by the EFE, not fixed in advance. Physical observables &#8212; proper times, curvature invariants, Wilson loops &#8212; are geometric objects that do not depend on coordinates or background choices.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div id="part6" class="part-header reveal">
+      <div class="part-number">Part Six</div>
+      <h2 class="part-title">The Quantum Gravity Trap</h2>
+    </div>
+
+    <div class="section-header reveal"><h3 class="section-title">6.1 &#8212; The Perturbative Quantization Attempt</h3></div>
+    <p class="reveal">The standard approach to quantum gravity attempts to quantize GR in the same way Yang-Mills was quantized: expand the metric around a flat background, read off Feynman rules, compute loop corrections. The metric is split: g&#956;&#957; = &#951;&#956;&#957; + &#954;h&#956;&#957;. This immediately breaks background independence &#8212; the defining feature of GR.</p>
+
+    <div id="flag15" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 15</span><span class="flag-title">The Background Split</span></div>
+      <div class="flag-body">
+        <p>Writing g&#956;&#957; = &#951;&#956;&#957; + &#954;h&#956;&#957; requires choosing a fixed background &#951;&#956;&#957;. This is incompatible with the background independence of GR. The thing being quantized &#8212; the metric &#8212; is the same thing providing the geometry of the space you are quantizing in.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>This is not a technical problem to be fixed by better mathematics. It is a signal that perturbative quantum field theory on a fixed background is the wrong language for quantum gravity. The language that respects background independence &#8212; fiber bundles, connections, holonomies &#8212; does not require a background split.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="flag16" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 16</span><span class="flag-title">Non-Renormalizability as a Death Sentence</span></div>
+      <div class="flag-body">
+        <p>The graviton vertex grows as k&#178; because the Einstein-Hilbert action contains second derivatives of the metric. Loop integrals diverge faster than in Yang-Mills. New counterterms are required at each loop order. The cascade never closes. Infinitely many parameters are needed.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>Non-renormalizability is telling you the perturbative expansion is wrong, not that quantum gravity is impossible. Yang-Mills is renormalizable because gauge symmetry closes off the counterterm cascade. Gravity&#8217;s diffeomorphism invariance does not close this cascade because it acts on spacetime itself rather than an internal fiber.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="flag17" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 17</span><span class="flag-title">Time as External Parameter vs. Dynamical Variable</span></div>
+      <div class="flag-body">
+        <p>Quantum mechanics requires a fixed external time parameter. General Relativity has no fixed external time. The Hamiltonian of GR is a constraint &#8212; it is zero on physical states. This is not a technical gap. It is a conceptual chasm.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>If time emerges from the non-associativity of the octonion fiber, then time is neither an external parameter nor a dynamical variable of the base. It is a property of the fiber structure. Both quantum mechanics and GR are approximations to a structure where time is an algebraic emergent property.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div id="part7" class="part-header reveal">
+      <div class="part-number">Part Seven</div>
+      <h2 class="part-title">The High Geometry Program</h2>
+    </div>
+
+    <div class="section-header reveal"><h3 class="section-title">7.1 &#8212; The Missed Dial</h3></div>
+    <p class="reveal">Physics has been turning the right-hand dial of the EFE &#8212; increasing T&#956;&#957; through higher collision energies &#8212; for fifty years. The left-hand dial &#8212; engineering G&#956;&#957; &#8212; has been largely ignored as an experimental instrument. The evidence that this is a mistake has been accumulating in condensed matter physics for decades.</p>
+
+    <div class="insight reveal">
+      <div class="insight-header"><span class="insight-label">Geometric clarity</span><span class="insight-title">Quasiparticles as Geometric Sampling</span></div>
+      <div class="insight-body"><p>A crystal imposes a specific geometric symmetry on everything inside it. The quasiparticles that emerge are the field equations evaluated at that symmetry point. Weyl fermions (predicted 1929) were found in Weyl semimetals in 2015. Majorana fermions (predicted 1937) appear in topological superconductors. Magnetic monopoles (predicted by Dirac) appear in spin ice materials. Every particle predicted by high-energy physics that has not been found at colliders has been found as a quasiparticle in a specific geometric environment.</p></div>
+    </div>
+
+    <div id="flag18" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 18</span><span class="flag-title">Fundamental vs. Emergent as a Fixed Hierarchy</span></div>
+      <div class="flag-body">
+        <p>Physics has maintained a strict hierarchy: fundamental particles are real, quasiparticles are emergent approximations. This hierarchy prevented the pattern above from being recognized as significant.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>The distinction between fundamental and emergent is a geometric artifact. Both are solutions to field equations evaluated at specific symmetry points. The electron&#8217;s symmetry environment is the vacuum. The phonon&#8217;s symmetry environment is the crystal lattice. Neither is more fundamental. Both are what the mathematics looks like from inside a particular geometric environment.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="flag19" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 19</span><span class="flag-title">Anti-Gravity Requires Exotic Matter</span></div>
+      <div class="flag-body">
+        <p>Every proposed mechanism for anti-gravity or warp drive has been dismissed because it requires exotic matter &#8212; matter with negative energy density, violating the energy conditions of GR. Since exotic matter is not observed, these proposals are not physical.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>This is a right-hand-side assumption. The Casimir effect demonstrates that quantum vacuum configurations can have negative energy density &#8212; physically, measurably, without exotic matter. The crystal program approaches this from the left-hand side: engineering the geometry of the base. No exotic matter required.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div id="part8" class="part-header reveal">
+      <div class="part-number">Part Eight</div>
+      <h2 class="part-title">The Civilisational Consequence</h2>
+    </div>
+
+    <p class="reveal">The Standard Model was completed in the 1970s. The Higgs boson was confirmed in 2012. In the intervening decades, no new fundamental physics emerged from experiment. The field&#8217;s response was to go harder: larger colliders, more parameters, more elaborate extensions. Each proposal was mathematically elaborate and experimentally sterile.</p>
+    <p class="reveal">Fusion power &#8212; the most important energy technology available to civilisation &#8212; has been ten years away for seventy years. Not because the physics was wrong but because the approach was wrong. Brute force against the geometry of the problem rather than with it.</p>
+
+    <div id="flag20" class="flag reveal">
+      <div class="flag-header"><span class="flag-number">Flag 20</span><span class="flag-title">More Force as the Default Response</span></div>
+      <div class="flag-body">
+        <p>When a problem resisted solution, physics defaulted to more force. Higher energy. Stronger confinement. Bigger machines. This is the methodological legacy of the bottom-up approach: if the building blocks don&#8217;t fit, use a bigger hammer.</p>
+        <div class="flag-resolution">
+          <div class="flag-resolution-label">Geometric resolution</div>
+          <p>The universe is not hiding at higher energies. It is hiding in plain sight &#8212; in the geometry already present, in the symmetries already operative, in the crystals that could be grown tomorrow if the right question were asked. The different question is not &#8220;what happens at higher energy&#8221; but &#8220;what does the field equation look like from this geometric corner.&#8221;</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div id="master" class="part-header reveal">
+      <div class="part-number">Summary</div>
+      <h2 class="part-title">Master Table of Assumptions</h2>
+    </div>
+
+    <div class="master-table-wrap reveal">
+      <table class="master-table">
+        <thead>
+          <tr>
+            <th>Flag</th>
+            <th>Assumption Made</th>
+            <th>False Direction</th>
+            <th>Geometric Resolution</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Absolute time is universal</td><td>Simultaneity is observer-independent</td><td>Proper time &#964; is the invariant; ds&#178; is geometric</td></tr>
+          <tr><td>2</td><td>Space is a fixed flat stage</td><td>Gravity acts on a passive background</td><td>Spacetime is dynamical; g&#956;&#957; responds to T&#956;&#957;</td></tr>
+          <tr><td>3</td><td>Force as the fundamental concept</td><td>Seek force laws; action at a distance</td><td>Free particles follow geodesics; gravity is curvature</td></tr>
+          <tr><td>4</td><td>Vacuum energy calculable from QFT</td><td>&#923; = zero-point energy sum &#8594; disaster</td><td>&#923; is intrinsic base curvature; different objects</td></tr>
+          <tr><td>5</td><td>Complex wavefunctions assumed</td><td>Complexity is a mathematical tool</td><td>&#8450; is forced by Hurwitz: unique 2D normed division algebra</td></tr>
+          <tr><td>6</td><td>Action principle universal</td><td>Applied everywhere without deeper justification</td><td>May be the statement that nature extremizes proper time</td></tr>
+          <tr><td>7</td><td>Local gauge invariance demanded</td><td>Forces postulated from a locality argument</td><td>Gauge groups are automorphisms of fibers; forced by geometry</td></tr>
+          <tr><td>8</td><td>Aharonov&#8211;Bohm is a paradox</td><td>Gauge potential is redundant; field is physical</td><td>Wilson loop is fundamental; local description was a shadow</td></tr>
+          <tr><td>9</td><td>Three gauge demands made separately</td><td>U(1), SU(2), SU(3) assumed independently</td><td>Three facets of &#8450;, &#8461;, &#120134;: one structure</td></tr>
+          <tr><td>10</td><td>Renormalizability as physical law</td><td>Non-renormalizable theories are wrong</td><td>Property of perturbative expansion, not of nature</td></tr>
+          <tr><td>11</td><td>Time as external parameter</td><td>QM and GR are irreconcilably incompatible</td><td>Time emerges from &#120134; non-associativity; algebraic property</td></tr>
+          <tr><td>12</td><td>Higgs as separate mechanism</td><td>Scalar field bolted on independently</td><td>Higgs vacuum = octonion unit vector choice = one act</td></tr>
+          <tr><td>13</td><td>Gravity as another gauge force</td><td>Seek group large enough to contain gravity</td><td>Gravity is base curvature; forces are fiber curvature</td></tr>
+          <tr><td>14</td><td>Fixed background for QFT</td><td>Quantize fields on flat spacetime</td><td>Background independence required; base is dynamical</td></tr>
+          <tr><td>15</td><td>Background split is valid</td><td>g&#956;&#957; = &#951;&#956;&#957; + &#954;h&#956;&#957; then quantize</td><td>Breaks background independence from the first step</td></tr>
+          <tr><td>16</td><td>Non-renormalizability is fatal</td><td>Quantum gravity is impossible</td><td>Signals wrong language; need non-perturbative geometric approach</td></tr>
+          <tr><td>17</td><td>Time incompatibility irreconcilable</td><td>QM and GR cannot be unified</td><td>Time as emergent from fiber dissolves the incompatibility</td></tr>
+          <tr><td>18</td><td>Fundamental/emergent hierarchy fixed</td><td>Quasiparticles are less real than particles</td><td>Both are field equations at symmetry points; hierarchy is artifact</td></tr>
+          <tr><td>19</td><td>Anti-gravity needs exotic matter</td><td>Impossible without negative mass</td><td>Engineer the geometry from the left-hand side of EFE</td></tr>
+          <tr><td>20</td><td>More force as the default response</td><td>Higher energy, bigger colliders, harder</td><td>Turn the other dial: engineer geometry, grow crystals</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="closing reveal">
+      <p class="closing-main">Start with geometry. Follow it wherever it goes.<br>Don&#8217;t drop the scroll.</p>
+      <p class="closing-sub">Come join the hunt</p>
+    </div>
+
+    <div style="height: 4rem;"></div>
+
+  </div>
+</div>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.style.color = '');
+        const active = document.querySelector('.nav-link[href="#' + entry.target.id + '"]');
+        if (active) active.style.color = 'var(--gold-light)';
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => navObserver.observe(s));
+</script>
+
+</body>
+</html>
