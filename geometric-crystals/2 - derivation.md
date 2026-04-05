@@ -234,6 +234,18 @@ Every particle predicted by high energy physics that hasn't been found at collid
 
 **Magnetic monopoles** — predicted by Dirac, found in spin ice materials.
 
+And phonons — the simplest quasiparticles, quantized sound, long considered purely classical background noise — have begun exhibiting behavior that standard phonon theory has no language for.
+
+**Chiral phonons.** In monolayer WSe₂, phonons at high-symmetry points carry intrinsic angular momentum of ±ℏ. Not the angular momentum of the whole lattice rotating. The phonon itself — a quantized vibration — has handedness. It couples to magnetic fields and transfers its angular momentum to electrons. A sound wave with spin.
+
+**Weyl phonons.** FeSi hosts phonons with topological charges — winding numbers in momentum space identical to those of Weyl fermions. The phonon spectrum has monopoles. The same topological classification that governs fundamental particles governs lattice vibrations in specific crystal geometries.
+
+**Phonon Hall effect.** In paramagnetic insulators with no net magnetization, a temperature gradient produces a transverse heat current perpendicular to an applied magnetic field. Phonons — no charge, classically just atomic oscillations — deflect sideways. Something is giving them a Berry phase. The mechanism is contested. The effect is real.
+
+**Quasicrystal thermal anomaly.** Crystals conduct heat at low temperature as T³. Glasses conduct as T. Icosahedral quasicrystals do neither. The thermal conductivity fits no standard formula, changes behavior without any structural transition, and the anomaly grows larger as the quasicrystal becomes more perfect. Standard phonon scattering theory simply isn't designed for this geometry — there is no unit cell to average over, no Brillouin zone to bound the modes.
+
+These are not exotic corner cases. They are results from well-funded mainstream condensed matter physics, sitting in the literature with no adequate explanation, because the standard framework treats phonons as background excitations of accidental matter rather than what the geometric framework says they are.
+
 This is not coincidence. This is the field equations being sampled from different geometric corners. The fundamental physics and the materials physics are the **same physics**. The distinction between fundamental particles and quasiparticles is a geometric artifact — both are solutions to field equations evaluated at specific symmetry points.
 
 The new field of physics is this: **systematic, deliberate sampling of the field equations from every accessible geometric corner**.
