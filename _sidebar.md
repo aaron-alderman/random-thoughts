@@ -121,7 +121,8 @@
   - [Overview](geometric-crystals/README.md)
   - [0 - Background](geometric-crystals/0%20-%20background.md)
   - [1 - Summary](geometric-crystals/1%20-%20summary.md)
-  - [2 - derivation](geometric-crystals/2%20-%20derivation.md)
+  - [2 - Derivation](geometric-crystals/2%20-%20derivation.md)
+  - [3 - Devotional](geometric-crystals/3%20-%20devotional.md)
   - Experiments
     - [Overview](geometric-crystals/experiments/README.md)
     - [Additional Fields](geometric-crystals/experiments/additional_fields.md)
