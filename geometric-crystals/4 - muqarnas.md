@@ -1,221 +1,105 @@
-Discrete → Continuous → Symmetry → Bridge
+# Discrete → Continuous → Symmetry → Bridge
 
+## 1. Muqarnas: Discrete Structure Approaching Continuum
 
----
+- Built from finite, modular cells  
+- Increasing subdivision reduces angular gaps and increases geometric frequency  
+- Before the apex, the structure appears smooth (continuous)
 
-1. Muqarnas: Discrete Structure Approaching Continuum
-
-Built from finite, modular cells
-
-Increasing subdivision:
-
-reduces angular gaps
-
-increases geometric frequency
-
-
-Before the apex:
-
-structure appears smooth (continuous)
-
-
-
-Key idea:
-
-> A discrete system can converge to a continuous geometry through refinement
-
-
-
+**Key idea:**  
+A discrete system can converge to a continuous geometry through refinement
 
 ---
 
-2. Perceptual Transition
+## 2. Perceptual Transition
 
-Middle region appears “chaotic” but is:
+- Middle region appears “chaotic” but is highly ordered  
+- Transition occurs when feature size is below perceptual resolution  
 
-highly ordered
-
-high-density structure
-
-
-Transition occurs when:
-
-feature size < perceptual resolution
-
-
-
-Key idea:
-
-> Discrete → continuous is a resolution threshold, not randomness
-
-
-
+**Key idea:**  
+Discrete → continuous is a resolution threshold, not randomness
 
 ---
 
-3. Symmetry Refinement
+## 3. Symmetry Refinement
 
-Start: low-order symmetry (e.g. D₄)
+D4 → D8 → D16 → … → SO(2)
 
-Subdivision increases symmetry order:
+- Angular spacing decreases toward zero  
 
-
-D_4 \rightarrow D_8 \rightarrow D_{16} \rightarrow \cdots \rightarrow SO(2)
-
-Angular spacing → 0
-
-
-Key idea:
-
-> Discrete symmetry becomes dense and approximates continuous symmetry
-
-
-
+**Key idea:**  
+Discrete symmetry becomes dense and approximates continuous symmetry
 
 ---
 
-4. From Position to Orientation
+## 4. From Position to Orientation
 
-Lower structure:
+- Lower structure: Cartesian (position-based)  
+- Upper structure: radial/angular (orientation-based)
 
-Cartesian (position-based)
+R² → SO(2)
 
-
-Upper structure:
-
-radial / angular (orientation-based)
-
-
-
-\mathbb R^2 \rightarrow SO(2)
-
-Key idea:
-
-> Geometry shifts from position to phase/orientation field
-
-
-
+**Key idea:**  
+Geometry shifts from position to phase/orientation field
 
 ---
 
-5. Removing Scale: Quaternion Insight
+## 5. Removing Scale: Quaternion Insight
 
-Quaternions:
-
-
-\mathbb H^\times \cong \mathbb R_{>0} \times SU(2)
+H× ≅ R₊ × SU(2)
 
 Normalize:
+q → q / |q|
 
-
-q \mapsto \frac{q}{|q|}
-
-Key idea:
-
-> Strip away magnitude → retain pure rotational structure
-
-
-
+**Key idea:**  
+Remove magnitude → retain rotational structure
 
 ---
 
-6. Octonions: Local Structure, Global Breakdown
+## 6. Octonions: Local Structure, Global Breakdown
 
-\mathbb R \rightarrow \mathbb C \rightarrow \mathbb H \rightarrow \mathbb O
+R → C → H → O
 
-Octonions:
+- Octonions are non-associative but alternative  
+- Built from overlapping quaternionic subalgebras  
 
-non-associative
-
-but alternative
-
-
-Structure:
-
-built from overlapping quaternionic subalgebras
-
-
-
-Key idea:
-
-> Global coherence breaks, but local consistency remains
-
-
-
+**Key idea:**  
+Global coherence breaks, local consistency remains
 
 ---
 
-7. Multiplication as Discrete Structure
+## 7. Multiplication as Discrete Structure
 
-Encoded by Fano plane
+- Encoded by Fano plane  
+- 7 oriented triples define multiplication  
+- Each triple is associative  
 
-7 oriented triples define multiplication
-
-Each triple = associative (quaternion-like)
-
-
-Interpretation:
-
-> A discrete combinatorial structure defines algebraic relationships
-
-
-
+**Key idea:**  
+Discrete combinatorial structure defines algebra
 
 ---
 
-8. Emergence of the Bridge
+## 8. Emergence of the Bridge
 
-Symmetry group preserving this structure:
+G2 = Aut(O)
 
-G2 Lie group
-
-
-Acts on:
-
- (imaginary octonions)
-
-
-Preserves:
-
-multiplication
-
-alternativity
-
-geometric structure
-
-
-
+- Acts on R⁷  
+- Preserves multiplication and alternativity  
 
 ---
 
-9. The Bridge
+## 9. The Bridge
 
- connects:
+G2 connects:
 
-Algebra
+- Algebra (octonion multiplication)  
+- Geometry (rotations in R⁷)
 
-octonion multiplication
-
-discrete relations
-
-
-Geometry
-
-rotations in 
-
-continuous structure
-
-
-
-Key idea:
-
->  is the symmetry that preserves the translation of discrete algebra into continuous geometry
-
-
-
+**Key idea:**  
+G2 preserves the translation of discrete algebra into continuous geometry
 
 ---
 
-Final Statement
+# Final Statement
 
-> Muqarnas illustrates how discrete structure converges to continuous geometry; octonions encode a discrete algebra with local consistency; and  is the bridge that preserves this structure as continuous geometric symmetry.
+Discrete structures converge to continuous geometry; octonions encode local algebraic consistency; and G2 is the bridge preserving this structure under continuous transformation.
