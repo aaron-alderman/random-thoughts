@@ -21,13 +21,16 @@ Consciousness as constituted by the relation between a model and the territory i
 Two complementary theological projects: a structural derivation of radical kenosis (the Cross as the event that fits the specification for a non-depletable cost-absorber), and a historical reconstruction of the suppressed feminine divine in the Christian tradition. Both converge on the claim that the Christian account of unconditional love is structurally complete in a way that requires the recovery of what was erased. See [theology/README.md](theology/README.md).
 
 **[geometric-crystals/](geometric-crystals/)** — *What If the Shape of Matter Matters?*
-A speculative experimental research program proposing that precision matter organization (specifically icosahedral quasicrystals with octonionic symmetry) may couple to spacetime curvature beyond energy density alone. Derived from the ontological framework's claim that geometric structure is load-bearing at every level. See [geometric-crystals/README.md](geometric-crystals/README.md).
+A speculative experimental research program proposing that precision matter organization (specifically icosahedral quasicrystals with octonionic symmetry) may couple to spacetime curvature beyond energy density alone. Derived from the ontological framework's claim that geometric structure is load-bearing at every level. The Scroll ([2 - derivation.md](geometric-crystals/2%20-%20derivation.md)) traces the full geometric derivation of the Standard Model from first principles, explains why condensed matter quasiparticles and fundamental particles are the same field equations at different geometric corners, and identifies the experimental frontier. See [geometric-crystals/README.md](geometric-crystals/README.md).
 
 **[systems/](systems/)** — *Drift, Legibility, and Civilization*
 How systems drift — through metric optimization, proxy capture, and variance suppression — and what the structural counter-patterns look like. Operates at three scales: the formal model of civilizational drift, the historical arc from hunter-gatherer bands through civilization to the kenotic alternative, and the individual dynamics of justification and voluntary restraint. See [systems/README.md](systems/README.md).
 
 **[ai/](ai/)** — *Epistemics and the Emissary Model*
 What LLMs structurally are, what they do to thinking, and why keeping humans as the epistemic principal is a political commitment, not merely a design preference. The coding-axis distortion, missing cognitive inputs, and the emissary model as the correct design relationship between humans and AI. See [ai/README.md](ai/README.md).
+
+**[programming/](programming/)** — *The Generation Cascade as Programming Paradigm*
+An application of the RCHO framework to software architecture. Derives four structural layers of correct software (identity, properties, relations, effects) from the division algebra sequence, then reads the history of programming paradigms as a series of remainder discoveries — each paradigm finding some layers and failing predictably at the ones it left undeclared. Makes specific falsifiable predictions about what a cascade-based system would achieve: race conditions surfacing as typed failures, parallelism derivable from declared structure, the LLM/human boundary sitting precisely at the relations-to-effects transition. See [programming/0 - summary.md](programming/0%20-%20summary.md).
 
 ---
 
