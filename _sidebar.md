@@ -11,10 +11,10 @@
   - [0 - Background](geometric-crystals/0%20-%20background.md)
   - [1 - Summary](geometric-crystals/1%20-%20summary.md)
   - [2 - Derivation](geometric-crystals/2%20-%20derivation.md)
-  - [The Scroll (HTML)](the_scroll.html)
+  - [The Scroll (Webpage)](https://aaron-alderman.github.io/random-thoughts/the_scroll.html)
   - [3 - Devotional](geometric-crystals/3%20-%20devotional.md)
   - [4 - Muqarnas](geometric-crystals/4%20-%20muqarnas.md)
-  - [Muqarnas (HTML)](muqarnas.html)
+  - [Muqarnas (Webpage)](https://aaron-alderman.github.io/random-thoughts/muqarnas.html)
   - Experiments
     - [Overview](geometric-crystals/experiments/README.md)
     - [Additional Fields](geometric-crystals/experiments/additional_fields.md)
