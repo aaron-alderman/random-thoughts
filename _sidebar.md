@@ -6,6 +6,27 @@
   - [Relations Preamble](relations/0%20-%20preamble.md)
   - [Trip Summary](consciousness/detail/1%20-%20trip%20summary.md)
 
+- Geometric Crystals
+  - [Overview](geometric-crystals/README.md)
+  - [0 - Background](geometric-crystals/0%20-%20background.md)
+  - [1 - Summary](geometric-crystals/1%20-%20summary.md)
+  - [2 - Derivation](geometric-crystals/2%20-%20derivation.md)
+  - [The Scroll (HTML)](the_scroll.html)
+  - [3 - Devotional](geometric-crystals/3%20-%20devotional.md)
+  - [4 - Muqarnas](geometric-crystals/4%20-%20muqarnas.md)
+  - [Muqarnas (HTML)](muqarnas.html)
+  - Experiments
+    - [Overview](geometric-crystals/experiments/README.md)
+    - [Additional Fields](geometric-crystals/experiments/additional_fields.md)
+    - [Antigravity](geometric-crystals/experiments/antigravity.md)
+    - [Biology](geometric-crystals/experiments/biology.md)
+    - [Fusion](geometric-crystals/experiments/fusion.md)
+    - [Quantum Computing](geometric-crystals/experiments/quantum_computing.md)
+    - [Superconductivity](geometric-crystals/experiments/superconductivity.md)
+
+- Programming
+  - [0 - Summary](programming/0%20-%20summary.md)
+
 - Ontology
   - [Overview](ontology/README.md)
   - [1 - Summary (Accessible)](ontology/1%20-%20summary%20%28accessible%29.md)
@@ -21,6 +42,18 @@
   - [8 - Geometry - Expt](ontology/8%20-%20geometry%20-%20expt.md)
   - [9 - Physics](ontology/9%20-%20physics.md)
   - [9a - Physics (Accessible)](ontology/9a%20-%20physics%20%28accessible%29.md)
+
+- Systems
+  - [Overview](systems/README.md)
+  - [1 - Legibility Trap](systems/1%20-%20legibility%20trap.md)
+  - [2 - Civilization](systems/2%20-%20civilization.md)
+  - [3 - Drift](systems/3%20-%20drift.md)
+
+- AI
+  - [Overview](ai/README.md)
+  - [1 - Summary](ai/1%20-%20summary.md)
+  - [2 - Problem](ai/2%20-%20problem.md)
+  - [3 - Framing](ai/3%20-%20framing.md)
 
 - Relations
   - [Overview](relations/README.md)
@@ -105,32 +138,3 @@
     - Synthesis
       - [Constitution](theology/radical-kenosis/synthesis/constitution.md)
 
-- Systems
-  - [Overview](systems/README.md)
-  - [1 - Legibility Trap](systems/1%20-%20legibility%20trap.md)
-  - [2 - Civilization](systems/2%20-%20civilization.md)
-  - [3 - Drift](systems/3%20-%20drift.md)
-
-- AI
-  - [Overview](ai/README.md)
-  - [1 - Summary](ai/1%20-%20summary.md)
-  - [2 - Problem](ai/2%20-%20problem.md)
-  - [3 - Framing](ai/3%20-%20framing.md)
-
-- Geometric Crystals
-  - [Overview](geometric-crystals/README.md)
-  - [0 - Background](geometric-crystals/0%20-%20background.md)
-  - [1 - Summary](geometric-crystals/1%20-%20summary.md)
-  - [2 - Derivation](geometric-crystals/2%20-%20derivation.md)
-  - [3 - Devotional](geometric-crystals/3%20-%20devotional.md)
-  - Experiments
-    - [Overview](geometric-crystals/experiments/README.md)
-    - [Additional Fields](geometric-crystals/experiments/additional_fields.md)
-    - [Antigravity](geometric-crystals/experiments/antigravity.md)
-    - [Biology](geometric-crystals/experiments/biology.md)
-    - [Fusion](geometric-crystals/experiments/fusion.md)
-    - [Quantum Computing](geometric-crystals/experiments/quantum_computing.md)
-    - [Superconductivity](geometric-crystals/experiments/superconductivity.md)
-
-- Programming
-  - [0 - Summary](programming/0%20-%20summary.md)
