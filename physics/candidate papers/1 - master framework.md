@@ -26,6 +26,46 @@ Start from `Spin(2,3)`, the octonions, and `J3(O)`; select the octonionic direct
 
 ---
 
+## How claims should be read here
+
+This document is allowed to make working choices. That is part of building the program.
+
+But each major claim should be read in the following bounded way:
+
+- what is already fixed by the lens being used here
+- what live options remain within that lens
+- which branch this project is currently running with
+- whether that branch is an axiom, a choice, a derivation, an interpretation, or still missing
+
+So when this document speaks firmly, it does not always mean the alternatives are dead. It may only mean:
+
+- this is the current working branch
+- this branch is coherent enough to build with
+- the bridge must later explain why it is physically preferred, or why the nearby alternatives are not
+
+Conversely, this document should not keep reopening what the lens has already chosen. If a structure is fixed by the lens, it is allowed to function as local starting data.
+
+This matters especially in cases like:
+
+- `J3(O)` versus `J3(C \otimes O)`
+- primitive projection versus observability downstream of zero-mass exchange
+- exact origin of the selected octonionic direction
+- Higgs-mediated mass generation as the route to `T1/T2` coupling
+
+---
+
+## Outstanding within the lens
+
+The current lens fixes the broad starting structures, but some especially important questions remain live within it.
+
+- `SU(3)`: the stabilizer isomorphism obtained from octonionic vector selection is mathematically standard; the live question is what formal treatment is still needed to realize that `SU(3)` as physical color within this lens
+- `Mixing`: the current analysis gives conditional reduced dynamics once a privileged zero-mass channel and `T1` readout are specified; the live question is whether mixing does more than develop the consequences of that prior choice
+- `Geometric mass`: the current formalism identifies `m` as the sector-mixing scale; the live question is whether that scale, or its spectrum, is geometrically derived rather than introduced as effective solution-level data
+
+These are not objections to the lens. They are the main places where the lens is still doing active work.
+
+---
+
 ## Top, Bottom, and Bridge
 
 The project is best understood as having three methodological levels.
@@ -86,6 +126,26 @@ At the project level, the safe position is:
 - the Standard Model may be a reduced visible slice of that larger structure
 - the framework owes a disciplined account of how that reduction happens
 
+This same bridge discipline also applies when there is more than one mathematically valid high-level organizing object. For example:
+
+- `J3(O)` is a standard real exceptional Jordan object
+- `J3(C \otimes O)` or `H_3(O_C)` is also a mathematically valid complexified exceptional Jordan object
+
+The framework should not treat that choice as already settled unless a bridge argument settles it. In the language of this project:
+
+- the mathematics may permit both
+- the bottom-up constraints may not yet distinguish them
+- the bridge must explain which one is physically relevant, or whether one is ambient and the other effective
+
+So this is not a defect. It is exactly the kind of choice the missing middle is supposed to discipline.
+
+In practice, this means that when the project says "use `J3(O)`" it should often be read as:
+
+- live options: `J3(O)`, `J3(C \otimes O)`, or a relation between them
+- working branch: start with `J3(O)` because it is the simpler real exceptional object
+- status: choice
+- bridge burden: explain why this is the physically relevant branch, or why the larger complexified object is only ambient
+
 ---
 
 ## 1. Statics / Kinematics
@@ -99,6 +159,7 @@ This is the layer of mathematical structure before effective dynamics is reduced
 - the octonions `O` with automorphism group `G2`
 - the reduction to `SU(3)` after fixing a preferred imaginary direction
 - the exceptional Jordan algebra `J3(O)` as the organizing space for generations
+- the possible complexified exceptional Jordan algebra `J3(C \otimes O)` as a larger ambient alternative
 - the selected direction associated with massless traversal or zero-mass interaction
 - the larger ambient space within which these selected structures live
 
@@ -109,6 +170,7 @@ This is the layer of mathematical structure before effective dynamics is reduced
 - The octonionic sector supplies the color structure through `G2 -> SU(3)`, but only after a direction in `O` is selected.
 - The physically relevant octonionic direction should be aligned with the direction associated with zero-mass traversal.
 - `J3(O)` supplies a natural three-slot structure relevant to generation organization.
+- `J3(C \otimes O)` is also mathematically available as a larger complexified organizing object, but its physical role is not yet fixed.
 - The `T1/T2` split is kinematically present before it is physically interpreted.
 
 ### Status
@@ -118,6 +180,7 @@ This is the layer of mathematical structure before effective dynamics is reduced
 - preferred octonion direction: choice
 - alignment between the preferred octonion direction and the massless-traversal direction: central framework proposal
 - use of `J3(O)` for generations: structural proposal, partly derived and partly interpretive depending on claim strength
+- choice between `J3(O)` and `J3(C \otimes O)`: bridge-level choice not yet physically settled
 
 ---
 
@@ -191,6 +254,7 @@ This is the layer of constraints, exclusions, and things that become forced once
 - whether the reduced dynamics is positive and stable
 - whether representation content is anomaly free
 - whether generation counting is forced or only suggestive
+- whether the real or complexified exceptional Jordan organizing space is the physically correct bridge object
 
 ### Project-specific consistency claims
 
@@ -199,6 +263,7 @@ This is the layer of constraints, exclusions, and things that become forced once
 - Some hypercharge coefficients may be uniquely fixed by the charge-matching and anomaly conditions.
 - A fourth generation may be excluded if the `J3(O)` argument is mathematically sound in the intended form.
 - Gauge invariance should constrain the alignment between the selected octonionic direction and the massless-interaction direction rather than allowing unrelated choices.
+- If both `J3(O)` and `J3(C \otimes O)` are mathematically available, the framework should explain whether one is fundamental, one is effective, or one is ruled out by the bridge to observed physics.
 
 ### Status
 
@@ -206,6 +271,7 @@ This is the layer of constraints, exclusions, and things that become forced once
 - anomaly constraints: standard derived consistency condition
 - uniqueness of hypercharge embedding: partly derived, needs careful wording in paper form
 - exact three-generation exclusion: strong claim, needs especially careful proof burden
+- `J3(O)` versus `J3(C \otimes O)`: significant unresolved bridge choice unless a future argument resolves it
 
 This is the layer where "natural" should be replaced by "forced by these constraints."
 
@@ -288,6 +354,7 @@ This is the layer of what the framework still owes.
 - a sharper derivation of why the selected octonionic direction should align with the massless-interaction channel
 - a sharper account of the relation between Higgs-mediated mass generation and `T1/T2` coupling
 - a clear ambient-to-observable reduction map from the large space to the Standard-Model-like visible sector
+- a bridge argument for whether the physically relevant exceptional Jordan object is `J3(O)`, `J3(C \otimes O)`, or a relation between them
 
 ### Project-specific publication lesson
 
@@ -327,14 +394,14 @@ The project is easiest to manage if each claim is tagged by category, logical st
 |---|---|---|---|
 | `Spin(2,3)` has a four-component spinor representation | Statics | Axiom/input to framework | 2 |
 | Choosing a time orientation induces a `T1/T2` split through `J^{01}` | Statics | Choice plus derived consequence | 3 |
-| A preferred octonionic direction must be selected to recover the observed `SU(3)` structure | Statics | Established structural fact inside the framework | 3 |
+| A preferred octonionic direction must be selected to recover the framework's `SU(3)` color slot | Statics | Established structural fact inside the framework | 3 |
 | The selected octonionic direction should align with the zero-mass interaction channel | Statics / Epistemics | Central proposal | 4 |
 | Zero-mass interactions define the effective observable channel `T1` | Epistemics / Dynamics | Central proposal | 4 |
 | Off-diagonal `T1/T2` mixing can be used in the microscopic generator | Dynamics | Choice | 4 |
 | Weak-coupling reduction yields a reduced Markovian equation | Dynamics | Derived under assumptions | 4 |
 | The long-scale observable dynamics has `D ~ m^2 / gamma` in the reduced model | Phenomenology | Derived within model | 4 |
 | Anomaly cancellation constrains the allowed right-handed content | Consistency | Derived consistency condition | 3 |
-| Mixing should be read physically as mass | Interpretation | Interpretation | 5 |
+| The sector-mixing scale may encode physical mass after further identification | Interpretation | Interpretation | 5 |
 | Higgs-mediated mass generation may be the route by which `T2` becomes dynamically accessible | Interpretation / Phenomenology | Plausible future direction | 5 |
 | The framework may organize CKM / PMNS structure | Phenomenology | Missing / future development | 5 |
 | The framework currently lacks sharp experimental bounds | Completion | Missing | 6 |

@@ -52,7 +52,7 @@ The static domain starts from the following inputs.
 
 1. Choose a time orientation, so that the generator `J^{01}` can be used to distinguish two sectors.
 2. Choose a preferred imaginary octonion direction, written as `e7`.
-3. Use the resulting `SU(3)` stabilizer of `e7` as the candidate color group.
+3. Use the resulting `SU(3)` stabilizer of `e7` as the structural color slot.
 4. Require that the physically relevant octonionic direction align with the direction associated with zero-mass traversal.
 
 These are choices inside the framework, not consequences of the mathematics alone.
@@ -159,7 +159,7 @@ For the purposes of the kernel, the important static point is:
 
 - the octonion choice creates a natural candidate for color structure
 
-This does not by itself prove that the physical color group must be this `SU(3)`, but it gives the structural slot where color can live.
+This does not by itself prove that the physical color group must be this `SU(3)` inside the present lens. The isomorphism is standard; what remains is the formal treatment that realizes this `SU(3)` as physical color.
 
 The new high-level proposal of the framework is stronger than a bare selection rule:
 
@@ -321,7 +321,7 @@ The static spine of the project is meaningful and coherent.
 At its safest level, it says:
 
 1. `Spin(2,3)` gives a two-sector spinor decomposition with weak-doublet structure.
-2. The octonions give a natural internal route to `SU(3)` color, but only after a direction is selected.
+2. The octonions give a natural internal route to an `SU(3)` color slot, with the stabilizer isomorphism fixed once a direction is selected.
 3. The strongest version of the framework ties that internal direction to the axis of zero-mass traversal rather than treating it as an unrelated choice.
 4. `J3(O)` gives a natural three-slot organizer.
 5. These ingredients together produce a strong candidate static arena for matter structure.

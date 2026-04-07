@@ -300,7 +300,7 @@ This section records the main dynamical claims in kernel form.
 | the reduced equation is of Lindblad type in the Markov regime | derived under assumptions | 4 | core JMP-style claim |
 | the long-scale density satisfies advection-diffusion | derived under closure assumptions | 4 | main reduced transport result |
 | `D ~ m^2 / gamma` | derived within model | 4 | clean scaling law |
-| `m` should be identified with physical mass | interpretation | 5 | plausible but stronger than the theorem |
+| `m` may encode physical mass after further identification | interpretation | 5 | plausible but stronger than the theorem |
 | Higgs-mediated mass generation may be what opens the `T1/T2` channel | interpretation / future work | 5 | promising but not established |
 | hidden-sector projection explains quantum uncertainty in general | interpretation / future work | 5 | suggestive but not established |
 | the hidden-sector correlator is derived from first principles | missing | 6 | major dynamical gap |

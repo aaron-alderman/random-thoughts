@@ -78,7 +78,7 @@ The parameter `m` is the scale of microscopic mixing between `T1` and `T2`, and 
 
 ### Stronger version
 
-Mass just is `T1/T2` mixing.
+Physical mass is encoded by `T1/T2` mixing.
 
 The stronger version is appealing but not yet a full theorem of the framework. To make it stronger, one would want:
 
@@ -178,7 +178,7 @@ It should be treated carefully, because it is easy for it to sound like a comple
 | Claim | Status | Maturity | Comment |
 |---|---|---|---|
 | `m` can be read as the parameter governing effective departure from ballistic visible transport | interpretation grounded in dynamics | 5 | strong but reasonable |
-| mass is fundamentally sector mixing | interpretation | 5 | central idea, not yet theorem |
+| physical mass may be encoded by sector mixing after further identification | interpretation | 5 | central idea, not yet theorem |
 | visible uncertainty reflects unresolved hidden-sector motion | interpretation grounded in reduced dynamics | 5 | attractive and coherent |
 | the `T1/T2` asymmetry provides a route to chirality | interpretation | 5 | promising but not yet proved |
 | several observed structures may arise from one common geometry | interpretive synthesis | 5 | high-level guiding idea |

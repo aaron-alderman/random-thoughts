@@ -229,6 +229,66 @@ So the full framework has three axes:
 
 ---
 
+## Claim framing inside the framework
+
+The point of the framework is not to avoid choosing. Papers and research programs have to choose.
+
+The point is to make each choice explicit and bounded.
+
+For any nontrivial claim, the framework should try to state:
+
+1. what the live options are
+2. which option the present framework or paper is running with
+3. what status that selected branch has
+4. whether nearby alternatives remain open
+
+More sharply, every claim should be read against two background questions:
+
+1. what is already fixed by the lens being used
+2. what is still live within that lens
+
+This matters because not every possible alternative should remain open forever. A research program is allowed to choose a lens. Once it does, some inputs are no longer under debate inside that local piece of work.
+
+This means a claim should often be written in the following style:
+
+- `Fixed by the lens`: what this framework is already deliberately taking as its working setup
+- `Option set`: what mathematically or physically serious alternatives exist
+- `Working branch`: which one this project is currently using
+- `Status`: axiom, choice, derived, interpretation, or missing
+- `Maturity`: 1 through 6
+- `Bridge burden`: what would be needed to rule out the nearby alternatives
+
+### Example
+
+Instead of writing:
+
+- `J3(O) is the generation space`
+
+the framework should prefer something like:
+
+- `Fixed by the lens`: exceptional Jordan structure is being used as part of the static organizational language
+- `Option set`: `J3(O)` or `J3(C \otimes O)` may both be mathematically valid organizing spaces
+- `Working branch`: use `J3(O)` unless and until the bridge requires the complexified object
+- `Status`: choice
+- `Maturity`: 5 or 6 depending on how strongly the text speaks
+- `Bridge burden`: explain why the real or complexified object is physically selected, or how one is ambient and the other effective
+
+This keeps the framework honest without preventing it from moving forward.
+
+### Important distinction
+
+An `Axiom` is not a proved result. It is a deliberate starting commitment.
+
+A `Choice` is not a flaw. It is a branch selection inside the available possibility space.
+
+A `Derived` claim is the stronger case: the alternatives are no longer live once the setup is fixed.
+
+So the framework should not try to eliminate all branch selection. It should only stop pretending that a live branch was already forced.
+
+Equally, the framework should not keep reopening what has already been fixed by the chosen lens. The goal is not maximal openness. The goal is disciplined local clarity.
+
+---
+
 ## The generic matrix
 
 | Category | Main question |

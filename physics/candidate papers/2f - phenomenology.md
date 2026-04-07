@@ -99,7 +99,7 @@ These are all phenomenological directions, but they are not all equally mature.
 
 ### Plausible but not yet predictive
 
-- heavier particles should exhibit stronger hidden-sector broadening in a physically meaningful sense
+- states with larger effective sector-mixing scale should exhibit stronger hidden-sector broadening in the reduced model
 - the framework should imply small deviations from ordinary unitary behaviour in some regimes
 - generation structure should leave indirect phenomenological traces
 
@@ -134,7 +134,7 @@ Until then, the project has phenomenological hints, not yet a mature phenomenolo
 |---|---|---|---|
 | the reduced model gives `D ~ m^2 / gamma` | derived within model | 4 | strongest current phenomenological relation |
 | stronger mixing increases effective broadening | direct consequence of scaling | 4 | safe but model-level |
-| heavier physical states should show stronger broadening in a physically testable sense | interpretation extended toward phenomenology | 5 | promising but not yet controlled |
+| states with larger effective sector-mixing scale should show stronger broadening in the reduced model | interpretation extended toward phenomenology | 5 | promising but not yet controlled |
 | hidden-sector effects might lead to observable deviations from standard unitary evolution | plausible phenomenological direction | 5 | qualitative only |
 | the framework currently makes sharp numerical predictions | missing | 6 | not yet true |
 | the framework is ready for a PRD-level phenomenology paper | overstatement at present | 6 | should be resisted |
