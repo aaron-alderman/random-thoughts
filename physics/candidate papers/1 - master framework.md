@@ -22,7 +22,69 @@ For the reusable generic version, see [00 - meta framework.md](C:/Users/aaron/De
 
 ## One-sentence project spine
 
-Start from `Spin(2,3)`, the octonions, and `J3(O)`; introduce a projected-observables postulate on a distinguished spinor sector; then ask what representation structure, reduced dynamics, and physical interpretation follow from that setup.
+Start from `Spin(2,3)`, the octonions, and `J3(O)`; select the octonionic direction aligned with the channel of massless traversal; let that alignment define the effective observable sector; then ask how massive couplings depart from pure `T1` propagation and what representation structure, reduced dynamics, and interpretation follow.
+
+---
+
+## Top, Bottom, and Bridge
+
+The project is best understood as having three methodological levels.
+
+### Top down
+
+Start from the largest plausible ambient structure and ask:
+
+- what symmetries exist
+- what sectors are available
+- what gauge, family, and dynamical structures are even possible
+
+In this spirit, a large `RCHO`-type ambient fiber or related enlarged space is not a problem in itself. It is the possibility space.
+
+### Bottom up
+
+Start from the experimentally constrained Standard Model world and ask:
+
+- what must be preserved
+- what minimal low-energy structure is already known
+- what cannot be violated
+
+### Bridge or missing middle
+
+The distinctive task of this series is to build the bridge between those two ends:
+
+- enough structure to explain why Standard-Model-like physics emerges from the top space
+- enough constraint to reduce the ambient space without pretending it was never there
+
+This bridge is the real identity of the project.
+
+---
+
+## Ambient-to-observable reduction
+
+One useful way to name the bridge object is:
+
+> **ambient-to-observable reduction**
+
+This means the framework should eventually specify how a large ambient space is reduced to:
+
+1. the physically relevant sector
+2. the gauge-reduced or constraint-reduced sector
+3. the actually observable sector
+
+This matters because a large ambient space can contain:
+
+- redundant information
+- zero directions
+- gauge-equivalent structure
+- sectors that are dynamically present but not directly observed
+
+That does **not** make the ambient space invalid. It only means that the reduction map has to be understood.
+
+At the project level, the safe position is:
+
+- the full ambient space may be real and generative
+- the Standard Model may be a reduced visible slice of that larger structure
+- the framework owes a disciplined account of how that reduction happens
 
 ---
 
@@ -37,19 +99,24 @@ This is the layer of mathematical structure before effective dynamics is reduced
 - the octonions `O` with automorphism group `G2`
 - the reduction to `SU(3)` after fixing a preferred imaginary direction
 - the exceptional Jordan algebra `J3(O)` as the organizing space for generations
+- the selected direction associated with massless traversal or zero-mass interaction
+- the larger ambient space within which these selected structures live
 
 ### Project-specific structural claims
 
 - The spinor decomposes into two two-component sectors, `T1` and `T2`, once a time orientation is chosen.
 - The `SU(2)` structure comes from the maximal compact subgroup acting on the spinor blocks.
-- The octonionic sector supplies the color structure through `G2 -> SU(3)`.
+- The octonionic sector supplies the color structure through `G2 -> SU(3)`, but only after a direction in `O` is selected.
+- The physically relevant octonionic direction should be aligned with the direction associated with zero-mass traversal.
 - `J3(O)` supplies a natural three-slot structure relevant to generation organization.
+- The `T1/T2` split is kinematically present before it is physically interpreted.
 
 ### Status
 
 - `Spin(2,3)` spinor structure: derived mathematics once the group is chosen
 - `T1/T2` split: derived once time orientation is chosen
 - preferred octonion direction: choice
+- alignment between the preferred octonion direction and the massless-traversal direction: central framework proposal
 - use of `J3(O)` for generations: structural proposal, partly derived and partly interpretive depending on claim strength
 
 ---
@@ -65,16 +132,20 @@ This is the layer describing how the state evolves.
 - off-diagonal coupling between `T1` and `T2`
 - reduced evolution for the projected sector
 - effective transport-diffusion after coarse-graining
+- a distinguished role for zero-mass propagation in defining the effective observable channel
 
 ### Project-specific dynamical claims
 
-- The microscopic model is a block Hamiltonian or generator with transport in `T1` and mixing between sectors.
+- Zero-mass interactions or traversal propagate only on the selected `T1` channel.
+- The microscopic model is a block Hamiltonian or generator with transport in `T1` and mixing between sectors once mass is present.
 - The leading observable correction from sector mixing enters at second order in the coupling.
 - Under weak coupling, fast hidden-sector relaxation, and Markov coarse-graining, the reduced evolution is time-local.
 - In the long-wavelength limit, the observable density satisfies an advection-diffusion equation with `D ~ m^2 / gamma`.
+- Massive or Higgs-mediated structure is the natural place where access to `T2` can enter.
 
 ### Status
 
+- zero-mass propagation on `T1`: central framework proposal
 - full-space evolution: postulated model choice
 - reduced Markovian equation: derived under assumptions
 - diffusion law: derived under additional closure assumptions
@@ -88,20 +159,22 @@ This is the layer of what is visible, measurable, or retained after coarse-grain
 
 ### Core epistemic postulates
 
-- physical observables are evaluated in `T1`
-- `T2` is not directly observed, but can affect the observable sector indirectly
-- reduced physics arises from projection plus coarse-graining
+- the effective observable channel is determined by the selected direction of zero-mass interaction
+- `T2` is not directly observed through that zero-mass channel, but can affect the observable sector indirectly
+- reduced physics arises from this interaction selection together with coarse-graining
 
 ### Project-specific epistemic claims
 
-- The observable algebra is defined by projection onto `T1`.
+- The observable algebra is effectively filtered through `T1` because zero-mass interactions travel on that channel.
 - The hidden sector is not discarded dynamically; it is only hidden observationally.
 - Effective uncertainty and diffusion appear because the observer does not resolve `T2` excursions.
+- The projection onto `T1` may be downstream of the interaction structure rather than an absolutely primitive axiom.
 
 ### Status
 
-- projection onto `T1`: postulate
-- hidden-sector influence on visible dynamics: derived once the postulate and dynamics are combined
+- `T1` as the effective observable channel for zero-mass interactions: central proposal
+- projection onto `T1`: possibly effective rather than primitive
+- hidden-sector influence on visible dynamics: derived once the interaction rule and dynamics are combined
 - reading coarse-graining as epistemic limitation: interpretation
 
 This is one of the most distinctive parts of the project. It is not reducible to pure statics or pure dynamics.
@@ -125,6 +198,7 @@ This is the layer of constraints, exclusions, and things that become forced once
 - Anomaly cancellation constrains the allowed right-handed matter content once the left-handed content is fixed.
 - Some hypercharge coefficients may be uniquely fixed by the charge-matching and anomaly conditions.
 - A fourth generation may be excluded if the `J3(O)` argument is mathematically sound in the intended form.
+- Gauge invariance should constrain the alignment between the selected octonionic direction and the massless-interaction direction rather than allowing unrelated choices.
 
 ### Status
 
@@ -147,6 +221,8 @@ This is the layer of physical meaning assigned to the structure.
 - uncertainty as unresolved hidden-sector motion
 - chirality as a consequence of sector asymmetry
 - multiple observed structures as reflections of one common geometry
+- the selected octonionic direction and the observable time-oriented channel are aspects of the same physical choice
+- the Standard Model may be the reduced visible face of a larger ambient space rather than the whole ontological structure
 
 ### Project-specific interpretation claims
 
@@ -154,6 +230,9 @@ This is the layer of physical meaning assigned to the structure.
 - Diffusion is read as the observable shadow of hidden-sector excursions.
 - The asymmetry between `T1` and `T2` is read as physically meaningful rather than merely representational.
 - The same geometric choices may underlie time orientation, color structure, and charge structure.
+- An early selection of direction may fix the later observable channel for zero-mass interactions.
+- Higgs-mediated mass generation may be what opens access away from pure `T1` propagation.
+- Much of the ambient space may be physically redundant, gauge-reduced, or observationally filtered without thereby being meaningless.
 
 ### Status
 
@@ -180,6 +259,7 @@ This is the layer of empirical or quasi-empirical implications.
 - Stronger sector mixing corresponds to stronger effective observable broadening.
 - If the representation-theoretic sector survives scrutiny, it may organize quark, lepton, and generation structure.
 - Hidden-sector effects might produce small deviations from idealized unitary behavior at short scales.
+- If Higgs-mediated mass generation is the route to `T1/T2` coupling, then the framework should eventually tie mass generation to departure from pure observable-channel transport.
 
 ### Status
 
@@ -205,6 +285,9 @@ This is the layer of what the framework still owes.
 - mass hierarchy
 - neutrino masses
 - experimentally usable predictions or bounds
+- a sharper derivation of why the selected octonionic direction should align with the massless-interaction channel
+- a sharper account of the relation between Higgs-mediated mass generation and `T1/T2` coupling
+- a clear ambient-to-observable reduction map from the large space to the Standard-Model-like visible sector
 
 ### Project-specific publication lesson
 
@@ -244,12 +327,15 @@ The project is easiest to manage if each claim is tagged by category, logical st
 |---|---|---|---|
 | `Spin(2,3)` has a four-component spinor representation | Statics | Axiom/input to framework | 2 |
 | Choosing a time orientation induces a `T1/T2` split through `J^{01}` | Statics | Choice plus derived consequence | 3 |
-| Observables are projected onto `T1` | Epistemics | Postulate | 4 |
+| A preferred octonionic direction must be selected to recover the observed `SU(3)` structure | Statics | Established structural fact inside the framework | 3 |
+| The selected octonionic direction should align with the zero-mass interaction channel | Statics / Epistemics | Central proposal | 4 |
+| Zero-mass interactions define the effective observable channel `T1` | Epistemics / Dynamics | Central proposal | 4 |
 | Off-diagonal `T1/T2` mixing can be used in the microscopic generator | Dynamics | Choice | 4 |
 | Weak-coupling reduction yields a reduced Markovian equation | Dynamics | Derived under assumptions | 4 |
 | The long-scale observable dynamics has `D ~ m^2 / gamma` in the reduced model | Phenomenology | Derived within model | 4 |
 | Anomaly cancellation constrains the allowed right-handed content | Consistency | Derived consistency condition | 3 |
 | Mixing should be read physically as mass | Interpretation | Interpretation | 5 |
+| Higgs-mediated mass generation may be the route by which `T2` becomes dynamically accessible | Interpretation / Phenomenology | Plausible future direction | 5 |
 | The framework may organize CKM / PMNS structure | Phenomenology | Missing / future development | 5 |
 | The framework currently lacks sharp experimental bounds | Completion | Missing | 6 |
 
@@ -276,4 +362,4 @@ Its more complete structure is:
 6. `Phenomenology`: what it predicts
 7. `Completion`: what remains unfinished
 
-For this program, the especially important extra axis is `Epistemics`, because projection onto `T1` is central and shapes how the rest of the framework is read.
+For this program, the especially important extra axis is `Epistemics`, because the observable sector may be determined by the selected massless-interaction channel rather than by a purely separate projection rule.
