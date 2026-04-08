@@ -24,6 +24,10 @@ For the reusable generic version, see [00 - meta framework.md](C:/Users/aaron/De
 
 Start from `Spin(2,3)`, the octonions, and `J3(O)`; select the octonionic direction aligned with the channel of massless traversal; let that alignment define the effective observable sector; then ask how massive couplings depart from pure `T1` propagation and what representation structure, reduced dynamics, and interpretation follow.
 
+Parent exploratory note:
+
+- the current strongest parent branch now sits one level above this reduced spine and treats a selected imaginary octonionic direction `u` as the effective time anchor, with `u^\perp \cong \mathbf{C}^3` as the main hidden geometric remainder; see [0c - parent inquiry map.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/0c%20-%20parent%20inquiry%20map.md)
+
 ---
 
 ## How claims should be read here
@@ -51,6 +55,7 @@ This matters especially in cases like:
 - primitive projection versus observability downstream of zero-mass exchange
 - exact origin of the selected octonionic direction
 - Higgs-mediated mass generation as the route to `T1/T2` coupling
+- whether `Spin(2,3)` is fundamental or an effective selected branch of a larger octonionic parent geometry
 
 ---
 
