@@ -8,7 +8,7 @@ It does not claim that the derivation has already been completed. Its job is to 
 
 - what minimum structure is required
 - why the current one-hidden-direction model is insufficient
-- how a two-direction hidden sector could produce an effective symplectic form
+- how a hidden oriented `2`-plane could produce an effective symplectic form
 - how standard uncertainty relations would then follow
 
 ---
@@ -18,7 +18,7 @@ It does not claim that the derivation has already been completed. Its job is to 
 This note covers:
 
 - the minimum algebraic structure needed for Heisenberg-type relations
-- a conditional derivation route from a two-direction hidden sector
+- a conditional derivation route from a hidden oriented `2`-plane
 - the difference between broadening and conjugate structure
 
 This note does not cover:
@@ -72,9 +72,9 @@ This is the cleanest reason the current `T2`-only model cannot derive Heisenberg
 
 ---
 
-## Two-direction hidden sector
+## Hidden Oriented Two-Plane
 
-Now suppose the hidden sector has two relevant directions, labeled `a,b = 2,3`, with coupling operators `V_a`.
+Now suppose the hidden sector contains a relevant oriented `2`-plane, locally carried by a quaternionic slice inside `O`, with basis directions labeled `a,b = 2,3` and coupling operators `V_a`.
 
 Then the second-order reduced correction takes schematic form
 $$
@@ -104,6 +104,8 @@ $$
 for some scalar coefficient `\theta`.
 
 This is the minimum hidden-sector structure that can carry oriented area.
+
+In the revised framing, these two directions are not being interpreted as literal extra timelike axes. They are the effective coordinates of an internal complex `2`-plane used to organize the hidden antisymmetric kernel.
 
 ---
 
@@ -189,7 +191,7 @@ So the uncertainty relation is not the primitive target. It is the consequence o
 ### Already clear
 
 - one hidden direction cannot produce the minimum antisymmetric structure
-- two hidden directions can produce an antisymmetric kernel
+- a hidden oriented `2`-plane can produce an antisymmetric kernel
 - an antisymmetric kernel can induce an observable two-form
 - a nondegenerate observable two-form is enough to support conjugate variables
 - once an effective commutator is obtained, Heisenberg follows in the standard way
@@ -225,8 +227,9 @@ This is the smallest plausible route to a genuine derivation within the present 
 At its safest level, this branch says:
 
 1. The current one-hidden-direction model can explain broadening but cannot derive Heisenberg.
-2. A two-direction hidden sector is the minimum extension that can encode the needed antisymmetric area structure.
-3. If that antisymmetric structure induces a nondegenerate observable two-form, then conjugate variables and Heisenberg-type relations can follow.
-4. The real open task is therefore to derive the observable symplectic form from the hidden reduction, not merely to derive more diffusion.
+2. A hidden oriented `2`-plane is the minimum extension that can encode the needed antisymmetric area structure.
+3. In the current framework reading, that `2`-plane is best treated as internal complex-plane data, locally carried by a quaternionic slice inside `O`, not as literal extra time.
+4. If that antisymmetric structure induces a nondegenerate observable two-form, then conjugate variables and Heisenberg-type relations can follow.
+5. The real open task is therefore to derive the observable symplectic form from the hidden reduction, not merely to derive more diffusion.
 
 That is enough to justify treating the Heisenberg program as a serious and sharply defined extension problem.

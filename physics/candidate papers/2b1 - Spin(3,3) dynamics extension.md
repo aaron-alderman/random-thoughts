@@ -1,14 +1,14 @@
-# `Spin(3,3)` Exploratory Dynamics Branch
+# `Spin(3,3)` Transitional Dynamics Lift
 
 ## Purpose
 
-This note records a controlled exploratory extension of the dynamics kernel corresponding to the `Spin(3,3)` static branch.
+This note records the exploratory dynamics lift corresponding to the `Spin(3,3)` static branch.
 
-It does not replace the current `T1 \oplus T2` reduced model. Its job is to ask:
+It does not replace the current `T1 \oplus T2` reduced model. Its job is to record:
 
 - how the current two-sector dynamics may arise from a `Spin(3,3)` parent
 - what the natural parent mixing operators look like
-- whether one or two hidden timelike directions change the reduced observable dynamics in an essential way
+- how a hidden two-plane structure may appear in the reduced observable dynamics
 - which statements are clean structural consequences and which remain speculative
 
 ---
@@ -21,6 +21,7 @@ This note covers:
 - the reduction from `SU(2)_t` parent time symmetry to the current `U(1)`-selected branch
 - possible multi-channel generalizations of sector mixing
 - possible consequences for reduced diffusion and uncertainty-like broadening
+- how the surviving lesson of this lift is now absorbed into internal hidden-plane language
 
 This note does not cover:
 
@@ -28,6 +29,7 @@ This note does not cover:
 - a first-principles microscopic bath derivation
 - phenomenological predictions
 - any claim that `Spin(3,3)` is already required by the framework
+- any claim that literal extra hidden times remain part of the operative kernel
 
 ---
 
@@ -146,7 +148,7 @@ So the reduced observable rule is downstream of:
 
 After one axis is chosen, the current model has one visible and one complementary sector.
 
-But the parent `SU(2)_t` suggests that hidden structure is more naturally organized by unused timelike directions rather than by a single primitive complement. This is one reason a richer hidden-sector dynamics becomes thinkable in the parent branch.
+But the parent `SU(2)_t` suggests that hidden structure is more naturally organized by an oriented internal two-plane rather than by a single primitive complement. In the current framework reading, that is the lesson carried forward from this exploratory lift.
 
 ---
 
@@ -191,7 +193,7 @@ L_\alpha \rho_1 L_\alpha^\dagger
 - \frac{1}{2}\{L_\alpha^\dagger L_\alpha,\rho_1\}
 \right)
 $$
-with distinct Lindblad operators associated to distinct hidden timelike directions.
+with distinct Lindblad operators associated to distinct hidden internal directions of the oriented two-plane.
 
 In a transport closure, the scalar diffusion coefficient may then be replaced by:
 
@@ -208,8 +210,8 @@ The current reduced model gives uncertainty-like broadening, but not a full deri
 
 The parent branch may help because:
 
-- one hidden time naturally gives one broadening channel
-- two unused parent-time directions could support a richer hidden algebra
+- one hidden direction naturally gives one broadening channel
+- a hidden oriented `2`-plane could support a richer hidden algebra
 - that richer algebra might be closer to a conjugate-pair structure than the present single-parameter diffusion model
 
 But this remains only a possibility.
@@ -228,7 +230,7 @@ So the safe statement is:
 
 ## Two-direction hidden sector and kernel decomposition
 
-The minimal mathematical reason to keep two hidden directions is that a one-dimensional hidden sector only supports scalar correction data, whereas a two-dimensional hidden sector supports both symmetric and antisymmetric structures.
+The minimal mathematical reason to keep an oriented hidden `2`-plane is that a one-dimensional hidden sector only supports scalar correction data, whereas a two-dimensional hidden sector supports both symmetric and antisymmetric structures.
 
 Suppose the hidden correction is organized by two hidden directions labeled by `a,b = 2,3`, with coupling operators `V_a`. Then the second-order reduced correction has schematic form
 $$
@@ -376,7 +378,7 @@ $$
 D_{ij}.
 $$
 
-This is not yet a theorem of the framework. It is the natural dynamical generalization suggested by a multi-direction hidden time sector.
+This is not yet a theorem of the framework. It is the natural dynamical generalization suggested by a multi-direction hidden sector organized by an internal oriented plane.
 
 ---
 
@@ -408,11 +410,12 @@ These are exactly the questions this exploratory branch is meant to clarify, not
 
 ## Working bottom line
 
-At its safest level, this exploratory branch says:
+At its safest level, this transitional branch says:
 
 1. A `Spin(3,3)` parent dynamics can be modeled naturally by letting Pauli operators act on the parent time doublet.
 2. After one effective time axis is selected, the current `T1 \oplus T2` block dynamics is recovered as a reduced branch.
 3. In that picture, the present mixing terms are naturally interpreted as transverse parent-time couplings.
-4. If more than one hidden parent-time direction remains dynamically relevant, the reduced observable law may become multi-channel rather than single-parameter.
+4. In the current project reading, the hidden structure worth retaining is an oriented internal `2`-plane rather than literal extra time.
+5. If that hidden two-plane remains dynamically relevant, the reduced observable law may become multi-channel rather than single-parameter.
 
-That is enough to justify exploring `Spin(3,3)` dynamics as a serious extension while leaving the current kernel intact.
+That is enough to justify preserving `Spin(3,3)` dynamics as a useful archival lift while treating its main lesson as already folded back into the operative kernel.

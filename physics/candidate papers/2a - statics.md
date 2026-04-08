@@ -54,6 +54,7 @@ The static domain starts from the following inputs.
 2. Choose a preferred imaginary octonion direction, written as `e7`.
 3. Use the resulting `SU(3)` stabilizer of `e7` as the structural color slot.
 4. Require that the physically relevant octonionic direction align with the direction associated with zero-mass traversal.
+5. Read the hidden complement behind the reduced `T1/T2` split as complex-plane data carried locally by a quaternionic `H` slice inside `O`.
 
 These are choices inside the framework, not consequences of the mathematics alone.
 
@@ -100,6 +101,8 @@ where `T1` and `T2` are the `J^{01}` eigenspaces with eigenvalues `-1/2` and `+1
 
 This split is static. In this file it is only a decomposition of representation space, not yet a complete statement about observation or evolution.
 
+In the revised project reading, `J^{01}` is the effective reduced splitting generator on the `Spin(2,3)` branch. The framework does **not** take this by itself as evidence that literal extra timelike axes remain fundamental. The working proposal is instead that the deeper hidden complement is carried by internal complex-plane data in a local quaternionic slice of `O`, with the present `T1/T2` decomposition as the effective visible image of that deeper structure.
+
 ---
 
 ## Static consequences of the Spin(2,3) structure
@@ -129,6 +132,7 @@ So, before any octonionic structure is introduced:
 - the existence of two sectors
 - the `SU(2)` doublet structure in each sector
 - the role of `J^{01}` as the splitting generator
+- the fact that `J^{01}` defines the effective reduced branch actually used in the kernel
 
 ### What is not yet static theorem
 
@@ -166,6 +170,14 @@ The new high-level proposal of the framework is stronger than a bare selection r
 - the relevant octonionic direction should be the one aligned with the channel associated with zero-mass traversal
 
 This is what ties the internal selection to the later observable sector, rather than leaving the two choices unrelated.
+
+The updated interpretive layer is:
+
+- the broad hidden parent remainder is still `u^\perp \cong \mathbf{C}^3`
+- the relevant hidden complex plane is carried locally by a quaternionic `H` slice inside `O`
+- the effective `Spin(2,3)` sector split is what remains after that hidden structure is folded into the reduced branch
+
+This folding picture is a working proposal suggested by the recent `Spin(3,3)` exploration. It is not yet a theorem of the framework.
 
 ---
 
@@ -258,9 +270,11 @@ This section records the main static claims in kernel form.
 |---|---|---|---|
 | `Spin(2,3)` has a four-component spinor representation | established input | 2 | background structure |
 | `J^{01}` splits the spinor into two two-component sectors | derived after choosing conventions | 3 | clean static result |
+| the `J^{01}` split should be read as an effective reduced branch rather than a literal multi-time remnant | working interpretation | 4 | sharpened by the folded `Spin(3,3)` analysis |
 | each sector carries `SU(2)` doublet structure under the maximal compact subgroup | derived | 3 | standard representation statement |
 | choosing `e7` reduces `G2` to `SU(3)` | established input | 3 | standard octonion fact |
 | the physically relevant octonionic direction should align with the zero-mass traversal direction | central framework proposal | 4 | connects internal selection to observable structure |
+| the hidden complement is carried locally by a quaternionic `H` slice as complex-plane data | working proposal | 4 | important new bridge statement, not yet theorem |
 | `T1 \otimes (3 + 1)` matches quark/lepton doublet slots | derived inside the representation ansatz | 4 | useful but still framework-internal |
 | hypercharge can be built from `J^{01}` and `Q7` | structural ansatz | 4 | worth sharpening later |
 | anomaly conditions constrain the remaining matter content | consistency consequence | 3 | belongs partly to the consistency layer |
@@ -323,7 +337,8 @@ At its safest level, it says:
 1. `Spin(2,3)` gives a two-sector spinor decomposition with weak-doublet structure.
 2. The octonions give a natural internal route to an `SU(3)` color slot, with the stabilizer isomorphism fixed once a direction is selected.
 3. The strongest version of the framework ties that internal direction to the axis of zero-mass traversal rather than treating it as an unrelated choice.
-4. `J3(O)` gives a natural three-slot organizer.
-5. These ingredients together produce a strong candidate static arena for matter structure.
+4. The hidden complement behind the effective split is best read as complex-plane data carried locally by a quaternionic `H` slice inside the broader octonionic remainder.
+5. `J3(O)` gives a natural three-slot organizer.
+6. These ingredients together produce a strong candidate static arena for matter structure.
 
 The main caution is that several attractive physical identifications are still one step stronger than the current static proof burden. This file should therefore be treated as the canonical source of static structure, not yet as a final static theorem sheet.

@@ -1,14 +1,14 @@
-# `Spin(3,3)` Exploratory Static Branch
+# `Spin(3,3)` Transitional Static Lift
 
 ## Purpose
 
-This note records a controlled exploratory extension of the static kernel.
+This note records the exploratory static lift that helped motivate the current folded reading of the framework.
 
-It does not replace the current `Spin(2,3)` framework. Its job is to ask:
+It does not replace the current `Spin(2,3)` framework. Its job is to record:
 
-- whether a larger signature `(3,3)` can serve as a parent static arena
-- whether the present `Spin(2,3)` setup is recovered by a single timelike selection
-- what genuinely new static structure would then become available
+- how a larger signature `(3,3)` suggested a richer parent-time organization
+- how the present `Spin(2,3)` setup is recovered by a single timelike selection
+- what lesson from that lift now survives in the main framework
 - which claims are standard mathematics and which remain speculative
 
 ---
@@ -20,7 +20,7 @@ This note covers:
 - the basic static structure of `Spin(3,3)`
 - the relation `Spin(3,3) -> Spin(2,3)` after timelike selection
 - the corresponding compact-subgroup reduction
-- possible implications for multi-time interpretation
+- how that exploratory lift is now re-read as hidden complex-plane structure rather than live multi-time ontology
 
 This note does not cover:
 
@@ -29,6 +29,7 @@ This note does not cover:
 - open-system arguments
 - phenomenology
 - any claim that the framework already requires three time dimensions
+- any claim that `Spin(3,3)` remains a live parent branch of the project
 
 ---
 
@@ -41,7 +42,7 @@ The exploratory idea here is stronger:
 - begin instead with `Spin(3,3)` as a larger parent static symmetry
 - treat the present `Spin(2,3)` structure as what remains after choosing one effective timelike axis
 
-If this works, then the current two-sector story may be the selected branch of a larger multi-time parent rather than the primitive starting point.
+If this works, then the current two-sector story may be the selected branch of a larger parent-time organization rather than the primitive starting point.
 
 ---
 
@@ -189,7 +190,7 @@ That opens the possibility that:
 
 In the reduced branch, one gets the current two-sector story.
 
-In the unreduced parent, however, hidden structure may be associated not just with one complementary sector but with the unused timelike directions in the parent triple.
+In the unreduced parent, however, hidden structure may be associated not just with one complementary sector but with the unused directions in the parent-time organization.
 
 This does not yet force a three-sector decomposition, but it gives a mathematically natural reason to explore one.
 
@@ -197,7 +198,7 @@ This does not yet force a three-sector decomposition, but it gives a mathematica
 
 If future work needs:
 
-- more than one hidden timelike degree of freedom
+- more than one hidden internal directional degree of freedom
 - a richer mixing operator
 - a route from broadening to something more phase-space-like
 
@@ -235,11 +236,11 @@ These are promising directions, but they are not yet part of the proven kernel.
 
 ## Working bottom line
 
-At its safest level, this exploratory branch says:
+At its safest level, this transitional branch says:
 
 1. `Spin(3,3)` is a mathematically natural parent extension of the current static setup.
 2. Selecting a unit timelike direction in `(3,3)` has stabilizer `Spin(2,3)`, so the present kernel can be recovered as a selected branch.
-3. The current `T1/T2` split may therefore be the reduction of a larger parent timelike symmetry rather than the primitive starting point.
-4. This extension creates room for a deeper multi-time interpretation without forcing that interpretation into the current kernel.
+3. The current `T1/T2` split may therefore be the reduction of a larger parent-time organization rather than the primitive starting point.
+4. In the current project reading, the main surviving lesson is not literal extra time, but that the hidden complement can be re-read as internal complex-plane data carried locally by a quaternionic slice inside `O`.
 
-That is enough to justify keeping `Spin(3,3)` as a serious exploratory static option.
+That is enough to justify preserving `Spin(3,3)` as a useful archival lift while treating its main content as already folded back into the operative `Spin(2,3)` line.

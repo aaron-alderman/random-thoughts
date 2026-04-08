@@ -26,7 +26,7 @@ Start from `Spin(2,3)`, the octonions, and `J3(O)`; select the octonionic direct
 
 Parent exploratory note:
 
-- the current strongest parent branch now sits one level above this reduced spine and treats a selected imaginary octonionic direction `u` as the effective time anchor, with `u^\perp \cong \mathbf{C}^3` as the main hidden geometric remainder; see [0c - parent inquiry map.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/0c%20-%20parent%20inquiry%20map.md)
+- the current strongest parent branch now sits one level above this reduced spine and treats a selected imaginary octonionic direction `u` as the effective time anchor, with `u^\perp \cong \mathbf{C}^3` as the main hidden geometric remainder and a local quaternionic `H` slice as the carrier of the relevant hidden complex plane; the earlier `Spin(3,3)` lift is now read as a transitional calculation that revealed this fold rather than as a live parent branch; see [0c - parent inquiry map.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/0c%20-%20parent%20inquiry%20map.md)
 
 ---
 
@@ -55,7 +55,7 @@ This matters especially in cases like:
 - primitive projection versus observability downstream of zero-mass exchange
 - exact origin of the selected octonionic direction
 - Higgs-mediated mass generation as the route to `T1/T2` coupling
-- whether `Spin(2,3)` is fundamental or an effective selected branch of a larger octonionic parent geometry
+- how the larger octonionic parent geometry folds into the effective `Spin(2,3)` branch without reifying extra timelike directions
 
 ---
 
@@ -160,20 +160,23 @@ This is the layer of mathematical structure before effective dynamics is reduced
 ### Core objects
 
 - `Spin(2,3)` and its four-component spinor representation
-- the generator `J^{01}` and the induced sector split
+- the generator `J^{01}` and the induced effective sector split
 - the octonions `O` with automorphism group `G2`
 - the reduction to `SU(3)` after fixing a preferred imaginary direction
 - the exceptional Jordan algebra `J3(O)` as the organizing space for generations
 - the possible complexified exceptional Jordan algebra `J3(C \otimes O)` as a larger ambient alternative
 - the selected direction associated with massless traversal or zero-mass interaction
+- a local quaternionic `H` slice inside `O` carrying the hidden complex-plane data relevant to the reduced branch
 - the larger ambient space within which these selected structures live
 
 ### Project-specific structural claims
 
 - The spinor decomposes into two two-component sectors, `T1` and `T2`, once a time orientation is chosen.
+- In the current reading, this `T1/T2` split is the effective reduced image of a deeper hidden complex-plane structure rather than evidence that literal extra time directions remain fundamental.
 - The `SU(2)` structure comes from the maximal compact subgroup acting on the spinor blocks.
 - The octonionic sector supplies the color structure through `G2 -> SU(3)`, but only after a direction in `O` is selected.
 - The physically relevant octonionic direction should be aligned with the direction associated with zero-mass traversal.
+- The relevant hidden two-plane is carried locally by a quaternionic slice inside `O`, while the broader parent remainder remains `u^\perp \cong \mathbf{C}^3`.
 - `J3(O)` supplies a natural three-slot structure relevant to generation organization.
 - `J3(C \otimes O)` is also mathematically available as a larger complexified organizing object, but its physical role is not yet fixed.
 - The `T1/T2` split is kinematically present before it is physically interpreted.
@@ -181,9 +184,10 @@ This is the layer of mathematical structure before effective dynamics is reduced
 ### Status
 
 - `Spin(2,3)` spinor structure: derived mathematics once the group is chosen
-- `T1/T2` split: derived once time orientation is chosen
+- `T1/T2` split: derived once time orientation is chosen, then read as the effective branch of a deeper hidden complex-plane structure
 - preferred octonion direction: choice
 - alignment between the preferred octonion direction and the massless-traversal direction: central framework proposal
+- local quaternionic carrier of the hidden complex plane: working proposal suggested by the folded `Spin(3,3)` analysis, not yet a theorem
 - use of `J3(O)` for generations: structural proposal, partly derived and partly interpretive depending on claim strength
 - choice between `J3(O)` and `J3(C \otimes O)`: bridge-level choice not yet physically settled
 
@@ -200,12 +204,14 @@ This is the layer describing how the state evolves.
 - off-diagonal coupling between `T1` and `T2`
 - reduced evolution for the projected sector
 - effective transport-diffusion after coarse-graining
+- hidden oriented two-plane data feeding the reduced correction terms
 - a distinguished role for zero-mass propagation in defining the effective observable channel
 
 ### Project-specific dynamical claims
 
 - Zero-mass interactions or traversal propagate only on the selected `T1` channel.
 - The microscopic model is a block Hamiltonian or generator with transport in `T1` and mixing between sectors once mass is present.
+- The hidden structure needed for richer corrections is interpreted as an internal complex `2`-plane, locally carried by a quaternionic slice inside `O`, rather than as literal extra time directions.
 - The leading observable correction from sector mixing enters at second order in the coupling.
 - Under weak coupling, fast hidden-sector relaxation, and Markov coarse-graining, the reduced evolution is time-local.
 - In the long-wavelength limit, the observable density satisfies an advection-diffusion equation with `D ~ m^2 / gamma`.

@@ -61,6 +61,7 @@ These complete major kernel domains.
 - a sharper relation between the projection rule and standard measurement language
 - a disciplined ambient-to-observable reduction map
 - a sharper parent-level reduction from the octonionic hidden geometry to the `Spin(2,3)` effective branch
+- a formal folding map from the exploratory `Spin(3,3)` lift into the effective `Spin(2,3)` branch plus hidden quaternionic complex-plane structure
 
 ### Tier 3: synthesis problems
 
@@ -83,6 +84,7 @@ These are the problems that would turn the project from a coherent framework int
 - how much of the generation story is structural and how much is interpretive?
 - what exactly in the large ambient space is physical structure, and what is redundancy, gauge, or filtered-out data?
 - can the octonionic remainder `u^\perp \cong \mathbf{C}^3` be shown to be the primary parent geometry from which color, wandering planes, and generation structure all descend?
+- can the local quaternionic carrier of the hidden complex plane be identified canonically inside the broader octonionic parent?
 
 ### Dynamics
 
@@ -90,6 +92,7 @@ These are the problems that would turn the project from a coherent framework int
 - under exactly what assumptions is the reduced semigroup form valid?
 - how should the framework be made relativistic beyond the current reduced model?
 - can the `2/4/6` wandering-access ladder be made dynamical rather than merely kinematical?
+- how exactly does the hidden internal `2`-plane feed the reduced kernel `G_{ab}` without being re-described as literal extra time?
 
 ### Epistemics
 
@@ -98,6 +101,7 @@ These are the problems that would turn the project from a coherent framework int
 - what is the relation to standard quantum measurement theory?
 - how does the ambient-to-observable reduction act on the full space before one reaches the final visible sector?
 - can a hidden antisymmetric `2`-plane induce the effective observable symplectic structure needed for Heisenberg-type relations?
+- how should the framework distinguish rigorously between literal spacetime directions, internal complex-plane structure, and reduced observable sectors?
 
 ### Consistency
 
@@ -148,11 +152,12 @@ These are the main blockers for different kinds of papers.
 If the goal is to build the framework in the most efficient order, the current priorities appear to be:
 
 1. sharpen the parent octonionic geometry and its reduction to the effective `Spin(2,3)` branch
-2. tighten the static and consistency proof burdens inside the reduced branch
-3. define the ambient-to-observable reduction more sharply
-4. strengthen the microscopic basis of the reduced dynamics, especially the hidden antisymmetric sector needed for a Heisenberg bridge
-5. complete the epistemic story around projection
-6. only then push toward mature phenomenology
+2. formalize the folding of the exploratory `Spin(3,3)` lift into hidden quaternionic complex-plane data
+3. tighten the static and consistency proof burdens inside the reduced branch
+4. define the ambient-to-observable reduction more sharply
+5. strengthen the microscopic basis of the reduced dynamics, especially the hidden antisymmetric sector needed for a Heisenberg bridge
+6. complete the epistemic story around projection
+7. only then push toward mature phenomenology
 
 This priority order matches the current maturity of the project.
 
@@ -168,6 +173,7 @@ This priority order matches the current maturity of the project.
 | ambient-to-observable reduction is not yet sharply defined | cross-domain | high | central missing-middle object |
 | projection onto `T1` lacks a deeper justification | epistemics | medium-high | central conceptual obligation |
 | parent octonionic geometry has not yet been rigorously reduced to the effective `Spin(2,3)` branch | statics / cross-domain | high | now a central parent-program task |
+| folded `Spin(3,3)` insight has not yet been formalized as a precise reduction map into hidden quaternionic complex-plane structure | statics / cross-domain | high | new central bridge task |
 | Heisenberg-type structure is not yet derived from a hidden antisymmetric sector | dynamics / epistemics | high | requires more than diffusion |
 | full field-theoretic completion is missing | dynamics / completion | high | major long-term gap |
 | no sharp experimental predictions yet | phenomenology | high | blocks PRD-style work |

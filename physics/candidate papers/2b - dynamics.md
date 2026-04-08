@@ -56,6 +56,7 @@ The dynamical domain assumes the following static setup.
    onto the two sectors.
 3. `T1` and `T2` are structurally distinct sectors, even before a physical interpretation is attached.
 4. A preferred direction has been selected so that the zero-mass traversal channel is identified with `T1`.
+5. The hidden complement relevant to richer reduced corrections is interpreted as an internal complex `2`-plane, carried locally by a quaternionic slice inside `O`, not as a literal extra timelike sector of spacetime.
 
 The dynamical layer adds the question:
 
@@ -72,6 +73,8 @@ The revised kernel uses two central ideas.
 States evolve in the full space `T1 \oplus T2`.
 
 This means the hidden sector is dynamically real inside the model, even if it is not directly observed.
+
+In the updated reading, this hidden-sector language should be handled carefully. At the kernel level the model still evolves in `T1 \oplus T2`, but the deeper structure behind the unresolved excursions is interpreted as internal hidden-plane data rather than as literal additional time coordinates.
 
 ### Principle D2: zero-mass propagation stays on `T1`
 
@@ -131,6 +134,7 @@ In the revised picture, the physical reading is:
 
 - the `H_tr` block is the zero-mass or massless-traversal channel
 - the off-diagonal block becomes relevant when mass-generating structure allows departure from pure `T1` propagation
+- the parameterization by one visible and one complementary block is the reduced image of a deeper hidden complex-plane structure, not yet the full parent geometry itself
 
 ---
 
@@ -177,6 +181,8 @@ What matters for the kernel is:
 - the hidden sector enters through its correlation functions
 - the projected dynamics is nontrivial even though observables are extracted only in `T1`
 - the privileged role of `T1` is inherited from the zero-mass channel, not just inserted after the fact
+
+In the present revised framing, a richer hidden correction should be read as living on an internal oriented `2`-plane when antisymmetric structure is needed. That language is preferred to the older extra-timelike wording inside the effective kernel.
 
 Under the Markov approximation, this becomes a time-local generator of Lindblad type:
 $$
@@ -272,6 +278,12 @@ The new related interpretive possibility is:
 
 That is promising, but still interpretive at present.
 
+Another important interpretive proposal now in play is:
+
+- the hidden two-direction structure needed for Heisenberg-type extensions is an internal complex `2`-plane, locally carried by a quaternionic slice of `O`
+
+This comes from the folded `Spin(3,3)` analysis, but it remains a working proposal rather than a derived theorem.
+
 ### Uncertainty as hidden-sector effect
 
 It is natural to read diffusive broadening as an observable shadow of unresolved hidden-sector excursions.
@@ -300,6 +312,7 @@ This section records the main dynamical claims in kernel form.
 | the reduced equation is of Lindblad type in the Markov regime | derived under assumptions | 4 | core JMP-style claim |
 | the long-scale density satisfies advection-diffusion | derived under closure assumptions | 4 | main reduced transport result |
 | `D ~ m^2 / gamma` | derived within model | 4 | clean scaling law |
+| richer hidden corrections are best interpreted through an internal oriented `2`-plane rather than literal extra time directions | working interpretation | 4 | aligns the kernel with the revised parent story |
 | `m` may encode physical mass after further identification | interpretation | 5 | plausible but stronger than the theorem |
 | Higgs-mediated mass generation may be what opens the `T1/T2` channel | interpretation / future work | 5 | promising but not established |
 | hidden-sector projection explains quantum uncertainty in general | interpretation / future work | 5 | suggestive but not established |
@@ -366,6 +379,7 @@ At its safest level, it says:
 4. sector mixing induces nontrivial reduced dynamics in `T1`
 5. in the weak-coupling Markov regime, this reduced dynamics is Lindblad-like
 6. in the long-scale closure regime, it becomes advection-diffusion with `D ~ m^2 / gamma`
+7. the deeper hidden structure needed for richer corrections is best read as internal complex-plane data rather than literal extra timelike dynamics
 
 That is already a meaningful kernel.
 

@@ -32,6 +32,7 @@ The key identifications are:
 - `\mathbf{C}^3` as three complex directions
 - the same `6`-space as `2+2+2` wandering planes
 - `SU(3)` as the unsplit symmetry of that remainder
+- a local quaternionic `H` slice as the carrier of the relevant hidden complex plane
 - a hidden `2`-plane as the minimum seed for Heisenberg through antisymmetric structure
 
 This is the strongest current candidate for the parent geometric branch because it gives one space that may underlie:
@@ -54,6 +55,7 @@ Why it currently leads:
 - it is mathematically clean
 - it is already tied to the octonionic `SU(3)` story
 - it naturally supports the `2+2+2` wandering picture
+- it has a natural local quaternionic carrier for the hidden complex-plane data
 - it does not require inventing extra spacetime dimensions at the outset
 
 ### 2. Heisenberg from a hidden antisymmetric `2`-form on a wandering `2`-plane
@@ -114,16 +116,17 @@ The stronger reading:
 
 is still one layer above the mathematics.
 
-### 6. `Spin(3,3)` as the necessary parent
+### 6. Folded `Spin(3,3)` as a transitional lift
 
-This remains a serious backup branch, but is no longer the leading one.
+This remains useful, but no longer as an alternative parent track.
 
-It should be kept alive if:
+Its present value is:
 
-- literal extra timelike structure becomes necessary
-- or the octonionic hidden-plane route fails to generate enough antisymmetric geometry
+- it exposed a two-plane or `SU(2)_t`-type structure that helped clarify the reduced `T1/T2` split
+- it suggests that what looked like an extra timelike degree can be re-read as hidden complex-plane data
+- it points back toward the octonionic-quaternionic parent geometry rather than away from it
 
-For now it looks less fundamental than the octonionic remainder story.
+For now it should be treated as an over-completed exploratory calculation whose main lesson has been folded back into the `Spin(2,3)` line.
 
 ---
 
@@ -160,6 +163,7 @@ The most interesting present cluster is:
 
 - octonionic time `u`
 - `u^\perp \cong \mathbf{C}^3`
+- a local quaternionic `H` slice carrying the relevant complex plane
 - `SU(3)` as the unsplit hidden symmetry
 - three wandering `2`-planes as the resolved form of that same remainder
 - one such `2`-plane giving the minimum Heisenberg seed
@@ -176,8 +180,8 @@ The most efficient immediate tests now appear to be:
 
 1. Prove carefully that compatible wandering `2`-planes in `u^\perp` are exactly complex-line choices in `\mathbf{C}^3`.
 2. Test whether a canonical antisymmetric `2`-form appears on a preferred `2`-plane or only after extra choice.
-3. Ask whether the `2/4/6` access ladder can be made dynamical rather than merely kinematical.
-4. Keep `Spin(3,3)` as a backup parent branch rather than the main one unless the octonionic route fails.
+3. Formalize the folding map by which the exploratory `Spin(3,3)` lift reduces to hidden complex-plane data in a local quaternionic slice.
+4. Ask whether the `2/4/6` access ladder can be made dynamical rather than merely kinematical.
 5. Treat the `120` / `H4` / golden-ratio line as a geometric flag rather than a core claim until a canonical quaternionic slice is identified.
 
 ---
@@ -188,6 +192,7 @@ The current parent branch is being read under the following assumptions:
 
 - time is taken to be a selected imaginary octonionic direction, not the scalar unit `1`
 - the hidden sector is read first as internal/octonionic geometry rather than literal extra spacetime dimensions
+- the relevant hidden complex plane is carried locally by a quaternionic `H` slice inside the broader octonionic remainder
 - the missing content of the framework is primarily relational, so the `225` base is interpreted as a relation/action arena rather than a particle-count arena
 
 ---
@@ -198,8 +203,9 @@ At its safest level, the current inquiry map says:
 
 1. The octonionic remainder `u^\perp \cong \mathbf{C}^3` is the strongest current parent anchor.
 2. The Heisenberg problem should be pursued through hidden antisymmetric `2`-plane structure, not through diffusion alone.
-3. The three-generation hypothesis is most plausible as a `2/4/6` access ladder inside the `6`-dimensional octonionic remainder.
-4. The `225` relational base remains the strongest parent relation-space architecture.
-5. `Spin(3,3)` should remain available as a backup branch, but the octonionic hidden-plane route is currently the main line to push.
+3. A local quaternionic `H` slice is the best current carrier for the hidden complex-plane data inside that parent remainder.
+4. The three-generation hypothesis is most plausible as a `2/4/6` access ladder inside the `6`-dimensional octonionic remainder.
+5. The `225` relational base remains the strongest parent relation-space architecture.
+6. `Spin(3,3)` should now be read as a transitional lift whose main lesson has already been absorbed back into the main octonionic `Spin(2,3)` line.
 
 That is enough to fix the present direction of inquiry without pretending the surrounding alternatives are closed.
