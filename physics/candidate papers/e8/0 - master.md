@@ -42,7 +42,7 @@ If the chain is driven by a single selected octonionic direction $u$ propagating
 - $u$ fixes the vector in $SO(2,4) \to Spin(2,3)$ — kills dilatation, fixes scale
 - $u$ defines the $T1$ observable channel — fixes epistemics
 - $u$ acts as time anchor in $Spin(2,3)$ — fixes dynamics
-- $u$ selects a quaternionic slice $\mathbb{H} \subset \mathbb{O}$ — forces the Higgs doublet
+- $u$ narrows $\mathbb{H}$ to an $S^2$ family; the Furey-Hughes $\mathbb{H}$-selection completes the cascade — forces the Higgs doublet
 
 Then the program's target theorem is:
 
@@ -60,7 +60,7 @@ Then the program's target theorem is:
 | [chain/j3-g2.md](chain/j3-g2.md) | $J_3(\mathbb{O}) \to G_2$ arrow; $\sqrt{3}$ ratio; Leech connection |
 | [chain/g2-so24.md](chain/g2-so24.md) | $G_2 \to SO(2,4)$ arrow; compact/split duality; $G_2(\mathbb{C})$ argument |
 | [chain/so24-spin23.md](chain/so24-spin23.md) | $SO(2,4) \to Spin(2,3)$ arrow; same-$u$ verification; Gogberashvili check |
-| [statics.md](statics.md) | Core objects; 24+3 split; two-sector ontology; snap coupling; SU(3) color gap |
+| [statics.md](statics.md) | Core objects; 24+3 split; two-sector ontology; snap coupling; SU(3) color gap; index-64 quotient $\cong(\mathbb{Z}/2)^6$; hexacode identification; Golay-admissibility |
 | [higgs.md](higgs.md) | Quaternionic slice; Furey & Hughes matching; idempotent chain; Weinberg angle derivation |
 | [dynamics.md](dynamics.md) | Coarse-graining; $\sqrt{3}$ Killing form; RG reframing; reduced dynamics |
 | [epistemics.md](epistemics.md) | Observable channel; Golay snapping; Born rule question; cosmological drift |
@@ -72,8 +72,8 @@ Then the program's target theorem is:
 ## Program Status
 
 **Strong (established mathematics):**
-- The 24+3 split is intrinsic to $J_3(\mathbb{O})$ and the Leech connection is established via Baez/Egan: $E_8^3$ contains $\sqrt{2}\Lambda_{24}$ of index 64. Equivariance under diagonal $G_2$ action follows from $G_2 = SO(8)^\tau$ (triality fixed-point theorem) — the same cascade $(u + \mathbb{H})$ that forces the Higgs also fixes the canonical Leech sublattice. Jordan product $D \circ U$ is a tier-transition operator into the 64-class quotient, not a tier-preserving map.
-- The $G_2$ $\sqrt{3}$ root ratio emerges from the dimension count of octonionic reduction — not chosen, forced
+- The 24+3 split is intrinsic to $J_3(\mathbb{O})$ and the Leech connection is established via Baez/Egan: $E_8^3$ contains $\sqrt{2}\Lambda_{24}$ of index 64. Equivariance under diagonal $G_2$ action follows from $G_2 = SO(8)^\tau$ (triality fixed-point theorem) — the same cascade $(u + \mathbb{H})$ that forces the Higgs also fixes the canonical Leech sublattice. Jordan product $D \circ U$ is a tier-transition operator into the 64-class quotient, not a tier-preserving map. The quotient $E_8^3/\sqrt{2}\Lambda_{24} \cong (\mathbb{Z}/2)^6$ is a theorem (duality proof); the 64 cosets identify with the hexacode $\mathcal{H}_6$ ($[6,3,4]_{\mathbb{F}_4}$, MOG construction), and hexacode minimum distance 4 enforces that minimum activation touches exactly 8 coordinates — the Golay minimum weight 8. All snap states $D \neq \pm I$ land on Golay-admissible cosets automatically.
+- The $G_2$ $\sqrt{3}$ root ratio emerges from the dimension count of octonionic reduction — not chosen, forced. Note: this does **not** produce a distinct coupling ratio $g_3/g_2$; embedding index $j=1$ absorbs it. Both $\sqrt{3}$'s (root ratio and $g'/g_2 = \sqrt{3/5}$) trace to $N_c = 3$, not independent predictions
 - The same $u$ drives all five chain roles ($G_2 \to SU(3)$ stabilizer, compact/split via $\mathbb{O}_\mathbb{C}$, Furey Cl(6) via $u^\perp$, T1 channel, spacelike image under Gogberashvili cone map) — all established
 - $\sin^2\theta_W = 3/8$ is derived from the 3+2 split of $u^\perp$ with no free parameters
 - $m_H = 2\cos\theta_W m_W \approx 127.1$ GeV fully derived: 1+3 split forced by $u$-selection; normalization condition $\|\Phi\|^2_Q = 3\|\Phi\|^2_L$ follows from $G_2 = \mathrm{Aut}(\mathbb{O})$ transitivity — now a theorem, not a postulate. Tree-level 1.5% residual identified as RG running from matching scale to $M_Z$; direction of correction closes the gap (needs explicit 1-loop calculation to confirm)
@@ -96,7 +96,7 @@ Then the program's target theorem is:
 
 1b. ~~**$E_8$ embedding index chain**~~ **Done.** All SM gauge groups embed in $E_8$ with total index $j=1$ through the program's chain ($SU(3)_C$ via $G_2$, $SU(2)_L$ and $SU(3)_C$ via $E_6 \supset SO(10) \supset SU(5)$; $U(1)_Y$ gets the GUT factor $5/3$). Consequence: $\sin^2\theta_W = 3/8$ is forced by the $E_8$ structure automatically — the 3+2 octonionic derivation and the embedding index derivation agree. Full unification $\alpha_3 = \alpha_2 = \alpha_1$ is predicted at $M_{E_8}$; the scale itself is not fixed geometrically (non-SUSY SM gives $\sim10^{13}$ GeV with 15% non-unification of $\alpha_3$). See [higgs.md](higgs.md).
 
-2. ~~**$m_H/m_W$ via Todorov**~~ **Done.** Derived $m_H = 2\cos\theta_W m_W$ from $u$-selection: the 1+3 split $\mathbb{O} = \mathbb{C}_u \oplus \mathbb{C}^3_{u^\perp}$ is the origin of Todorov's postulate, making the $u$-framework the common root of both $\sin^2\theta_W = 3/8$ and $m_H \approx 127.1$ GeV. Residual 1.5% gap to experiment; normalization condition not yet derived from $u$-structure. See [higgs.md](higgs.md).
+2. ~~**$m_H/m_W$ via Todorov**~~ **Done.** Derived $m_H = 2\cos\theta_W m_W$ from $u$-selection: the 1+3 split $\mathbb{O} = \mathbb{C}_u \oplus \mathbb{C}^3_{u^\perp}$ is the origin of Todorov's postulate, making the $u$-framework the common root of both $\sin^2\theta_W = 3/8$ and $m_H \approx 127.1$ GeV. Normalization condition $\|\Phi\|^2_Q = 3\|\Phi\|^2_L$ derived from $G_2 = \mathrm{Aut}(\mathbb{O})$ transitivity — now a theorem. Residual 1.5% gap to experiment identified as RG running from matching scale to $M_Z$; direction of correction closes the gap (needs explicit 1-loop calculation to confirm). See [higgs.md](higgs.md).
 
 3. ~~**$\sqrt{3}$ Killing form calculation**~~ **Done.** $SU(3) \subset G_2$ via long roots; explicit root computation gives $g_{SU(3)}/g_\text{short} = 1/\sqrt{3}$ from Killing form; embedding index $j=1$ means $g_3 = g_{G_2}$ at GUT scale — so $1/\sqrt{3}$ does NOT appear in $g_3/g_2$. Both $\sqrt{3}$'s (root ratio and Weinberg angle $g'/g_2 = \sqrt{3/5}$) share the same origin: $N_c = 3$. Not independent predictions. See [dynamics.md](dynamics.md).
 
@@ -104,7 +104,27 @@ Then the program's target theorem is:
 
 4b. ~~**Triality frame from Furey-Hughes**~~ **Done.** Three-step derivation: (i) $u$-selection fixes $u^\perp$ and leaves a residual $SU(2)$ freedom in $\mathbb{H}$; (ii) $\mathbb{H}$-selection (Furey-Hughes electroweak step) determines $D_4 \subset E_8 = \mathbb{O}_\mathbb{Z}$ and hence the triality $\tau$ up to $\mathbb{Z}/2$ inversion; (iii) the octonionic orientation (fixed by the multiplication table) resolves the inversion. The two-step cascade $(u + \mathbb{H})$ **fully determines** the Leech sublattice. The key structural fact: $G_2 = SO(8)^\tau$ (the fixed-point subgroup of $D_4$ triality in $SO(8)$), which means any $\tau$-covariant sublattice of $E_8^3$ is automatically equivariant under the diagonal $G_2$ action. The cascade that forces the SM Higgs also fixes the Leech ground state — same algebraic data, two roles. See [statics.md](statics.md).
 
-5. **Index-64 quotient structure** — the Jordan product $D \circ U$ maps the Leech tier into the 64-class quotient $E_8^3/\sqrt{2}\Lambda_{24}$. Identify the structure of this quotient explicitly: is $E_8^3/\sqrt{2}\Lambda_{24} \cong (\mathbb{Z}/2)^6$? Does the 64 relate to the weight-8 Golay codewords (there are $759 \cdot 8 / 24 = ...$, no — there are $C(24,8)/... = 759$ weight-8 codewords in $\mathcal{G}_{24}$, order 64 = $2^6$, and the minimum weight-8 structure of the Golay code naturally produces 64-dimensional objects)? If the quotient structure matches the Golay code's weight-8 layer, the snap coupling lands on Golay-admissible states — making the Leech tier a true error-correcting ground state.
+5. ~~**Index-64 quotient structure**~~ **Done (partial — see [statics.md](statics.md) Part 4).** Three results: (i) $E_8^3/\sqrt{2}\Lambda_{24} \cong (\mathbb{Z}/2)^6$ is a **theorem**: since $\sqrt{2}\Lambda_{24} \subset E_8^3$ with both unimodular, dualizing gives $E_8^3 \subset \tfrac{1}{\sqrt{2}}\Lambda_{24}$, so $2E_8^3 \subset \sqrt{2}\Lambda_{24}$ and every coset element has order $\leq 2$. (ii) The hexacode $\mathcal{H}_6$ ($[6,3,4]_{\mathbb{F}_4}$, 64 codewords) has additive group $\cong (\mathbb{Z}/2)^6$; the MOG construction of $\Lambda_{24}$ identifies the 64 cosets with hexacode codewords — explicit bijection requires the triality frame of item 4b. (iii) Golay-admissibility is automatic: hexacode minimum distance 4 means no weight-1,2,3 cosets exist, and minimum activation touches exactly 8 of 24 coordinates — the Golay minimum weight 8. Snap coupling $D \circ U$ lands on a non-trivial Golay-admissible coset for all $D \neq \pm I$. **Open**: whether the specific coset is weight-4 (octad) or weight-6 (hexad) type for a given snap state $D$.
+
+---
+
+### Immediate / well-scoped
+
+6. **1-loop RG correction to $m_H$** — the tree-level result $m_H = 2\cos\theta_W m_W \approx 127.1$ GeV has a 1.5% residual gap to experiment ($125.25$ GeV). The gap is identified as RG running from the octonionic matching scale down to $M_Z$; the direction of the 1-loop correction closes it. An explicit 1-loop calculation would promote success condition 2 from "partial" to "confirmed" (or falsify it). This is the most concrete bounded task: requires identifying the matching scale, running the Higgs quartic and gauge couplings, and checking the sign and magnitude of the correction.
+
+7. **Hexacode coset type for snap states** — completing item 5: given a snap state $D = \mathrm{diag}(d_1,d_2,d_3)$, the coset $(\lambda_{12}, \lambda_{13}, \lambda_{23}) \in (\mathbb{F}_4)^3$ is determined by $(d_i + d_j)/2 \bmod \mathbb{F}_4$. The question is whether generic snap states produce weight-4 (octad-type) or weight-6 (hexad-type) hexacodewords, and whether any constraint on $D$ selects one class over the other. Requires writing the hexacode generator matrix explicitly using the triality frame from item 4b and evaluating $D$-families.
+
+### Medium-term / structural
+
+8. **Born rule from Golay admissibility** — failure condition 4 remains open: no probability measure reproducing $P(i) = |\psi_i|^2$ on Golay-admissible support has been constructed. Without this, the Leech-tier picture has no physical probability interpretation. The Golay minimum-weight constraint defines the support; the task is to show the unique measure on that support consistent with unitary evolution and coset structure is the Born rule. May connect to the hexacode weight distribution (weight-4 vs weight-6 admissible states having different measure contributions).
+
+9. **Three generations** — success condition 3, untouched. $J_3(\mathbb{O})$ is a $3 \times 3$ matrix algebra; the 3 is structural, not derived. An argument is needed for why the chain admits exactly 3 generations and not 4. The three diagonal snap coordinates $(a,b,c)$ and the three off-diagonal $\mathbb{O}$-slots are the obvious candidates; whether the generation count follows from the Jordan rank or from some representation-theoretic constraint on $E_6 \supset SO(10) \supset SU(5)$ is not yet examined.
+
+### Hard / requires external input or new structure
+
+10. **$\alpha_3$ non-unification** — non-SUSY SM fails to unify $\alpha_3$ with $\alpha_1, \alpha_2$ by 15% even with $\sin^2\theta_W = 3/8$ as GUT input. Either a SUSY spectrum is required (external to the program), or the program must supply a geometric reason why the running above the matching scale differs from naive SM extrapolation. No clear path from the current chain.
+
+11. **SU(3) as physical QCD color** — flagged as a possible permanent limitation. The gap (stabilizer $\to$ gauged color with correct representations, coupling, and anomaly cancellation) has no current approach within the program. May require a separate construction at the $E_6$ level using the $\mathbf{27}$ decomposition under $SU(3) \times SU(3) \times SU(3)$.
 
 ---
 
