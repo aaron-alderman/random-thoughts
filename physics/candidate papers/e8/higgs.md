@@ -616,7 +616,56 @@ The precise statement is: a single-loop RG calculation with the SM $\beta$-funct
 - **Close:** An explicit 1-loop RG calculation showing $8\lambda(M_Z)/g^2(M_Z) = 2.426$ starting from $R_0 = 2.500$ with SM $\beta$-functions. Given the direction of running, this appears plausible.
 - **Kill:** If the 1-loop RG running overshoots (drives $R$ significantly below 2.426) or requires fine-tuning of initial conditions beyond the one constraint ($\lambda_0 = 5g_0^2/16$), the tree-level formula would be insufficient.
 
-**Status of gap 2:** Identified as an RG running issue. Direction of correction is right. Magnitude requires explicit calculation. Not closed, but well-characterized.
+**Status of gap 2:** Identified as a 1-loop threshold correction issue (see Gap 2 Correction below). The "RG running from GUT to EW" framing is problematic — see below. Not closed, but reframed.
+
+---
+
+### Gap 2 Correction: RG Running vs. EW Threshold Correction
+
+The framing "3% reduction in $R$ from GUT to EW via RG running" turns out to be incorrect. Here is the explicit analysis.
+
+**The claimed mechanism (GUT-to-EW running).**
+
+Set $\lambda_0 = 5g_2^2(\Lambda)/16 \approx 0.0925$ at $\Lambda \approx 10^{13}$ GeV and run $R = 8\lambda/g_2^2$ down to $M_Z$. Both $\lambda$ and $g_2^2$ increase going to lower scales:
+- $g_2^2$: $0.296 \to 0.424$ (+43%, from $\alpha_2^{-1}: 42.4 \to 29.6$)
+- $\lambda$: by analogy with SM running
+
+Using SM $\beta$-functions at the GUT scale with $y_t(\Lambda) \approx 0.5$:
+
+$$16\pi^2 \beta_\lambda|_\Lambda \approx 12\lambda_0^2 - 6y_t^4 + \tfrac{3}{8}[2g_2^4 + (g_2^2+g'^2)^2] + \lambda_0(12y_t^2 - 9g_2^2 - 3g'^2)$$
+$$\approx 0.103 - 0.375 + 0.150 - 0.018 = -0.140$$
+
+So $\beta_\lambda(\Lambda) = -0.140/16\pi^2 < 0$: $\lambda$ DECREASES going to UV, equivalently **INCREASES going to IR**. Running $\lambda$ from $\Lambda$ to $M_Z$: $\lambda$ increases from 0.0925 toward a value well above 0.1294.
+
+Comparison with the SM (run upward from experiment): the SM running from $\lambda(M_Z) = 0.1294$ (physical $m_H = 125.2$ GeV) upward gives $\lambda(\Lambda) \approx -0.01$ (the SM vacuum near-instability). But our octonionic BC gives $\lambda_0 = +0.0925$ at the same scale. Running this DOWN to $M_Z$ gives $\lambda(M_Z) \approx 0.233$, predicting $m_H \approx 167$ GeV — far above 125.2 GeV.
+
+**The GUT-to-EW running framing is therefore wrong in magnitude.** The 3% gap between 127.1 and 125.2 GeV cannot be attributed to SM running of the quartic from the GUT scale.
+
+**Vacuum stability tension.** With physical $m_H = 125.2$ GeV, the SM $\lambda$ runs to zero (near-instability) around $10^{10}$–$10^{12}$ GeV and is slightly negative by $10^{13}$ GeV. The octonionic BC $\lambda_0 = 0.0925 > 0$ is inconsistent with this SM running. This is a genuine tension: the framework either predicts new physics between the EW and GUT scales that modifies the running (making $\lambda$ smaller in the IR than SM alone), or the formula should not be treated as a GUT-scale UV boundary condition at all.
+
+**The correct framing: 1-loop EW threshold correction.**
+
+The Todorov formula $\lambda = g^2\cos^2\theta_W/2$ is a tree-level relation within the $sl(2|1)$ superconnection framework at the EW scale. It is not a running coupling relation — it is a statement about the tree-level Lagrangian of the EW sector. The 1.5% gap is a 1-loop correction to this tree-level relation within EW perturbation theory.
+
+The dominant corrections come from:
+1. **Top quark loop** (negative): $\delta\lambda_{top} \approx -6y_t^4/(16\pi^2) \approx -6 \times 0.780/157.9 \approx -0.030$ at $\mu \sim m_H$. This is a $\delta\lambda/\lambda \approx -23\%$ correction, far too large if taken naively.
+2. **Gauge boson loops** (positive): $\delta\lambda_{gauge} \approx +3(2g_2^4 + (g_2^2+g'^2)^2)/(8 \times 16\pi^2) \approx +0.0016$, small ($+1.2\%$).
+
+The top loop appears to overshoot: $\delta\lambda_{top}/\lambda \approx -23\%$ would give $m_H \approx 115$ GeV. However, this naive estimate is not correct: the Todorov tree-level formula already incorporates the EW symmetry breaking structure, and the relevant 1-loop correction is the finite threshold correction to the relation $\lambda = g^2\cos^2\theta_W/2$, not the running of $\lambda$ alone.
+
+Specifically, the 1-loop correction to the ratio $R = m_H^2/m_W^2 = 8\lambda/g_2^2$ (which is what actually matters) involves cancellations between the corrections to $\lambda$ and $g_2^2$. A rough estimate:
+
+$$\delta R/R \approx \frac{\delta\lambda}{\lambda} - \frac{\delta g_2^2}{g_2^2}$$
+
+The gauge boson loop corrections to $m_W^2$ shift $g_2^2$ at the same order; after including these, the net 1-loop correction to $R$ could plausibly be $\approx -1.5\%$ consistent with the observed gap. This requires an explicit calculation.
+
+**What is needed to close or kill gap 2 (revised):**
+
+- **Close:** An explicit 1-loop calculation of the correction to $R = m_H^2/m_W^2$ within the $sl(2|1)$ superconnection framework, accounting for top and gauge loop diagrams at the EW scale. If the net 1-loop correction drives $R$ from 2.500 to 2.427 (a 3% reduction), the formula is confirmed.
+- **Kill:** If the 1-loop correction is of the wrong sign, or requires fine-tuned cancellations to land on 2.427, the tree-level formula is insufficient.
+- **Address the vacuum stability tension:** Identify whether the octonionic framework predicts new physics that modifies the $\lambda$ running between the EW and GUT scales, or establish that the formula should only be applied at the EW scale (making the GUT-scale BC interpretation irrelevant).
+
+**Updated status of gap 2:** The "RG running" interpretation is replaced by the "1-loop EW threshold" interpretation. The vacuum stability tension is a new open problem. The direction of the 1-loop correction ($R$ decreases) is plausible but unconfirmed.
 
 ---
 
@@ -637,7 +686,8 @@ The precise statement is: a single-loop RG calculation with the SM $\beta$-funct
 | 1+3 split $\mathbb{O} = \mathbb{C}_u \oplus \mathbb{C}^3_{u^\perp}$ as origin of Todorov's postulate | Established — $u$-selection forces the split | 2 |
 | Normalization condition $\|\Phi\|^2_Q = 3\|\Phi\|^2_L$ derived from $G_2$ transitivity | Established — theorem from $G_2 = \mathrm{Aut}(\mathbb{O})$ | 2 |
 | Full $m_H/m_W$ derivation internal to $u$-framework (no external postulates) | Established | 2 |
-| 1.5% gap = RG running from matching scale to $M_Z$; direction of correction is right | Identified — explicit 1-loop RG calculation needed | 4 |
+| 1.5% gap = 1-loop EW threshold correction to $sl(2|1)$ tree-level relation | Reframed — GUT-to-EW running framing is wrong in magnitude (gives $m_H\approx 167$ GeV); 1-loop calculation at EW scale needed | 4 |
+| Running octonionic BC $\lambda_0 = 5g_2^2(\Lambda)/16$ to $M_Z$ gives $m_H \approx 167$ GeV | Tension with SM vacuum stability — requires resolution (new physics or EW-only interpretation) | 5 |
 | GUT scale at which $3/8$ applies: not yet derived | Missing | 6 |
 | Vev direction within $\mathbb{H}$: dynamical selection | Missing — $SU(2)$ residual freedom | 6 |
 | Vev scale $v \approx 246$ GeV fixed geometrically | Dynamical gap — not yet derivable | 6 |
