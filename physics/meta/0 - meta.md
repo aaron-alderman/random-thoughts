@@ -16,8 +16,6 @@ It separates seven orthogonal layers:
 
 This is the generic version, independent of any one project.
 
-For a project-specific application, see [00 - master framework.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/00%20-%20master%20framework.md).
-
 ---
 
 ## 1. Statics / Kinematics
