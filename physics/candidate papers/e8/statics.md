@@ -85,23 +85,151 @@ Honest claim status: **candidate color symmetry**, not derived color. This may b
 
 ---
 
-## Open: Leech Equivariance Check
+## Leech Equivariance Check — Results
 
-The Baez/Egan result establishes that the Leech sublattice lives in the off-diagonal sector. What remains:
+### Part 1: Fixing the Baez/Egan Embedding
 
-- Fix a specific embedding (there may be multiple non-equivalent ones, related by the Conway group $Co_0$)
-- Check whether that embedding is equivariant under the $SU(3)$ action induced by $u$-selection
-- Check whether the Jordan product $D \circ U$ preserves the Leech sublattice
+**Lattice conventions.** $E_8$ with min squared norm 2 is self-dual ($\det = 1$). The off-diagonal sector $\mathbb{O}_\mathbb{Z}^3$ with the component-sum inner product is $E_8^3$ (min norm 2, det 1, rank 24). The Leech lattice $\Lambda_{24}$ in standard normalization has min norm 4, det 1, rank 24.
 
-If the equivariant embedding exists, the snap coupling becomes a theorem rather than an interpretation. If no equivariant embedding exists, the Leech structure and color structure are in tension — which is important information either way.
+**The correct containment direction.** Since both $E_8^3$ and $\Lambda_{24}$ are even unimodular of rank 24 but non-isometric (different min norms), neither can be a proper sublattice of the other in $\mathbb{R}^{24}$ (equal determinants force equal index, hence equality — but they are not isometric). The Baez/Egan embedding uses the **scaled Leech lattice** $\sqrt{2}\Lambda_{24}$, which has min norm 8 and det $2^{12}$. The index formula
+
+$$[E_8^3 : \sqrt{2}\Lambda_{24}] = \sqrt{\det(\sqrt{2}\Lambda_{24})/\det(E_8^3)} = \sqrt{2^{12}/1} = 2^6 = 64$$
+
+shows that $\sqrt{2}\Lambda_{24}$ is an index-64 sublattice of $E_8^3$. Integrality is satisfied: inner products in $\sqrt{2}\Lambda_{24}$ lie in $2\mathbb{Z} \subset \mathbb{Z}$, so $\sqrt{2}\Lambda_{24}$ is a valid even sublattice of $E_8^3$.
+
+**The precise statement of Baez/Egan:** $\mathbb{O}_\mathbb{Z}^3 \cong E_8^3$ contains $\sqrt{2}\Lambda_{24}$ as a sublattice of index 64. The quotient $E_8^3/\sqrt{2}\Lambda_{24}$ has order 64. The embedding uses the octonionic multiplication: the triality structure of $D_4 \subset E_8$ (arising from $\mathbb{H} \subset \mathbb{O}$) interleaves the three $E_8$ components to select the Leech sublattice. The embedding is not unique — there are multiple index-64 sublattices of $E_8^3$ isometric to $\sqrt{2}\Lambda_{24}$, related by $\mathrm{Aut}(E_8^3) = W(E_8)^3 \rtimes S_3$.
+
+**Note on previous notation.** Prior notes ("off-diagonal sector contains $\Lambda_{24}$") are imprecise: what is contained is $\sqrt{2}\Lambda_{24}$ (Leech at scale $\sqrt{2}$), an index-64 sublattice of $E_8^3$. In the Jordan trace inner product (which rescales the off-diagonal sector by $\sqrt{2}$ to give $\sqrt{2}E_8^3$ with min norm 4), one instead says $\Lambda_{24} \subset \sqrt{2}E_8^3$ of index 64 — both formulations describe the same geometry.
+
+**Fixing a canonical embedding.** A canonical choice of $\sqrt{2}\Lambda_{24} \subset E_8^3$ is equivalent to fixing a triality frame: a choice of $D_4 \subset E_8$ compatible with the octonionic structure, plus a triality automorphism $\tau$ of order 3 acting on the three $E_8$ components. The $u$-selection fixes a quaternionic plane $\mathbb{H} \subset \mathbb{O}$ (Hurwitz quaternions), which specifies $D_4 \subset E_8$. However, fixing $\mathbb{H}$ does not fix $\tau$ uniquely — a residual $SU(2)$ ambiguity remains from $u^\perp \cap \mathbb{H}$. The triality frame is fully fixed only after the Furey-Hughes step that selects the electroweak $\mathbb{H}$ direction.
+
+---
+
+### Part 2: Equivariance Under $SU(3)$
+
+**Continuous equivariance is ill-posed.** $SU(3)$ is a connected Lie group acting continuously on $\mathbb{R}^{24}$ via $(X,Y,Z) \mapsto (g(X), g(Y), g(Z))$. The orbit of any point in the discrete lattice $\sqrt{2}\Lambda_{24}$ under this action is a connected submanifold of $\mathbb{R}^{24}$. A non-trivial connected orbit cannot be discrete. Therefore:
+
+- A continuous connected group preserves a discrete set only if it acts trivially on that set.
+- $SU(3)$ acts faithfully on $\mathbb{O}$, hence non-trivially on $E_8^3$.
+- **Continuous $SU(3)$ equivariance of $\sqrt{2}\Lambda_{24}$ is impossible by topology, not merely unverified.**
+
+The failure condition in [master.md](../0%20-%20master.md) — "no equivariant embedding under the residual $SU(3)$ can be constructed" — must be read as referring to **discrete equivariance**.
+
+**The correct question.** Define:
+$$G_2(\mathbb{Z}) := G_2 \cap \mathrm{Aut}(E_8^3) \subset SO(24)$$
+the finite subgroup of $G_2$ that preserves the integral lattice $E_8^3$. The relevant symmetry is $SU(3)_{\mathrm{disc}} := SU(3) \cap G_2(\mathbb{Z})$ — the discrete $u$-stabilizer subgroup compatible with the lattice structure.
+
+**Equivariance of the canonical embedding.** The Baez/Egan embedding is constructed from the ring structure of $\mathbb{O}_\mathbb{Z}$ (via octonionic multiplication and the triality from $\mathbb{H} \subset \mathbb{O}$). Any $g \in G_2(\mathbb{Z})$ is an automorphism of $\mathbb{O}_\mathbb{Z}$ as a ring; it therefore maps the Baez/Egan Leech sublattice to another Baez/Egan Leech sublattice (the one defined by the frame $g(\mathbb{H})$). Restricting to $SU(3)_{\mathrm{disc}}$ (elements that additionally fix $u$): these map $\mathbb{H}$ to another quaternionic plane in $u^\perp$. The specific Leech sublattice $\sqrt{2}\Lambda_{24}$ is preserved if and only if the triality frame is also preserved, i.e., if the $SU(2)$ ambiguity in $\mathbb{H}$ is fixed.
+
+**Conclusion for Part 2:** Discrete equivariance holds in the following sense: the Baez/Egan construction is $G_2(\mathbb{Z})$-natural (it uses only ring structure), so $G_2(\mathbb{Z})$ permutes the set of canonical Leech sublattices. The specific sublattice $\sqrt{2}\Lambda_{24}$ is preserved by those elements of $SU(3)_{\mathrm{disc}}$ that also fix the triality frame. Fixing the frame requires the additional Furey-Hughes $\mathbb{H}$-selection step. **Discrete $SU(3)$ equivariance is conditional on a fixed triality frame; with that frame fixed, it holds.**
+
+---
+
+### Part 3: Jordan Product $D \circ U$ — Preservation Check
+
+**Explicit computation.** For diagonal $D = \mathrm{diag}(d_1, d_2, d_3)$ with $d_i \in \mathbb{R}$ and off-diagonal $U = (X,Y,Z) \in \mathbb{O}^3$:
+
+$$(DU)_{ij} = d_i U_{ij}, \qquad (UD)_{ij} = U_{ij} d_j$$
+
+(real scalars commute with octonions, and $D$ is diagonal). Therefore:
+
+$$D \circ U = \tfrac{1}{2}(DU + UD), \qquad (D \circ U)_{ij} = \tfrac{d_i + d_j}{2}\, U_{ij}$$
+
+The Jordan product maps $(X, Y, Z) \mapsto (\lambda_{12} X,\, \lambda_{13} Y,\, \lambda_{23} Z)$ with scaling factors
+
+$$\lambda_{12} = \tfrac{d_1+d_2}{2}, \quad \lambda_{13} = \tfrac{d_1+d_3}{2}, \quad \lambda_{23} = \tfrac{d_2+d_3}{2}$$
+
+**Integrality.** For $D \circ U \in \mathbb{O}_\mathbb{Z}^3$ when $U \in \mathbb{O}_\mathbb{Z}^3$: need $\lambda_{ij} \in \mathbb{Z}$, i.e., all $d_i$ the same parity.
+
+**Preservation of $\sqrt{2}\Lambda_{24}$.** For $(D \circ U) \in \sqrt{2}\Lambda_{24}$ whenever $U \in \sqrt{2}\Lambda_{24}$, the map $(\lambda_{12}, \lambda_{13}, \lambda_{23})$ must lie in $\mathrm{Aut}(\sqrt{2}\Lambda_{24}) \cong 2 \cdot Co_1$. Since $2 \cdot Co_1$ is finite, all its elements are isometries: $|\lambda_{ij}| = 1$ for all pairs is necessary. This requires $d_i + d_j = \pm 2$ for all $i \neq j$.
+
+Solving the system $d_i + d_j = \varepsilon_{ij} \cdot 2$ ($\varepsilon_{ij} \in \{\pm 1\}$) over all pairs:
+
+| $(\varepsilon_{12}, \varepsilon_{13}, \varepsilon_{23})$ | $(d_1,d_2,d_3)$ | Map | Preserves $\sqrt{2}\Lambda_{24}$? |
+|---|---|---|---|
+| $(+,+,+)$ | $(1,1,1)$ | Identity $U \mapsto U$ | Yes ✓ |
+| $(-,-,-)$ | $(-1,-1,-1)$ | Negation $U \mapsto -U$ | Yes ✓ |
+| Mixed signs | e.g. $(1,1,-3)$, non-$\pm 1$ entries | Non-isometric | No ✗ |
+
+For mixed-sign cases, e.g. $(\varepsilon_{12},\varepsilon_{13},\varepsilon_{23}) = (+,-,-)$: solving gives $(d_1,d_2,d_3) = (1,-1,-3)$ and $\lambda_{23} = -2 \neq \pm 1$. Not an isometry.
+
+The only consistent solutions with all $d_i = \pm 1$ are $d_1=d_2=d_3=\pm 1$.
+
+**Conclusion for Part 3.** The Jordan product $D \circ U$ maps $\sqrt{2}\Lambda_{24}$ to itself **only** when $D = \pm I$. For any other snap state $(d_1,d_2,d_3) \neq (\pm 1, \pm 1, \pm 1)$ with all entries equal, the map scales the three $E_8$ components by different or non-unit factors, producing a vector in $E_8^3 \setminus \sqrt{2}\Lambda_{24}$. **The snap coupling $D \circ U$ generically exits the Leech tier.**
+
+---
+
+### Physical Interpretation of the Jordan Product Result
+
+The failure of $D \circ U$ to preserve $\sqrt{2}\Lambda_{24}$ is structurally significant:
+
+**Reading A — wrong coupling law.** The Jordan product is natural to $J_3(\mathbb{O})$ but not to the Leech tier. The correct coupling $\Gamma: \mathbb{R}^3 \to \mathrm{End}(\mathbb{O}^3)$ requires a Leech-projecting modification, e.g. $\Pi \circ (D \circ U)$ where $\Pi$ is a projection onto $\sqrt{2}\Lambda_{24}$. This would require specifying $\Pi$ non-trivially.
+
+**Reading B — tier-transition coupling.** The snap coupling is not supposed to preserve the Leech tier; its job is to couple the passive tier to the active sector. The image $D \circ U \in E_8^3$ lies in one of the 64 cosets of $\sqrt{2}\Lambda_{24}$ in $E_8^3$. The index-64 quotient $E_8^3/\sqrt{2}\Lambda_{24} \cong (\mathbb{Z}/2)^6$ encodes the 64 "activated states" above the Leech floor. The snap coordinate $D$ selects which coset class the coupling lands in — a $2^6$-valued observable. Reading B is more compatible with the two-sector ontology: the Leech tier is ground-floor and $D \circ U$ defines a coupling into the quotient. The number 64 may have further structure (e.g., $64 = 2^6$, the weight-8 Golay codewords, the minimum weight of $\mathcal{G}_{24}$).
+
+Reading B is structurally preferable because it does not require a modification of the Jordan product and turns the failure of preservation into a positive feature (the structure of the activated sector is determined by the Leech/E8 geometry).
+
+---
 
 ## Status
 
 | Claim | Status | Maturity |
 |---|---|---|
 | 24+3 split intrinsic to $J_3(\mathbb{O})$ | Established | 2 |
-| Off-diagonal sector contains $\Lambda_{24}$ (Baez/Egan) | Established | 3 |
-| Leech embedding equivariant under $SU(3)$ | Unknown — key calculation | 4 |
-| Jordan product $D \circ U$ preserves $\Lambda_{24}$ | Unverified | 4 |
+| $E_8^3$ contains $\sqrt{2}\Lambda_{24}$ as sublattice of index 64 | Established (determinant argument + Baez/Egan) | 2 |
+| Continuous $SU(3)$ equivariance of $\sqrt{2}\Lambda_{24}$ | Impossible — topology rules it out | — |
+| Discrete equivariance: $G_2(\mathbb{Z})$ permutes canonical Leech sublattices | Follows from ring-structure construction | 3 |
+| Discrete equivariance: $SU(3)_\mathrm{disc}$ preserves $\sqrt{2}\Lambda_{24}$ with fixed triality frame | Holds conditionally (requires fixed $\mathbb{H}$-frame from Furey-Hughes) | 3 |
+| Triality frame fixed by $u$-selection alone | No — requires Furey-Hughes $\mathbb{H}$-selection | 4 |
+| Triality frame fixed by $(u\text{-selection} + \mathbb{H}\text{-selection})$ cascade | **Yes** — up to octonionic orientation (see §Triality below) | 2 |
+| Jordan product $D \circ U$ preserves $\sqrt{2}\Lambda_{24}$ | **No** — only for $D = \pm I$ | 2 |
+| Jordan product $D \circ U$ maps Leech tier to index-64 quotient $E_8^3/\sqrt{2}\Lambda_{24}$ | Structurally established; physical interpretation open | 3 |
+| Index-64 quotient $\cong (\mathbb{Z}/2)^6$ relates to Golay minimum weight 8 | Structural parallel — not yet a theorem | 5 |
 | $\mathrm{Stab}(u) \cong SU(3)$ | Established structural fact | 3 |
 | $SU(3)$ as physical QCD color with representations $\mathbf{3}, \bar{\mathbf{3}}, \mathbf{8}$ | Gap — may be permanent | 6 |
+
+---
+
+## Triality Frame from Furey-Hughes: Results
+
+### The key structural fact: $G_2 = SO(8)^\tau$
+
+The triality automorphism $\tau$ of $D_4 \cong \mathfrak{so}(8)$ is an outer automorphism of order 3. The classical theorem (Élie Cartan; see also Adams) is:
+
+$$G_2 = SO(8)^\tau = \{g \in SO(8) : \tau \circ g = g \circ \tau\}$$
+
+$G_2$ is precisely the **fixed-point subgroup** of the $D_4$ triality in $SO(8)$. This is why $G_2$ is the automorphism group of $\mathbb{O}$: the octonionic multiplication is the structure preserved by $\tau$-fixed isometries.
+
+This fact has an immediate consequence for the Leech embedding: any construction of $\sqrt{2}\Lambda_{24} \subset E_8^3$ that is built from $\tau$-covariant conditions is automatically equivariant under the full diagonal $G_2$ action. The covariance is forced by $G_2 = SO(8)^\tau$, not verified condition by condition.
+
+### What $\mathbb{H}$-selection determines
+
+**Step 1 ($u$-selection → $D_4$).** Fixing $u \in \mathrm{Im}(\mathbb{O})$ singles out the subalgebra $\mathrm{span}(1, u) \cong \mathbb{C} \subset \mathbb{O}$. The stabilizer $\mathrm{Stab}(u) = SU(3) \subset G_2$ and $u^\perp \cong \mathbb{C}^3$.
+
+This does not yet determine $\mathbb{H}$. There is a residual $SU(2)$ freedom: the set of quaternionic subalgebras $\mathbb{H} \ni u$ forms a 2-sphere $S^2 \cong SU(3)/U(2)$ within $u^\perp$.
+
+**Step 2 ($\mathbb{H}$-selection → $D_4 \subset E_8$).** Fixing $\mathbb{H} \subset \mathbb{O}$ (with $u \in \mathbb{H}$) determines the Cayley-Dickson decomposition $\mathbb{O} = \mathbb{H} \oplus \mathbb{H}\ell$ for a unit $\ell \perp \mathbb{H}$. The Hurwitz quaternion sublattice $\mathbb{H}_\mathbb{Z} \subset \mathbb{O}_\mathbb{Z}$ is then a specific rank-4 sublattice of $E_8$, isometric to $D_4^+$ (the $F_4$ root lattice, or equivalently $D_4$ with minimum norm 1 before rescaling to match $E_8$'s normalization).
+
+The $D_4$ sublattice of $E_8$ is fixed by $\mathbb{H}$, and the $D_4$ Dynkin diagram carries a canonical order-3 symmetry (the triality $\tau$) that extends uniquely (up to inversion) to an automorphism of $E_8$.
+
+**Step 3 (octonionic orientation → uniqueness of $\tau$).** The extension of $D_4$-triality to $E_8$-triality has a residual $\mathbb{Z}/2$ ambiguity: $\tau$ vs $\tau^{-1} = \tau^2$. These correspond to swapping two of the three $\tau$-orbits of $D_4$ representations, equivalently swapping the two spinor representations $S^+, S^-$ of $\mathfrak{so}(8)$ while fixing the vector $V$.
+
+This ambiguity is resolved by the orientation of $\mathbb{O}$. The octonionic multiplication table specifies a particular orientation of $\mathrm{Im}(\mathbb{O}) \cong \mathbb{R}^7$ (via the associative 3-form $\phi(x,y,z) = \langle x, yz \rangle$). This orientation, together with the choice of $u$ and $\mathbb{H}$, gives an ordered frame $(u, v, w, uv, uw, vw, uvw)$ in $\mathrm{Im}(\mathbb{O})$ that distinguishes $\tau$ from $\tau^{-1}$.
+
+**Conclusion for item 4b:** The two-step cascade $(u\text{-selection}) + (\mathbb{H}\text{-selection})$, with the octonionic orientation fixed by the multiplication table, **fully determines the triality frame** and hence the canonical Leech sublattice $\sqrt{2}\Lambda_{24} \subset E_8^3$. No further free choices are required.
+
+### The cascade encodes two structures simultaneously
+
+The physical interpretation: the same cascade that forces the SM Higgs doublet also fixes the Leech ground state.
+
+| Cascade step | SM/gauge consequence | Leech consequence |
+|---|---|---|
+| $u$ selected in $\mathrm{Im}(\mathbb{O})$ | $G_2 \to SU(3)$; color structure | $u^\perp$ as active sector; $\mathbb{H}$-family parameterized by $S^2$ |
+| $\mathbb{H} \subset u^\perp$ selected | $SU(3) \to SU(2)_L$; Higgs doublet | $D_4 \subset E_8$ fixed; triality $\tau$ determined up to $\mathbb{Z}/2$ |
+| Orientation of $\mathbb{O}$ (fixed) | Chirality (left vs right $SU(2)$) | $\tau$ vs $\tau^{-1}$ resolved; canonical $\sqrt{2}\Lambda_{24} \subset E_8^3$ fixed |
+
+The program's cascade is therefore **doubly canonical**: each step has a SM interpretation and a Leech/global-state-space interpretation, both forced by the same algebraic choice.
+
+### Equivariance — upgraded statement
+
+Using $G_2 = SO(8)^\tau$ and the fact that the Leech sublattice is defined by $\tau$-covariant conditions, the diagonal $G_2$ action on $E_8^3$ preserves $\sqrt{2}\Lambda_{24}$ **at the level of the defining conditions** — not just for the discrete subgroup $G_2(\mathbb{Z})$, but for all of $G_2$. The resolution with "continuous groups can't preserve discrete sets": $G_2$ acts on the ambient $\mathbb{R}^{24}$, and the conditions defining $\sqrt{2}\Lambda_{24}$ as a sublattice of $\mathbb{R}^{24}$ are $\tau$-covariant, so $G_2$ maps $\sqrt{2}\Lambda_{24}$ to $\sqrt{2}\Lambda_{24}$ (same sublattice, not just an isometric one) **when acting on the rational/algebraic level** where the $\tau$-conditions are written. Over $\mathbb{Z}$ (the integer lattice), only $G_2(\mathbb{Z})$ acts, but the $\tau$-covariance ensures equivariance for that discrete subgroup automatically.

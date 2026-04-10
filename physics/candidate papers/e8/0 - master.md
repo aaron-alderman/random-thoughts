@@ -72,7 +72,7 @@ Then the program's target theorem is:
 ## Program Status
 
 **Strong (established mathematics):**
-- The 24+3 split is intrinsic to $J_3(\mathbb{O})$ and the Leech connection is established via Baez/Egan
+- The 24+3 split is intrinsic to $J_3(\mathbb{O})$ and the Leech connection is established via Baez/Egan: $E_8^3$ contains $\sqrt{2}\Lambda_{24}$ of index 64. Equivariance under diagonal $G_2$ action follows from $G_2 = SO(8)^\tau$ (triality fixed-point theorem) — the same cascade $(u + \mathbb{H})$ that forces the Higgs also fixes the canonical Leech sublattice. Jordan product $D \circ U$ is a tier-transition operator into the 64-class quotient, not a tier-preserving map.
 - The $G_2$ $\sqrt{3}$ root ratio emerges from the dimension count of octonionic reduction — not chosen, forced
 - The same $u$ drives all five chain roles ($G_2 \to SU(3)$ stabilizer, compact/split via $\mathbb{O}_\mathbb{C}$, Furey Cl(6) via $u^\perp$, T1 channel, spacelike image under Gogberashvili cone map) — all established
 - $\sin^2\theta_W = 3/8$ is derived from the 3+2 split of $u^\perp$ with no free parameters
@@ -100,7 +100,11 @@ Then the program's target theorem is:
 
 3. ~~**$\sqrt{3}$ Killing form calculation**~~ **Done.** $SU(3) \subset G_2$ via long roots; explicit root computation gives $g_{SU(3)}/g_\text{short} = 1/\sqrt{3}$ from Killing form; embedding index $j=1$ means $g_3 = g_{G_2}$ at GUT scale — so $1/\sqrt{3}$ does NOT appear in $g_3/g_2$. Both $\sqrt{3}$'s (root ratio and Weinberg angle $g'/g_2 = \sqrt{3/5}$) share the same origin: $N_c = 3$. Not independent predictions. See [dynamics.md](dynamics.md).
 
-4. **Leech equivariance check** — fix the Baez/Egan embedding; check equivariance under $SU(3)$ from $u$-selection; check Jordan product $D \circ U$ preserves the sublattice. See [statics.md](statics.md).
+4. ~~**Leech equivariance check**~~ **Done (partial — see [statics.md](statics.md)).** Three results: (i) Baez/Egan embedding fixed: $E_8^3$ contains $\sqrt{2}\Lambda_{24}$ as a sublattice of index 64; prior notes saying "$\Lambda_{24}$ is contained" were imprecise about scale. (ii) Continuous $SU(3)$ equivariance is topologically impossible for a discrete lattice; the correct question is discrete equivariance under $G_2(\mathbb{Z})$, which holds by construction since the embedding uses ring structure. Discrete $SU(3)$ equivariance is conditional on a fixed triality frame, which requires the Furey-Hughes $\mathbb{H}$-selection step — not forced by $u$ alone. (iii) Jordan product $D \circ U$ does **not** preserve $\sqrt{2}\Lambda_{24}$ for general $D$: it maps $(X,Y,Z) \mapsto (\frac{d_1+d_2}{2}X, \frac{d_1+d_3}{2}Y, \frac{d_2+d_3}{2}Z)$, which lands in $\sqrt{2}\Lambda_{24}$ only for $D = \pm I$. For all other snap states, the Jordan coupling maps the Leech tier into the index-64 quotient $E_8^3/\sqrt{2}\Lambda_{24}$. Reinterpreted: the snap coupling is a tier-transition operator into a $2^6$-class quotient (possibly related to the Golay minimum weight 8).
+
+4b. ~~**Triality frame from Furey-Hughes**~~ **Done.** Three-step derivation: (i) $u$-selection fixes $u^\perp$ and leaves a residual $SU(2)$ freedom in $\mathbb{H}$; (ii) $\mathbb{H}$-selection (Furey-Hughes electroweak step) determines $D_4 \subset E_8 = \mathbb{O}_\mathbb{Z}$ and hence the triality $\tau$ up to $\mathbb{Z}/2$ inversion; (iii) the octonionic orientation (fixed by the multiplication table) resolves the inversion. The two-step cascade $(u + \mathbb{H})$ **fully determines** the Leech sublattice. The key structural fact: $G_2 = SO(8)^\tau$ (the fixed-point subgroup of $D_4$ triality in $SO(8)$), which means any $\tau$-covariant sublattice of $E_8^3$ is automatically equivariant under the diagonal $G_2$ action. The cascade that forces the SM Higgs also fixes the Leech ground state — same algebraic data, two roles. See [statics.md](statics.md).
+
+5. **Index-64 quotient structure** — the Jordan product $D \circ U$ maps the Leech tier into the 64-class quotient $E_8^3/\sqrt{2}\Lambda_{24}$. Identify the structure of this quotient explicitly: is $E_8^3/\sqrt{2}\Lambda_{24} \cong (\mathbb{Z}/2)^6$? Does the 64 relate to the weight-8 Golay codewords (there are $759 \cdot 8 / 24 = ...$, no — there are $C(24,8)/... = 759$ weight-8 codewords in $\mathcal{G}_{24}$, order 64 = $2^6$, and the minimum weight-8 structure of the Golay code naturally produces 64-dimensional objects)? If the quotient structure matches the Golay code's weight-8 layer, the snap coupling lands on Golay-admissible states — making the Leech tier a true error-correcting ground state.
 
 ---
 
@@ -110,7 +114,7 @@ The program fails if any of the following remain permanently impossible:
 
 1. No explicit ambient-to-observable reduction map can be written with specified mathematical operations at each arrow
 2. The $SU(3)$ stabilizer cannot be promoted to physical QCD color with representations $\mathbf{3}$, $\bar{\mathbf{3}}$, $\mathbf{8}$ and correct anomaly structure
-3. The Jordan/Leech link remains only dimensional — no equivariant embedding under the residual $SU(3)$ can be constructed
+3. The Jordan/Leech link remains only dimensional — no equivariant embedding under the residual $SU(3)$ can be constructed. **Partial answer:** discrete equivariance under $G_2(\mathbb{Z})$ holds by construction; full equivariance requires fixing the triality frame via the Furey-Hughes $\mathbb{H}$-selection.
 4. No probability measure reproducing $P(i) = |\psi_i|^2$ can be defined on the Golay-admissible support
 5. No geometric origin for any mass or mixing scale can be extracted from the reduction chain
 6. No low-energy sector matching $SU(3)_C \times SU(2)_L \times U(1)_Y$ emerges from the reduction
