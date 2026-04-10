@@ -74,7 +74,7 @@ Then the program's target theorem is:
 **Strong (established mathematics):**
 - The 24+3 split is intrinsic to $J_3(\mathbb{O})$ and the Leech connection is established via Baez/Egan
 - The $G_2$ $\sqrt{3}$ root ratio emerges from the dimension count of octonionic reduction — not chosen, forced
-- The same $u$ drives four of the five chain roles ($G_2 \to SU(3)$ stabilizer, compact/split via $\mathbb{O}_\mathbb{C}$, Furey Cl(6) via $u^\perp$, T1 channel) — established. One check remains: the causal character of $\tilde{u}$ under the Gogberashvili cone map
+- The same $u$ drives all five chain roles ($G_2 \to SU(3)$ stabilizer, compact/split via $\mathbb{O}_\mathbb{C}$, Furey Cl(6) via $u^\perp$, T1 channel, spacelike image under Gogberashvili cone map) — all established
 - $\sin^2\theta_W = 3/8$ is derived from the 3+2 split of $u^\perp$ with no free parameters
 - $m_H = 2\cos\theta_W m_W \approx 127.1$ GeV fully derived: 1+3 split forced by $u$-selection; normalization condition $\|\Phi\|^2_Q = 3\|\Phi\|^2_L$ follows from $G_2 = \mathrm{Aut}(\mathbb{O})$ transitivity — now a theorem, not a postulate. Tree-level 1.5% residual identified as RG running from matching scale to $M_Z$; direction of correction closes the gap (needs explicit 1-loop calculation to confirm)
 
@@ -92,7 +92,7 @@ Then the program's target theorem is:
 
 ## Next Steps (priority order)
 
-1. **Gogberashvili causal character check** — work through arXiv:1602.07979 explicitly; verify image of $\tilde{u}$ is spacelike in $\mathbb{R}^{2,4}$ (not timelike → $SO(1,4)$). See [chain/so24-spin23.md](chain/so24-spin23.md).
+1. ~~**Gogberashvili causal character check**~~ **Done.** $u = j_n$-type (spacelike in $\mathbb{R}^{3,4}$, stabilizer $SU(2,1)$ in split $G_2$) maps to $X^n$ (spacelike in $\mathbb{R}^{2,4}$) under the cone map $\varpi = \lambda_\|/L$, $X^n = x_n/L$. Stabilizer $SO(2,3) \to Spin(2,3)$ ✓. The de Sitter group $SO(1,4)$ appears for the timelike $J_n$/$\varpi$ direction — the wrong branch. See [chain/so24-spin23.md](chain/so24-spin23.md).
 
 1b. ~~**$E_8$ embedding index chain**~~ **Done.** All SM gauge groups embed in $E_8$ with total index $j=1$ through the program's chain ($SU(3)_C$ via $G_2$, $SU(2)_L$ and $SU(3)_C$ via $E_6 \supset SO(10) \supset SU(5)$; $U(1)_Y$ gets the GUT factor $5/3$). Consequence: $\sin^2\theta_W = 3/8$ is forced by the $E_8$ structure automatically — the 3+2 octonionic derivation and the embedding index derivation agree. Full unification $\alpha_3 = \alpha_2 = \alpha_1$ is predicted at $M_{E_8}$; the scale itself is not fixed geometrically (non-SUSY SM gives $\sim10^{13}$ GeV with 15% non-unification of $\alpha_3$). See [higgs.md](higgs.md).
 
