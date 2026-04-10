@@ -86,13 +86,15 @@ Then the program's target theorem is:
 **Persistent weak points:**
 - $SU(3)$ as physical QCD color remains structural, not forced — may be a permanent limitation
 - The Higgs vev scale $v \approx 246$ GeV is not derivable from the algebra alone
-- The GUT scale (needed to connect $\sin^2\theta_W = 3/8$ to measured $0.231$) is not yet derived from the geometry
+- The GUT scale: $M_X \approx 10^{13}$ GeV from SM running with $\sin^2\theta_W = 3/8$ as input; all SM embedding indices in $E_8$ are $j=1$ (computed), giving complete unification at $M_{E_8}$. Non-SUSY SM fails to unify $\alpha_3$ by 15%. The absolute scale $M_{E_8}$ and coupling $\alpha_{E_8}$ are not geometrically determined — require UV input or SUSY spectrum
 
 ---
 
 ## Next Steps (priority order)
 
 1. **Gogberashvili causal character check** — work through arXiv:1602.07979 explicitly; verify image of $\tilde{u}$ is spacelike in $\mathbb{R}^{2,4}$ (not timelike → $SO(1,4)$). See [chain/so24-spin23.md](chain/so24-spin23.md).
+
+1b. ~~**$E_8$ embedding index chain**~~ **Done.** All SM gauge groups embed in $E_8$ with total index $j=1$ through the program's chain ($SU(3)_C$ via $G_2$, $SU(2)_L$ and $SU(3)_C$ via $E_6 \supset SO(10) \supset SU(5)$; $U(1)_Y$ gets the GUT factor $5/3$). Consequence: $\sin^2\theta_W = 3/8$ is forced by the $E_8$ structure automatically — the 3+2 octonionic derivation and the embedding index derivation agree. Full unification $\alpha_3 = \alpha_2 = \alpha_1$ is predicted at $M_{E_8}$; the scale itself is not fixed geometrically (non-SUSY SM gives $\sim10^{13}$ GeV with 15% non-unification of $\alpha_3$). See [higgs.md](higgs.md).
 
 2. ~~**$m_H/m_W$ via Todorov**~~ **Done.** Derived $m_H = 2\cos\theta_W m_W$ from $u$-selection: the 1+3 split $\mathbb{O} = \mathbb{C}_u \oplus \mathbb{C}^3_{u^\perp}$ is the origin of Todorov's postulate, making the $u$-framework the common root of both $\sin^2\theta_W = 3/8$ and $m_H \approx 127.1$ GeV. Residual 1.5% gap to experiment; normalization condition not yet derived from $u$-structure. See [higgs.md](higgs.md).
 
