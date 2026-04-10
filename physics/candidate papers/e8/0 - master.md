@@ -247,13 +247,23 @@ Jordan / Leech              AdS / holography
 
 **The double cover:** The simply-connected cover is what allows spinor representations globally. Without it, only tensor representations are available. This connects to the Leech/Golay global consistency structure — the double cover is also about global rather than local consistency.
 
-**Critical internal consistency requirement:** The vector fixed here must be the *same* octonionic direction $u$ that breaks $G_2 \to SU(3)$ and defines the $T1$ observable channel. If these are the same $u$, the entire chain is driven by a single geometric choice with cascading forced consequences. If they are different, the chain has a hidden branch point. **This must be verified explicitly.**
+**Same-$u$ verification status:** Four of the five roles of $u$ through the chain are now confirmed:
+
+- $\mathrm{Stab}_{G_2}(u) = SU(3)$: established mathematical fact
+- Same $u$ across compact/split via $\mathbb{O}_\mathbb{C}$: established (Hurwitz/Jacobson)
+- $u = e_7$ in Furey's Cl(6), $u^\perp$ is the 6D Witt space: established by the idempotent matching
+- T1 observable channel = $u$: by construction
+
+**One remaining check:** The Gogberashvili cone map sends $\mathrm{Im}(\tilde{\mathbb{O}}) \cong \mathbb{R}^{3,4}$ to $\mathbb{R}^{2,4}$. For the stabilizer of the image vector $v_u$ to be $SO(2,3)$ (giving $Spin(2,3)$ via double cover, as required), $v_u$ must be **spacelike** in $\mathbb{R}^{2,4}$. If $v_u$ were timelike, the stabilizer would be $SO(1,4)$ (the de Sitter group) instead — a different endpoint. Whether $\tilde{u}$ (the split-form image of $u$) maps to a spacelike vector under the Gogberashvili cone map is the single concrete coordinate check still needed. This requires working through Gogberashvili (arXiv:1602.07979) explicitly.
+
+**Note on "time anchor" language:** The description of $u$ as "time anchor in $Spin(2,3)$" refers to $u$'s role *within the reduced theory* — selecting one of the two timelike directions in the $(2+3)$-dimensional space that $Spin(2,3)$ inherits. It does not describe the causal character of the vector fixed in $SO(2,4) \to Spin(2,3)$, which must be spacelike in $\mathbb{R}^{2,4}$.
 
 | Status | Maturity |
 |---|---|
 | Mathematical reduction: Established | 2 |
 | Scale-fixing / RG claim: Proposal | 4 |
-| Same $u$ throughout: Unverified requirement | 4 |
+| Same $u$ at $G_2$, Cl(6), T1 channel, compact/split: Established | 3 |
+| Image of $\tilde{u}$ spacelike under Gogberashvili cone map: Requires explicit coordinate check | 4 |
 
 ---
 
@@ -573,9 +583,9 @@ All items in this section are interpretation unless a given paper explicitly pro
 
 ### Priority order
 
-**1. Verify that the same $u$ drives the entire chain**
+**1. Gogberashvili causal character check (the one remaining same-$u$ item)**
 
-The octonionic direction that breaks $G_2 \to SU(3)$, fixes the vector in $SO(2,4) \to Spin(2,3)$, and defines the $T1$ observable channel must be the same $u$. If it is, the chain is internally consistent and the central claim holds. If not, there is a hidden branch point. This is a concrete check, not a long calculation.
+The same-$u$ claim is confirmed for four of five roles: $G_2 \to SU(3)$ stabilizer (established), compact/split transition via $\mathbb{O}_\mathbb{C}$ (established), Furey Cl(6) via $u^\perp$ (established), T1 channel (by construction). The one remaining check: under the explicit Gogberashvili cone map $\mathrm{Im}(\tilde{\mathbb{O}}) \to \mathbb{R}^{2,4}$, does the image of $\tilde{u}$ land on a **spacelike** vector? Spacelike $\Rightarrow$ stabilizer $SO(2,3) = Spin(2,3)/\mathbb{Z}_2$ ✓. Timelike $\Rightarrow$ stabilizer $SO(1,4)$ (de Sitter group) ✗. Work through Gogberashvili arXiv:1602.07979 explicitly in components to settle this.
 
 **2. The $\sqrt{3}$ Killing form calculation**
 
@@ -825,7 +835,8 @@ The Baez/Egan result that the off-diagonal sector of $J_3(\mathbb{O})$ over inte
 | Choosing $u$ induces $T1/T2$ split | Statics | Choice + derived consequence | 3 |
 | $\mathrm{Stab}(u) \cong SU(3)$ | Statics | Established structural fact | 3 |
 | $u$ aligns with zero-mass interaction channel | Statics/Epistemics | Central proposal | 4 |
-| Single $u$ drives entire chain | Statics | Unverified requirement | 4 |
+| Same $u$ at $G_2$, Cl(6), T1, compact/split | Statics | Established | 3 |
+| Image of $\tilde{u}$ spacelike in $\mathbb{R}^{2,4}$ (Gogberashvili) | Consistency | One coordinate check remaining | 4 |
 | Off-diagonal $J_3(\mathbb{O}_\mathbb{Z})$ contains Leech sublattice | Statics | Established (Baez/Egan) | 3 |
 | Leech embedding is equivariant under $SU(3)$ | Consistency | Unknown — key calculation | 4 |
 | $\sin^2\theta_W = 3/8$ from 3+2 split of $u^\perp$ | Phenomenology | Derived — same as SU(5), different mechanism | 3 |
@@ -862,7 +873,7 @@ The program has two genuinely strong results, one structurally established conne
 **Strong (established mathematics):**
 - The 24+3 split is intrinsic to $J_3(\mathbb{O})$ and the Leech connection is established via Baez/Egan — not numerology
 - The $G_2$ $\sqrt{3}$ root ratio emerges from the dimension count of octonionic reduction — not chosen, forced — and connects to scale-fixing via the Killing form
-- The $u$-selection is invariant across the compact/split $G_2$ transition via shared complexification $\mathbb{O}_\mathbb{C}$ — no hidden discontinuity; internal and spacetime symmetries are two faces of one complex choice
+- The same $u$ drives four of the five chain roles ($G_2 \to SU(3)$ stabilizer, compact/split via $\mathbb{O}_\mathbb{C}$, Furey Cl(6) via $u^\perp$, T1 channel) — established. One check remains: the causal character of $\tilde{u}$ under the Gogberashvili cone map must be spacelike (not timelike) to give $Spin(2,3)$ rather than $SO(1,4)$ as the stabilizer.
 - $\sin^2\theta_W = 3/8$ is derived from the 3+2 split of $u^\perp$ with no free parameters — the same number as SU(5), but here it emerges from the $u$-selection forcing the hypercharge structure rather than from a GUT group embedding
 
 **Structurally established (Furey \& Hughes 2022):**
