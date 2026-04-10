@@ -4,7 +4,8 @@
 
 | Claim | What would confirm it | Maturity |
 |---|---|---|
-| $\sqrt{3}$ appears in physical scale ratio | CMB temperature, cosmological constant, or Hubble scale stands in $\sqrt{3}$ relation to local quantum gravity scale via Killing form calculation | 5 |
+| $\sqrt{3}$ root ratio gives $g_{SU(3)}/g_\text{short} = 1/\sqrt{3}$ within $G_2$ | Established — Killing form explicit; embedding index $j=1$ means $g_3=g_2$ at GUT scale, so $1/\sqrt{3}$ does NOT appear independently in $g_3/g_2$; both $\sqrt{3}$'s (root ratio + Weinberg angle) trace to $N_c=3$ | 2 |
+| $\sqrt{3}$ appears in physical scale ratio (cosmological) | CMB temperature, cosmological constant, or Hubble scale stands in $\sqrt{3}$ relation to local quantum gravity scale | 5 |
 | $\sin^2\theta_W = 3/8$ from 3+2 split of $u^\perp$ | Derived (same number as SU(5), different mechanism — from $u$-selection) | 3 |
 | Connection to measured $0.231$ via standard RG running | Requires GUT scale from geometry — not yet derived | 5 |
 | Golay snapping gives Born rule | Specific forbidden outcome combinations in many-body entangled systems; deviations from Born rule in high-complexity experiments | 5 |
@@ -38,8 +39,8 @@
 | Choosing $u$ induces $T1/T2$ split | Statics | Choice + derived consequence | 3 |
 | $\mathrm{Stab}(u) \cong SU(3)$ | Statics | Established structural fact | 3 |
 | $u$ aligns with zero-mass interaction channel | Statics/Epistemics | Central proposal | 4 |
-| Same $u$ at $G_2$, Cl(6), T1, compact/split | Statics | Established | 3 |
-| Image of $\tilde{u}$ spacelike in $\mathbb{R}^{2,4}$ (Gogberashvili) | Consistency | One coordinate check remaining | 4 |
+| Same $u$ at $G_2$, Cl(6), T1, compact/split, Gogberashvili cone map | Statics | All five roles established | 2 |
+| Image of $\tilde{u}$ spacelike in $\mathbb{R}^{2,4}$ (Gogberashvili) | Consistency | Established — $u = j_n$-type (spacelike, $SU(2,1)$ stabilizer), cone map $X^n = x_n/L$, stabilizer $SO(2,3)$ ✓ | 2 |
 | Off-diagonal $J_3(\mathbb{O}_\mathbb{Z})$ contains Leech sublattice | Statics | Established (Baez/Egan) | 3 |
 | Leech embedding equivariant under $SU(3)$ | Consistency | Unknown — key calculation | 4 |
 | $\sin^2\theta_W = 3/8$ from 3+2 split of $u^\perp$ | Phenomenology | Derived — same as SU(5), different mechanism | 3 |

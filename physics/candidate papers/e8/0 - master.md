@@ -98,7 +98,7 @@ Then the program's target theorem is:
 
 2. ~~**$m_H/m_W$ via Todorov**~~ **Done.** Derived $m_H = 2\cos\theta_W m_W$ from $u$-selection: the 1+3 split $\mathbb{O} = \mathbb{C}_u \oplus \mathbb{C}^3_{u^\perp}$ is the origin of Todorov's postulate, making the $u$-framework the common root of both $\sin^2\theta_W = 3/8$ and $m_H \approx 127.1$ GeV. Residual 1.5% gap to experiment; normalization condition not yet derived from $u$-structure. See [higgs.md](higgs.md).
 
-3. **$\sqrt{3}$ Killing form calculation** — compute $G_2$ long/short root normalization; check whether $1/\sqrt{3}$ appears in SM coupling ratios. Half-day calculation. See [dynamics.md](dynamics.md).
+3. ~~**$\sqrt{3}$ Killing form calculation**~~ **Done.** $SU(3) \subset G_2$ via long roots; explicit root computation gives $g_{SU(3)}/g_\text{short} = 1/\sqrt{3}$ from Killing form; embedding index $j=1$ means $g_3 = g_{G_2}$ at GUT scale — so $1/\sqrt{3}$ does NOT appear in $g_3/g_2$. Both $\sqrt{3}$'s (root ratio and Weinberg angle $g'/g_2 = \sqrt{3/5}$) share the same origin: $N_c = 3$. Not independent predictions. See [dynamics.md](dynamics.md).
 
 4. **Leech equivariance check** — fix the Baez/Egan embedding; check equivariance under $SU(3)$ from $u$-selection; check Jordan product $D \circ U$ preserves the sublattice. See [statics.md](statics.md).
 
