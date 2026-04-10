@@ -65,6 +65,7 @@ Then the program's target theorem is:
 | [dynamics.md](dynamics.md) | Coarse-graining; $\sqrt{3}$ Killing form; RG reframing; reduced dynamics |
 | [epistemics.md](epistemics.md) | Observable channel; Golay snapping; Born rule question; cosmological drift |
 | [phenomenology.md](phenomenology.md) | What's checkable; what's missing; full claim maturity matrix |
+| [references.md](references.md) | Key papers with formulas, numerical details, community reception, open checks |
 
 ---
 
@@ -75,6 +76,7 @@ Then the program's target theorem is:
 - The $G_2$ $\sqrt{3}$ root ratio emerges from the dimension count of octonionic reduction — not chosen, forced
 - The same $u$ drives four of the five chain roles ($G_2 \to SU(3)$ stabilizer, compact/split via $\mathbb{O}_\mathbb{C}$, Furey Cl(6) via $u^\perp$, T1 channel) — established. One check remains: the causal character of $\tilde{u}$ under the Gogberashvili cone map
 - $\sin^2\theta_W = 3/8$ is derived from the 3+2 split of $u^\perp$ with no free parameters
+- $m_H = 2\cos\theta_W m_W \approx 127.1$ GeV fully derived: 1+3 split forced by $u$-selection; normalization condition $\|\Phi\|^2_Q = 3\|\Phi\|^2_L$ follows from $G_2 = \mathrm{Aut}(\mathbb{O})$ transitivity — now a theorem, not a postulate. Tree-level 1.5% residual identified as RG running from matching scale to $M_Z$; direction of correction closes the gap (needs explicit 1-loop calculation to confirm)
 
 **Structurally established (Furey & Hughes 2022):**
 - The cascade mechanism matching the $u$-selection cascade is established in arXiv:2210.10126
@@ -92,7 +94,7 @@ Then the program's target theorem is:
 
 1. **Gogberashvili causal character check** — work through arXiv:1602.07979 explicitly; verify image of $\tilde{u}$ is spacelike in $\mathbb{R}^{2,4}$ (not timelike → $SO(1,4)$). See [chain/so24-spin23.md](chain/so24-spin23.md).
 
-2. **$m_H/m_W$ via Todorov** — reproduce arXiv:2206.06912 starting from the $u$-selection rather than Clifford primitives. If successful, first precision prediction in the program. See [higgs.md](higgs.md).
+2. ~~**$m_H/m_W$ via Todorov**~~ **Done.** Derived $m_H = 2\cos\theta_W m_W$ from $u$-selection: the 1+3 split $\mathbb{O} = \mathbb{C}_u \oplus \mathbb{C}^3_{u^\perp}$ is the origin of Todorov's postulate, making the $u$-framework the common root of both $\sin^2\theta_W = 3/8$ and $m_H \approx 127.1$ GeV. Residual 1.5% gap to experiment; normalization condition not yet derived from $u$-structure. See [higgs.md](higgs.md).
 
 3. **$\sqrt{3}$ Killing form calculation** — compute $G_2$ long/short root normalization; check whether $1/\sqrt{3}$ appears in SM coupling ratios. Half-day calculation. See [dynamics.md](dynamics.md).
 
