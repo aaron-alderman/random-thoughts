@@ -16,7 +16,7 @@ The $\pm 0.019$ GeV error comes purely from $\delta m_W = \pm 0.012$ GeV (PDG in
 
 **Starting postulate:** $\mathbb{O} = \mathbb{C} \oplus \mathbb{C}^3$. In the $u$-framework this split is derived: $\mathbb{C} = \mathbb{C}_u$ (span of $1, u$), $\mathbb{C}^3 = u^\perp$.
 
-**Connection to $u$-framework:** The normalization condition $\|\Phi\|^2_Q = 3\|\Phi\|^2_L$ is now formalized in the $u$-framework as a conditional proposition: it follows from $G_2 = \mathrm{Aut}(\mathbb{O})$ transitivity together with orthogonal additivity of the quadratic form and diagonal Higgs embedding across the three colour channels. What remains open is showing that Todorov's precise superconnection norm is exactly this quadratic form. See [higgs.md](higgs.md).
+**Connection to $u$-framework:** The normalization condition $\|\Phi\|^2_Q = 3\|\Phi\|^2_L$ is now formalized in the $u$-framework as a conditional proposition: it follows from $G_2 = \mathrm{Aut}(\mathbb{O})$ transitivity together with orthogonal additivity of the quadratic form and diagonal Higgs embedding across the three colour channels. What remains open is showing that Todorov's precise superconnection norm is exactly this quadratic form. See [higgs-todorov.md](higgs-todorov.md).
 
 **Useful internal detail:** Todorov treats the lepton projector $\ell$ and the colour projectors $q_j$ as mutually orthogonal idempotents in $\mathrm{Cl}_6$. The Higgs normalization is fixed by comparing the leptonic $\Phi^2$ contribution with that of a single coloured quark; in his restricted-projector parametrization this is encoded by $\rho^2 = 1/2$, which then gives $m_H^2/m_W^2 = 5/2$.
 
