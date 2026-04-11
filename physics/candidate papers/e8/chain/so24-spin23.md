@@ -14,10 +14,10 @@ The simply-connected cover is what allows spinor representations globally. Witho
 
 ## Same-$u$ verification status
 
-Four of the five roles of $u$ through the chain are confirmed:
+Four of the five roles of $u$ through the chain are explicit, while the compact/split identification remains a structural claim:
 
 - $\mathrm{Stab}_{G_2}(u) = SU(3)$: established mathematical fact
-- Same $u$ across compact/split via $\mathbb{O}_\mathbb{C}$: established (Hurwitz/Jacobson) — see [g2-so24.md](g2-so24.md)
+- Same complex-level $u$ across compact/split via $\mathbb{O}_\mathbb{C}$: argued through common complexification, not independently proved — see [g2-so24.md](g2-so24.md)
 - $u = e_7$ in Furey's Cl(6), $u^\perp$ is the 6D Witt space: established by the idempotent matching — see [higgs.md](../higgs.md)
 - T1 observable channel = $u$: by construction
 
@@ -42,5 +42,5 @@ Note: the de Sitter group $SO(1,4)$ appears in the paper (eq. 20) via the dynami
 | $SO(2,3) \subset SO(2,4)$ as vector stabilizer: Established | Established | 2 |
 | $Spin(2,3)$ = simply-connected cover: Established | Established | 2 |
 | Scale-fixing / RG reframing via dilatation removal | Proposal | 4 |
-| Same $u$ at $G_2$, Cl(6), T1 channel, compact/split | Established | 3 |
+| Same $u$ at $G_2$, Cl(6), T1 channel, compact/split | Four roles explicit; compact/split identification remains structural | 4 |
 | Image of $\tilde{u}$ spacelike under Gogberashvili cone map | Established by explicit coordinate argument | 2 |

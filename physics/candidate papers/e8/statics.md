@@ -113,7 +113,7 @@ shows that $\sqrt{2}\Lambda_{24}$ is an index-64 sublattice of $E_8^3$. Integral
 - $SU(3)$ acts faithfully on $\mathbb{O}$, hence non-trivially on $E_8^3$.
 - **Continuous $SU(3)$ equivariance of $\sqrt{2}\Lambda_{24}$ is impossible by topology, not merely unverified.**
 
-The failure condition in [master.md](../0%20-%20master.md) — "no equivariant embedding under the residual $SU(3)$ can be constructed" — must be read as referring to **discrete equivariance**.
+The failure condition in [0 - master.md](0%20-%20master.md) — "no equivariant embedding under the residual $SU(3)$ can be constructed" — must be read as referring to **discrete equivariance**.
 
 **The correct question.** Define:
 $$G_2(\mathbb{Z}) := G_2 \cap \mathrm{Aut}(E_8^3) \subset SO(24)$$
@@ -248,7 +248,7 @@ $$G_2 = SO(8)^\tau = \{g \in SO(8) : \tau \circ g = g \circ \tau\}$$
 
 $G_2$ is precisely the **fixed-point subgroup** of the $D_4$ triality in $SO(8)$. This is why $G_2$ is the automorphism group of $\mathbb{O}$: the octonionic multiplication is the structure preserved by $\tau$-fixed isometries.
 
-This fact has an immediate consequence for the Leech embedding: any construction of $\sqrt{2}\Lambda_{24} \subset E_8^3$ that is built from $\tau$-covariant conditions is automatically equivariant under the full diagonal $G_2$ action. The covariance is forced by $G_2 = SO(8)^\tau$, not verified condition by condition.
+This fact has an immediate consequence for the Leech embedding: any construction of $\sqrt{2}\Lambda_{24} \subset E_8^3$ that is built from $\tau$-covariant conditions is automatically covariant under the diagonal $G_2$ action at the level of the ambient algebraic data. This does **not** by itself show that the full continuous group acts as a symmetry of the discrete integral lattice; that stronger claim is ruled out by the topology argument above.
 
 ### What $\mathbb{H}$-selection determines
 
@@ -278,6 +278,8 @@ The physical interpretation: the same cascade that forces the SM Higgs doublet a
 
 The program's cascade is therefore **doubly canonical**: each step has a SM interpretation and a Leech/global-state-space interpretation, both forced by the same algebraic choice.
 
-### Equivariance — upgraded statement
+Clarification: the triality-based argument here is about covariance of the *ambient algebraic construction*. It should not be read as overturning Part 2's topology result. A connected continuous group still cannot act nontrivially as a literal symmetry of a discrete integral lattice; the actual lattice symmetry remains the discrete subgroup compatible with the fixed triality frame.
 
-Using $G_2 = SO(8)^\tau$ and the fact that the Leech sublattice is defined by $\tau$-covariant conditions, the diagonal $G_2$ action on $E_8^3$ preserves $\sqrt{2}\Lambda_{24}$ **at the level of the defining conditions** — not just for the discrete subgroup $G_2(\mathbb{Z})$, but for all of $G_2$. The resolution with "continuous groups can't preserve discrete sets": $G_2$ acts on the ambient $\mathbb{R}^{24}$, and the conditions defining $\sqrt{2}\Lambda_{24}$ as a sublattice of $\mathbb{R}^{24}$ are $\tau$-covariant, so $G_2$ maps $\sqrt{2}\Lambda_{24}$ to $\sqrt{2}\Lambda_{24}$ (same sublattice, not just an isometric one) **when acting on the rational/algebraic level** where the $\tau$-conditions are written. Over $\mathbb{Z}$ (the integer lattice), only $G_2(\mathbb{Z})$ acts, but the $\tau$-covariance ensures equivariance for that discrete subgroup automatically.
+### Equivariance - clarified statement
+
+Using $G_2 = SO(8)^\tau$ and the fact that the Leech sublattice is defined by $\tau$-covariant conditions, the most defensible conclusion is this: the canonical Leech embedding is $G_2$-covariant at the level of the ambient algebraic data. That explains why the discrete subgroup $G_2(\mathbb{Z})$ acts naturally on the integral construction once the triality frame is fixed. It should not be read as a literal continuous symmetry of the discrete lattice itself; at the lattice level, the actual symmetry remains the discrete subgroup compatible with the fixed triality frame.

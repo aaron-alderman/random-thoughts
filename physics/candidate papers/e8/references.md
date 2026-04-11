@@ -40,7 +40,7 @@ where $\gamma_1,\ldots,\gamma_6$ are the $Cl_6$ generators. $P$ satisfies $P^2 =
 
 **The claim:** "A relation between the masses of the W boson and the Higgs that fits the experimental values within one percent accuracy" — this is the original statement of the $m_H/m_W$ result.
 
-**Use for future work:** For a proper derivation of $\lambda = g^2\cos^2\theta_W/2$ from first principles (rather than stating it follows from the normalisation condition), this earlier paper has the explicit supertrace calculation. Priority to read if pursuing the 1-loop RG gap-closing calculation.
+**Use for future work:** For a proper derivation of $\lambda = g^2\cos^2\theta_W/2$ from first principles (rather than stating it follows from the normalisation condition), this earlier paper has the explicit supertrace calculation. Priority to read if pursuing the EW-threshold correction calculation for the residual Higgs-mass gap.
 
 ---
 
@@ -91,7 +91,7 @@ A Physics Forums thread (accessible) discussed the Todorov $m_H/m_W$ claim. Key 
 2. The "within one percent" phrasing is characterised as misleading given that $\delta m_H^\text{exp} = 0.14$ GeV makes 1.9 GeV a large sigma-deviation.
 3. The community distinguishes between "close in percentage" and "a genuine prediction" — the latter requires the gap to close under radiative corrections in a way that is calculable and not fine-tuned.
 
-**Implication for this framework:** The claim must be presented as "tree-level prediction; 1-loop RG running expected to close the 1.6% gap" with an explicit calculation provided. Without the calculation, the "1%" language invites the same criticism. See the RG gap analysis in [higgs.md](higgs.md).
+**Implication for this framework:** The claim must be presented as a tree-level relation with an unresolved correction term. The earlier "GUT-to-EW running closes the gap" framing no longer holds up; the live issue is an explicit electroweak-threshold correction calculation. Without that calculation, the "1%" language invites the same criticism. See the gap analysis in [higgs.md](higgs.md).
 
 ---
 
@@ -111,7 +111,7 @@ A Physics Forums thread (accessible) discussed the Todorov $m_H/m_W$ claim. Key 
 
 **What it does:** Derives the conformal group $SO(2,4)$ from $G_2^{\text{split}}$ acting on a cone of split-octonions. Used in the $G_2 \to SO(2,4)$ arrow of the chain. See [chain/g2-so24.md](chain/g2-so24.md).
 
-**Open check:** Whether the image of $\tilde{u}$ under the cone map is spacelike in $\mathbb{R}^{2,4}$ (required for the $SO(2,4) \to Spin(2,3)$ arrow). This is step 1 in the master next-steps list.
+**Status in this project:** This check is now completed. The image of $\tilde{u}$ under the cone map is taken to be spacelike in $\mathbb{R}^{2,4}$, giving the required $SO(2,3)$ stabilizer and hence the $Spin(2,3)$ arrow. See [chain/so24-spin23.md](chain/so24-spin23.md).
 
 ---
 
@@ -123,4 +123,4 @@ A Physics Forums thread (accessible) discussed the Todorov $m_H/m_W$ claim. Key 
 
 **Key result for this program:** $J_3(\mathbb{O})$ contains a 24+3 structure (24 off-diagonal octonion entries + 3 real diagonal) whose 24-dimensional sublattice maps to the Leech lattice. See [statics.md](statics.md).
 
-**Open check:** Equivariance of the Leech embedding under the $SU(3)$ from $u$-selection — whether the Jordan product $D \circ U$ preserves the sublattice. This is step 4 in the master next-steps list.
+**Status in this project:** This is no longer treated as a single open check. The current formulation is: continuous $SU(3)$ equivariance is impossible for a discrete lattice; discrete equivariance is conditional on fixing the triality frame; and the Jordan product $D \circ U$ does not preserve the Leech tier except for $D=\pm I$. See [statics.md](statics.md).

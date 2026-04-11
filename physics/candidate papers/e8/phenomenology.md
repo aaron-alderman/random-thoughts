@@ -39,15 +39,15 @@
 | Choosing $u$ induces $T1/T2$ split | Statics | Choice + derived consequence | 3 |
 | $\mathrm{Stab}(u) \cong SU(3)$ | Statics | Established structural fact | 3 |
 | $u$ aligns with zero-mass interaction channel | Statics/Epistemics | Central proposal | 4 |
-| Same $u$ at $G_2$, Cl(6), T1, compact/split, Gogberashvili cone map | Statics | All five roles established | 2 |
+| Same $u$ at $G_2$, Cl(6), T1, compact/split, Gogberashvili cone map | Statics | Four roles explicit; compact/split identification argued via common complexification | 4 |
 | Image of $\tilde{u}$ spacelike in $\mathbb{R}^{2,4}$ (Gogberashvili) | Consistency | Established — $u = j_n$-type (spacelike, $SU(2,1)$ stabilizer), cone map $X^n = x_n/L$, stabilizer $SO(2,3)$ ✓ | 2 |
 | Off-diagonal $J_3(\mathbb{O}_\mathbb{Z})$ contains Leech sublattice | Statics | Established (Baez/Egan) | 3 |
-| Leech embedding equivariant under $SU(3)$ | Consistency | Unknown — key calculation | 4 |
+| Leech embedding equivariant under $SU(3)$ | Consistency | Continuous equivariance is impossible; discrete equivariance is conditional on the fixed triality frame | 3 |
 | $\sin^2\theta_W = 3/8$ from 3+2 split of $u^\perp$ | Phenomenology | Derived — same as SU(5), different mechanism | 3 |
 | GUT scale at which $3/8$ applies: not yet derived from geometry | Phenomenology | Missing | 6 |
-| $m_H/m_W$ within 1% (Todorov) — mapping to $u$-framework needed | Phenomenology | Established by Todorov; import needed | 4 |
+| $m_H/m_W$ from the $u$-framework via Todorov/Furey matching | Phenomenology | Imported structurally; tree-level relation established, EW threshold correction still open | 3 |
 | Compact $G_2$ = internal, split $G_2$ = spacetime, same $u$ | Statics/Interpretation | Structural proposal | 4 |
-| $\mathbb{H} \subset \mathbb{O}$ from $u$ carries $SU(2)$ doublet | Statics | Established | 2 |
+| $\mathbb{H} \subset \mathbb{O}$ from $u$ carries $SU(2)$ doublet | Statics | Any quaternionic slice through $u$ carries the doublet structure; residual $SU(2)$ freedom remains | 3 |
 | Cascade mechanism matches Furey & Hughes (2022) | Statics | Established structurally | 3 |
 | Higgs as scalar component of tri$(\mathbb{H})$ triality triple | Statics | Established by Furey & Hughes | 3 |
 | $u$ determines $u^\perp$ which determines Cl(6) which determines $qq^\dagger$ | Consistency | Established by matching | 3 |
