@@ -16,7 +16,17 @@ The $\pm 0.019$ GeV error comes purely from $\delta m_W = \pm 0.012$ GeV (PDG in
 
 **Starting postulate:** $\mathbb{O} = \mathbb{C} \oplus \mathbb{C}^3$. In the $u$-framework this split is derived: $\mathbb{C} = \mathbb{C}_u$ (span of $1, u$), $\mathbb{C}^3 = u^\perp$.
 
-**Connection to $u$-framework:** The normalization condition $\|\Phi\|^2_Q = 3\|\Phi\|^2_L$ is a theorem in the $u$-framework (follows from $G_2 = \mathrm{Aut}(\mathbb{O})$ transitivity on $\mathrm{Im}(\mathbb{O})$). See [higgs.md](higgs.md).
+**Connection to $u$-framework:** The normalization condition $\|\Phi\|^2_Q = 3\|\Phi\|^2_L$ is now formalized in the $u$-framework as a conditional proposition: it follows from $G_2 = \mathrm{Aut}(\mathbb{O})$ transitivity together with orthogonal additivity of the quadratic form and diagonal Higgs embedding across the three colour channels. What remains open is showing that Todorov's precise superconnection norm is exactly this quadratic form. See [higgs.md](higgs.md).
+
+**Useful internal detail:** Todorov treats the lepton projector $\ell$ and the colour projectors $q_j$ as mutually orthogonal idempotents in $\mathrm{Cl}_6$. The Higgs normalization is fixed by comparing the leptonic $\Phi^2$ contribution with that of a single coloured quark; in his restricted-projector parametrization this is encoded by $\rho^2 = 1/2$, which then gives $m_H^2/m_W^2 = 5/2$.
+
+**Useful structural detail:** In the octonion paper the particle projector is written as a singlet-plus-triplet decomposition, $\mathcal{P}=\ell+q$ with $q=q_1+q_2+q_3$. This is the Clifford-algebra counterpart of the octonionic split $\mathbb{O}=\mathbb{C}\oplus\mathbb{C}^3$, and is the natural candidate for the intertwiner between the $u$-framework channels and Todorov's idempotent basis.
+
+**Concrete check to do later:** Use Todorov's colour generators given by the traceless bilinears in the colour oscillators $(b_j,b_k^\dagger)$ and compute their action on the leptonic states built from $\ell$ and the coloured quark states built from $q_m$. If the leptons are colour singlets and the three quark channels mix as a single three-dimensional irreducible colour representation, then the representation part of the intertwiner is established.
+
+**Likely simplification:** With the projector convention $\ell=p_1p_2p_3$ and $q_j=p_jp_k'p_\ell'$, the leptons sit in the colour vacuum sector $\Lambda^0(\mathbb{C}^3)$ while the quark channels sit in the two-particle sector $\Lambda^2(\mathbb{C}^3)$. So the representation part may already be reducible to Fock-space occupation counting; the harder remaining step is the supertrace metric matching.
+
+**Updated read of the gap:** The representation half of the normalization problem is now close to settled in the notes. The source formulas sharpen the metric half too: once Todorov's odd Higgs operator is decomposed channelwise as $\Phi=\Phi_\ell+\sum_j\Phi_{q_j}$, orthogonality of distinct channels and equality of the three quark diagonal weights follow formally from $\ell q_j=0$, $q_jq_k=\delta_{jk}q_j$, and factor separation between the weak oscillators and the colour projectors. So the live issue is no longer the full $4\times4$ matrix from scratch, but the remaining scalar comparison between the leptonic diagonal entry and one single-colour quark entry. Equivalently, one still has to show that the channel form is not merely $a\oplus bI_3$ but actually $cI_4$ on $(\ell,q_1,q_2,q_3)$.
 
 ---
 
@@ -39,6 +49,11 @@ where $\gamma_1,\ldots,\gamma_6$ are the $Cl_6$ generators. $P$ satisfies $P^2 =
 **Sterile neutrino exclusion:** The weak hypercharge $Y$ is promoted to a **superselection rule**, not merely a gauge generator. The zero eigenspace of $Y$ — which contains right-handed neutrinos (sterile neutrinos) — is excluded from the particle subspace by the $P$ projection. Sterile neutrinos are allowed to exist but are structurally outside the observable sector defined by $P$.
 
 **The claim:** "A relation between the masses of the W boson and the Higgs that fits the experimental values within one percent accuracy" — this is the original statement of the $m_H/m_W$ result.
+
+**What to extract next:** For the normalization problem, the sharp target is no longer "derive the factor of 3 somehow". It is:
+- show the odd-sector supertrace on the lepton-plus-colour channels has $SU(3)$ block form $a \oplus bI_3$;
+- show the octonionic lift to pre-selection $G_2$ data forces $a=b$;
+- then read Todorov's $\rho$ as the basis-dependent encoding of that equality in the restricted projector formalism.
 
 **Use for future work:** For a proper derivation of $\lambda = g^2\cos^2\theta_W/2$ from first principles (rather than stating it follows from the normalisation condition), this earlier paper has the explicit supertrace calculation. Priority to read if pursuing the EW-threshold correction calculation for the residual Higgs-mass gap.
 

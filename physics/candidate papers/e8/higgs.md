@@ -484,17 +484,37 @@ The Yang-Mills-Higgs action is $\mathrm{Str}(\mathbb{F} \wedge \ast\mathbb{F})$ 
 
 ### Step 4: Normalization Condition — Lepton vs. Quark Sectors
 
-The critical step. In $\mathrm{Cl}_6$ built on $u^\perp$, the Higgs field $\Phi$ appears in both the lepton subalgebra (the $\mathbb{C}_u$ factor, complex dimension 1) and the quark-colour subalgebra (the $\mathbb{C}^3_{u^\perp}$ factor, complex dimension 3).
+The critical step can be stated as a quadratic-form statement on the odd part of the Quillen superconnection. Let
 
-Todorov's normalization condition: the superconnection norm of $\Phi$ is the same in both subalgebras,
+$$\mathcal{N}(\Phi)$$
 
-$$\|\Phi\|^2_{\mathrm{Cl}(\mathbb{C}_u)} = \|\Phi\|^2_{\mathrm{Cl}(\mathbb{C}^3_{u^\perp})} / 3$$
+denote the positive quadratic form on one Higgs doublet induced by the supertrace pairing of the odd generators. After the $u$-selection we have the orthogonal complex decomposition
 
-i.e., the per-colour-channel Higgs norm in the quark sector equals the Higgs norm in the lepton sector. This is the only normalization consistent with the 1+3 split that treats the $u$-direction and the three perpendicular colour directions on equal footing.
+$$\mathbb{O} = \mathbb{C}_u \oplus \mathbb{C}^3_{u^\perp}.$$
 
-In the $u$-framework, this condition has a clean origin: the $u$ direction and the three $\mathbb{C}^3$ directions are all imaginary octonions of equal squared norm $|u|^2 = |e_i|^2 = 1$, so the Higgs norm (which lives in $u^\perp$) must be distributed equally across all four complex directions of $\mathbb{O}/\mathbb{R}$.
+Assume:
 
-This normalization condition equates the lepton-sector and quark-sector contributions to the $sl(2|1)$ supertrace in the action. It constrains the relative coefficient between the Higgs kinetic term and the Higgs quartic term.
+1. $\mathcal{N}$ is induced from a $G_2$-equivariant octonionic Hermitian form before a specific $u$ is chosen.
+2. $\mathcal{N}$ is additive across the orthogonal summands $\mathbb{C}_u$ and $\mathbb{C}^3_{u^\perp}$.
+3. The same Higgs amplitude $\Phi$ appears in each of the three colour channels, so the quark contribution differs from the lepton contribution only by multiplicity.
+
+Then there is a constant $c > 0$ such that
+
+$$\mathcal{N}_L(\Phi) = c|\Phi|^2, \qquad \mathcal{N}_Q(\Phi) = 3c|\Phi|^2,$$
+
+hence
+
+$$\boxed{\mathcal{N}_Q(\Phi) = 3\,\mathcal{N}_L(\Phi)}.$$
+
+Equivalently,
+
+$$\|\Phi\|^2_{\mathrm{Cl}(\mathbb{C}_u)} = \|\Phi\|^2_{\mathrm{Cl}(\mathbb{C}^3_{u^\perp})} / 3.$$
+
+So the per-colour-channel Higgs norm in the quark sector equals the Higgs norm in the lepton sector. Gap 1 below gives the formal proof and isolates the remaining open issue: proving that Todorov's specific superconnection norm is exactly the $\mathcal{N}$ selected by these hypotheses.
+
+This already matches Todorov's setup more closely than the earlier draft made explicit. In the octonion paper, the lepton projector $\ell$ and the colour projectors $q_j$ are mutually orthogonal idempotents in $\mathrm{Cl}_6$, which strongly suggests a sectorwise decomposition of the odd quadratic form once the odd generators are expressed relative to those projectors. And the relative Higgs normalization is fixed by comparing the leptonic $\Phi^2$ contribution with that of a single coloured quark, not with the total three-colour quark trace. In Todorov's notation this condition is encoded by the parameter $\rho$ and yields $\rho^2 = 1/2$ for the restricted particle projector, which then gives $m_H^2/m_W^2 = 5/2$.
+
+So Assumptions 2 and 3 are not ad hoc additions to Todorov's calculation: they are a repackaging of the sectorwise orthogonality and per-colour comparison already present there. The genuinely new input supplied by the $u$-framework is Assumption 1, namely that the quadratic form being compared is the restriction of a $G_2$-equivariant octonionic Hermitian form before $u$ is selected.
 
 ### Step 5: Mass Relation
 
@@ -533,15 +553,15 @@ This is the level of accuracy of the prediction. Todorov characterizes this as "
 |---|---|---|
 | $\mathbb{O} = \mathbb{C}_u \oplus \mathbb{C}^3_{u^\perp}$ | **Derived** — $u$-selection | This framework |
 | $sl(2|1)$ structure of electroweak sector | **Derived** — from Quillen/Todorov construction on the 1+3 split | Follows Todorov once 1+3 is given |
-| Normalization condition (lepton = quark) | **Imported** — Todorov's key step | arXiv:2206.06912, 2010.15621 |
-| $\lambda = g^2\cos^2\theta_W/2$ | **Imported** — from normalization condition | Todorov |
+| Normalization condition (lepton = quark) | **Formalized conditionally** — from $G_2$-equivariance + additivity assumptions | This framework, matching Todorov |
+| $\lambda = g^2\cos^2\theta_W/2$ | **Imported once normalization is matched to Todorov's supertrace** | Todorov |
 | $m_H = 2\cos\theta_W\, m_W$ | **Imported** — algebraic consequence of $\lambda$ | Todorov |
 | $\sin^2\theta_W = 3/8$ | **Derived** — from 3+2 split of $u^\perp$ | This framework |
 | $m_H \approx 127.1$ GeV | **Prediction** — combining derived $\theta_W$ with Todorov formula | This framework |
 
 **What is genuinely new here:** The starting point for Todorov's calculation — the 1+3 octonion split — is derived from the $u$-selection rather than postulated. This closes the gap between the octonionic derivation of the Weinberg angle and the $sl(2|1)$ derivation of $m_H/m_W$: both rest on a single source.
 
-**What remains unresolved:** The normalization condition itself — why the per-channel lepton and quark Higgs norms must be equal — is still not fully derived from the $u$-selection. The transitivity argument below is a plausible route, but it is not yet a formal derivation inside the superconnection setup.
+**What remains unresolved:** The multiplicity relation has now been formalized as a conditional proposition, and Assumptions 2 and 3 are already mirrored by Todorov's orthogonal idempotents and his per-colour normalization condition. The remaining gap is sharper: one still has to prove that Todorov's exact superconnection norm coincides with the $G_2$-equivariant additive quadratic form used in the proposition below.
 
 **The 1.5% gap:** At the precision of this tree-level calculation, $m_H \approx 127$ GeV is 1.5% above the measured 125.2 GeV. Whether this gap closes under radiative corrections (computable in $sl(2|1)$) or whether it reflects a genuine limitation of the Todorov formula is not yet determined.
 
@@ -551,29 +571,568 @@ This is the level of accuracy of the prediction. Todorov characterizes this as "
 
 ### Gap 1: Normalization Condition from $G_2$ Transitivity
 
-**Claim:** $\|\Phi\|^2_L = \|\Phi\|^2_Q / 3$ may follow from the octonionic structure without additional postulate.
+**Proposition (formalized normalization statement).** Let $\mathcal{N}$ be the quadratic form on the Higgs doublet sector used in the odd part of the $sl(2|1)$ superconnection. Suppose:
 
-**Argument:** The automorphism group $G_2 = \mathrm{Aut}(\mathbb{O})$ preserves the octonion inner product $\langle e_i, e_j\rangle = \delta_{ij}$ and acts transitively on the unit sphere $S^6 \subset \mathrm{Im}(\mathbb{O}) \cong \mathbb{R}^7$. Therefore, before $u$ is selected, all 7 imaginary octonions are $G_2$-equivalent. If the relevant Higgs normalization can be shown to depend only on this $G_2$-equivariant octonionic data, then the per-direction contribution is uniform across the 1+3 split.
+1. **Pre-selection equivariance.** Before a unit imaginary octonion $u \in \mathrm{Im}(\mathbb{O})$ is selected, $\mathcal{N}$ is induced from a $G_2$-invariant positive Hermitian form on the relevant octonionic data.
+2. **Orthogonal additivity.** After fixing $u$, the decomposition
+   $$\mathbb{O} = \mathbb{C}_u \oplus \mathbb{C}^3_{u^\perp}$$
+   is orthogonal for $\mathcal{N}$, and $\mathcal{N}$ splits as the sum of its restrictions to these two summands.
+3. **Diagonal Higgs embedding.** The Higgs field entering the quark sector is the same scalar amplitude in each colour channel, so the quark contribution is the sum of three identical channel contributions.
 
-After $u$ is selected, the stabilizer $SU(3) \subset G_2$ acts on $u^\perp \cong \mathbb{C}^3$ via the fundamental representation and acts transitively on the unit sphere $S^5 \subset u^\perp$. So within $u^\perp$, all unit directions remain equivalent. And $u$ itself was equivalent to every direction in $u^\perp$ before the selection (by $G_2$ transitivity); fixing $u$ does not change the norms, only the symmetry.
+Then
 
-Under that assumption:
-$$\|\Phi\|^2_{u\text{-dir}} = \|\Phi\|^2_{\text{per complex dir in } u^\perp}$$
+$$\mathcal{N}_Q(\Phi) = 3\,\mathcal{N}_L(\Phi),$$
 
-With the 1+3 complex identification: the lepton sector is the 1 complex direction $u$, the quark sector is the 3 complex directions $u^\perp$:
+equivalently
 
-$$\|\Phi\|^2_L = \|\Phi\|^2_{\text{per colour}} \qquad \|\Phi\|^2_Q = 3 \times \|\Phi\|^2_{\text{per colour}}$$
+$$\|\Phi\|^2_Q = 3\|\Phi\|^2_L.$$
 
-$$\implies \|\Phi\|^2_Q = 3\|\Phi\|^2_L$$
+**Proof.**
 
-This reproduces Todorov's normalization condition at the level of octonionic counting. What is still missing is a clean proof that the specific superconnection normalization entering the Higgs mass formula is exactly this $G_2$-equivariant quantity rather than an additional dynamical input.
+Because $G_2 = \mathrm{Aut}(\mathbb{O})$ preserves the standard octonion inner product and acts transitively on the unit sphere
+
+$$S^6 \subset \mathrm{Im}(\mathbb{O}),$$
+
+every unit imaginary direction is equivalent before the choice of $u$. By Assumption 1, the coefficient with which $\mathcal{N}$ weights a Higgs copy attached to a unit complex direction is therefore independent of that direction. Call this common coefficient $c > 0$.
+
+After fixing $u$, the stabilizer $G_{2,u} \cong SU(3)$ acts on $u^\perp \cong \mathbb{C}^3$ in the fundamental representation. Hence any $SU(3)$-invariant Hermitian quadratic form on $u^\perp$ is a scalar multiple of the standard norm. So by Assumptions 1 and 2,
+
+$$\mathcal{N}|_{\mathbb{C}_u} = c|\Phi|^2, \qquad \mathcal{N}|_{\mathbb{C}^3_{u^\perp}} = c\sum_{i=1}^3 |\Phi_i|^2.$$
+
+By Assumption 3, the same Higgs amplitude is copied into each colour channel, so $\Phi_1 = \Phi_2 = \Phi_3 = \Phi$ at the level of the normalization count. Therefore
+
+$$\mathcal{N}_L(\Phi) = c|\Phi|^2, \qquad \mathcal{N}_Q(\Phi) = c\sum_{i=1}^3 |\Phi|^2 = 3c|\Phi|^2,$$
+
+which gives
+
+$$\mathcal{N}_Q(\Phi) = 3\,\mathcal{N}_L(\Phi). \qquad \square$$
+
+**Interpretation.** The factor of 3 is not an extra coupling constant. It is the multiplicity of the three equivalent complex colour directions inside $u^\perp$. The comparison with the lepton sector is possible because $G_2$-equivariance identifies the coefficient on the distinguished $\mathbb{C}_u$ direction with the coefficient on any colour direction before the symmetry is broken by choosing $u$.
+
+**What this does and does not prove.** This is a formal derivation of the normalization relation from explicit hypotheses. What remains open is the identification step: one still has to prove that Todorov's supertrace norm is exactly the $\mathcal{N}$ satisfying Assumptions 1-3, rather than a more general quadratic form with extra dynamical weights.
+
+### Gap 1a: Match to Todorov's Actual Normalization Parameter
+
+The proposition above explains the colour multiplicity factor in invariant octonionic language. Todorov packages the same comparison in a different parameter, $\rho$, defined through the relative weight of the leptonic and single-colour quark contributions to $\Phi^2$ in the restricted particle subspace.
+
+The two descriptions are compatible as follows.
+
+1. Our proposition compares the total quark contribution with the lepton contribution and gives
+   $$\mathcal{N}_Q = 3\mathcal{N}_L.$$
+2. Todorov first decomposes the quark part into three orthogonal colour channels using the idempotents $q_j$, and then compares $\mathcal{N}_L$ with one channel $\mathcal{N}_{Q,j}$.
+3. Equal per-channel contributions mean
+   $$\mathcal{N}_{Q,j} = \mathcal{N}_L, \qquad \mathcal{N}_Q = \sum_{j=1}^3 \mathcal{N}_{Q,j} = 3\mathcal{N}_L.$$
+
+So the proposition is the invariant reformulation of Todorov's per-colour comparison.
+
+Why then does Todorov obtain $\rho^2 = 1/2$ rather than $1$? Because $\rho$ is not the raw multiplicity factor. It is the coefficient appearing after passing to the restricted particle projector and expanding $\Phi^2$ in his chosen idempotent basis. In that parametrization, equality between the leptonic contribution and one coloured-quark contribution is encoded by $\rho^2 = 1/2$, and substituting this into Todorov's mass formula gives
+
+$$\frac{m_H^2}{m_W^2} = 4\,\frac{1+6\rho^4}{1+6\rho^2} = \frac{5}{2}.$$
+
+This means the conceptual translation is now clear:
+
+- the factor of 3 in the $u$-framework is the colour multiplicity of the full quark trace;
+- the factor $1/2$ in Todorov's $\rho$-parametrization is the basis-dependent encoding of equal leptonic and single-colour contributions in the restricted projector formalism.
+
+What still needs proof is only the final identification step: that Todorov's basis-dependent $\rho$-normalization arises from the same $G_2$-equivariant quadratic form used in the proposition, rather than from an independent extra choice.
+
+### Gap 1b: Sufficient Criterion for Full Closure
+
+The remaining identification problem can now be reduced to one explicit algebraic statement. The derivation would be fully internal to the $u$-framework if one proved the following.
+
+**Closure criterion.** There exists a constant $\kappa > 0$ such that, after identifying Todorov's odd generators with the Higgs copies associated with
+
+$$\mathbb{O} = \mathbb{C}_u \oplus \bigoplus_{j=1}^3 \mathbb{C}_{e_j},$$
+
+the odd-sector supertrace takes the form
+
+$$\mathrm{Str}_{\mathrm{odd}}(\Phi^\dagger \Phi) = \kappa\left(\|\Phi_u\|^2 + \sum_{j=1}^3 \|\Phi_j\|^2\right),$$
+
+with the three colour terms weighted equally, and with Todorov's restricted-projector comparison inserting the same Higgs amplitude into each channel for the purpose of the normalization count:
+
+$$\Phi_u,\ \Phi_1,\ \Phi_2,\ \Phi_3 \text{ all contribute with the same channel weight to the comparison.}$$
+
+If this holds, then:
+
+1. the supertrace norm is automatically orthogonally additive;
+2. the coefficient of each colour channel equals the leptonic coefficient;
+3. the total quark contribution is exactly three times the lepton contribution;
+4. Todorov's parameter $\rho$ is fixed by this equality and no longer represents an independent input.
+
+So the whole Higgs normalization problem is reduced to checking one basis-level identity for the odd supertrace.
+
+Equivalently: it is enough to show that the matrix of the quadratic form $\mathcal{N}$ in the basis adapted to $\ell, q_1, q_2, q_3$ is proportional to the identity on these four channels. Once that is shown, the factor of 3 follows from multiplicity alone.
+
+### Gap 1c: Representation-Theoretic Reduction
+
+The closure criterion above can be weakened to a much smaller statement.
+
+After the choice of $u$, the relevant complex space is
+
+$$\mathbb{C}_u \oplus \mathbb{C}^3_{u^\perp} \cong \mathbf{1} \oplus \mathbf{3}$$
+
+as an $SU(3)$-module. Let $\mathcal{N}$ be any Hermitian quadratic form on this space coming from the odd-sector supertrace.
+
+If $\mathcal{N}$ is $SU(3)$-invariant, then by Schur's lemma it has the block form
+
+$$\mathcal{N} = a\,|\Phi_u|^2 + b\sum_{j=1}^3 |\Phi_j|^2,$$
+
+for some $a,b > 0$, with no mixed terms between the $\mathbf{1}$ and the $\mathbf{3}$ and no colour-dependent splitting inside the $\mathbf{3}$.
+
+So $SU(3)$-invariance alone already proves:
+
+1. orthogonality between the lepton channel and the colour triplet;
+2. equality of the three colour coefficients;
+3. reduction of the entire problem to the single scalar comparison $a \stackrel{?}{=} b$.
+
+The full $u$-framework claim is exactly that the form is not merely $SU(3)$-invariant after selection, but is the restriction of a pre-selection $G_2$-invariant form on $\mathrm{Im}(\mathbb{O})$. That stronger statement removes the last freedom and forces
+
+$$a=b.$$
+
+At that point one obtains
+
+$$\mathcal{N} = a\left(|\Phi_u|^2 + \sum_{j=1}^3 |\Phi_j|^2\right),$$
+
+and the quark/lepton ratio is immediately a multiplicity factor:
+
+$$\mathcal{N}_Q = 3\mathcal{N}_L.$$
+
+So the proof target can now be phrased in its sharpest form:
+
+- Todorov's odd supertrace should be shown to be $SU(3)$-invariant on $\mathbf{1}\oplus\mathbf{3}$, giving the block form $a \oplus bI_3$;
+- the octonionic lift should then be shown to identify the two block coefficients, $a=b$.
+
+This is weaker, cleaner, and more checkable than trying to prove the final factor of 3 in one jump.
+
+### Gap 1d: Concrete Proof Template for $a=b$
+
+The representation-theoretic reduction suggests a natural lemma chain.
+
+**Lemma 1 (uniqueness of the pre-selection quadratic form).** The $7$-dimensional real representation $\mathrm{Im}(\mathbb{O})$ of $G_2$ is irreducible, so any $G_2$-invariant positive symmetric bilinear form on $\mathrm{Im}(\mathbb{O})$ is a scalar multiple of the standard octonion inner product:
+
+$$B(x,y) = c\,\langle x,y\rangle, \qquad c>0.$$
+
+This is the real content of "there is only one $G_2$-equivariant norm before choosing $u$".
+
+**Lemma 2 (restriction after $u$-selection).** Once a unit $u$ is chosen, pick an orthonormal complex basis of the four relevant channels
+
+$$u,\ e_1,\ e_2,\ e_3,$$
+
+where $u$ spans the lepton line $\mathbb{C}_u$ and $e_j$ span the colour lines inside $\mathbb{C}^3_{u^\perp}$. Restricting the form $B$ of Lemma 1 to these four channels gives
+
+$$B|_{\mathbb{C}_u \oplus \bigoplus_{j=1}^3 \mathbb{C}_{e_j}} = c\left(|\Phi_u|^2 + \sum_{j=1}^3 |\Phi_j|^2\right).$$
+
+So the lepton coefficient and the three colour coefficients are automatically equal before any projector-based rewriting.
+
+**Lemma 3 (comparison with the supertrace form).** Let $\mathcal{N}_{\mathrm{Tod}}$ be the quadratic form defined by Todorov's odd-sector supertrace in the basis adapted to the orthogonal idempotents
+
+$$\ell,\ q_1,\ q_2,\ q_3.$$
+
+If the dictionary between the octonionic channels and Todorov's idempotent channels is intertwining, i.e. if
+
+$$\mathbb{C}_u \leftrightarrow \ell, \qquad \mathbb{C}_{e_j} \leftrightarrow q_j,$$
+
+and the supertrace quadratic form is the image of $B$ under this identification, then
+
+$$\mathcal{N}_{\mathrm{Tod}} = c\left(|\Phi_\ell|^2 + \sum_{j=1}^3 |\Phi_{q_j}|^2\right).$$
+
+Therefore the block coefficients in Gap 1c satisfy
+
+$$a=b=c.$$
+
+At that point the normalization theorem is done.
+
+So the only genuinely nontrivial step left is not the factor of 3 itself, nor the $SU(3)$ block decomposition, but the intertwining statement in Lemma 3. Everything else follows formally.
+
+In practical terms, proving Lemma 3 should amount to checking two things:
+
+1. the odd generators attached to $\ell$ and $q_j$ transform under the same octonionic complex lines selected by $u$;
+2. the supertrace pairing on these generators is induced from the same invariant bilinear form as the octonionic norm.
+
+If both are verified, then the closure of Gap 1 is immediate.
+
+### Gap 1e: Explicit Intertwiner Ansatz
+
+The most natural candidate for the intertwiner of Lemma 3 is already implicit in the shared $\mathbb{C}\oplus\mathbb{C}^3$ structure.
+
+Start from the chain
+
+$$u \longrightarrow u^\perp \longrightarrow \mathrm{Cl}(6)\text{ on }u^\perp \longrightarrow \text{Witt basis }(b_j,b_j^\dagger).$$
+
+Given the Witt decomposition of $u^\perp$, Todorov's particle projector splits as a singlet plus triplet,
+
+$$\mathcal{P} = \ell + q, \qquad q = q_1+q_2+q_3,$$
+
+where $\ell$ is the lepton idempotent and the $q_j$ are the three coloured-quark idempotents. In the octonionic paper this is exactly the Clifford-algebra realization of the same decomposition that appears geometrically as
+
+$$\mathbb{O} = \mathbb{C}_u \oplus \mathbb{C}^3_{u^\perp}.$$
+
+This suggests the following explicit ansatz:
+
+1. the singlet line $\mathbb{C}_u$ is identified with the idempotent channel $\ell$;
+2. the three colour lines inside $\mathbb{C}^3_{u^\perp}$ are identified with the three idempotent channels $q_1,q_2,q_3$;
+3. the colour ladder operators $b_j,b_j^\dagger$ are the Clifford realization of the chosen complex basis of $\mathbb{C}^3_{u^\perp}$.
+
+Schematically,
+
+$$\mathbb{C}_u \leftrightarrow \ell, \qquad \mathbb{C}_{e_j} \leftrightarrow q_j,$$
+
+while the Clifford creation operator $b_j^\dagger$ is the operator that realizes the $j$th colour channel over the vacuum sector associated with $\ell$.
+
+Under this ansatz, Todorov's decomposition of the particle projector is not an extra choice layered on top of the octonionic split. It is the idempotent form of the same singlet-plus-triplet decomposition after passing from octonionic geometry to the Clifford-Fock picture.
+
+To keep the levels distinct:
+
+1. $e_j$ labels an octonionic complex line in $\mathbb{C}^3_{u^\perp}$;
+2. $q_j$ labels the corresponding idempotent channel in the Clifford algebra;
+3. $b_j^\dagger$ is the creation operator used to generate that channel in the Fock-style realization.
+
+The remaining work is then highly concrete:
+
+1. show that the action of $SU(3)$ on the octonionic colour basis $e_j$ matches its action on the Clifford generators $b_j^\dagger$;
+2. show that the corresponding quark state channels labelled by $q_j$ furnish a three-dimensional irreducible colour representation while the lepton channel labelled by $\ell$ remains a singlet;
+3. compute the odd supertrace in this basis and verify that it respects this singlet-triplet splitting.
+
+If all three checks go through, Lemma 3 is no longer a heuristic bridge but an actual identification of bases.
+
+### Gap 1f: $SU(3)$ Covariance Check in Todorov's Basis
+
+The intertwiner ansatz can be tested directly inside Todorov's Clifford basis.
+
+Let
+
+$$p_j = b_j b_j^\dagger, \qquad p_j' = b_j^\dagger b_j = 1-p_j,$$
+
+and
+
+$$\ell = p_1p_2p_3, \qquad q_j = p_j p_k' p_\ell',$$
+
+with $(j,k,\ell)$ a permutation of $(1,2,3)$. Then
+
+$$\mathcal{P} = \ell + q, \qquad q=q_1+q_2+q_3.$$
+
+Todorov identifies the colour Lie algebra with the traceless part of the bilinears in the colour oscillators, i.e. the matrix of operators built from
+
+$$b_j,\ b_k^\dagger,$$
+
+so the natural infinitesimal $su(3)$ action is already built into the Clifford algebra. In this language, the desired covariance statement is:
+
+1. the leptonic states built on the $\ell$ channel are fixed by the $su(3)$ generators, hence are singlets;
+2. the quark states built on the channels $q_1,q_2,q_3$ are mixed among themselves by the same generators;
+3. on that three-dimensional quark-state space, the generators act as an irreducible colour $\mathbf{3}$ or $\bar{\mathbf{3}}$, depending on convention.
+
+This is exactly the Clifford-algebra avatar of the octonionic statement
+
+$$\mathbb{C}_u \oplus \mathbb{C}^3_{u^\perp} \cong \mathbf{1}\oplus\mathbf{3}.$$
+
+So the practical verification problem is now very small:
+
+1. compute the action of the traceless colour bilinears on the leptonic states $\ell a a^\dagger,\ \ell a^\dagger a$ and on the coloured quark states $q_m a a^\dagger,\ q_m a^\dagger a$;
+2. check that the leptonic states are annihilated by the colour generators;
+3. check that the coloured quark states are mixed with the standard three-dimensional irreducible pattern.
+
+If these hold, then the representation content of Todorov's idempotent basis is exactly the one required by the octonionic split, and the only remaining step is matching the supertrace quadratic form itself.
+
+In other words: Gap 1 is now split into two independent checks:
+
+- **representation check:** the lepton states built on $\ell$ are singlets, while the quark states built on $q_j$ furnish a three-dimensional irreducible colour representation under the Clifford $su(3)$ action;
+- **metric check:** the odd supertrace on these channels is the transported $G_2$-equivariant quadratic form.
+
+The first is now an explicit finite algebra calculation; the second is the true remaining conceptual step.
+
+### Gap 1g: State-Level Form of the Representation Check
+
+Todorov's paper already gives the correct state basis for this test. Using his identifications,
+
+$$\ell a a^\dagger = \nu, \qquad \ell a^\dagger a = e,$$
+$$q_j a a^\dagger = u_j, \qquad q_j a^\dagger a = d_j.$$
+
+So the representation check should be stated at the level of these fermionic states, not at the level of the bare idempotents alone.
+
+The desired statement is then simply:
+
+1. the leptonic pair $(\nu,e)$ is annihilated by the colour $su(3)$ generators;
+2. the up-type colour triple $(u_1,u_2,u_3)$ transforms as a three-dimensional irreducible colour representation;
+3. the down-type colour triple $(d_1,d_2,d_3)$ transforms as the same three-dimensional irreducible colour representation.
+
+This is exactly the physical form of the octonionic singlet-plus-triplet decomposition.
+
+At this stage it is safest not to fix whether this irreducible representation is written as $\mathbf{3}$ or $\bar{\mathbf{3}}$. With projector conventions such as
+
+$$q_j = p_j p_k' p_\ell',$$
+
+the $q_j$ channels can naturally be interpreted as one-hole states in a three-mode fermionic system, which often carry the conjugate triplet. For the normalization argument this distinction is irrelevant: what matters is only that the quark sector is a single three-dimensional irreducible colour representation, with equal channel weights.
+
+With this phrasing, the intertwiner ansatz becomes cleaner:
+
+- the octonionic singlet line $\mathbb{C}_u$ corresponds to the lepton sector labelled by $\ell$;
+- the octonionic colour lines $\mathbb{C}_{e_j}$ correspond to the three quark colour channels labelled by $q_j$;
+- the colour generators act on the resulting quark states in the standard three-dimensional irreducible way.
+
+So the finite check to perform later is now completely explicit: evaluate the action of the traceless colour bilinears on the six states
+
+$$\nu,\ e,\ u_j,\ d_j,$$
+
+and verify the singlet-plus-triplet pattern directly.
+
+### Gap 1h: Oscillator-Sector Interpretation
+
+There is also a clean abstract reason the colour sector should be three-dimensional irreducible.
+
+For three fermionic colour modes, the Fock space decomposes by occupation number:
+
+$$\mathcal{F} = \Lambda^0(\mathbb{C}^3)\ \oplus\ \Lambda^1(\mathbb{C}^3)\ \oplus\ \Lambda^2(\mathbb{C}^3)\ \oplus\ \Lambda^3(\mathbb{C}^3).$$
+
+Under the colour group:
+
+$$\Lambda^0(\mathbb{C}^3) \cong \mathbf{1}, \qquad \Lambda^1(\mathbb{C}^3) \cong \mathbf{3}, \qquad \Lambda^2(\mathbb{C}^3) \cong \bar{\mathbf{3}}, \qquad \Lambda^3(\mathbb{C}^3) \cong \mathbf{1}.$$
+
+With the projector convention
+
+$$\ell = p_1p_2p_3,$$
+
+the leptonic channel is the colour vacuum sector, hence a singlet. With
+
+$$q_j = p_j p_k' p_\ell',$$
+
+the quark channels are naturally "one-hole" states, i.e. states with two occupied colour modes. So they sit in the $\Lambda^2(\mathbb{C}^3)$ sector, which is canonically a three-dimensional irreducible representation isomorphic to $\bar{\mathbf{3}}$.
+
+This explains why the review above forced a correction: in these conventions, the $q_j$ sector is more naturally the conjugate triplet than the fundamental. But for the Higgs normalization argument this changes nothing. The only structural fact we need is:
+
+$$\text{lepton sector} \cong \mathbf{1}, \qquad \text{quark colour sector} \cong \text{one irreducible } 3\text{-dimensional module}.$$
+
+So the representation check can now be split even further:
+
+1. identify which occupation sector the states $\nu,e,u_j,d_j$ inhabit;
+2. verify that the colour bilinears preserve that sector;
+3. use the exterior-algebra decomposition above to read off the representation.
+
+This gives a second route to the same conclusion, independent of any detailed commutator calculation.
+
+### Gap 1i: Occupation-Sector Identification of $\nu,e,u_j,d_j$
+
+The exterior-algebra argument becomes concrete once the projector conventions are unpacked.
+
+For one fermionic mode, with $\{b_j,b_j^\dagger\}=1$, the operators
+
+$$p_j = b_j b_j^\dagger, \qquad p_j' = b_j^\dagger b_j$$
+
+project respectively onto the unoccupied and occupied states of the $j$th colour mode. Therefore:
+
+- $p_j$ means "mode $j$ empty";
+- $p_j'$ means "mode $j$ filled".
+
+Hence
+
+$$\ell = p_1p_2p_3$$
+
+is the state with all three colour modes empty, i.e. the vacuum sector
+
+$$\ell \in \Lambda^0(\mathbb{C}^3).$$
+
+Likewise,
+
+$$q_j = p_j p_k' p_\ell'$$
+
+means that mode $j$ is empty while the other two colour modes are occupied. So each $q_j$ lies in the two-particle sector
+
+$$q_j \in \Lambda^2(\mathbb{C}^3).$$
+
+Now use Todorov's state identifications
+
+$$\ell a a^\dagger = \nu, \qquad \ell a^\dagger a = e,$$
+$$q_j a a^\dagger = u_j, \qquad q_j a^\dagger a = d_j.$$
+
+The weak oscillators $a,a^\dagger$ act in the electroweak sector and do not change the colour occupation number. So:
+
+$$\nu,\ e \in \Lambda^0(\mathbb{C}^3), \qquad u_j,\ d_j \in \Lambda^2(\mathbb{C}^3).$$
+
+By the decomposition from Gap 1h, this implies immediately:
+
+$$\mathrm{span}\{\nu,e\} \text{ is colour-singlet}, \qquad \mathrm{span}\{u_j\},\ \mathrm{span}\{d_j\} \text{ are each } \bar{\mathbf{3}} \text{ (up to convention).}$$
+
+So, modulo the convention-dependent choice of $\mathbf{3}$ versus $\bar{\mathbf{3}}$, the representation check is already essentially done at the level of occupation sectors.
+
+What remains for a full writeup is only to record this as a short lemma:
+
+1. $\ell$ labels the colour vacuum sector;
+2. $q_j$ label the one-hole/two-particle sector;
+3. the weak oscillators preserve colour occupation number;
+4. therefore $(\nu,e)$ are colour singlets and $(u_j),(d_j)$ are colour triplets in the irreducible three-dimensional sense.
+
+This is probably the cleanest route to finishing the representation half of Gap 1.
+
+### Gap 1j: Lemma-Corollary Form of the Representation Result
+
+The previous subsection can now be compressed into a clean statement.
+
+**Lemma (colour-sector identification).** With
+
+$$p_j=b_j b_j^\dagger,\qquad p_j'=b_j^\dagger b_j,\qquad \ell=p_1p_2p_3,\qquad q_j=p_jp_k'p_\ell',$$
+
+the Clifford-Fock colour sectors satisfy
+
+$$\ell \in \Lambda^0(\mathbb{C}^3), \qquad q_j \in \Lambda^2(\mathbb{C}^3).$$
+
+If the weak oscillators $a,a^\dagger$ commute with colour occupation number, then Todorov's particle states obey
+
+$$\nu,e \in \Lambda^0(\mathbb{C}^3), \qquad u_j,d_j \in \Lambda^2(\mathbb{C}^3).$$
+
+**Corollary (representation content).** The lepton states $(\nu,e)$ are colour singlets, while the quark colour triples $(u_1,u_2,u_3)$ and $(d_1,d_2,d_3)$ each furnish the same irreducible three-dimensional colour representation, naturally identified with $\bar{\mathbf 3}$ in the projector convention above.
+
+So the representation part of the intertwiner is no longer an open conceptual problem. At most, it remains a bookkeeping problem of writing the oscillator argument in the notation of Todorov's paper.
+
+### Gap 1k: What Actually Remains Open
+
+After the lemma-corollary reduction, Gap 1 should now be read as split into:
+
+1. **Representation part:** essentially closed. The singlet-plus-triplet decomposition follows from occupation counting in the colour Fock space.
+2. **Metric part:** still open. One must show that the odd-sector supertrace on these channels is the transported restriction of the unique pre-selection $G_2$-invariant quadratic form.
+
+So the only genuinely unresolved statement is now:
+
+$$\mathcal{N}_{\mathrm{Tod}} \stackrel{?}{=} c\,\mathcal{N}_{G_2\text{-lifted}} \quad \text{on } \ell \oplus q_1 \oplus q_2 \oplus q_3.$$
+
+If that identity holds, then every remaining normalization statement follows formally:
+
+- equal channel weights;
+- total quark/lepton ratio $3:1$;
+- Todorov's $\rho$ fixed as the basis-dependent encoding of that equality;
+- hence $\lambda = g^2\cos^2\theta_W/2$ and $m_H = 2\cos\theta_W\,m_W$.
+
+At this point, the project has crossed an important threshold: the representation-theoretic part is no longer the bottleneck. The bottleneck is purely the metric/supertrace identification.
+
+### Gap 1l: Minimal Metric-Matching Checklist
+
+The metric part can now be reduced to a short list of explicit identities. Let
+
+$$Q_\ell,\ Q_{q_1},\ Q_{q_2},\ Q_{q_3}$$
+
+denote the odd generators or odd basis elements associated with the lepton channel and the three quark channels, in whatever basis Todorov uses for the odd sector.
+
+To prove
+
+$$\mathcal{N}_{\mathrm{Tod}} = c\,\mathcal{N}_{G_2\text{-lifted}}$$
+
+on $\ell \oplus q_1 \oplus q_2 \oplus q_3$, it is enough to verify the following:
+
+1. **Diagonal channel decomposition**
+   $$\mathrm{Str}(Q_i^\dagger Q_j)=0 \qquad \text{for } i\neq j.$$
+   This ensures orthogonality of distinct channels.
+
+2. **Equal quark-channel weights**
+   $$\mathrm{Str}(Q_{q_1}^\dagger Q_{q_1})=\mathrm{Str}(Q_{q_2}^\dagger Q_{q_2})=\mathrm{Str}(Q_{q_3}^\dagger Q_{q_3}).$$
+   This is the $SU(3)$ part.
+
+3. **Lepton/quark equality**
+   $$\mathrm{Str}(Q_\ell^\dagger Q_\ell)=\mathrm{Str}(Q_{q_j}^\dagger Q_{q_j}) \qquad \text{for each } j.$$
+   This is the genuine octonionic lift condition, i.e. the step that goes beyond post-selection $SU(3)$ symmetry.
+
+4. **Positivity / nondegeneracy**
+   $$\mathrm{Str}(Q_\ell^\dagger Q_\ell)>0.$$
+   Then the common value defines the overall scale $c$.
+
+If these four statements hold, then the odd quadratic form has matrix
+
+$$c\,\mathrm{diag}(1,1,1,1)$$
+
+on the channel basis $(\ell,q_1,q_2,q_3)$, and therefore agrees with the transported restriction of the unique $G_2$-invariant form up to overall scale.
+
+So the metric problem is not "compare two huge formalisms". It is simply to compute four kinds of supertrace matrix elements and show that they collapse to a common scalar.
+
+### Gap 1m: What Todorov's Explicit Formulas Already Force
+
+The primary-source formulas reduce the checklist even further.
+
+In Todorov's restricted projector formalism, the odd Higgs operator is written explicitly as
+
+$$\Phi = \Phi_\ell + \Phi_q,$$
+
+with
+
+$$\Phi_\ell=\ell(\phi_1A_1^\dagger-\overline{\phi}_1A_1+\phi_2A_2^\dagger-\overline{\phi}_2A_2),$$
+$$\Phi_q=\rho\,q\sum_{\alpha=1}^2(\phi_\alpha a_\alpha^\dagger-\overline{\phi}_\alpha a_\alpha), \qquad q=q_1+q_2+q_3,$$
+
+where the $q_j$ are mutually orthogonal idempotents:
+
+$$q_jq_k=\delta_{jk}q_j, \qquad \ell q_j=0=q_j\ell.$$
+
+Because the weak oscillators $a_\alpha,a_\alpha^\dagger$ and the projected leptonic generators $A_\alpha,A_\alpha^\dagger$ live in the separate $Cl_4$ factor, they commute with the colour projectors. So one may refine the quark part channelwise:
+
+$$\Phi_q=\sum_{j=1}^3\Phi_{q_j}, \qquad \Phi_{q_j}:=\rho\,q_j\sum_{\alpha=1}^2(\phi_\alpha a_\alpha^\dagger-\overline{\phi}_\alpha a_\alpha).$$
+
+Then the cross terms vanish formally:
+
+$$\Phi_\ell\Phi_{q_j}=0, \qquad \Phi_{q_j}\Phi_{q_k}=0 \quad (j\neq k).$$
+
+So orthogonality of distinct channels is not an additional dynamical hypothesis once the odd operator is written in Todorov's projector basis. It is built into the algebraic decomposition itself.
+
+The quark diagonals are equally immediate. From Todorov's explicit formula for $\Phi^2$ one gets
+
+$$\Phi_{q_j}^2=-\rho^2 q_j(\phi_1\overline{\phi}_1+\phi_2\overline{\phi}_2)=-\rho^2 q_j\,\phi\overline{\phi},$$
+
+hence
+
+$$-\,\mathrm{Tr}(\Phi_{q_j}^2)=\rho^2\,\phi\overline{\phi}$$
+
+for each $j$, independent of colour. Therefore the quark block of the channel quadratic form is automatically a scalar multiple of the identity:
+
+$$\text{quark block}=b\,I_3.$$
+
+What remains nontrivial is only the leptonic diagonal entry. Todorov computes, in the restricted projector formalism,
+
+$$-\,\mathrm{Tr}\!\left(\ell(1-\pi_1\pi_2)\Phi^2\right)=\frac12\,\phi\overline{\phi},$$
+
+while a single quark channel contributes
+
+$$-\,\mathrm{Tr}\!\left(\rho^2 q_j\Phi^2\right)=\rho^2\,\phi\overline{\phi}.$$
+
+Equality of the leptonic contribution with one coloured-quark contribution is therefore exactly the statement
+
+$$\rho^2=\frac12.$$
+
+So the source-level metric problem is no longer "show that an arbitrary $4\times 4$ channel matrix is scalar". The explicit formulas already collapse it to the block form
+
+$$a \oplus bI_3,$$
+
+with the quark block fixed by orthogonal idempotents and factor separation. The only genuinely open step is to show that the scalar equality
+
+$$a=b$$
+
+is forced by the transported pre-selection $G_2$-invariant quadratic form, rather than inserted as an independent normalization choice.
+
+### Gap 1n: Sharpest Remaining Theorem
+
+The entire Higgs-normalization program can now be summarized by one final theorem-sized target.
+
+**Remaining theorem target.** In Todorov's odd sector, after decomposing into the channel basis $(\ell,q_1,q_2,q_3)$, the odd quadratic form already has the block shape
+
+$$a \oplus bI_3,$$
+
+and one has to prove the remaining scalar equality
+
+$$a=b>0.$$
+
+Equivalently, the supertrace pairing on the channels should be proportional to the identity:
+
+$$\left(\mathrm{Str}(Q_i^\dagger Q_j)\right)_{i,j\in\{\ell,q_1,q_2,q_3\}} = c\,I_4.$$
+
+Everything else is now downstream:
+
+- the representation theory explains why the three quark channels sit together in one irreducible colour sector;
+- the octonionic lift explains why the lepton channel must carry the same weight as each quark channel;
+- the total quark norm is therefore three times the lepton norm;
+- Todorov's $\rho$ is fixed by this equality;
+- the Higgs mass relation follows.
+
+This is as condensed as the open problem can be made without actually doing the supertrace calculation.
 
 **Consequence for the derivation chain:** Every step in the $m_H/m_W$ derivation now has an octonionic origin:
 
 | Step | Origin |
 |---|---|
 | 1+3 split $\mathbb{O} = \mathbb{C}_u \oplus \mathbb{C}^3$ | $u$-selection (derived) |
-| Normalization condition $\|\Phi\|^2_Q = 3\|\Phi\|^2_L$ | $G_2$ transitivity on $\mathrm{Im}(\mathbb{O})$ (derived) |
+| Normalization condition $\|\Phi\|^2_Q = 3\|\Phi\|^2_L$ | $G_2$ transitivity + additivity + diagonal Higgs embedding (formalized conditionally) |
 | $\sin^2\theta_W = 3/8$ | 3+2 split of $u^\perp$ (derived) |
 | $m_H = 2\cos\theta_W m_W$ | $sl(2|1)$ structure + normalization condition (Todorov, now derivable from above) |
 | $m_H \approx 127.1$ GeV (tree level) | Combining all derived inputs |
@@ -671,7 +1230,7 @@ The gauge boson loop corrections to $m_W^2$ shift $g_2^2$ at the same order; aft
 
 ## Status
 
-Reading note: the status table below should be read in light of the revised Gap 1 discussion above. In particular, the normalization step is now best treated as a plausible octonionic argument rather than a closed theorem internal to the superconnection framework.
+Reading note: the status table below should be read in light of the revised Gap 1 discussion above. In particular, the normalization step is now best treated as a formalized conditional proposition rather than a closed theorem internal to the superconnection framework.
 
 | Claim | Status | Maturity |
 |---|---|---|
@@ -686,7 +1245,7 @@ Reading note: the status table below should be read in light of the revised Gap 
 | Connection to measured $0.231$ requires RG running | Established (standard) | 2 |
 | $m_H/m_W$ within 1.5%: $m_H = 2\cos\theta_W m_W$, $m_H \approx 127.1$ GeV | Derived (Todorov formula + $u$-framework $\theta_W$) | 3 |
 | 1+3 split $\mathbb{O} = \mathbb{C}_u \oplus \mathbb{C}^3_{u^\perp}$ as origin of Todorov's postulate | Established — $u$-selection forces the split | 2 |
-| Normalization condition $\|\Phi\|^2_Q = 3\|\Phi\|^2_L$ from $G_2$ transitivity | Plausible octonionic argument; not yet a formal theorem in the superconnection setup | 4 |
+| Normalization condition $\|\Phi\|^2_Q = 3\|\Phi\|^2_L$ from $G_2$ transitivity | Representation part essentially closed; metric/supertrace matching still open | 4 |
 | Full $m_H/m_W$ derivation internal to $u$-framework (no external postulates) | Not yet closed - Todorov's superconnection step still carries nontrivial imported structure | 4 |
 | 1.5% gap = 1-loop EW threshold correction to $sl(2|1)$ tree-level relation | Reframed; GUT-to-EW running is wrong in magnitude, so an explicit EW-scale 1-loop calculation is needed | 4 |
 | Running octonionic BC $\lambda_0 = 5g_2^2(\Lambda)/16$ to $M_Z$ gives $m_H \approx 167$ GeV | Tension with SM vacuum stability; requires resolution (new physics or EW-only interpretation) | 5 |
