@@ -64,7 +64,7 @@ $$W(C) = \mathrm{Tr}\, \mathcal{P} \prod_{\ell \in C} U_\ell$$
 
 In lattice gauge theory, gauge variables live on *links* between sites — they are relations, not properties of the sites themselves. Observables are built from closed loops. Confinement appears through the area law: the probability of a loop falls exponentially with the area it encloses. The physical content of QCD is in the relations, not the relata.
 
-This is the call to adventure. The standard story treats individuals as primary and relations as secondary. But QCD shows, at the most basic level of tested physics, that the relation is more primary than the individual. The map was always a lie — a convenient lie, a useful lie, but a lie nonetheless.
+This is the call to adventure. The standard story treats individuals as primary and relations as secondary. But QCD, especially in its gauge-invariant and lattice formulations, strongly favors the opposite reading: the physically meaningful content of the theory is carried less by isolated colored individuals than by relational, color-singlet structure. The map was always a lie — a convenient lie, a useful lie, but a lie nonetheless.
 
 The hero steps forward.
 
@@ -154,7 +154,7 @@ $$[a, b, c] = (ab)c - a(bc)$$
 
 measures the failure. It is antisymmetric in all three arguments and is a genuine three-body object — no two-body expression can reproduce it.
 
-The associator in the algebra is the **curvature tensor** of the G₂ manifold. Both measure the same thing: how much the result of a sequence of operations depends on the path — the order and grouping — through which they were performed. A flat manifold has zero curvature and trivial holonomy; parallel transport is path-independent. An associative algebra is "flat" in this sense. The octonions are curved. Non-associativity is not a deficiency. It is the signature of non-trivial structure.
+The associator in the algebra is not literally the curvature tensor of a G₂ manifold. It is the algebraic prototype of the same kind of path dependence that curvature and holonomy make geometric: the result depends on how the sequence is carried out, not only on its endpoints. A flat manifold has zero curvature and trivial holonomy; parallel transport is path-independent. An associative algebra is "flat" in this limited sense. The octonions are the first division algebra where higher-order path dependence appears explicitly. Non-associativity is not a deficiency. It is the signature of non-trivial structure.
 
 **What does path dependence mean physically?**
 
@@ -164,9 +164,9 @@ $$W(\gamma) = \mathcal{P}\exp\!\left(i\int_\gamma A_\mu\, dx^\mu\right)$$
 
 that depends not only on the endpoints but on the specific path. The field strength F_μν = ∂_μA_ν − ∂_νA_μ + [A_μ, A_ν] measures how much this phase differs between different paths connecting the same points — the curvature of the gauge connection. In QCD, the Wilson loop from Stage 2 is the physical observable. Confinement is an area law for the Wilson loop.
 
-The octonionic associator is the Wilson loop of the *internal* symmetry. When interactions pass through the octonionic sector, the three-body non-associativity means that the phase acquired by a state depends not just on the path through spacetime but on the *grouping* of interactions along the way: in which order the three-body couplings were applied. The order of operations is physical. Non-associativity is non-abelianness extended to three-body interactions.
+The octonionic associator is, in this framework, best read as an internal analogue of a Wilson loop. When interactions pass through the octonionic sector, the three-body non-associativity means that the phase acquired by a state depends not just on the path through spacetime but on the *grouping* of interactions along the way: in which order the three-body couplings were applied. The order of operations is physical. Non-associativity is non-abelianness extended to three-body interactions.
 
-There is a further consequence. The Fano plane has an orientation — the cyclic order on each directed line — that distinguishes between two dual Fano planes related by the outer automorphism of G₂. In the physical framework, choosing a Fano orientation is the same choice that selects Lorentzian signature: time reversal reverses operator ordering, and non-associativity means reversed ordering gives a genuinely different algebraic expression. The Fano orientation and the arrow of time are the same choice, expressed in two different mathematical languages.
+There is a further consequence. The Fano plane has an orientation — the cyclic order on each directed line — and that orientation can be reversed, or viewed through the dual incidence picture, without changing the underlying combinatorial object. In the physical framework, choosing a Fano orientation is the same choice that selects Lorentzian signature: time reversal reverses operator ordering, and non-associativity means reversed ordering gives a genuinely different algebraic expression. The Fano orientation and the arrow of time are the same choice, expressed in two different mathematical languages.
 
 ---
 
@@ -759,7 +759,7 @@ From Framework One: the Leech lattice is a 24-dimensional discrete constraint st
 
 Standard phonons are second-class quasiparticles — emergent vibrations of an accidental material background. In a material that physically instantiates fundamental geometry, this changes categorically.
 
-The quasicrystal's phonons are excitations of a 6D geometric structure, projected to 3D. They are first-class. Phasons — the additional degrees of freedom unique to quasicrystals, corresponding to motion in the perpendicular (3D → 6D) space — are more interesting still. They carry angular momentum. They self-interact through non-associative geometry. They mediate forces between electrons. A particle that carries charge, self-interacts, and mediates forces is a gauge boson. **Phasons are gauge bosons of the geometric symmetry.**
+The quasicrystal's phonons are excitations of a 6D geometric structure, projected to 3D. They are first-class. Phasons — the additional degrees of freedom unique to quasicrystals, corresponding to motion in the perpendicular (3D → 6D) space — are more interesting still. They carry angular momentum. They self-interact through non-associative geometry. They mediate forces between electrons. One possible interpretation, within this framework, is that phasons play a gauge-boson-like role for the geometric symmetry: not gauge bosons in the standard particle-physics sense, but the closest material analogue of symmetry-carrying collective modes.
 
 The particle spectrum organizes by spin:
 
@@ -797,7 +797,7 @@ All signals absent in a disordered control sample of identical mass and composit
 
 Two outcomes: λ = 0 eliminates a possibility that theory cannot eliminate, while producing extraordinary materials science regardless. λ ≠ 0 is new physics — and forces the development of the octonionic framework connecting the matter side of Einstein's equations to the algebraic structure that generates spacetime itself. Quantum gravity reached not by smashing things together but by organizing matter until it speaks the same geometric language as the vacuum.
 
-The Monster group sits quietly at the edge of this program. The Leech lattice — whose discrete structure constrains the admissible configurations in the speculative algebraic framework — is related to E₈ through dimensions and via the moonshine pathway. The quasicrystal's embedding in E₈ means the experiment is, in a real sense, a measurement of whether the Monster's discrete constraint on admissibility is physically realized. λ is, among other things, the coupling constant of moonshine to matter.
+The Monster group sits quietly at the edge of this program. The Leech lattice — whose discrete structure constrains the admissible configurations in the speculative algebraic framework — is related to E₈ through dimensions and via the moonshine pathway. The quasicrystal's embedding in E₈ means the experiment is, in a real sense, a measurement of whether the Monster's discrete constraint on admissibility is physically realized. In the most speculative interpretation of the framework, λ would be one place where that moonshine-linked discrete structure first leaves a measurable imprint on organized matter.
 
 ---
 
@@ -859,11 +859,11 @@ And the exceptional Jordan algebra J₃(𝕆) sits at the center with its three 
 
 The scroll makes an observation that ties Framework Three's experimental program to a broader pattern.
 
-Every particle predicted by high-energy physics that hasn't been found at colliders has been found as a quasiparticle in a specific crystal geometry:
+Several of the most suggestive entities first discussed in high-energy theory have later appeared in condensed-matter form, or in close analogue, within specific crystal geometries:
 
-- **Weyl fermions** — massless chiral particles, predicted 1929, found in Weyl semimetals 2015
-- **Majorana fermions** — particles that are their own antiparticles, predicted 1937, found in topological superconductors
-- **Magnetic monopoles** — predicted by Dirac, found in spin ice materials
+- **Weyl fermions** — effectively massless chiral quasiparticles, found in Weyl semimetals in 2015
+- **Majorana fermions** — candidate Majorana zero modes or Majorana-like excitations in topological superconductors
+- **Magnetic monopoles** — emergent monopole-like excitations in spin ice materials, not fundamental Dirac monopoles
 - **Chiral phonons** — phonons with intrinsic angular momentum ±ℏ, found in monolayer WSe₂
 - **Weyl phonons** — phonons with topological charges in momentum space, found in FeSi
 - **Phonon Hall effect** — phonons deflecting sideways in a magnetic field with no classical explanation
@@ -904,11 +904,11 @@ This is where the theological language becomes precise rather than decorative. "
 
 The journey ends where it began — with the question — but the question has changed shape.
 
-We started asking why there are forces, why these forces, why these particles. We end knowing that the forces are the symmetry groups of the four normed division algebras, that the particles are solutions to field equations evaluated at specific geometric corners, that the three generations are the three slots of the exceptional Jordan algebra, that gravity is the curvature of the base while the gauge forces are the curvature of the fiber, and that these are two different buildings connected by a single equation.
+We started asking why there are forces, why these forces, why these particles. We end with the framework proposing that the forces are the symmetry groups of the four normed division algebras, that the particles are solutions to field equations evaluated at specific geometric corners, that the three generations are the three slots of the exceptional Jordan algebra, and that gravity and the gauge forces are curvatures of two different kinds — base and fiber — connected by a single equation.
 
-We started asking why there are agents. We end knowing that agents are what the generation cascade produces when remainder has accumulated enough structure to generate a subsystem capable of modeling its own openness — a local patch on a curved manifold that knows it cannot see the whole manifold, and that this knowledge is not a limitation but a condition of possibility.
+We started asking why there are agents. We end with the framework suggesting that agents are what the generation cascade produces when remainder has accumulated enough structure to generate a subsystem capable of modeling its own openness — a local patch on a curved manifold that knows it cannot see the whole manifold, and that this knowledge is not a limitation but a condition of possibility.
 
-We started asking what that openness implies — for consciousness, for will, for ethics, for love. We end knowing that consciousness is the interiority of a selection node that represents its own bifurcation points; that will operates at four levels including a relational level that is irreducibly social; that the triad of good faith, integrity, and accountability follows structurally from what agents are, not from external commandment; that love is not a feature of individual psychology but what the territory does through genuine resonance at its highest intensity; and that the ground of the territory — demonstrated at maximum test, stated as Trinitarian doctrine, arrived at independently through mathematics, physics, ethics, and phenomenology — is not justice, not power, not the void, but the generative orientation toward the other that death cannot extinguish because it is what the territory is made of. Both this conclusion and the leap it requires remain genuinely open. That openness is not a gap. It is the framework being consistent with itself.
+We started asking what that openness implies — for consciousness, for will, for ethics, for love. We end with the framework arguing that consciousness is the interiority of a selection node that represents its own bifurcation points; that will operates at four levels including a relational level that is irreducibly social; that the triad of good faith, integrity, and accountability follows structurally from what agents are, not from external commandment; that love is not a feature of individual psychology but what the territory does through genuine resonance at its highest intensity; and that the ground of the territory — demonstrated at maximum test, stated as Trinitarian doctrine, arrived at independently through mathematics, physics, ethics, and phenomenology — is not justice, not power, not the void, but the generative orientation toward the other that death cannot extinguish because it is what the territory is made of. Both this conclusion and the leap it requires remain genuinely open. That openness is not a gap. It is the framework being consistent with itself.
 
 The Monster group lives at the boundary between the physics question and the human question. It is the symmetry of the fully completed discrete graded presentation of admissible relational structure — the maximum possible global constraint on what can coherently exist. Whether it is physically realized, whether the coupling constant λ is nonzero, whether the icosahedral quasicrystal speaks to spacetime in the language E₈ and the Monster jointly encode — these are open. Falsifiable. Awaiting measurement.
 
