@@ -5,6 +5,8 @@ const toneEnabled = document.getElementById("toneEnabled");
 const frequencyInput = document.getElementById("frequencyInput");
 const amplitudeInput = document.getElementById("amplitudeInput");
 const amplitudeValue = document.getElementById("amplitudeValue");
+const balanceInput = document.getElementById("balanceInput");
+const balanceValue = document.getElementById("balanceValue");
 const statusText = document.getElementById("statusText");
 const waveformTab = document.getElementById("waveformTab");
 const heatmapTab = document.getElementById("heatmapTab");
@@ -21,6 +23,8 @@ const rejectHotFramesInput = document.getElementById("rejectHotFramesInput");
 const rejectPercentileInput = document.getElementById("rejectPercentileInput");
 const renderRejectHotBinsInput = document.getElementById("renderRejectHotBinsInput");
 const renderRejectPercentileInput = document.getElementById("renderRejectPercentileInput");
+const subtractColumnBackgroundInput = document.getElementById("subtractColumnBackgroundInput");
+const backgroundPercentileInput = document.getElementById("backgroundPercentileInput");
 const freqScaleSelect = document.getElementById("freqScaleSelect");
 const displayStartInput = document.getElementById("displayStartInput");
 const displayEndInput = document.getElementById("displayEndInput");
@@ -29,12 +33,14 @@ const fftRange = document.getElementById("fftRange");
 const fftAverageCount = document.getElementById("fftAverageCount");
 const fftFrameFilterStatus = document.getElementById("fftFrameFilterStatus");
 const fftRenderFilterStatus = document.getElementById("fftRenderFilterStatus");
+const fftBackgroundStatus = document.getElementById("fftBackgroundStatus");
 const fftVisibleBand = document.getElementById("fftVisibleBand");
 const sweepEnabledInput = document.getElementById("sweepEnabledInput");
 const sweepStartHzInput = document.getElementById("sweepStartHzInput");
 const sweepEndHzInput = document.getElementById("sweepEndHzInput");
 const sweepStepsInput = document.getElementById("sweepStepsInput");
 const sweepLogInput = document.getElementById("sweepLogInput");
+const sweepContinuousInput = document.getElementById("sweepContinuousInput");
 const sweepLoopInput = document.getElementById("sweepLoopInput");
 const sweepStepSecondsInput = document.getElementById("sweepStepSecondsInput");
 const restartSweepButton = document.getElementById("restartSweepButton");
@@ -52,6 +58,9 @@ let sourceNode = null;
 let analyserNode = null;
 let oscillatorNode = null;
 let gainNode = null;
+let leftGainNode = null;
+let rightGainNode = null;
+let mergerNode = null;
 let analysisTimerId = null;
 let displayTimerId = null;
 
@@ -66,17 +75,22 @@ let currentStepFrameScores = [];
 let heatmapRows = [];
 let sweepCurrentFrequencyValue = 440;
 let sweepStepStartTime = null;
+let sweepPassStartTime = null;
 let currentSweepFrequencies = [];
+let currentSweepBoundaries = [];
 let currentSweepStepIndex = 0;
 
 const defaultSampleRate = 48000;
 const maxOscillatorFrequency = 20000;
 const fftAxisPadding = { top: 12, right: 16, bottom: 34, left: 76 };
+const fftMarginalLayout = { topHeight: 56, rightWidth: 82, gap: 12 };
 const heatmapPalette = buildHeatmapPalette();
 const settingsStorageKey = "audio-lab-settings-v1";
 const analysisIntervalMs = 100;
 const displayIntervalMs = 400;
 const maxRenderHistoryPerRow = 64;
+const minFrameFilterFrames = 8;
+const minRenderFilterVisits = 4;
 let activeView = "heatmap";
 let waveformDirty = true;
 let heatmapDirty = true;
@@ -109,6 +123,7 @@ function collectSettings() {
     toneEnabled: toneEnabled.checked,
     frequencyInput: frequencyInput.value,
     amplitudeInput: amplitudeInput.value,
+    balanceInput: balanceInput.value,
     fftSizeSelect: fftSizeSelect.value,
     smoothingInput: smoothingInput.value,
     minDbInput: minDbInput.value,
@@ -117,6 +132,8 @@ function collectSettings() {
     rejectPercentileInput: rejectPercentileInput.value,
     renderRejectHotBinsInput: renderRejectHotBinsInput.checked,
     renderRejectPercentileInput: renderRejectPercentileInput.value,
+    subtractColumnBackgroundInput: subtractColumnBackgroundInput.checked,
+    backgroundPercentileInput: backgroundPercentileInput.value,
     freqScaleSelect: freqScaleSelect.value,
     displayStartInput: displayStartInput.value,
     displayEndInput: displayEndInput.value,
@@ -125,6 +142,7 @@ function collectSettings() {
     sweepEndHzInput: sweepEndHzInput.value,
     sweepStepsInput: sweepStepsInput.value,
     sweepLogInput: sweepLogInput.checked,
+    sweepContinuousInput: sweepContinuousInput.checked,
     sweepLoopInput: sweepLoopInput.checked,
     sweepStepSecondsInput: sweepStepSecondsInput.value,
   };
@@ -157,6 +175,7 @@ function loadSettings() {
     if (typeof settings.toneEnabled === "boolean") toneEnabled.checked = settings.toneEnabled;
     if (typeof settings.frequencyInput === "string") frequencyInput.value = settings.frequencyInput;
     if (typeof settings.amplitudeInput === "string") amplitudeInput.value = settings.amplitudeInput;
+    if (typeof settings.balanceInput === "string") balanceInput.value = settings.balanceInput;
     if (typeof settings.fftSizeSelect === "string") fftSizeSelect.value = settings.fftSizeSelect;
     if (typeof settings.smoothingInput === "string") smoothingInput.value = settings.smoothingInput;
     if (typeof settings.minDbInput === "string") minDbInput.value = settings.minDbInput;
@@ -173,6 +192,12 @@ function loadSettings() {
     if (typeof settings.renderRejectPercentileInput === "string") {
       renderRejectPercentileInput.value = settings.renderRejectPercentileInput;
     }
+    if (typeof settings.subtractColumnBackgroundInput === "boolean") {
+      subtractColumnBackgroundInput.checked = settings.subtractColumnBackgroundInput;
+    }
+    if (typeof settings.backgroundPercentileInput === "string") {
+      backgroundPercentileInput.value = settings.backgroundPercentileInput;
+    }
     if (typeof settings.freqScaleSelect === "string") freqScaleSelect.value = settings.freqScaleSelect;
     if (typeof settings.displayStartInput === "string") displayStartInput.value = settings.displayStartInput;
     if (typeof settings.displayEndInput === "string") displayEndInput.value = settings.displayEndInput;
@@ -183,6 +208,9 @@ function loadSettings() {
     if (typeof settings.sweepEndHzInput === "string") sweepEndHzInput.value = settings.sweepEndHzInput;
     if (typeof settings.sweepStepsInput === "string") sweepStepsInput.value = settings.sweepStepsInput;
     if (typeof settings.sweepLogInput === "boolean") sweepLogInput.checked = settings.sweepLogInput;
+    if (typeof settings.sweepContinuousInput === "boolean") {
+      sweepContinuousInput.checked = settings.sweepContinuousInput;
+    }
     if (typeof settings.sweepLoopInput === "boolean") sweepLoopInput.checked = settings.sweepLoopInput;
     if (typeof settings.sweepStepSecondsInput === "string") {
       sweepStepSecondsInput.value = settings.sweepStepSecondsInput;
@@ -210,6 +238,21 @@ function formatFrequencyCompact(value) {
   }
 
   return `${formatNumber(value, value % 1 === 0 ? 0 : 1)} Hz`;
+}
+
+function formatBalanceLabel(value) {
+  if (value <= -99) {
+    return "Left only";
+  }
+  if (value >= 99) {
+    return "Right only";
+  }
+  if (Math.abs(value) < 0.5) {
+    return "Center";
+  }
+
+  const magnitude = Math.round(Math.abs(value));
+  return value < 0 ? `${magnitude}% left` : `${magnitude}% right`;
 }
 
 function buildHeatmapPalette() {
@@ -273,6 +316,7 @@ function getFftSettings() {
   const renderRejectPercentile = Math.round(
     clampNumber(Number(renderRejectPercentileInput.value), 50, 100, 95)
   );
+  const backgroundPercentile = Math.round(clampNumber(Number(backgroundPercentileInput.value), 0, 50, 20));
 
   return {
     fftSize: Number(fftSizeSelect.value),
@@ -283,6 +327,8 @@ function getFftSettings() {
     rejectPercentile,
     renderRejectHotBins: renderRejectHotBinsInput.checked,
     renderRejectPercentile,
+    subtractColumnBackground: subtractColumnBackgroundInput.checked,
+    backgroundPercentile,
     scale: freqScaleSelect.value,
   };
 }
@@ -301,6 +347,7 @@ function getSweepSettings() {
     endHz,
     steps: Math.round(clampNumber(Number(sweepStepsInput.value), 2, 20000, 50)),
     log: sweepLogInput.checked,
+    continuous: sweepContinuousInput.checked,
     loop: sweepLoopInput.checked,
     stepSeconds: clampNumber(Number(sweepStepSecondsInput.value), 0.1, 86400, 60),
   };
@@ -321,6 +368,61 @@ function buildSweepFrequencies(settings) {
   }
 
   return frequencies;
+}
+
+function buildSweepBoundaries(settings, frequencies) {
+  if (frequencies.length === 0) {
+    return [];
+  }
+
+  const boundaries = new Float32Array(frequencies.length + 1);
+  boundaries[0] = settings.startHz;
+  boundaries[boundaries.length - 1] = settings.endHz;
+
+  for (let index = 1; index < frequencies.length; index += 1) {
+    boundaries[index] = settings.log
+      ? Math.sqrt(frequencies[index - 1] * frequencies[index])
+      : (frequencies[index - 1] + frequencies[index]) * 0.5;
+  }
+
+  return Array.from(boundaries);
+}
+
+function getSweepFrequencyAtProgress(settings, progress) {
+  const clampedProgress = clampNumber(progress, 0, 1, 0);
+  return settings.log
+    ? settings.startHz * (settings.endHz / settings.startHz) ** clampedProgress
+    : settings.startHz + (settings.endHz - settings.startHz) * clampedProgress;
+}
+
+function getSweepBinIndex(frequency) {
+  if (currentSweepFrequencies.length <= 1 || currentSweepBoundaries.length < 2) {
+    return 0;
+  }
+
+  if (frequency <= currentSweepBoundaries[0]) {
+    return 0;
+  }
+  if (frequency >= currentSweepBoundaries[currentSweepBoundaries.length - 1]) {
+    return currentSweepFrequencies.length - 1;
+  }
+
+  for (let index = 0; index < currentSweepFrequencies.length; index += 1) {
+    if (frequency < currentSweepBoundaries[index + 1]) {
+      return index;
+    }
+  }
+
+  return currentSweepFrequencies.length - 1;
+}
+
+function getActiveSweepRowFrequency() {
+  if (currentSweepFrequencies.length === 0) {
+    return sweepCurrentFrequencyValue;
+  }
+
+  const safeIndex = Math.min(currentSweepFrequencies.length - 1, Math.max(0, currentSweepStepIndex));
+  return currentSweepFrequencies[safeIndex];
 }
 
 function getVisibleFrequencyRange(scale = getFftSettings().scale) {
@@ -356,17 +458,30 @@ function updateControls() {
   const sweepSettings = getSweepSettings();
   const visibleRange = getVisibleFrequencyRange(fftSettings.scale);
   const resolutionHz = getSampleRate() / fftSettings.fftSize;
+  const balance = clampNumber(Number(balanceInput.value), -100, 100, 0);
 
   amplitudeValue.textContent = `${amplitudeInput.value}%`;
+  balanceValue.textContent = formatBalanceLabel(balance);
   smoothingValue.textContent = fftSettings.smoothing.toFixed(2);
   fftRange.textContent = `${Math.round(fftSettings.minDb)} dB to ${Math.round(fftSettings.maxDb)} dB`;
   fftResolution.textContent = `${resolutionHz.toFixed(1)} Hz/bin`;
   fftAverageCount.textContent = `${currentStepFrameCount} frame${currentStepFrameCount === 1 ? "" : "s"}`;
   fftFrameFilterStatus.textContent = fftSettings.rejectHotFrames
-    ? `P${fftSettings.rejectPercentile} cutoff`
+    ? currentStepFrames.length >= minFrameFilterFrames
+      ? `P${fftSettings.rejectPercentile} cutoff`
+      : `Need ${minFrameFilterFrames} frames`
     : "Off";
   fftRenderFilterStatus.textContent = fftSettings.renderRejectHotBins
-    ? `Per-bin P${fftSettings.renderRejectPercentile}`
+    ? heatmapRows.some(
+        (row) => Array.isArray(row.visitSpectra) && row.visitSpectra.length >= minRenderFilterVisits
+      )
+      ? `Per-bin P${fftSettings.renderRejectPercentile}`
+      : `Need ${minRenderFilterVisits} visits`
+    : "Off";
+  fftBackgroundStatus.textContent = fftSettings.subtractColumnBackground
+    ? heatmapRows.length >= 2
+      ? `Per-column P${fftSettings.backgroundPercentile}`
+      : "Need 2 rows"
     : "Off";
   fftVisibleBand.textContent = `${formatFrequencyCompact(visibleRange.start)} to ${formatFrequencyCompact(
     visibleRange.end
@@ -405,6 +520,7 @@ function clearHeatmap(resetSweepTimer = false) {
 
   if (resetSweepTimer && audioContext) {
     sweepStepStartTime = audioContext.currentTime;
+    sweepPassStartTime = audioContext.currentTime;
   }
 
   updateControls();
@@ -426,10 +542,21 @@ function syncToneSettings() {
 
   const now = audioContext.currentTime;
   const amplitude = Number(amplitudeInput.value) / 100;
+  const pan = clampNumber(Number(balanceInput.value) / 100, -1, 1, 0);
   const frequency = isSweepActive() ? sweepCurrentFrequencyValue : getFrequencyValue();
+  const angle = ((pan + 1) * Math.PI) / 4;
+  const channelAmplitude = toneEnabled.checked ? amplitude : 0;
+  const leftGain = channelAmplitude * Math.cos(angle);
+  const rightGain = channelAmplitude * Math.sin(angle);
 
   applyOscillatorFrequency(frequency);
-  gainNode.gain.setValueAtTime(toneEnabled.checked ? amplitude : 0, now);
+  gainNode.gain.setValueAtTime(1, now);
+  if (leftGainNode) {
+    leftGainNode.gain.setValueAtTime(leftGain, now);
+  }
+  if (rightGainNode) {
+    rightGainNode.gain.setValueAtTime(rightGain, now);
+  }
 }
 
 function commitFrequencyInput() {
@@ -467,6 +594,7 @@ function commitFrameFilterInputs() {
   const fftSettings = getFftSettings();
   rejectPercentileInput.value = String(fftSettings.rejectPercentile);
   renderRejectPercentileInput.value = String(fftSettings.renderRejectPercentile);
+  backgroundPercentileInput.value = String(fftSettings.backgroundPercentile);
   updateControls();
   heatmapDirty = true;
   persistSettings();
@@ -515,6 +643,7 @@ function applyFftSettings() {
 
   rejectPercentileInput.value = String(settings.rejectPercentile);
   renderRejectPercentileInput.value = String(settings.renderRejectPercentile);
+  backgroundPercentileInput.value = String(settings.backgroundPercentile);
   updateControls();
   heatmapDirty = true;
   persistSettings();
@@ -523,6 +652,7 @@ function applyFftSettings() {
 function startSweep(resetRows = true) {
   const sweepSettings = getSweepSettings();
   currentSweepFrequencies = buildSweepFrequencies(sweepSettings);
+  currentSweepBoundaries = buildSweepBoundaries(sweepSettings, currentSweepFrequencies);
   currentSweepStepIndex = 0;
   sweepCurrentFrequencyValue = currentSweepFrequencies[0];
   frequencyInput.value = formatNumber(
@@ -530,6 +660,7 @@ function startSweep(resetRows = true) {
     sweepCurrentFrequencyValue % 1 === 0 ? 0 : 1
   );
   sweepStepStartTime = audioContext ? audioContext.currentTime : null;
+  sweepPassStartTime = audioContext ? audioContext.currentTime : null;
 
   if (resetRows) {
     heatmapRows = [];
@@ -551,8 +682,10 @@ function stopSweep() {
   }
 
   sweepStepStartTime = null;
+  sweepPassStartTime = null;
   resetCurrentStepAverage();
   currentSweepFrequencies = [];
+  currentSweepBoundaries = [];
   currentSweepStepIndex = 0;
   sweepCurrentFrequencyValue = getFrequencyValue();
   syncToneSettings();
@@ -569,6 +702,16 @@ function restartSweep() {
     updateControls();
   }
   persistSettings();
+}
+
+function commitCurrentSweepBin() {
+  if (currentStepFrameCount === 0) {
+    return false;
+  }
+
+  const committedSpectrum = buildCommittedStepSpectrum();
+  upsertHeatmapRow(getActiveSweepRowFrequency(), committedSpectrum, 1);
+  return true;
 }
 
 function upsertHeatmapRow(frequency, spectrum, visitCount = 1) {
@@ -621,7 +764,11 @@ function computePercentile(sortedValues, percentile) {
 function buildCommittedStepSpectrum() {
   const fftSettings = getFftSettings();
 
-  if (!fftSettings.rejectHotFrames || currentStepFrames.length === 0) {
+  if (
+    !fftSettings.rejectHotFrames ||
+    currentStepFrames.length === 0 ||
+    currentStepFrames.length < minFrameFilterFrames
+  ) {
     return currentStepAverageData.slice();
   }
 
@@ -654,7 +801,11 @@ function buildCommittedStepSpectrum() {
 }
 
 function buildRenderedSpectrum(row, fftSettings) {
-  if (!fftSettings.renderRejectHotBins || !Array.isArray(row.visitSpectra) || row.visitSpectra.length === 0) {
+  if (
+    !fftSettings.renderRejectHotBins ||
+    !Array.isArray(row.visitSpectra) ||
+    row.visitSpectra.length < minRenderFilterVisits
+  ) {
     return row.spectrum;
   }
 
@@ -690,14 +841,52 @@ function buildRenderedSpectrum(row, fftSettings) {
   return rendered;
 }
 
+function buildColumnBackground(rows, fftSettings) {
+  if (
+    !fftSettings.subtractColumnBackground ||
+    rows.length < 2
+  ) {
+    return null;
+  }
+
+  const background = new Float32Array(rows[0].renderedSpectrum.length);
+  for (let binIndex = 0; binIndex < background.length; binIndex += 1) {
+    const values = new Array(rows.length);
+    for (let rowIndex = 0; rowIndex < rows.length; rowIndex += 1) {
+      values[rowIndex] = rows[rowIndex].renderedSpectrum[binIndex];
+    }
+
+    values.sort((left, right) => left - right);
+    const baseline = computePercentile(values, fftSettings.backgroundPercentile);
+    background[binIndex] = Number.isFinite(baseline) ? baseline : fftSettings.minDb;
+  }
+
+  return background;
+}
+
+function subtractColumnBackground(spectrum, background, minDb) {
+  if (!background) {
+    return spectrum;
+  }
+
+  const floorPower = 10 ** (minDb / 10);
+  const adjustedSpectrum = new Float32Array(spectrum.length);
+
+  for (let binIndex = 0; binIndex < spectrum.length; binIndex += 1) {
+    const signalPower = 10 ** (spectrum[binIndex] / 10);
+    const backgroundPower = 10 ** (background[binIndex] / 10);
+    const residualPower = Math.max(floorPower, signalPower - backgroundPower);
+    adjustedSpectrum[binIndex] = 10 * Math.log10(residualPower);
+  }
+
+  return adjustedSpectrum;
+}
+
 function finalizeSweepStep() {
-  if (currentStepFrameCount === 0) {
+  if (!commitCurrentSweepBin()) {
     sweepStepStartTime = audioContext ? audioContext.currentTime : null;
     return;
   }
-
-  const committedSpectrum = buildCommittedStepSpectrum();
-  upsertHeatmapRow(sweepCurrentFrequencyValue, committedSpectrum, 1);
 
   const sweepSettings = getSweepSettings();
   const nextIndex = currentSweepStepIndex + 1;
@@ -724,6 +913,51 @@ function finalizeSweepStep() {
   sweepStepStartTime = audioContext.currentTime;
   resetCurrentStepAverage();
   syncToneSettings();
+}
+
+function advanceContinuousSweep(currentTime, sweepSettings) {
+  const totalDuration = sweepSettings.stepSeconds * currentSweepFrequencies.length;
+  if (!Number.isFinite(totalDuration) || totalDuration <= 0) {
+    return;
+  }
+
+  if (sweepPassStartTime === null) {
+    sweepPassStartTime = currentTime;
+  }
+
+  const elapsedPass = Math.max(0, currentTime - sweepPassStartTime);
+  const progress = Math.min(1, elapsedPass / totalDuration);
+  const frequency = getSweepFrequencyAtProgress(sweepSettings, progress);
+  const targetIndex = getSweepBinIndex(frequency);
+
+  while (currentSweepStepIndex < targetIndex) {
+    commitCurrentSweepBin();
+    currentSweepStepIndex += 1;
+    sweepStepStartTime = currentTime;
+    resetCurrentStepAverage();
+    heatmapDirty = true;
+  }
+
+  sweepCurrentFrequencyValue = frequency;
+  applyOscillatorFrequency(frequency);
+
+  if (elapsedPass >= totalDuration) {
+    commitCurrentSweepBin();
+    heatmapDirty = true;
+
+    if (sweepSettings.loop) {
+      currentSweepStepIndex = 0;
+      sweepPassStartTime = currentTime;
+      sweepStepStartTime = currentTime;
+      sweepCurrentFrequencyValue = currentSweepFrequencies[0];
+      resetCurrentStepAverage();
+      syncToneSettings();
+    } else {
+      sweepEnabledInput.checked = false;
+      stopSweep();
+      setStatus(`Sweep completed at ${formatFrequencyCompact(sweepSettings.endHz)}`);
+    }
+  }
 }
 
 function accumulateCurrentStep(minDb) {
@@ -792,6 +1026,28 @@ function drawWaveform() {
   waveformDirty = false;
 }
 
+function getHeatmapLayout(width, height) {
+  const plotWidth = Math.max(160, width - fftAxisPadding.left - fftAxisPadding.right);
+  const plotHeight = Math.max(120, height - fftAxisPadding.top - fftAxisPadding.bottom);
+  const heatmapWidth = Math.max(80, plotWidth - fftMarginalLayout.rightWidth - fftMarginalLayout.gap);
+  const heatmapHeight = Math.max(80, plotHeight - fftMarginalLayout.topHeight - fftMarginalLayout.gap);
+
+  return {
+    heatmapX: fftAxisPadding.left,
+    heatmapY: fftAxisPadding.top + fftMarginalLayout.topHeight + fftMarginalLayout.gap,
+    heatmapWidth,
+    heatmapHeight,
+    topX: fftAxisPadding.left,
+    topY: fftAxisPadding.top,
+    topWidth: heatmapWidth,
+    topHeight: fftMarginalLayout.topHeight,
+    rightX: fftAxisPadding.left + heatmapWidth + fftMarginalLayout.gap,
+    rightY: fftAxisPadding.top + fftMarginalLayout.topHeight + fftMarginalLayout.gap,
+    rightWidth: fftMarginalLayout.rightWidth,
+    rightHeight: heatmapHeight,
+  };
+}
+
 function getFrequencyForX(x, width, scale, minFrequency, maxFrequency) {
   if (scale === "log") {
     const logMin = Math.log10(minFrequency);
@@ -815,6 +1071,81 @@ function getFrequencyX(frequency, width, scale, minFrequency, maxFrequency) {
   }
 
   return ((safeFrequency - minFrequency) / (maxFrequency - minFrequency)) * width;
+}
+
+function getSweepScaleSettings(rows) {
+  const sweepSettings = getSweepSettings();
+  const fallbackMin = sweepSettings.log ? Math.max(20, sweepSettings.startHz) : sweepSettings.startHz;
+  let minFrequency = fallbackMin;
+  let maxFrequency = sweepSettings.endHz;
+
+  if (rows.length > 0) {
+    minFrequency = rows[0].frequency;
+    maxFrequency = rows[rows.length - 1].frequency;
+  }
+
+  if (sweepSettings.log) {
+    minFrequency = Math.max(20, minFrequency);
+  }
+  if (minFrequency >= maxFrequency) {
+    maxFrequency = minFrequency + 0.1;
+  }
+
+  return {
+    minFrequency,
+    maxFrequency,
+    log: sweepSettings.log,
+  };
+}
+
+function getSweepY(frequency, height, scaleSettings) {
+  const safeFrequency = Math.min(scaleSettings.maxFrequency, Math.max(scaleSettings.minFrequency, frequency));
+
+  if (scaleSettings.log) {
+    const logMin = Math.log10(scaleSettings.minFrequency);
+    const logMax = Math.log10(scaleSettings.maxFrequency);
+    const logValue = Math.log10(safeFrequency);
+    return ((logValue - logMin) / (logMax - logMin)) * height;
+  }
+
+  return ((safeFrequency - scaleSettings.minFrequency) / (scaleSettings.maxFrequency - scaleSettings.minFrequency)) * height;
+}
+
+function buildHeatmapRowGeometry(rows, chartHeight, scaleSettings) {
+  const centers = new Float32Array(rows.length);
+  const pixelRowIndices = new Uint32Array(chartHeight);
+
+  if (rows.length === 0) {
+    return { centers, pixelRowIndices };
+  }
+
+  if (rows.length === 1) {
+    centers[0] = chartHeight * 0.5;
+    pixelRowIndices.fill(0);
+    return { centers, pixelRowIndices };
+  }
+
+  for (let rowIndex = 0; rowIndex < rows.length; rowIndex += 1) {
+    centers[rowIndex] = getSweepY(rows[rowIndex].frequency, chartHeight, scaleSettings);
+  }
+
+  const boundaries = new Float32Array(rows.length + 1);
+  boundaries[0] = 0;
+  boundaries[rows.length] = chartHeight;
+  for (let rowIndex = 1; rowIndex < rows.length; rowIndex += 1) {
+    boundaries[rowIndex] = (centers[rowIndex - 1] + centers[rowIndex]) * 0.5;
+  }
+
+  let boundaryIndex = 1;
+  for (let y = 0; y < chartHeight; y += 1) {
+    const yCenter = y + 0.5;
+    while (boundaryIndex < boundaries.length - 1 && yCenter >= boundaries[boundaryIndex]) {
+      boundaryIndex += 1;
+    }
+    pixelRowIndices[y] = boundaryIndex - 1;
+  }
+
+  return { centers, pixelRowIndices };
 }
 
 function getNiceLinearTickStep(range) {
@@ -871,7 +1202,7 @@ function getDisplayRows() {
 
   if (isSweepActive() && currentStepFrameCount > 0) {
     const previewRow = {
-      frequency: sweepCurrentFrequencyValue,
+      frequency: getActiveSweepRowFrequency(),
       spectrum: currentStepAverageData,
       preview: true,
     };
@@ -934,68 +1265,249 @@ function exportHeatmapCsv() {
   setStatus(`Exported ${heatmapRows.length} heatmap row${heatmapRows.length === 1 ? "" : "s"} to CSV`);
 }
 
-function drawHeatmapAxes(chartWidth, chartHeight, settings, minFrequency, maxFrequency, rows) {
+function drawHeatmapAxes(layout, settings, minFrequency, maxFrequency, rows, rowGeometry) {
   const xTicks = getFrequencyTickValues(settings.scale, minFrequency, maxFrequency);
   const yTickCount = Math.min(6, Math.max(rows.length, 2));
+  const yLabelX = -10;
 
   fftContext.save();
-  fftContext.translate(fftAxisPadding.left, fftAxisPadding.top);
+  fftContext.translate(layout.heatmapX, layout.heatmapY);
   fftContext.strokeStyle = "rgba(255, 255, 255, 0.08)";
   fftContext.fillStyle = "rgba(238, 247, 255, 0.78)";
   fftContext.lineWidth = 1;
   fftContext.font = "12px 'Segoe UI'";
 
   for (const frequency of xTicks) {
-    const x = getFrequencyX(frequency, chartWidth, settings.scale, minFrequency, maxFrequency);
+    const x = getFrequencyX(frequency, layout.heatmapWidth, settings.scale, minFrequency, maxFrequency);
     if (x <= 2) {
       fftContext.textAlign = "left";
-    } else if (x >= chartWidth - 2) {
+    } else if (x >= layout.heatmapWidth - 2) {
       fftContext.textAlign = "right";
     } else {
       fftContext.textAlign = "center";
     }
     fftContext.beginPath();
     fftContext.moveTo(x, 0);
-    fftContext.lineTo(x, chartHeight);
+    fftContext.lineTo(x, layout.heatmapHeight);
     fftContext.stroke();
-    fftContext.fillText(formatFrequencyCompact(frequency), x, chartHeight + 18);
+    fftContext.fillText(formatFrequencyCompact(frequency), x, layout.heatmapHeight + 18);
   }
 
-  fftContext.textAlign = "left";
+  fftContext.textAlign = "right";
   if (rows.length > 0) {
     for (let i = 0; i < yTickCount; i += 1) {
       const rowIndex = rows.length === 1 ? 0 : Math.round((i / (yTickCount - 1)) * (rows.length - 1));
-      const y = rows.length === 1 ? chartHeight * 0.5 : (rowIndex / (rows.length - 1)) * chartHeight;
+      const y = rowGeometry.centers[rowIndex];
       fftContext.beginPath();
       fftContext.moveTo(0, y);
-      fftContext.lineTo(chartWidth, y);
+      fftContext.lineTo(layout.heatmapWidth, y);
       fftContext.stroke();
-      fftContext.fillText(formatFrequencyCompact(rows[rowIndex].frequency), 8, y + 4);
+      fftContext.fillText(formatFrequencyCompact(rows[rowIndex].frequency), yLabelX, y + 4);
     }
   } else {
     fftContext.beginPath();
-    fftContext.moveTo(0, chartHeight * 0.5);
-    fftContext.lineTo(chartWidth, chartHeight * 0.5);
+    fftContext.moveTo(0, layout.heatmapHeight * 0.5);
+    fftContext.lineTo(layout.heatmapWidth, layout.heatmapHeight * 0.5);
     fftContext.stroke();
-    fftContext.fillText("No sweep rows yet", 8, chartHeight * 0.5 + 4);
+    fftContext.fillText("No sweep rows yet", yLabelX, layout.heatmapHeight * 0.5 + 4);
   }
 
   fftContext.strokeStyle = "rgba(255, 255, 255, 0.18)";
   fftContext.beginPath();
   fftContext.moveTo(0, 0);
-  fftContext.lineTo(0, chartHeight);
-  fftContext.lineTo(chartWidth, chartHeight);
+  fftContext.lineTo(0, layout.heatmapHeight);
+  fftContext.lineTo(layout.heatmapWidth, layout.heatmapHeight);
   fftContext.stroke();
 
   fftContext.fillStyle = "rgba(238, 247, 255, 0.92)";
   fftContext.textAlign = "center";
-  fftContext.fillText("Response frequency", chartWidth / 2, chartHeight + 32);
+  fftContext.fillText("Response frequency", layout.heatmapWidth / 2, layout.heatmapHeight + 32);
 
   fftContext.save();
-  fftContext.translate(18, chartHeight / 2);
+  fftContext.translate(18, layout.heatmapHeight / 2);
   fftContext.rotate(-Math.PI / 2);
   fftContext.fillText("Driven sweep frequency", 0, 0);
   fftContext.restore();
+
+  fftContext.restore();
+}
+
+function buildHeatmapMarginals(renderedRows, columnBins) {
+  const binCount = renderedRows.length > 0 ? renderedRows[0].renderedSpectrum.length : 0;
+  const columnTotals = new Float32Array(binCount);
+  const rowTotals = new Float32Array(renderedRows.length);
+
+  for (let rowIndex = 0; rowIndex < renderedRows.length; rowIndex += 1) {
+    const row = renderedRows[rowIndex];
+    let rowTotal = 0;
+
+    for (let binIndex = 0; binIndex < row.renderedSpectrum.length; binIndex += 1) {
+      const dbValue = row.renderedSpectrum[binIndex];
+      const power = 10 ** (dbValue / 10);
+      columnTotals[binIndex] += power;
+    }
+
+    for (let x = 0; x < columnBins.length; x += 1) {
+      const dbValue = row.renderedSpectrum[columnBins[x]];
+      const power = 10 ** (dbValue / 10);
+      rowTotal += power;
+    }
+
+    rowTotals[rowIndex] = rowTotal;
+  }
+
+  return { columnTotals, rowTotals };
+}
+
+function drawTopMarginal(layout, columnTotals, settings, minFrequency, maxFrequency, nyquist) {
+  fftContext.save();
+  fftContext.translate(layout.topX, layout.topY);
+  fftContext.strokeStyle = "rgba(255, 255, 255, 0.14)";
+  fftContext.fillStyle = "rgba(255, 255, 255, 0.03)";
+  fftContext.lineWidth = 1;
+  fftContext.font = "12px 'Segoe UI'";
+  fftContext.fillRect(0, 0, layout.topWidth, layout.topHeight);
+  fftContext.strokeRect(0, 0, layout.topWidth, layout.topHeight);
+  fftContext.fillStyle = "rgba(238, 247, 255, 0.72)";
+  fftContext.textAlign = "left";
+  fftContext.fillText("Column cumulative", 10, 14);
+
+  if (columnTotals.length > 0) {
+    const maxTotal = Math.max(...columnTotals, 1e-12);
+    const chartTop = 22;
+    const chartBottom = layout.topHeight - 6;
+    const chartRange = Math.max(1, chartBottom - chartTop);
+    const binWidthHz = nyquist / columnTotals.length;
+    let started = false;
+
+    fftContext.fillStyle = "rgba(110, 231, 255, 0.18)";
+    fftContext.strokeStyle = "rgba(110, 231, 255, 0.92)";
+    fftContext.beginPath();
+    for (let binIndex = 0; binIndex < columnTotals.length; binIndex += 1) {
+      const leftFrequency = binIndex * binWidthHz;
+      const rightFrequency = (binIndex + 1) * binWidthHz;
+
+      if (rightFrequency < minFrequency || leftFrequency > maxFrequency) {
+        continue;
+      }
+
+      const leftX = Math.max(
+        0,
+        Math.min(layout.topWidth, getFrequencyX(leftFrequency, layout.topWidth, settings.scale, minFrequency, maxFrequency))
+      );
+      const rightX = Math.max(
+        0,
+        Math.min(layout.topWidth, getFrequencyX(rightFrequency, layout.topWidth, settings.scale, minFrequency, maxFrequency))
+      );
+      const y = chartBottom - (columnTotals[binIndex] / maxTotal) * chartRange;
+
+      if (!started) {
+        fftContext.moveTo(leftX, chartBottom);
+        fftContext.lineTo(leftX, y);
+        started = true;
+      } else {
+        fftContext.lineTo(leftX, y);
+      }
+
+      fftContext.lineTo(rightX, y);
+    }
+
+    if (started) {
+      fftContext.lineTo(layout.topWidth, chartBottom);
+      fftContext.closePath();
+      fftContext.fill();
+    }
+
+    fftContext.beginPath();
+    started = false;
+    for (let binIndex = 0; binIndex < columnTotals.length; binIndex += 1) {
+      const leftFrequency = binIndex * binWidthHz;
+      const rightFrequency = (binIndex + 1) * binWidthHz;
+
+      if (rightFrequency < minFrequency || leftFrequency > maxFrequency) {
+        continue;
+      }
+
+      const leftX = Math.max(
+        0,
+        Math.min(layout.topWidth, getFrequencyX(leftFrequency, layout.topWidth, settings.scale, minFrequency, maxFrequency))
+      );
+      const rightX = Math.max(
+        0,
+        Math.min(layout.topWidth, getFrequencyX(rightFrequency, layout.topWidth, settings.scale, minFrequency, maxFrequency))
+      );
+      const y = chartBottom - (columnTotals[binIndex] / maxTotal) * chartRange;
+
+      if (!started) {
+        fftContext.moveTo(leftX, y);
+        started = true;
+      } else {
+        fftContext.lineTo(leftX, y);
+      }
+      fftContext.lineTo(rightX, y);
+    }
+
+    if (started) {
+      fftContext.stroke();
+    }
+  }
+
+  fftContext.restore();
+}
+
+function drawRightMarginal(layout, rowTotals, rowGeometry) {
+  fftContext.save();
+  fftContext.translate(layout.rightX, layout.rightY);
+  fftContext.strokeStyle = "rgba(255, 255, 255, 0.14)";
+  fftContext.fillStyle = "rgba(255, 255, 255, 0.03)";
+  fftContext.lineWidth = 1;
+  fftContext.font = "12px 'Segoe UI'";
+  fftContext.fillRect(0, 0, layout.rightWidth, layout.rightHeight);
+  fftContext.strokeRect(0, 0, layout.rightWidth, layout.rightHeight);
+
+  fftContext.save();
+  fftContext.translate(layout.rightWidth - 14, layout.rightHeight / 2);
+  fftContext.rotate(-Math.PI / 2);
+  fftContext.fillStyle = "rgba(238, 247, 255, 0.72)";
+  fftContext.textAlign = "center";
+  fftContext.fillText("Row cumulative", 0, 0);
+  fftContext.restore();
+
+  if (rowTotals.length > 0) {
+    const maxTotal = Math.max(...rowTotals, 1e-12);
+    const chartWidth = layout.rightWidth - 12;
+
+    fftContext.fillStyle = "rgba(255, 111, 145, 0.18)";
+    fftContext.strokeStyle = "rgba(255, 111, 145, 0.92)";
+    fftContext.beginPath();
+    fftContext.moveTo(0, 0);
+
+    for (let rowIndex = 0; rowIndex < rowTotals.length; rowIndex += 1) {
+      const y = rowGeometry.centers[rowIndex];
+      const x = (rowTotals[rowIndex] / maxTotal) * chartWidth;
+      if (rowIndex === 0) {
+        fftContext.lineTo(x, y);
+      } else {
+        fftContext.lineTo(x, y);
+      }
+    }
+
+    fftContext.lineTo(0, layout.rightHeight);
+    fftContext.closePath();
+    fftContext.fill();
+
+    fftContext.beginPath();
+    for (let rowIndex = 0; rowIndex < rowTotals.length; rowIndex += 1) {
+      const y = rowGeometry.centers[rowIndex];
+      const x = (rowTotals[rowIndex] / maxTotal) * chartWidth;
+      if (rowIndex === 0) {
+        fftContext.moveTo(x, y);
+      } else {
+        fftContext.lineTo(x, y);
+      }
+    }
+    fftContext.stroke();
+  }
 
   fftContext.restore();
 }
@@ -1004,25 +1516,41 @@ function drawFftHeatmap() {
   const { width, height } = fftCanvas;
   const settings = getFftSettings();
   const visibleRange = getVisibleFrequencyRange(settings.scale);
+  const layout = getHeatmapLayout(width, height);
   const rows = getDisplayRows();
-  const renderedRows = rows.map((row) => ({
+  const committedRenderedRows = heatmapRows.map((row) => ({
     ...row,
     renderedSpectrum: buildRenderedSpectrum(row, settings),
   }));
-  const chartWidth = width - fftAxisPadding.left - fftAxisPadding.right;
-  const chartHeight = height - fftAxisPadding.top - fftAxisPadding.bottom;
+  const columnBackground = buildColumnBackground(committedRenderedRows, settings);
+  const renderedRows = rows.map((row) => ({
+    ...row,
+    renderedSpectrum: subtractColumnBackground(
+      buildRenderedSpectrum(row, settings),
+      columnBackground,
+      settings.minDb
+    ),
+  }));
+  const sweepScaleSettings = getSweepScaleSettings(renderedRows);
+  const rowGeometry = buildHeatmapRowGeometry(renderedRows, layout.heatmapHeight, sweepScaleSettings);
   const nyquist = getNyquist();
 
   fftContext.clearRect(0, 0, width, height);
-  drawHeatmapAxes(chartWidth, chartHeight, settings, visibleRange.start, visibleRange.end, renderedRows);
+  drawHeatmapAxes(layout, settings, visibleRange.start, visibleRange.end, renderedRows, rowGeometry);
 
   if (renderedRows.length === 0) {
     return;
   }
 
-  const columnBins = new Uint32Array(chartWidth);
-  for (let x = 0; x < chartWidth; x += 1) {
-    const frequency = getFrequencyForX(x, chartWidth, settings.scale, visibleRange.start, visibleRange.end);
+  const columnBins = new Uint32Array(layout.heatmapWidth);
+  for (let x = 0; x < layout.heatmapWidth; x += 1) {
+    const frequency = getFrequencyForX(
+      x,
+      layout.heatmapWidth,
+      settings.scale,
+      visibleRange.start,
+      visibleRange.end
+    );
     const binIndex = Math.min(
       renderedRows[0].renderedSpectrum.length - 1,
       Math.max(0, Math.floor((frequency / nyquist) * renderedRows[0].renderedSpectrum.length))
@@ -1030,20 +1558,24 @@ function drawFftHeatmap() {
     columnBins[x] = binIndex;
   }
 
-  const imageData = fftContext.createImageData(chartWidth, chartHeight);
+  const { columnTotals, rowTotals } = buildHeatmapMarginals(renderedRows, columnBins);
+  drawTopMarginal(layout, columnTotals, settings, visibleRange.start, visibleRange.end, nyquist);
+  drawRightMarginal(layout, rowTotals, rowGeometry);
+
+  const imageData = fftContext.createImageData(layout.heatmapWidth, layout.heatmapHeight);
   const pixels = imageData.data;
 
-  for (let y = 0; y < chartHeight; y += 1) {
-    const rowIndex = Math.min(renderedRows.length - 1, Math.floor((y / chartHeight) * renderedRows.length));
+  for (let y = 0; y < layout.heatmapHeight; y += 1) {
+    const rowIndex = Math.min(renderedRows.length - 1, rowGeometry.pixelRowIndices[y]);
     const row = renderedRows[rowIndex];
 
-    for (let x = 0; x < chartWidth; x += 1) {
+    for (let x = 0; x < layout.heatmapWidth; x += 1) {
       const binIndex = columnBins[x];
       const dbValue = row.renderedSpectrum[binIndex];
       const normalized = (dbValue - settings.minDb) / (settings.maxDb - settings.minDb);
       const clamped = Math.min(1, Math.max(0, normalized));
       const color = heatmapPalette[Math.round(clamped * 255)];
-      const pixelIndex = (y * chartWidth + x) * 4;
+      const pixelIndex = (y * layout.heatmapWidth + x) * 4;
 
       pixels[pixelIndex] = color[0];
       pixels[pixelIndex + 1] = color[1];
@@ -1052,7 +1584,7 @@ function drawFftHeatmap() {
     }
   }
 
-  fftContext.putImageData(imageData, fftAxisPadding.left, fftAxisPadding.top);
+  fftContext.putImageData(imageData, layout.heatmapX, layout.heatmapY);
   heatmapDirty = false;
 }
 
@@ -1083,11 +1615,19 @@ function analysisTick() {
       startSweep(false);
     }
 
-    accumulateCurrentStep(fftSettings.minDb);
+    if (sweepSettings.continuous) {
+      advanceContinuousSweep(audioContext.currentTime, sweepSettings);
+      if (!sweepEnabledInput.checked) {
+        return;
+      }
+      accumulateCurrentStep(fftSettings.minDb);
+    } else {
+      accumulateCurrentStep(fftSettings.minDb);
 
-    if (audioContext.currentTime - sweepStepStartTime >= sweepSettings.stepSeconds) {
-      finalizeSweepStep();
-      heatmapDirty = true;
+      if (audioContext.currentTime - sweepStepStartTime >= sweepSettings.stepSeconds) {
+        finalizeSweepStep();
+        heatmapDirty = true;
+      }
     }
   } else {
     sweepCurrentFrequencyValue = getFrequencyValue();
@@ -1129,10 +1669,17 @@ async function startAudio() {
     oscillatorNode = audioContext.createOscillator();
     oscillatorNode.type = "sine";
     gainNode = audioContext.createGain();
+    leftGainNode = audioContext.createGain();
+    rightGainNode = audioContext.createGain();
+    mergerNode = audioContext.createChannelMerger(2);
 
     sourceNode.connect(analyserNode);
     oscillatorNode.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+    gainNode.connect(leftGainNode);
+    gainNode.connect(rightGainNode);
+    leftGainNode.connect(mergerNode, 0, 0);
+    rightGainNode.connect(mergerNode, 0, 1);
+    mergerNode.connect(audioContext.destination);
 
     oscillatorNode.start();
     sweepCurrentFrequencyValue = getFrequencyValue();
@@ -1178,6 +1725,21 @@ async function stopAudio() {
   if (gainNode) {
     gainNode.disconnect();
     gainNode = null;
+  }
+
+  if (leftGainNode) {
+    leftGainNode.disconnect();
+    leftGainNode = null;
+  }
+
+  if (rightGainNode) {
+    rightGainNode.disconnect();
+    rightGainNode = null;
+  }
+
+  if (mergerNode) {
+    mergerNode.disconnect();
+    mergerNode = null;
   }
 
   if (sourceNode) {
@@ -1257,6 +1819,12 @@ amplitudeInput.addEventListener("input", () => {
   persistSettings();
 });
 
+balanceInput.addEventListener("input", () => {
+  updateControls();
+  syncToneSettings();
+  persistSettings();
+});
+
 fftSizeSelect.addEventListener("change", applyFftSettings);
 smoothingInput.addEventListener("input", applyFftSettings);
 minDbInput.addEventListener("blur", commitDbInputs);
@@ -1269,6 +1837,9 @@ rejectPercentileInput.addEventListener("change", commitFrameFilterInputs);
 renderRejectHotBinsInput.addEventListener("change", commitFrameFilterInputs);
 renderRejectPercentileInput.addEventListener("blur", commitFrameFilterInputs);
 renderRejectPercentileInput.addEventListener("change", commitFrameFilterInputs);
+subtractColumnBackgroundInput.addEventListener("change", commitFrameFilterInputs);
+backgroundPercentileInput.addEventListener("blur", commitFrameFilterInputs);
+backgroundPercentileInput.addEventListener("change", commitFrameFilterInputs);
 
 freqScaleSelect.addEventListener("change", () => {
   commitVisibleRangeInputs();
@@ -1297,6 +1868,7 @@ sweepEndHzInput.addEventListener("change", commitSweepInputs);
 sweepStepsInput.addEventListener("blur", commitSweepInputs);
 sweepStepsInput.addEventListener("change", commitSweepInputs);
 sweepLogInput.addEventListener("change", commitSweepInputs);
+sweepContinuousInput.addEventListener("change", commitSweepInputs);
 sweepLoopInput.addEventListener("change", () => {
   updateControls();
   persistSettings();

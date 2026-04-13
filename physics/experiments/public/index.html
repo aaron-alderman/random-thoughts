@@ -47,6 +47,12 @@
           <input id="amplitudeInput" type="range" min="0" max="100" step="1" value="20" />
           <strong id="amplitudeValue">20%</strong>
         </label>
+
+        <label class="control">
+          <span>L/R balance</span>
+          <input id="balanceInput" type="range" min="-100" max="100" step="1" value="0" />
+          <strong id="balanceValue">Center</strong>
+        </label>
       </section>
 
       <section class="panel view-panel">
@@ -93,7 +99,7 @@
       <section class="panel sweep-panel">
         <div class="panel-header">
           <h2>Sweep Controls</h2>
-          <p>Looping re-samples the same sweep rows and averages into the existing heatmap</p>
+          <p>Choose stepped or continuous motion; looping re-samples the same heatmap rows</p>
         </div>
 
         <div class="advanced-grid sweep-grid">
@@ -129,6 +135,11 @@
           <label class="control">
             <span>Log spacing</span>
             <input id="sweepLogInput" type="checkbox" checked />
+          </label>
+
+          <label class="control">
+            <span>Continuous sweep</span>
+            <input id="sweepContinuousInput" type="checkbox" />
           </label>
 
           <label class="control">
@@ -253,6 +264,19 @@
           </label>
 
           <label class="control">
+            <span>Subtract column background</span>
+            <input id="subtractColumnBackgroundInput" type="checkbox" checked />
+          </label>
+
+          <label class="control">
+            <span>Background percentile</span>
+            <div class="number-field">
+              <input id="backgroundPercentileInput" type="number" min="0" max="50" step="1" value="20" />
+              <strong>%</strong>
+            </div>
+          </label>
+
+          <label class="control">
             <span>Frequency scale</span>
             <select id="freqScaleSelect">
               <option value="linear" selected>Linear</option>
@@ -285,6 +309,10 @@
           <div class="metric-card">
             <span>Display filter</span>
             <strong id="fftRenderFilterStatus">Per-bin P95</strong>
+          </div>
+          <div class="metric-card">
+            <span>Background mode</span>
+            <strong id="fftBackgroundStatus">Need 2 rows</strong>
           </div>
         </div>
       </section>
