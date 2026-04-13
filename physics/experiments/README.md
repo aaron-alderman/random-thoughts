@@ -44,7 +44,7 @@ http://127.0.0.1:3000
 7. The FFT panel is now a heatmap: each completed dwell interval becomes a new row.
 8. Use `Reset Heatmap` to clear the recorded rows and start fresh from the current point.
 9. Use `Export to CSV` to save the recorded heatmap rows, with one row per completed sweep step.
-10. Use the advanced FFT controls to change size, smoothing, dB range, linear vs log frequency scale, and the visible start/end frequency window.
+10. Use the advanced FFT controls to change size, smoothing, dB range, hot-frame rejection percentile, display-only hot-bin suppression, linear vs log frequency scale, and the visible start/end frequency window.
 11. All analysis and sweep options are saved in browser local storage and restored on refresh.
 
 ## Notes
@@ -56,5 +56,8 @@ http://127.0.0.1:3000
 - CSV export writes one record per completed sweep row, with the sweep frequency and all FFT response bins as columns.
 - The sweep now runs from the configured start frequency to the configured end frequency, and can loop back to the start automatically.
 - Sweep spacing can be linear or logarithmic; logarithmic spacing is usually the more natural choice for audio work.
+- Hot-frame rejection stores the raw FFT frames for the current dwell interval only, then can reject the top percentile of high-power frames before committing that step's average.
+- Display-only anomalous-bin suppression compares each response-frequency bin against that same bin's recent history for the row, and only changes the rendered heatmap, not the stored/exported data.
+- To keep unattended runs bounded, the display-only per-bin history uses a limited recent visit history per row rather than unbounded storage.
 - Automatic loop-back re-samples the same sweep frequencies and averages them into the existing heatmap rows; only `Reset Heatmap` or `Restart Sweep + Clear` wipes the stored rows.
 - The older Python prototype is still in the folder, but the Node/web version is now the recommended path.

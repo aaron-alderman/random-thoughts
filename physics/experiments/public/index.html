@@ -227,6 +227,32 @@
           </label>
 
           <label class="control">
+            <span>Reject hot frames</span>
+            <input id="rejectHotFramesInput" type="checkbox" checked />
+          </label>
+
+          <label class="control">
+            <span>Upper percentile</span>
+            <div class="number-field">
+              <input id="rejectPercentileInput" type="number" min="50" max="100" step="1" value="90" />
+              <strong>%</strong>
+            </div>
+          </label>
+
+          <label class="control">
+            <span>Suppress anomalous bins</span>
+            <input id="renderRejectHotBinsInput" type="checkbox" checked />
+          </label>
+
+          <label class="control">
+            <span>Anomaly percentile</span>
+            <div class="number-field">
+              <input id="renderRejectPercentileInput" type="number" min="50" max="100" step="1" value="95" />
+              <strong>%</strong>
+            </div>
+          </label>
+
+          <label class="control">
             <span>Frequency scale</span>
             <select id="freqScaleSelect">
               <option value="linear" selected>Linear</option>
@@ -251,6 +277,14 @@
           <div class="metric-card">
             <span>Current step frames</span>
             <strong id="fftAverageCount">0 frames</strong>
+          </div>
+          <div class="metric-card">
+            <span>Frame filter</span>
+            <strong id="fftFrameFilterStatus">P90 cutoff</strong>
+          </div>
+          <div class="metric-card">
+            <span>Display filter</span>
+            <strong id="fftRenderFilterStatus">Per-bin P95</strong>
           </div>
         </div>
       </section>

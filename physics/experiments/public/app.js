@@ -17,12 +17,18 @@ const smoothingInput = document.getElementById("smoothingInput");
 const smoothingValue = document.getElementById("smoothingValue");
 const minDbInput = document.getElementById("minDbInput");
 const maxDbInput = document.getElementById("maxDbInput");
+const rejectHotFramesInput = document.getElementById("rejectHotFramesInput");
+const rejectPercentileInput = document.getElementById("rejectPercentileInput");
+const renderRejectHotBinsInput = document.getElementById("renderRejectHotBinsInput");
+const renderRejectPercentileInput = document.getElementById("renderRejectPercentileInput");
 const freqScaleSelect = document.getElementById("freqScaleSelect");
 const displayStartInput = document.getElementById("displayStartInput");
 const displayEndInput = document.getElementById("displayEndInput");
 const fftResolution = document.getElementById("fftResolution");
 const fftRange = document.getElementById("fftRange");
 const fftAverageCount = document.getElementById("fftAverageCount");
+const fftFrameFilterStatus = document.getElementById("fftFrameFilterStatus");
+const fftRenderFilterStatus = document.getElementById("fftRenderFilterStatus");
 const fftVisibleBand = document.getElementById("fftVisibleBand");
 const sweepEnabledInput = document.getElementById("sweepEnabledInput");
 const sweepStartHzInput = document.getElementById("sweepStartHzInput");
@@ -55,6 +61,8 @@ const waveformData = new Float32Array(waveformBufferLength);
 let fftFrameData = new Float32Array(1024);
 let currentStepAverageData = new Float32Array(1024);
 let currentStepFrameCount = 0;
+let currentStepFrames = [];
+let currentStepFrameScores = [];
 let heatmapRows = [];
 let sweepCurrentFrequencyValue = 440;
 let sweepStepStartTime = null;
@@ -68,6 +76,7 @@ const heatmapPalette = buildHeatmapPalette();
 const settingsStorageKey = "audio-lab-settings-v1";
 const analysisIntervalMs = 100;
 const displayIntervalMs = 400;
+const maxRenderHistoryPerRow = 64;
 let activeView = "heatmap";
 let waveformDirty = true;
 let heatmapDirty = true;
@@ -104,6 +113,10 @@ function collectSettings() {
     smoothingInput: smoothingInput.value,
     minDbInput: minDbInput.value,
     maxDbInput: maxDbInput.value,
+    rejectHotFramesInput: rejectHotFramesInput.checked,
+    rejectPercentileInput: rejectPercentileInput.value,
+    renderRejectHotBinsInput: renderRejectHotBinsInput.checked,
+    renderRejectPercentileInput: renderRejectPercentileInput.value,
     freqScaleSelect: freqScaleSelect.value,
     displayStartInput: displayStartInput.value,
     displayEndInput: displayEndInput.value,
@@ -148,6 +161,18 @@ function loadSettings() {
     if (typeof settings.smoothingInput === "string") smoothingInput.value = settings.smoothingInput;
     if (typeof settings.minDbInput === "string") minDbInput.value = settings.minDbInput;
     if (typeof settings.maxDbInput === "string") maxDbInput.value = settings.maxDbInput;
+    if (typeof settings.rejectHotFramesInput === "boolean") {
+      rejectHotFramesInput.checked = settings.rejectHotFramesInput;
+    }
+    if (typeof settings.rejectPercentileInput === "string") {
+      rejectPercentileInput.value = settings.rejectPercentileInput;
+    }
+    if (typeof settings.renderRejectHotBinsInput === "boolean") {
+      renderRejectHotBinsInput.checked = settings.renderRejectHotBinsInput;
+    }
+    if (typeof settings.renderRejectPercentileInput === "string") {
+      renderRejectPercentileInput.value = settings.renderRejectPercentileInput;
+    }
     if (typeof settings.freqScaleSelect === "string") freqScaleSelect.value = settings.freqScaleSelect;
     if (typeof settings.displayStartInput === "string") displayStartInput.value = settings.displayStartInput;
     if (typeof settings.displayEndInput === "string") displayEndInput.value = settings.displayEndInput;
@@ -244,11 +269,20 @@ function getFftSettings() {
     minDb = maxDb - 1;
   }
 
+  const rejectPercentile = Math.round(clampNumber(Number(rejectPercentileInput.value), 50, 100, 90));
+  const renderRejectPercentile = Math.round(
+    clampNumber(Number(renderRejectPercentileInput.value), 50, 100, 95)
+  );
+
   return {
     fftSize: Number(fftSizeSelect.value),
     smoothing: Number(smoothingInput.value),
     minDb,
     maxDb,
+    rejectHotFrames: rejectHotFramesInput.checked,
+    rejectPercentile,
+    renderRejectHotBins: renderRejectHotBinsInput.checked,
+    renderRejectPercentile,
     scale: freqScaleSelect.value,
   };
 }
@@ -328,6 +362,12 @@ function updateControls() {
   fftRange.textContent = `${Math.round(fftSettings.minDb)} dB to ${Math.round(fftSettings.maxDb)} dB`;
   fftResolution.textContent = `${resolutionHz.toFixed(1)} Hz/bin`;
   fftAverageCount.textContent = `${currentStepFrameCount} frame${currentStepFrameCount === 1 ? "" : "s"}`;
+  fftFrameFilterStatus.textContent = fftSettings.rejectHotFrames
+    ? `P${fftSettings.rejectPercentile} cutoff`
+    : "Off";
+  fftRenderFilterStatus.textContent = fftSettings.renderRejectHotBins
+    ? `Per-bin P${fftSettings.renderRejectPercentile}`
+    : "Off";
   fftVisibleBand.textContent = `${formatFrequencyCompact(visibleRange.start)} to ${formatFrequencyCompact(
     visibleRange.end
   )}`;
@@ -348,6 +388,8 @@ function resetCurrentStepAverage() {
   currentStepAverageData = new Float32Array(fftFrameData.length);
   currentStepAverageData.fill(getFftSettings().minDb);
   currentStepFrameCount = 0;
+  currentStepFrames = [];
+  currentStepFrameScores = [];
   updateControls();
 }
 
@@ -421,6 +463,15 @@ function commitDbInputs() {
   persistSettings();
 }
 
+function commitFrameFilterInputs() {
+  const fftSettings = getFftSettings();
+  rejectPercentileInput.value = String(fftSettings.rejectPercentile);
+  renderRejectPercentileInput.value = String(fftSettings.renderRejectPercentile);
+  updateControls();
+  heatmapDirty = true;
+  persistSettings();
+}
+
 function commitVisibleRangeInputs() {
   const visibleRange = getVisibleFrequencyRange(getFftSettings().scale);
   displayStartInput.value = formatNumber(visibleRange.start, visibleRange.start % 1 === 0 ? 0 : 1);
@@ -462,6 +513,8 @@ function applyFftSettings() {
     reinitializeFftBuffers();
   }
 
+  rejectPercentileInput.value = String(settings.rejectPercentile);
+  renderRejectPercentileInput.value = String(settings.renderRejectPercentile);
   updateControls();
   heatmapDirty = true;
   persistSettings();
@@ -527,6 +580,7 @@ function upsertHeatmapRow(frequency, spectrum, visitCount = 1) {
       frequency,
       spectrum: spectrum.slice(),
       visits: visitCount,
+      visitSpectra: [spectrum.slice()],
     });
     heatmapRows.sort((left, right) => left.frequency - right.frequency);
     return;
@@ -538,6 +592,102 @@ function upsertHeatmapRow(frequency, spectrum, visitCount = 1) {
       existingRow.spectrum[i] + ((spectrum[i] - existingRow.spectrum[i]) * visitCount) / nextVisits;
   }
   existingRow.visits = nextVisits;
+  if (!Array.isArray(existingRow.visitSpectra)) {
+    existingRow.visitSpectra = [];
+  }
+  existingRow.visitSpectra.push(spectrum.slice());
+  if (existingRow.visitSpectra.length > maxRenderHistoryPerRow) {
+    existingRow.visitSpectra.shift();
+  }
+}
+
+function computePercentile(sortedValues, percentile) {
+  if (sortedValues.length === 0) {
+    return Number.NaN;
+  }
+
+  const rank = (percentile / 100) * (sortedValues.length - 1);
+  const lowerIndex = Math.floor(rank);
+  const upperIndex = Math.ceil(rank);
+
+  if (lowerIndex === upperIndex) {
+    return sortedValues[lowerIndex];
+  }
+
+  const weight = rank - lowerIndex;
+  return sortedValues[lowerIndex] + (sortedValues[upperIndex] - sortedValues[lowerIndex]) * weight;
+}
+
+function buildCommittedStepSpectrum() {
+  const fftSettings = getFftSettings();
+
+  if (!fftSettings.rejectHotFrames || currentStepFrames.length === 0) {
+    return currentStepAverageData.slice();
+  }
+
+  const sortedScores = [...currentStepFrameScores].sort((left, right) => left - right);
+  const threshold = computePercentile(sortedScores, fftSettings.rejectPercentile);
+  const keptFrames = [];
+
+  for (let index = 0; index < currentStepFrameScores.length; index += 1) {
+    if (currentStepFrameScores[index] <= threshold) {
+      keptFrames.push(currentStepFrames[index]);
+    }
+  }
+
+  if (keptFrames.length === 0) {
+    return currentStepAverageData.slice();
+  }
+
+  const spectrum = new Float32Array(fftFrameData.length);
+  spectrum.fill(fftSettings.minDb);
+
+  for (let frameIndex = 0; frameIndex < keptFrames.length; frameIndex += 1) {
+    const frame = keptFrames[frameIndex];
+    const sampleCount = frameIndex + 1;
+    for (let binIndex = 0; binIndex < frame.length; binIndex += 1) {
+      spectrum[binIndex] += (frame[binIndex] - spectrum[binIndex]) / sampleCount;
+    }
+  }
+
+  return spectrum;
+}
+
+function buildRenderedSpectrum(row, fftSettings) {
+  if (!fftSettings.renderRejectHotBins || !Array.isArray(row.visitSpectra) || row.visitSpectra.length === 0) {
+    return row.spectrum;
+  }
+
+  const rendered = new Float32Array(row.spectrum.length);
+  const history = row.visitSpectra;
+
+  for (let binIndex = 0; binIndex < rendered.length; binIndex += 1) {
+    const values = new Array(history.length);
+    for (let visitIndex = 0; visitIndex < history.length; visitIndex += 1) {
+      values[visitIndex] = history[visitIndex][binIndex];
+    }
+
+    values.sort((left, right) => left - right);
+    const threshold = computePercentile(values, fftSettings.renderRejectPercentile);
+
+    let keptSum = 0;
+    let keptCount = 0;
+    for (let visitIndex = 0; visitIndex < history.length; visitIndex += 1) {
+      const value = history[visitIndex][binIndex];
+      if (value <= threshold) {
+        keptSum += value;
+        keptCount += 1;
+      }
+    }
+
+    if (keptCount === 0) {
+      rendered[binIndex] = row.spectrum[binIndex];
+    } else {
+      rendered[binIndex] = keptSum / keptCount;
+    }
+  }
+
+  return rendered;
 }
 
 function finalizeSweepStep() {
@@ -546,7 +696,8 @@ function finalizeSweepStep() {
     return;
   }
 
-  upsertHeatmapRow(sweepCurrentFrequencyValue, currentStepAverageData, 1);
+  const committedSpectrum = buildCommittedStepSpectrum();
+  upsertHeatmapRow(sweepCurrentFrequencyValue, committedSpectrum, 1);
 
   const sweepSettings = getSweepSettings();
   const nextIndex = currentSweepStepIndex + 1;
@@ -576,13 +727,21 @@ function finalizeSweepStep() {
 }
 
 function accumulateCurrentStep(minDb) {
+  const frame = new Float32Array(fftFrameData.length);
+  let powerSum = 0;
+
   currentStepFrameCount += 1;
 
   for (let i = 0; i < fftFrameData.length; i += 1) {
     const sample = Number.isFinite(fftFrameData[i]) ? fftFrameData[i] : minDb;
+    frame[i] = sample;
+    powerSum += 10 ** (sample / 10);
     const previous = currentStepAverageData[i];
     currentStepAverageData[i] = previous + (sample - previous) / currentStepFrameCount;
   }
+
+  currentStepFrames.push(frame);
+  currentStepFrameScores.push(powerSum / fftFrameData.length);
 }
 
 function drawWaveformGrid(width, height) {
@@ -846,14 +1005,18 @@ function drawFftHeatmap() {
   const settings = getFftSettings();
   const visibleRange = getVisibleFrequencyRange(settings.scale);
   const rows = getDisplayRows();
+  const renderedRows = rows.map((row) => ({
+    ...row,
+    renderedSpectrum: buildRenderedSpectrum(row, settings),
+  }));
   const chartWidth = width - fftAxisPadding.left - fftAxisPadding.right;
   const chartHeight = height - fftAxisPadding.top - fftAxisPadding.bottom;
   const nyquist = getNyquist();
 
   fftContext.clearRect(0, 0, width, height);
-  drawHeatmapAxes(chartWidth, chartHeight, settings, visibleRange.start, visibleRange.end, rows);
+  drawHeatmapAxes(chartWidth, chartHeight, settings, visibleRange.start, visibleRange.end, renderedRows);
 
-  if (rows.length === 0) {
+  if (renderedRows.length === 0) {
     return;
   }
 
@@ -861,8 +1024,8 @@ function drawFftHeatmap() {
   for (let x = 0; x < chartWidth; x += 1) {
     const frequency = getFrequencyForX(x, chartWidth, settings.scale, visibleRange.start, visibleRange.end);
     const binIndex = Math.min(
-      rows[0].spectrum.length - 1,
-      Math.max(0, Math.floor((frequency / nyquist) * rows[0].spectrum.length))
+      renderedRows[0].renderedSpectrum.length - 1,
+      Math.max(0, Math.floor((frequency / nyquist) * renderedRows[0].renderedSpectrum.length))
     );
     columnBins[x] = binIndex;
   }
@@ -871,12 +1034,12 @@ function drawFftHeatmap() {
   const pixels = imageData.data;
 
   for (let y = 0; y < chartHeight; y += 1) {
-    const rowIndex = Math.min(rows.length - 1, Math.floor((y / chartHeight) * rows.length));
-    const row = rows[rowIndex];
+    const rowIndex = Math.min(renderedRows.length - 1, Math.floor((y / chartHeight) * renderedRows.length));
+    const row = renderedRows[rowIndex];
 
     for (let x = 0; x < chartWidth; x += 1) {
       const binIndex = columnBins[x];
-      const dbValue = row.spectrum[binIndex];
+      const dbValue = row.renderedSpectrum[binIndex];
       const normalized = (dbValue - settings.minDb) / (settings.maxDb - settings.minDb);
       const clamped = Math.min(1, Math.max(0, normalized));
       const color = heatmapPalette[Math.round(clamped * 255)];
@@ -1100,6 +1263,12 @@ minDbInput.addEventListener("blur", commitDbInputs);
 minDbInput.addEventListener("change", commitDbInputs);
 maxDbInput.addEventListener("blur", commitDbInputs);
 maxDbInput.addEventListener("change", commitDbInputs);
+rejectHotFramesInput.addEventListener("change", commitFrameFilterInputs);
+rejectPercentileInput.addEventListener("blur", commitFrameFilterInputs);
+rejectPercentileInput.addEventListener("change", commitFrameFilterInputs);
+renderRejectHotBinsInput.addEventListener("change", commitFrameFilterInputs);
+renderRejectPercentileInput.addEventListener("blur", commitFrameFilterInputs);
+renderRejectPercentileInput.addEventListener("change", commitFrameFilterInputs);
 
 freqScaleSelect.addEventListener("change", () => {
   commitVisibleRangeInputs();
@@ -1141,6 +1310,7 @@ commitFrequencyInput();
 commitSweepInputs();
 commitVisibleRangeInputs();
 commitDbInputs();
+commitFrameFilterInputs();
 updateControls();
 setActiveView(activeView);
 drawWaveformGrid(waveformCanvas.width, waveformCanvas.height);
