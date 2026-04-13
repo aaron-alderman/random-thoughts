@@ -33,6 +33,12 @@ Then open:
 http://127.0.0.1:3000
 ```
 
+Phase-jump transient experiment:
+
+```text
+http://127.0.0.1:3000/transient-phase.html
+```
+
 ## Use
 
 1. Click `Start Audio`.
@@ -65,3 +71,5 @@ http://127.0.0.1:3000
 - To keep unattended runs bounded, the display-only per-bin history uses a limited recent visit history per row rather than unbounded storage.
 - Automatic loop-back re-samples the same sweep frequencies and averages them into the existing heatmap rows; only `Reset Heatmap` or `Restart Sweep + Clear` wipes the stored rows.
 - The older Python prototype is still in the folder, but the Node/web version is now the recommended path.
+- `transient-phase.html` is a separate experiment page for fixed-carrier phase-jump transient testing, with the heatmap y-axis representing phase jump in degrees.
+- In the phase-jump page, the jump is now a one-shot event per dwell interval after the configured delay, not a repeated phase-kick train.
