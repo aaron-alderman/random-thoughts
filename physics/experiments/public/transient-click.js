@@ -49,9 +49,15 @@ const exportCsvButton = document.getElementById("exportCsvButton");
 const sweepCurrentFrequency = document.getElementById("sweepCurrentFrequency");
 const sweepStepProgress = document.getElementById("sweepStepProgress");
 const sweepRecordedRows = document.getElementById("sweepRecordedRows");
+const clickAmplitudeInput = document.getElementById("clickAmplitudeInput");
+const clickWidthMsInput = document.getElementById("clickWidthMsInput");
+const clickCountInput = document.getElementById("clickCountInput");
+const clickSpacingMsInput = document.getElementById("clickSpacingMsInput");
 
 const waveformContext = waveformCanvas.getContext("2d");
 const fftContext = fftCanvas.getContext("2d");
+
+const clickExperiment = getClickExperiment(window.TRANSIENT_CLICK_CONFIG?.mode);
 
 let audioContext = null;
 let mediaStream = null;
@@ -75,32 +81,148 @@ let sweepStepStartTime = null;
 let currentSweepFrequencies = [];
 let currentSweepStepIndex = 0;
 let carrierPhase = 0;
-let samplesUntilPhaseJump = 0;
 let currentCarrierFrequencyValue = 440;
-let currentPhaseJumpDegreesValue = 0;
-let currentJumpIntervalSecondsValue = 0.5;
-let currentLeftGainValue = 0;
-let currentRightGainValue = 0;
-let phaseJumpApplied = false;
-let boundaryTransitionSamplesRemaining = 0;
-let boundaryTransitionTotalSamples = 0;
-let boundaryTransitionResetPending = false;
+let currentCarrierAmplitudeValue = 0;
+let currentLeftBalanceValue = 0;
+let currentRightBalanceValue = 0;
+let currentClickDelaySecondsValue = 0.5;
+let currentClickAmplitudeValue = 0.8;
+let currentClickWidthMsValue = 0.1;
+let currentClickCountValue = 1;
+let currentClickSpacingMsValue = 20;
+let clickCountdownSamples = 0;
+let clickPulseSamplesRemaining = 0;
+let clickPulseTotalSamples = 1;
+let clickPulseSampleIndex = 0;
+let clickTrainClicksRemaining = 0;
+let clickTrainArmed = false;
 
 const defaultSampleRate = 48000;
 const maxCarrierFrequency = 20000;
 const fftAxisPadding = { top: 12, right: 16, bottom: 34, left: 76 };
 const fftMarginalLayout = { topHeight: 56, rightWidth: 82, gap: 12 };
 const heatmapPalette = buildHeatmapPalette();
-const settingsStorageKey = "phase-jump-lab-settings-v1";
+const settingsStorageKey = `transient-click-lab-${clickExperiment.mode}-settings-v1`;
 const analysisIntervalMs = 100;
 const displayIntervalMs = 400;
 const maxRenderHistoryPerRow = 64;
 const minFrameFilterFrames = 8;
 const minRenderFilterVisits = 4;
-const boundaryTransitionSeconds = 0.008;
 let activeView = "heatmap";
 let waveformDirty = true;
 let heatmapDirty = true;
+
+function getClickExperiment(mode) {
+  switch (mode) {
+    case "amplitude":
+      return {
+        mode: "amplitude",
+        axisLabel: "Click amplitude",
+        unitLabel: "%",
+        currentLabel: "Current amplitude",
+        sweepStatus: "Click-amplitude experiment running",
+        idleStatus: "Carrier running",
+        csvColumnName: "click_amplitude_percent",
+        csvFilePrefix: "transient-click-amplitude",
+        startDefault: 5,
+        endDefault: 100,
+        stepsDefault: 40,
+        clamp(value) {
+          return clampNumber(value, 0, 100, 80);
+        },
+        format(value) {
+          return `${formatNumber(value, Math.abs(value % 1) < 1e-6 ? 0 : 1)} %`;
+        },
+        toParameters(value, baseParameters) {
+          return {
+            ...baseParameters,
+            amplitudePercent: value,
+          };
+        },
+      };
+    case "count":
+      return {
+        mode: "count",
+        axisLabel: "Click count",
+        unitLabel: "clicks",
+        currentLabel: "Current count",
+        sweepStatus: "Click-count experiment running",
+        idleStatus: "Carrier running",
+        csvColumnName: "click_count",
+        csvFilePrefix: "transient-click-count",
+        startDefault: 1,
+        endDefault: 8,
+        stepsDefault: 8,
+        clamp(value) {
+          return Math.round(clampNumber(value, 1, 64, 2));
+        },
+        format(value) {
+          const safeValue = Math.round(value);
+          return `${safeValue} click${safeValue === 1 ? "" : "s"}`;
+        },
+        toParameters(value, baseParameters) {
+          return {
+            ...baseParameters,
+            count: Math.round(value),
+          };
+        },
+      };
+    case "spacing":
+      return {
+        mode: "spacing",
+        axisLabel: "Click spacing",
+        unitLabel: "ms",
+        currentLabel: "Current spacing",
+        sweepStatus: "Click-spacing experiment running",
+        idleStatus: "Carrier running",
+        csvColumnName: "click_spacing_ms",
+        csvFilePrefix: "transient-click-spacing",
+        startDefault: 1,
+        endDefault: 200,
+        stepsDefault: 40,
+        clamp(value) {
+          return clampNumber(value, 0.05, 5000, 20);
+        },
+        format(value) {
+          return `${formatNumber(value, value >= 10 || Math.abs(value % 1) < 1e-6 ? 0 : 2)} ms`;
+        },
+        toParameters(value, baseParameters) {
+          return {
+            ...baseParameters,
+            spacingMs: value,
+            count: Math.max(2, baseParameters.count),
+          };
+        },
+      };
+    case "width":
+    default:
+      return {
+        mode: "width",
+        axisLabel: "Click width",
+        unitLabel: "ms",
+        currentLabel: "Current width",
+        sweepStatus: "Click-width experiment running",
+        idleStatus: "Carrier running",
+        csvColumnName: "click_width_ms",
+        csvFilePrefix: "transient-click-width",
+        startDefault: 0.05,
+        endDefault: 5,
+        stepsDefault: 40,
+        clamp(value) {
+          return clampNumber(value, 0.01, 1000, 0.1);
+        },
+        format(value) {
+          return `${formatNumber(value, value >= 10 || Math.abs(value % 1) < 1e-6 ? 0 : 2)} ms`;
+        },
+        toParameters(value, baseParameters) {
+          return {
+            ...baseParameters,
+            widthMs: value,
+          };
+        },
+      };
+  }
+}
 
 function setStatus(text) {
   statusText.textContent = text;
@@ -131,6 +253,10 @@ function collectSettings() {
     frequencyInput: frequencyInput.value,
     amplitudeInput: amplitudeInput.value,
     balanceInput: balanceInput.value,
+    clickAmplitudeInput: clickAmplitudeInput?.value ?? "",
+    clickWidthMsInput: clickWidthMsInput?.value ?? "",
+    clickCountInput: clickCountInput?.value ?? "",
+    clickSpacingMsInput: clickSpacingMsInput?.value ?? "",
     fftSizeSelect: fftSizeSelect.value,
     smoothingInput: smoothingInput.value,
     minDbInput: minDbInput.value,
@@ -182,6 +308,18 @@ function loadSettings() {
     if (typeof settings.frequencyInput === "string") frequencyInput.value = settings.frequencyInput;
     if (typeof settings.amplitudeInput === "string") amplitudeInput.value = settings.amplitudeInput;
     if (typeof settings.balanceInput === "string") balanceInput.value = settings.balanceInput;
+    if (clickAmplitudeInput && typeof settings.clickAmplitudeInput === "string") {
+      clickAmplitudeInput.value = settings.clickAmplitudeInput;
+    }
+    if (clickWidthMsInput && typeof settings.clickWidthMsInput === "string") {
+      clickWidthMsInput.value = settings.clickWidthMsInput;
+    }
+    if (clickCountInput && typeof settings.clickCountInput === "string") {
+      clickCountInput.value = settings.clickCountInput;
+    }
+    if (clickSpacingMsInput && typeof settings.clickSpacingMsInput === "string") {
+      clickSpacingMsInput.value = settings.clickSpacingMsInput;
+    }
     if (typeof settings.fftSizeSelect === "string") fftSizeSelect.value = settings.fftSizeSelect;
     if (typeof settings.smoothingInput === "string") smoothingInput.value = settings.smoothingInput;
     if (typeof settings.minDbInput === "string") minDbInput.value = settings.minDbInput;
@@ -264,6 +402,66 @@ function formatBalanceLabel(value) {
   return value < 0 ? `${magnitude}% left` : `${magnitude}% right`;
 }
 
+function getDefaultClickValue() {
+  return clickExperiment.clamp(clickExperiment.startDefault);
+}
+
+function getModeFixedInput() {
+  switch (clickExperiment.mode) {
+    case "amplitude":
+      return sweepStartHzInput;
+    case "count":
+      return clickCountInput;
+    case "spacing":
+      return clickSpacingMsInput;
+    case "width":
+    default:
+      return clickWidthMsInput;
+  }
+}
+
+function getClickAmplitudePercent() {
+  if (clickExperiment.mode === "amplitude" && !clickAmplitudeInput) {
+    return clickExperiment.clamp(Number(sweepStartHzInput.value));
+  }
+  return clampNumber(Number(clickAmplitudeInput?.value), 0, 100, 80);
+}
+
+function getClickWidthMs() {
+  return clampNumber(Number(clickWidthMsInput?.value), 0.01, 1000, 0.1);
+}
+
+function getClickCount() {
+  return Math.round(clampNumber(Number(clickCountInput?.value), 1, 64, 1));
+}
+
+function getClickSpacingMs() {
+  return clampNumber(Number(clickSpacingMsInput?.value), 0.05, 5000, 20);
+}
+
+function getBaseClickParameters() {
+  return {
+    amplitudePercent: getClickAmplitudePercent(),
+    widthMs: getClickWidthMs(),
+    count: getClickCount(),
+    spacingMs: getClickSpacingMs(),
+  };
+}
+
+function getCurrentSweepValue() {
+  if (isSweepActive()) {
+    return getActiveSweepRowFrequency();
+  }
+
+  const modeInput = getModeFixedInput();
+  const rawValue = modeInput ? Number(modeInput.value) : Number(sweepStartHzInput.value);
+  return clickExperiment.clamp(rawValue);
+}
+
+function getCurrentClickParameters() {
+  return clickExperiment.toParameters(getCurrentSweepValue(), getBaseClickParameters());
+}
+
 function buildHeatmapPalette() {
   const stops = [
     { at: 0.0, color: [7, 17, 31] },
@@ -343,19 +541,22 @@ function getFftSettings() {
 }
 
 function getSweepSettings() {
-  let startHz = clampNumber(Number(sweepStartHzInput.value), 0, 360, 0);
-  let endHz = clampNumber(Number(sweepEndHzInput.value), 0, 360, 180);
+  let startHz = clickExperiment.clamp(Number(sweepStartHzInput.value));
+  let endHz = clickExperiment.clamp(Number(sweepEndHzInput.value));
 
   if (startHz >= endHz) {
-    endHz = Math.min(360, startHz + 1);
+    endHz =
+      clickExperiment.mode === "count"
+        ? Math.min(64, startHz + 1)
+        : clickExperiment.clamp(startHz * 1.5 + 0.01);
   }
 
   return {
     enabled: sweepEnabledInput.checked,
     startHz,
     endHz,
-    steps: Math.round(clampNumber(Number(sweepStepsInput.value), 2, 360, 50)),
-    jumpIntervalSeconds: clampNumber(Number(jumpIntervalSecondsInput.value), 0.01, 60, 0.5),
+    steps: Math.round(clampNumber(Number(sweepStepsInput.value), 2, 360, clickExperiment.stepsDefault)),
+    jumpIntervalSeconds: clampNumber(Number(jumpIntervalSecondsInput.value), 0.001, 60, 0.5),
     loop: sweepLoopInput.checked,
     stepSeconds: clampNumber(Number(sweepStepSecondsInput.value), 0.1, 86400, 60),
   };
@@ -367,10 +568,24 @@ function buildSweepFrequencies(settings) {
   }
 
   const frequencies = [];
+
   for (let index = 0; index < settings.steps; index += 1) {
     const ratio = index / (settings.steps - 1);
-    const frequency = settings.startHz + (settings.endHz - settings.startHz) * ratio;
-    frequencies.push(frequency);
+    const value = settings.startHz + (settings.endHz - settings.startHz) * ratio;
+    const clampedValue = clickExperiment.clamp(value);
+
+    if (clickExperiment.mode === "count") {
+      const integerValue = Math.round(clampedValue);
+      if (frequencies.length === 0 || frequencies[frequencies.length - 1] !== integerValue) {
+        frequencies.push(integerValue);
+      }
+    } else {
+      frequencies.push(clampedValue);
+    }
+  }
+
+  if (frequencies.length === 0) {
+    frequencies.push(clickExperiment.clamp(settings.startHz));
   }
 
   return frequencies;
@@ -378,7 +593,7 @@ function buildSweepFrequencies(settings) {
 
 function getActiveSweepRowFrequency() {
   if (currentSweepFrequencies.length === 0) {
-    return sweepCurrentFrequencyValue;
+    return clickExperiment.clamp(Number(sweepStartHzInput.value));
   }
 
   const safeIndex = Math.min(currentSweepFrequencies.length - 1, Math.max(0, currentSweepStepIndex));
@@ -407,14 +622,6 @@ function getVisibleFrequencyRange(scale = getFftSettings().scale) {
 
 function getFrequencyValue() {
   return clampNumber(Number(frequencyInput.value), 20, maxCarrierFrequency, 440);
-}
-
-function getCurrentPhaseJumpDegrees() {
-  if (isSweepActive()) {
-    return getActiveSweepRowFrequency();
-  }
-
-  return clampNumber(Number(sweepStartHzInput.value), 0, 360, 0);
 }
 
 function isSweepActive() {
@@ -455,8 +662,8 @@ function updateControls() {
     visibleRange.end
   )}`;
 
-  const displayedPhaseJump = isSweepActive() ? sweepCurrentFrequencyValue : getCurrentPhaseJumpDegrees();
-  sweepCurrentFrequency.textContent = formatDegreesCompact(displayedPhaseJump);
+  const displayedValue = isSweepActive() ? sweepCurrentFrequencyValue : getCurrentSweepValue();
+  sweepCurrentFrequency.textContent = clickExperiment.format(displayedValue);
   sweepRecordedRows.textContent = `${heatmapRows.length} row${heatmapRows.length === 1 ? "" : "s"}`;
   exportCsvButton.disabled = heatmapRows.length === 0;
 
@@ -503,39 +710,35 @@ function syncToneSettings() {
     return;
   }
 
-  const amplitude = Number(amplitudeInput.value) / 100;
+  const carrierAmplitude = Number(amplitudeInput.value) / 100;
   const pan = clampNumber(Number(balanceInput.value) / 100, -1, 1, 0);
   const frequency = getFrequencyValue();
-  const phaseJumpDegrees = getCurrentPhaseJumpDegrees();
-  const jumpIntervalSeconds = getSweepSettings().jumpIntervalSeconds;
   const angle = ((pan + 1) * Math.PI) / 4;
-  const channelAmplitude = toneEnabled.checked ? amplitude : 0;
-  currentLeftGainValue = channelAmplitude * Math.cos(angle);
-  currentRightGainValue = channelAmplitude * Math.sin(angle);
-  currentPhaseJumpDegreesValue = phaseJumpDegrees;
-  currentJumpIntervalSecondsValue = jumpIntervalSeconds;
+  const clickParameters = getCurrentClickParameters();
+  currentCarrierAmplitudeValue = toneEnabled.checked ? carrierAmplitude : 0;
+  currentLeftBalanceValue = Math.cos(angle);
+  currentRightBalanceValue = Math.sin(angle);
+  currentClickDelaySecondsValue = getSweepSettings().jumpIntervalSeconds;
+  currentClickAmplitudeValue = clickParameters.amplitudePercent / 100;
+  currentClickWidthMsValue = clickParameters.widthMs;
+  currentClickCountValue = clickParameters.count;
+  currentClickSpacingMsValue = clickParameters.spacingMs;
   currentCarrierFrequencyValue = frequency;
 
   applyOscillatorFrequency(frequency);
 }
 
-function resetPhaseJumpCycle(resetCarrierPhase = false) {
+function armClickTrain(resetCarrierPhase = false) {
   if (resetCarrierPhase) {
     carrierPhase = 0;
   }
-  samplesUntilPhaseJump = Math.max(1, Math.round(currentJumpIntervalSecondsValue * getSampleRate()));
-  phaseJumpApplied = false;
-}
-
-function queueBoundaryTransition(resetCarrierPhase = true) {
-  if (!audioContext) {
-    resetPhaseJumpCycle(resetCarrierPhase);
-    return;
-  }
-
-  boundaryTransitionTotalSamples = Math.max(16, Math.round(boundaryTransitionSeconds * getSampleRate()));
-  boundaryTransitionSamplesRemaining = boundaryTransitionTotalSamples;
-  boundaryTransitionResetPending = resetCarrierPhase;
+  const sampleRate = getSampleRate();
+  clickCountdownSamples = Math.max(0, Math.round(currentClickDelaySecondsValue * sampleRate));
+  clickPulseTotalSamples = Math.max(1, Math.round((currentClickWidthMsValue / 1000) * sampleRate));
+  clickPulseSamplesRemaining = 0;
+  clickPulseSampleIndex = 0;
+  clickTrainClicksRemaining = Math.max(0, Math.round(currentClickCountValue));
+  clickTrainArmed = clickTrainClicksRemaining > 0;
 }
 
 function commitFrequencyInput() {
@@ -586,12 +789,12 @@ function commitVisibleRangeInputs() {
 
 function commitSweepInputs() {
   const sweepSettings = getSweepSettings();
-  sweepStartHzInput.value = formatNumber(sweepSettings.startHz, sweepSettings.startHz % 1 === 0 ? 0 : 1);
-  sweepEndHzInput.value = formatNumber(sweepSettings.endHz, sweepSettings.endHz % 1 === 0 ? 0 : 1);
+  sweepStartHzInput.value = formatNumber(sweepSettings.startHz, sweepSettings.startHz >= 10 ? 0 : 2);
+  sweepEndHzInput.value = formatNumber(sweepSettings.endHz, sweepSettings.endHz >= 10 ? 0 : 2);
   sweepStepsInput.value = String(sweepSettings.steps);
   jumpIntervalSecondsInput.value = formatNumber(
     sweepSettings.jumpIntervalSeconds,
-    sweepSettings.jumpIntervalSeconds % 1 === 0 ? 0 : 2
+    sweepSettings.jumpIntervalSeconds >= 10 ? 0 : 3
   );
   sweepStepSecondsInput.value = formatNumber(
     sweepSettings.stepSeconds,
@@ -599,7 +802,34 @@ function commitSweepInputs() {
   );
   syncToneSettings();
   if (audioContext) {
-    resetPhaseJumpCycle();
+    armClickTrain();
+  }
+  updateControls();
+  persistSettings();
+}
+
+function commitClickInputs() {
+  const clickAmplitude = getClickAmplitudePercent();
+  const clickWidthMs = getClickWidthMs();
+  const clickCount = getClickCount();
+  const clickSpacingMs = getClickSpacingMs();
+
+  if (clickAmplitudeInput) {
+    clickAmplitudeInput.value = formatNumber(clickAmplitude, clickAmplitude >= 10 ? 0 : 1);
+  }
+  if (clickWidthMsInput) {
+    clickWidthMsInput.value = formatNumber(clickWidthMs, clickWidthMs >= 10 ? 0 : 2);
+  }
+  if (clickCountInput) {
+    clickCountInput.value = String(clickCount);
+  }
+  if (clickSpacingMsInput) {
+    clickSpacingMsInput.value = formatNumber(clickSpacingMs, clickSpacingMs >= 10 ? 0 : 2);
+  }
+
+  syncToneSettings();
+  if (audioContext) {
+    armClickTrain();
   }
   updateControls();
   persistSettings();
@@ -645,28 +875,21 @@ function startSweep(resetRows = true) {
 
   resetCurrentStepAverage();
   syncToneSettings();
-  queueBoundaryTransition(true);
+  armClickTrain();
   updateControls();
   heatmapDirty = true;
   persistSettings();
 }
 
 function stopSweep() {
-  if (sweepCurrentFrequencyValue) {
-    frequencyInput.value = formatNumber(
-      sweepCurrentFrequencyValue,
-      sweepCurrentFrequencyValue % 1 === 0 ? 0 : 1
-    );
-  }
-
   sweepStepStartTime = null;
   resetCurrentStepAverage();
   currentSweepFrequencies = [];
   currentSweepStepIndex = 0;
-  sweepCurrentFrequencyValue = getCurrentPhaseJumpDegrees();
+  sweepCurrentFrequencyValue = getCurrentSweepValue();
   syncToneSettings();
   if (audioContext) {
-    queueBoundaryTransition(true);
+    armClickTrain();
   }
   updateControls();
   heatmapDirty = true;
@@ -877,7 +1100,7 @@ function finalizeSweepStep() {
     } else {
       sweepEnabledInput.checked = false;
       stopSweep();
-      setStatus(`Sweep completed at ${formatFrequencyCompact(sweepCurrentFrequencyValue)}`);
+      setStatus(`Sweep completed at ${clickExperiment.format(sweepCurrentFrequencyValue)}`);
       return;
     }
   } else {
@@ -888,7 +1111,7 @@ function finalizeSweepStep() {
   sweepStepStartTime = audioContext.currentTime;
   resetCurrentStepAverage();
   syncToneSettings();
-  queueBoundaryTransition(true);
+  armClickTrain();
 }
 
 function accumulateCurrentStep(minDb) {
@@ -1161,7 +1384,7 @@ function exportHeatmapCsv() {
 
   const header = [
     "row_index",
-    "phase_jump_degrees",
+    clickExperiment.csvColumnName,
     "visit_count",
     "sample_rate_hz",
     "fft_size",
@@ -1184,7 +1407,7 @@ function exportHeatmapCsv() {
   const timestamp = new Date().toISOString().replace(/[:]/g, "-");
 
   anchor.href = url;
-  anchor.download = `phase-jump-heatmap-${timestamp}.csv`;
+  anchor.download = `${clickExperiment.csvFilePrefix}-${timestamp}.csv`;
   document.body.append(anchor);
   anchor.click();
   anchor.remove();
@@ -1229,7 +1452,7 @@ function drawHeatmapAxes(layout, settings, minFrequency, maxFrequency, rows, row
       fftContext.moveTo(0, y);
       fftContext.lineTo(layout.heatmapWidth, y);
       fftContext.stroke();
-      fftContext.fillText(formatDegreesCompact(rows[rowIndex].frequency), yLabelX, y + 4);
+      fftContext.fillText(clickExperiment.format(rows[rowIndex].frequency), yLabelX, y + 4);
     }
   } else {
     fftContext.beginPath();
@@ -1253,7 +1476,7 @@ function drawHeatmapAxes(layout, settings, minFrequency, maxFrequency, rows, row
   fftContext.save();
   fftContext.translate(18, layout.heatmapHeight / 2);
   fftContext.rotate(-Math.PI / 2);
-  fftContext.fillText("Phase jump", 0, 0);
+  fftContext.fillText(clickExperiment.axisLabel, 0, 0);
   fftContext.restore();
 
   fftContext.restore();
@@ -1549,7 +1772,7 @@ function analysisTick() {
       heatmapDirty = true;
     }
   } else {
-    sweepCurrentFrequencyValue = getCurrentPhaseJumpDegrees();
+    sweepCurrentFrequencyValue = getCurrentSweepValue();
   }
 }
 
@@ -1565,57 +1788,75 @@ function displayTick() {
   }
 }
 
-function processPhaseJumpOutput(event) {
+function getClickPulseSample(sampleIndex, totalSamples, amplitude) {
+  if (totalSamples <= 1) {
+    return amplitude;
+  }
+
+  // Use a zero-mean bipolar pulse so "width" sounds like a click family,
+  // not like a short one-sided DC bump or tone burst.
+  const pulsePosition = (sampleIndex + 0.5) / totalSamples;
+  return amplitude * Math.sin(2 * Math.PI * pulsePosition);
+}
+
+function mixTransientWithCarrier(carrierSample, clickSample, pulseActive) {
+  if (clickExperiment.mode === "width" && pulseActive) {
+    const attenuation = 1 - currentClickAmplitudeValue;
+    return carrierSample * attenuation;
+  }
+
+  return Math.max(-1, Math.min(1, carrierSample + clickSample));
+}
+
+function processClickOutput(event) {
   const leftChannel = event.outputBuffer.getChannelData(0);
   const rightChannel = event.outputBuffer.getChannelData(1);
   const sampleRate = event.outputBuffer.sampleRate;
-  const jumpIntervalSamples = Math.max(1, Math.round(currentJumpIntervalSecondsValue * sampleRate));
-  const phaseJumpRadians = (currentPhaseJumpDegreesValue * Math.PI) / 180;
   const phaseIncrement = (2 * Math.PI * currentCarrierFrequencyValue) / sampleRate;
 
-  if (!Number.isFinite(samplesUntilPhaseJump) || samplesUntilPhaseJump <= 0) {
-    samplesUntilPhaseJump = jumpIntervalSamples;
-  }
-
   for (let sampleIndex = 0; sampleIndex < leftChannel.length; sampleIndex += 1) {
-    let transitionGain = 1;
-    if (boundaryTransitionSamplesRemaining > 0) {
-      const elapsed = boundaryTransitionTotalSamples - boundaryTransitionSamplesRemaining;
-      const halfSamples = Math.max(1, Math.floor(boundaryTransitionTotalSamples / 2));
+    let clickSample = 0;
+    let pulseActive = false;
 
-      if (elapsed >= halfSamples && boundaryTransitionResetPending) {
-        resetPhaseJumpCycle(true);
-        boundaryTransitionResetPending = false;
+    if (clickTrainArmed && clickTrainClicksRemaining > 0) {
+      if (clickPulseSamplesRemaining <= 0) {
+        if (clickCountdownSamples > 0) {
+          clickCountdownSamples -= 1;
+        } else {
+          clickPulseSamplesRemaining = clickPulseTotalSamples;
+          clickPulseSampleIndex = 0;
+        }
       }
 
-      if (elapsed < halfSamples) {
-        const t = halfSamples <= 1 ? 1 : elapsed / (halfSamples - 1);
-        transitionGain = Math.cos((Math.min(1, t) * Math.PI) / 2);
-      } else {
-        const secondHalfSamples = Math.max(1, boundaryTransitionTotalSamples - halfSamples);
-        const t = secondHalfSamples <= 1 ? 1 : (elapsed - halfSamples) / (secondHalfSamples - 1);
-        transitionGain = Math.sin((Math.min(1, t) * Math.PI) / 2);
+      if (clickPulseSamplesRemaining > 0) {
+        pulseActive = true;
+        clickSample = getClickPulseSample(
+          clickPulseSampleIndex,
+          clickPulseTotalSamples,
+          currentClickAmplitudeValue
+        );
+        clickPulseSamplesRemaining -= 1;
+        clickPulseSampleIndex += 1;
+
+        if (clickPulseSamplesRemaining <= 0) {
+          clickTrainClicksRemaining -= 1;
+          if (clickTrainClicksRemaining > 0) {
+            clickCountdownSamples = Math.max(0, Math.round((currentClickSpacingMsValue / 1000) * sampleRate));
+          } else {
+            clickTrainArmed = false;
+          }
+        }
       }
-
-      boundaryTransitionSamplesRemaining -= 1;
     }
 
-    if (!phaseJumpApplied && samplesUntilPhaseJump <= 0) {
-      carrierPhase += phaseJumpRadians;
-      phaseJumpApplied = true;
-    }
-
-    const sample = Math.sin(carrierPhase);
-    leftChannel[sampleIndex] = sample * currentLeftGainValue * transitionGain;
-    rightChannel[sampleIndex] = sample * currentRightGainValue * transitionGain;
+    const carrierSample = Math.sin(carrierPhase) * currentCarrierAmplitudeValue;
+    const mixedSample = mixTransientWithCarrier(carrierSample, clickSample, pulseActive);
+    leftChannel[sampleIndex] = mixedSample * currentLeftBalanceValue;
+    rightChannel[sampleIndex] = mixedSample * currentRightBalanceValue;
 
     carrierPhase += phaseIncrement;
     if (carrierPhase >= Math.PI || carrierPhase <= -Math.PI) {
       carrierPhase = Math.atan2(Math.sin(carrierPhase), Math.cos(carrierPhase));
-    }
-
-    if (!phaseJumpApplied) {
-      samplesUntilPhaseJump -= 1;
     }
   }
 }
@@ -1641,18 +1882,15 @@ async function startAudio() {
     initializeAnalyser();
 
     processorNode = audioContext.createScriptProcessor(1024, 0, 2);
-    processorNode.onaudioprocess = processPhaseJumpOutput;
+    processorNode.onaudioprocess = processClickOutput;
 
     sourceNode.connect(analyserNode);
     processorNode.connect(audioContext.destination);
 
-    resetPhaseJumpCycle(true);
-    boundaryTransitionSamplesRemaining = 0;
-    boundaryTransitionTotalSamples = 0;
-    boundaryTransitionResetPending = false;
-    sweepCurrentFrequencyValue = getCurrentPhaseJumpDegrees();
+    sweepCurrentFrequencyValue = getCurrentSweepValue();
     sweepStepStartTime = null;
     syncToneSettings();
+    armClickTrain(true);
 
     if (getSweepSettings().enabled) {
       startSweep(true);
@@ -1664,7 +1902,7 @@ async function startAudio() {
 
     startButton.disabled = true;
     stopButton.disabled = false;
-    setStatus(getSweepSettings().enabled ? "Phase jump experiment running" : "Carrier running");
+    setStatus(getSweepSettings().enabled ? clickExperiment.sweepStatus : clickExperiment.idleStatus);
   } catch (error) {
     console.error(error);
     setStatus(`Start failed: ${error.message}`);
@@ -1715,7 +1953,7 @@ async function stopAudio() {
   stopButton.disabled = true;
   setStatus("Idle");
   sweepStepStartTime = null;
-  sweepCurrentFrequencyValue = getCurrentPhaseJumpDegrees();
+  sweepCurrentFrequencyValue = getCurrentSweepValue();
   resetCurrentStepAverage();
 
   waveformContext.clearRect(0, 0, waveformCanvas.width, waveformCanvas.height);
@@ -1772,6 +2010,26 @@ balanceInput.addEventListener("input", () => {
   persistSettings();
 });
 
+if (clickAmplitudeInput) {
+  clickAmplitudeInput.addEventListener("blur", commitClickInputs);
+  clickAmplitudeInput.addEventListener("change", commitClickInputs);
+}
+
+if (clickWidthMsInput) {
+  clickWidthMsInput.addEventListener("blur", commitClickInputs);
+  clickWidthMsInput.addEventListener("change", commitClickInputs);
+}
+
+if (clickCountInput) {
+  clickCountInput.addEventListener("blur", commitClickInputs);
+  clickCountInput.addEventListener("change", commitClickInputs);
+}
+
+if (clickSpacingMsInput) {
+  clickSpacingMsInput.addEventListener("blur", commitClickInputs);
+  clickSpacingMsInput.addEventListener("change", commitClickInputs);
+}
+
 fftSizeSelect.addEventListener("change", applyFftSettings);
 smoothingInput.addEventListener("input", applyFftSettings);
 minDbInput.addEventListener("blur", commitDbInputs);
@@ -1800,10 +2058,10 @@ sweepEnabledInput.addEventListener("change", () => {
   if (audioContext && sweepEnabledInput.checked) {
     commitSweepInputs();
     startSweep(true);
-    setStatus("Phase jump experiment running");
+    setStatus(clickExperiment.sweepStatus);
   } else if (audioContext) {
     stopSweep();
-    setStatus("Carrier running");
+    setStatus(clickExperiment.idleStatus);
   }
   updateControls();
   persistSettings();
@@ -1828,6 +2086,7 @@ sweepStepSecondsInput.addEventListener("change", commitSweepInputs);
 loadSettings();
 reinitializeFftBuffers();
 commitFrequencyInput();
+commitClickInputs();
 commitSweepInputs();
 commitVisibleRangeInputs();
 commitDbInputs();

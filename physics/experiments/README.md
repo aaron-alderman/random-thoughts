@@ -39,6 +39,15 @@ Phase-jump transient experiment:
 http://127.0.0.1:3000/transient-phase.html
 ```
 
+Click transient experiments:
+
+```text
+http://127.0.0.1:3000/transient-click-width.html
+http://127.0.0.1:3000/transient-click-amplitude.html
+http://127.0.0.1:3000/transient-click-count.html
+http://127.0.0.1:3000/transient-click-spacing.html
+```
+
 ## Use
 
 1. Click `Start Audio`.
@@ -73,3 +82,6 @@ http://127.0.0.1:3000/transient-phase.html
 - The older Python prototype is still in the folder, but the Node/web version is now the recommended path.
 - `transient-phase.html` is a separate experiment page for fixed-carrier phase-jump transient testing, with the heatmap y-axis representing phase jump in degrees.
 - In the phase-jump page, the jump is now a one-shot event per dwell interval after the configured delay, not a repeated phase-kick train.
+- The click transient pages share the same FFT heatmap pipeline, but replace phase jumps with a simpler one-shot click train so the carrier can stay continuous.
+- `transient-click-width.html` sweeps click width, `transient-click-amplitude.html` sweeps click amplitude, `transient-click-count.html` sweeps click count, and `transient-click-spacing.html` sweeps click spacing.
+- In the click pages, the x-axis remains response frequency and the heatmap y-axis is whichever click parameter that page is sweeping.
