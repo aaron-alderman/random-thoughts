@@ -179,6 +179,19 @@ This priority order matches the current maturity of the project.
 | no sharp experimental predictions yet | phenomenology | high | blocks PRD-style work |
 | interpretation can still outrun proof if not carefully disciplined | interpretation | medium | recurring writing risk |
 
+### NS programme bridge tasks (added from ns_to_spin23_integration.md)
+
+The NS/J3(O) regularity programme has identified several structural parallels with the Spin(2,3) framework. The following bridge arguments are required before any NS-derived structure can function as more than corroborating evidence.
+
+| Bridge task | Domain | Severity | Comment |
+|---|---|---|---|
+| find a rescaling group in the Spin(2,3) setting for which the preferred octonionic direction is the unique fixed point, analogous to BKM scale-invariance of s* | statics | high | would promote the octonionic alignment claim from maturity 4 to derived |
+| count the independent gauge-invariant nonlocal observables of the theory and compare to 12 | statics / consistency | medium | decides J3(O) vs J3(C⊗O) from the observable-algebra side |
+| establish that T1-pure propagation is dynamically unstable in the Spin(2,3) setting, or that γ > 0 is forced by the dynamics | dynamics | high | Spin(2,3) analogue of NS Gap A |
+| derive from Spin(2,3) representation theory that the relevant scaling exponents are forced to differ by 1/2 | dynamics / consistency | medium | would independently verify the NS exponent gap |
+| prove or disprove that Jordan algebra positivity N_lifted ≥ 0 is inconsistent with violation of reflection positivity in the dual theory | consistency | medium | potential route to close Gap A from the gauge-theory side |
+| physically justify the identification m ~ strain rate a(t) and γ ~ vorticity correlation |b_ij| in the NS/Spin(2,3) parameter mapping | dynamics | medium-low | dimensional analogy only at present; needs an independent physical argument |
+
 ---
 
 ## Working bottom line

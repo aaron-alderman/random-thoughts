@@ -320,6 +320,74 @@ This section records the main dynamical claims in kernel form.
 
 ---
 
+## NS Programme structural corroboration
+
+This section records corroboration of key dynamical claims from the NS/J3(O) regularity programme. All bridge identifications are structural proposals (maturity 5). The underlying NS results are at maturity 3–4. None of the items here substitute for independent derivation within the Spin(2,3) framework.
+
+---
+
+### T1/T2 split and the strain-only blow-up ray
+
+**What the NS programme established (maturity 3):**
+
+The NS programme identifies a 1D curve in the Q-R invariant plane — the strain-only ray Q = −3a²/4, R = −a³/4 — as the exact blow-up attractor of restricted Euler dynamics. On this ray: the cubic defect J̃ = det[ξ̂, ê₁, Ω̂ω] vanishes; vorticity aligns with a strain eigenvector; the discriminant Δ = 27R² + 4Q³ = 0 is maintained; and the flow has no transverse triadic coupling. This is an exact algebraic result. The complementary result is that physical NS solutions are regularised by transverse terms (vortex line curvature and twist) which prevent collapse onto the ray.
+
+**What this addresses here (maturity 4):**
+
+The central dynamical claim of this framework is that zero-mass interactions propagate only on T1, with T2 entering through off-diagonal mixing once mass is present (Principle D2). The question of why T1-pure propagation should be dynamically unstable — equivalently, why the hidden sector relaxation γ > 0 is forced rather than assumed — is an open problem.
+
+**Proposed bridge identification (maturity 5):**
+
+The strain-only ray corresponds to the T1-pure sector. More precisely: T1-pure propagation = no transverse coupling = strain-only ray (J̃ = 0); T2 mixing = transverse triadic coupling = off-strain-ray deviation (J̃ ≠ 0). NS regularity = T2 mixing prevents T1 collapse. Under this identification, the NS result that T1-pure blow-up is prevented by transverse (T2) terms translates into: the T1 channel is stable precisely because T2 mixing is present.
+
+This belongs in discussion at maturity 5 as structural corroboration of the hidden-sector picture. It should not appear as a derivation.
+
+**What this file still needs:**
+
+An independent argument that T1-pure propagation is dynamically unstable in the Spin(2,3) setting, or that hidden sector relaxation γ > 0 is forced by the dynamics. This is the Spin(2,3) analogue of Gap A in the NS programme.
+
+---
+
+### Exponent gap 1/2 and the fermionic sector
+
+**What the NS programme established (maturity 4):**
+
+The NS programme derives a scaling contradiction under Type I blow-up. Near T*: N_lifted ~ C'/(T*−t)^{7/2} from β·b² scaling, while Type I + Jacobi gives N_lifted ≤ C/(T*−t)³. The gap is 7/2 − 3 = 1/2. This gap is robust to logarithmic corrections because the separation is 1/2, not approaching zero.
+
+**What this addresses here:**
+
+The exponent gap of 1/2 is a half-integer. In Spin(2,3), half-integer scaling dimensions correspond to fermionic representations. The spinor representation of Spin(2,3) = Sp(4) has dimension 4 and carries half-integer quantum numbers.
+
+**Proposed bridge identification (maturity 5):**
+
+The robustness of the exponent gap 1/2 reflects the rigidity of the fermionic sector in the Spin(2,3) representation theory. Integer exponent gaps can be corrected by bosonic renormalisation effects; half-integer gaps are protected by spin-statistics and cannot be perturbed by bosonic interactions. The exponent gap 1/2 in the NS programme may be robust for the same algebraic reason that the Dirac operator gap is robust in Spin(2,3): both are protected by the representation theory of the same group.
+
+This is a structural observation, not a derived result. It does not prove the gap is exactly 1/2 in the rigorous PDE sense; it observes that if the gap is 1/2, its robustness has a representation-theoretic explanation.
+
+**What this file still needs:**
+
+A derivation within the Spin(2,3) setting that the relevant scaling exponents are forced to differ by exactly 1/2 by the representation theory of Spin(2,3).
+
+---
+
+### Diffusion law D ~ m²/γ and the NS exponent scaling
+
+**What the NS programme established (maturity 4):**
+
+Under Type I blow-up near T*: a(t) ~ 2/(T*−t) (strain rate); b_ij ~ ω_i · u_j ~ C/(T*−t)^{5/4} (vorticity correlation); ratio b/(a/2) ~ (T*−t)^{−1/4} → ∞ confirming b exceeds the filter threshold near blow-up. The Raychaudhuri Riccati equation gives C_eff = 0.022 ≪ 1/3 (maturity 4, N=32³, needs N=64³ confirmation), placing the NS flow well inside the stable regime.
+
+**What this addresses here (maturity 4):**
+
+The diffusion law D ~ m²/γ is derived here under reduction assumptions. The physical identification of m and γ from more fundamental data remains open.
+
+**Proposed bridge identification (maturity 5):**
+
+The NS scaling quantities map onto the Spin(2,3) diffusion law parameters as: m ~ a(t) ~ (T*−t)⁻¹ (strain rate as sector-mixing scale); γ ~ |b_ij| ~ (T*−t)^{−5/4} (vorticity correlation rate as hidden-sector relaxation); D ~ m²/γ ~ (T*−t)^{−3/4}. The diffusion coefficient diverges near blow-up, consistent with the flow becoming singular. The exponent 3/4 is dimensionally related to the gap 1/2 and the Spin(2,3) spinor representation.
+
+Note: this mapping is dimensional and structural, not a derivation. The identification m ~ a(t) requires an independent physical argument and should not be imported as a derived result; it belongs in discussion.
+
+---
+
 ## Interfaces to other domains
 
 The dynamics domain uses and supplies the following interfaces.

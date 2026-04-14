@@ -59,6 +59,19 @@ This matters especially in cases like:
 
 ---
 
+## NS Programme cross-reference
+
+A parallel programme in NS regularity via J3(O) has been independently developed and its structural overlaps with this framework are recorded in `ns_to_spin23_integration.md`. The transfer summary:
+
+- The NS programme has constructed an explicit full-rank embedding of local fluid variables into J3(H) and lifted it to J3(O) via 12 bilocal vorticity correlations, closing the dimensional count 15+12=27 exactly (maturity 3–4). This bears on the J3(O) vs J3(C⊗O) choice.
+- G2 transitivity on S⁶ is proved, and the BKM blow-up rescaling group selects the vorticity direction ξ̂ as its unique fixed point (maturity 3). This provides a structural template for how the preferred octonionic direction might be forced rather than chosen.
+- The strain-only blow-up attractor (1D ray in Q-R space with J̃ = 0) is structurally consistent with pure T1 propagation; transverse terms that prevent collapse onto the ray are structurally consistent with T2 mixing preventing T1 collapse (maturity 4 for the NS result; maturity 5 for the bridge identification).
+- An exponent gap of 1/2 in the NS scaling contradiction is proposed to reflect the rigidity of the fermionic sector in Spin(2,3) representation theory (maturity 5 for bridge identification).
+
+All bridge identifications between the two programmes are maturity 5 proposals. None substitute for independent derivation within the Spin(2,3) framework. The NS programme is most useful as a source of structural templates that reduce the search space for missing bridge arguments.
+
+---
+
 ## Outstanding within the lens
 
 The current lens fixes the broad starting structures, but some especially important questions remain live within it.
@@ -365,7 +378,9 @@ This is the layer of what the framework still owes.
 - a sharper derivation of why the selected octonionic direction should align with the massless-interaction channel
 - a sharper account of the relation between Higgs-mediated mass generation and `T1/T2` coupling
 - a clear ambient-to-observable reduction map from the large space to the Standard-Model-like visible sector
-- a bridge argument for whether the physically relevant exceptional Jordan object is `J3(O)`, `J3(C \otimes O)`, or a relation between them
+- a bridge argument for whether the physically relevant exceptional Jordan object is `J3(O)`, `J3(C \otimes O)`, or a relation between them; the NS programme suggests this can be resolved by counting independent gauge-invariant nonlocal observables
+- an independent argument that the preferred octonionic direction is the unique fixed point of a rescaling group analogous to BKM, which would promote the alignment claim from a central proposal to a derived result
+- a derivation that T1-pure propagation is dynamically unstable or that hidden-sector relaxation γ > 0 is forced, which is the Spin(2,3) analogue of NS Gap A
 
 ### Project-specific publication lesson
 

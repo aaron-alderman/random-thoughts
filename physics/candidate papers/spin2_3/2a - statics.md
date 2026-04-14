@@ -284,6 +284,60 @@ This section records the main static claims in kernel form.
 
 ---
 
+## NS Programme structural corroboration
+
+This section records corroboration of key static claims from the NS/J3(O) regularity programme. All bridge identifications are structural proposals (maturity 5). The underlying NS results are at maturity 3–4. None of the items here substitute for independent derivation within the Spin(2,3) framework.
+
+---
+
+### Preferred octonionic direction: G2 transitivity and BKM scale-invariance
+
+**What the NS programme established (maturity 3):**
+
+The NS programme proves that G2 acts transitively on S⁶ (rank 6/6, confirmed for 10 independent test points). The vorticity direction ξ̂ = ω/|ω| lives in S² ⊂ Im(H) ⊂ Im(O), and the dimensionless ratio s* = r/r_c ≈ 1.12091 — the Burgers vortex radius at which the Vieillefosse locus is touched — is exactly preserved under BKM blow-up rescaling. BKM acts as the blow-up rescaling group; s* is its unique scale-invariant geometric quantity.
+
+**What this addresses here (maturity 4):**
+
+The open question in this framework is why the selected octonionic direction should align with the zero-mass traversal channel rather than being an independent choice. The central proposal (maturity 4) is that this alignment is physically meaningful, but the forcing mechanism has not been derived.
+
+**Proposed bridge identification (maturity 5):**
+
+The preferred octonionic direction of the Spin(2,3) framework corresponds to the vorticity direction ξ̂, and its alignment with the zero-mass channel is forced by a scale-invariance condition analogous to BKM. In the NS programme, the blow-up attractor selects ξ̂ as the unique fixed-point direction of the rescaling group, and G2 transitivity ensures this direction can be brought to any standard reference direction without loss of generality.
+
+If this argument structure is correct, the alignment of the octonionic direction with the zero-mass channel is not a free choice but a dynamical consequence.
+
+**What this file still needs:**
+
+An independent argument within the Spin(2,3) setting that there is a rescaling group under which the preferred octonionic direction is the unique fixed point. This would promote the alignment claim from maturity 4 (central proposal) to a derived result.
+
+---
+
+### J3(O) versus J3(C⊗O): the 15+12=27 dimensional count
+
+**What the NS programme established (maturity 3–4):**
+
+The NS programme constructs a full-rank linear embedding φ: R¹⁵ → J3(H) of 15 local fluid variables (5 strain, 3 vorticity, 1 pressure, 5 pressure Hessian, 1 helicity). The embedding is rank 15/15 with condition number 3.86, and is canonical up to G2 automorphisms. The lift to J3(O) is completed by identifying 12 additional nonlocal fluid variables: the gauge-invariant bilocal vorticity correlations C_ij = ω_i · u_j and related cross-helicity correlators. Total: 15 + 12 = 27 = dim J3(O). The count is exact.
+
+**What this addresses here (maturity 5–6):**
+
+The choice between J3(O) and J3(C⊗O) is flagged here as a significant unresolved bridge question. The framework currently treats J3(O) as the working branch without a physical argument for why 27 dimensions rather than 54 are correct.
+
+**Proposed bridge identification (maturity 4):**
+
+The NS dimensional count provides a concrete physical constraint. The local fluid variables fill exactly 15 dimensions. The gauge-invariant bilocal nonlocal observables (vorticity correlations, Wilson-line analogues) fill exactly 12. Together they fill J3(O) exactly. J3(C⊗O) at 54 dimensions would require 39 additional dimensions with no natural identification in the fluid or gauge-theoretic context.
+
+This is not a proof that J3(C⊗O) is ruled out, but an argument that J3(O) is the natural level for the physical embedding, with J3(C⊗O) a potential ambient container dynamically projected out.
+
+**Reframing the bridge question:**
+
+The NS programme suggests the J3(O) vs J3(C⊗O) question can be resolved by asking: how many independent gauge-invariant nonlocal observables does the theory contain? If 12, then J3(O); if more, then J3(C⊗O) or beyond. This is a concrete question the framework can investigate independently.
+
+**What this file still needs:**
+
+An independent argument within the Spin(2,3) setting for whether the physically relevant exceptional Jordan object is J3(O), J3(C⊗O), or a relation between them.
+
+---
+
 ## Interfaces to other domains
 
 The static domain hands the following objects to the rest of the framework:
