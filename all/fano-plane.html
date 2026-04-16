@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A1 — Fano Plane</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: 'Georgia', serif; }
+  canvas { display: block; }
+  #controls { margin-top: 16px; display: flex; gap: 12px; }
+  button {
+    background: #1a1a2e; color: #ccc; border: 1px solid #444;
+    padding: 7px 18px; cursor: pointer; border-radius: 4px; font-size: 14px;
+  }
+  button:hover { background: #2a2a4e; color: #fff; }
+</style>
+</head>
+<body>
+<canvas id="c" width="900" height="600"></canvas>
+<div id="controls">
+  <button id="btnPlay">&#9654; Play</button>
+  <button id="btnRestart">&#8635; Restart</button>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const CX = W / 2, CY = H / 2 - 20;
+
+// ── Fano geometry ──────────────────────────────────────────────────────────
+const R_outer = 170;   // radius of the six outer points
+const labels = ['e₁','e₂','e₃','e₄','e₅','e₆','e₇'];
+
+// Six points on circle (starting at top, spacing 60°), plus one at centre
+function outerPt(i) {          // i = 0..5
+  const angle = -Math.PI / 2 + i * (2 * Math.PI / 6);
+  return { x: CX + R_outer * Math.cos(angle), y: CY + R_outer * Math.sin(angle) };
+}
+const pts = [
+  outerPt(0),  // e1  top
+  outerPt(1),  // e2  top-right
+  outerPt(2),  // e3  bottom-right
+  outerPt(3),  // e4  bottom
+  outerPt(4),  // e5  bottom-left
+  outerPt(5),  // e6  top-left
+  { x: CX, y: CY },  // e7  centre
+];
+
+// Seven lines (each is a set of 3 point indices)
+// Classic Fano: outer triangle, inner triangle, three "spokes", plus inscribed circle
+const lines = [
+  [0, 2, 4],   // outer triangle: e1-e3-e5
+  [1, 3, 5],   // outer triangle: e2-e4-e6
+  [0, 1, 6],   // spoke
+  [1, 2, 6],   // spoke
+  [2, 3, 6],   // spoke
+  [3, 4, 6],   // spoke – wait, standard Fano has 7 lines with 3 pts each
+  [4, 5, 6],   // spoke
+];
+// Actually use the standard Fano collinearity:
+// Lines: {0,1,3} {1,2,4} {2,3,5} {3,4,6} {4,5,0} {5,6,1} {6,0,2}  (0-indexed)
+const fanoLines = [
+  [0,1,3], [1,2,4], [2,3,5], [3,4,6], [4,5,0], [5,6,1], [6,0,2]
+];
+
+// Colours for the seven lines
+const lineColors = [
+  '#e74c3c','#e67e22','#f1c40f','#2ecc71','#1abc9c','#3498db','#9b59b6'
+];
+
+// Directed triples for multiplication arrows (eᵢ·eⱼ = eₖ cyclic)
+// We show one arrow set per line
+const directedTriples = fanoLines.map(l => [...l]);  // use same ordering
+
+// ── Animation state ────────────────────────────────────────────────────────
+const PHASES = {
+  BLACK:      { dur: 0.8 },  // black pause
+  POINTS:     { dur: 3.0 },  // 7 points fade in one by one
+  LINES:      { dur: 4.5 },  // 7 lines draw one by one
+  ARROWS:     { dur: 4.0 },  // cyclic arrows appear
+  ROTATE:     { dur: 3.5 },  // full rotation by 2π/7
+  G2:         { dur: 3.0 },  // G₂ symmetry flash
+  CAPTION:    { dur: 3.5 },  // final caption
+};
+
+const phaseName = Object.keys(PHASES);
+const phaseDur  = phaseName.map(k => PHASES[k].dur);
+const totalDur  = phaseDur.reduce((a,b) => a+b, 0);
+
+let startTime = null;
+let paused = true;
+let elapsed = 0;
+let lastTimestamp = null;
+let animId = null;
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function lerp(a, b, t) { return a + (b - a) * t; }
+function clamp01(t) { return Math.max(0, Math.min(1, t)); }
+function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+function getPhaseProgress(elapsed) {
+  let acc = 0;
+  for (let i = 0; i < phaseName.length; i++) {
+    const d = phaseDur[i];
+    if (elapsed < acc + d) return { phase: i, t: (elapsed - acc) / d };
+    acc += d;
+  }
+  return { phase: phaseName.length - 1, t: 1 };
+}
+
+function phaseStart(idx) {
+  let acc = 0;
+  for (let i = 0; i < idx; i++) acc += phaseDur[i];
+  return acc;
+}
+
+// ── Drawing primitives ─────────────────────────────────────────────────────
+function drawPoint(pt, alpha, color = '#ffffff', r = 7) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.beginPath();
+  ctx.arc(pt.x, pt.y, r, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawLabel(pt, label, alpha, color = '#e0e0e0') {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.font = 'italic 18px Georgia';
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  // offset label away from centre
+  const dx = pt.x - CX, dy = pt.y - CY;
+  const len = Math.sqrt(dx*dx + dy*dy) || 1;
+  const off = 26;
+  ctx.fillText(label, pt.x + dx/len*off, pt.y + dy/len*off);
+  ctx.restore();
+}
+
+function drawLineThrough3(p0, p1, p2, alpha, color) {
+  // Extend the line from p0 through p2 a little beyond
+  const dir = { x: p2.x - p0.x, y: p2.y - p0.y };
+  const len = Math.sqrt(dir.x*dir.x + dir.y*dir.y);
+  const u = { x: dir.x/len, y: dir.y/len };
+  const ext = 30;
+  const A = { x: p0.x - u.x*ext, y: p0.y - u.y*ext };
+  const B = { x: p2.x + u.x*ext, y: p2.y + u.y*ext };
+  ctx.save();
+  ctx.globalAlpha = alpha * 0.65;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 8;
+  ctx.beginPath();
+  ctx.moveTo(A.x, A.y);
+  ctx.lineTo(B.x, B.y);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawInscribedCircle(alpha, color) {
+  // The "circle line" in the Fano plane — inscribed circle connecting alternate outer pts
+  const R_in = R_outer * Math.sin(Math.PI/3);
+  ctx.save();
+  ctx.globalAlpha = alpha * 0.65;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 8;
+  ctx.setLineDash([8, 5]);
+  ctx.beginPath();
+  ctx.arc(CX, CY, R_in, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+}
+
+function drawArrow(from, to, alpha, color) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = 2;
+  const dx = to.x - from.x, dy = to.y - from.y;
+  const len = Math.sqrt(dx*dx+dy*dy);
+  const ux = dx/len, uy = dy/len;
+  const headLen = 12, headAng = 0.45;
+  // Draw from 30% to 70% of segment to not obscure points
+  const sx = from.x + ux*len*0.30, sy = from.y + uy*len*0.30;
+  const ex = from.x + ux*len*0.70, ey = from.y + uy*len*0.70;
+  ctx.beginPath();
+  ctx.moveTo(sx, sy);
+  ctx.lineTo(ex, ey);
+  ctx.stroke();
+  // arrowhead
+  ctx.beginPath();
+  ctx.moveTo(ex, ey);
+  ctx.lineTo(ex - headLen*Math.cos(-headAng + Math.atan2(uy,ux)),
+             ey - headLen*Math.sin(-headAng + Math.atan2(uy,ux)));
+  ctx.lineTo(ex - headLen*Math.cos( headAng + Math.atan2(uy,ux)),
+             ey - headLen*Math.sin( headAng + Math.atan2(uy,ux)));
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawCaption(text, alpha, y = H - 55, size = 20) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.font = `italic ${size}px Georgia`;
+  ctx.fillStyle = '#d4c5a9';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.shadowColor = 'rgba(200,180,130,0.4)';
+  ctx.shadowBlur = 12;
+  ctx.fillText(text, W/2, y);
+  ctx.restore();
+}
+
+function drawTitle(text, alpha, y = 60) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.font = 'bold 26px Georgia';
+  ctx.fillStyle = '#ffffff';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = '#aaa';
+  ctx.shadowBlur = 10;
+  ctx.fillText(text, W/2, y);
+  ctx.restore();
+}
+
+// ── Rotation transform helper ──────────────────────────────────────────────
+function rotatePts(pts, cx, cy, angle) {
+  return pts.map(p => {
+    const dx = p.x - cx, dy = p.y - cy;
+    return {
+      x: cx + dx*Math.cos(angle) - dy*Math.sin(angle),
+      y: cy + dx*Math.sin(angle) + dy*Math.cos(angle),
+    };
+  });
+}
+
+// ── Main render ────────────────────────────────────────────────────────────
+function render(ts) {
+  if (!paused) {
+    if (lastTimestamp !== null) {
+      elapsed += (ts - lastTimestamp) / 1000;
+    }
+    lastTimestamp = ts;
+  } else {
+    lastTimestamp = null;
+  }
+
+  // clamp
+  if (elapsed > totalDur) { elapsed = totalDur; }
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, W, H);
+
+  const { phase } = getPhaseProgress(elapsed);
+  const e = elapsed;
+
+  // Compute current rotation angle (used in rotate phase and persists after)
+  const rotStart = phaseStart(4); // ROTATE phase
+  const rotDur   = phaseDur[4];
+  let rotAngle = 0;
+  if (e > rotStart) {
+    const rt = clamp01((e - rotStart) / rotDur);
+    rotAngle = easeInOut(rt) * (2 * Math.PI / 7);
+  }
+
+  // Working point positions (may be rotated)
+  const curPts = rotatePts(pts, CX, CY, rotAngle);
+
+  // ── PHASE 0 — BLACK ──────────────────────────────────────────────────────
+  const p0s = phaseStart(0), p0d = phaseDur[0];
+
+  // ── PHASE 1 — POINTS ────────────────────────────────────────────────────
+  const p1s = phaseStart(1), p1d = phaseDur[1];
+  if (e > p1s) {
+    // Title fades in
+    const titleAlpha = clamp01((e - p1s) / 0.5);
+    drawTitle('A1 — Fano Plane', titleAlpha);
+
+    // Points appear one by one
+    for (let i = 0; i < 7; i++) {
+      const appear = p1s + i * (p1d / 7);
+      const ptAlpha = clamp01((e - appear) / 0.4);
+      const col = lineColors[i];
+      drawPoint(curPts[i], ptAlpha, col, 8);
+      drawLabel(curPts[i], labels[i], ptAlpha, col);
+    }
+  }
+
+  // ── PHASE 2 — LINES ──────────────────────────────────────────────────────
+  const p2s = phaseStart(2), p2d = phaseDur[2];
+  if (e > p2s) {
+    const numLines = fanoLines.length; // 7
+    for (let li = 0; li < numLines; li++) {
+      const appear = p2s + li * (p2d / numLines);
+      const la = clamp01((e - appear) / 0.5);
+      const [a, b, c] = fanoLines[li];
+      // Check if this is the "circle" line — treat line index 6 specially
+      // Actually we draw all as straight lines (Fano has 6 straight + 1 circle)
+      // Line 6 is [6,0,2] — centre + two outer = a spoke + chord, not the circle
+      // The inscribed circle connects pts 0,2,4 via arc (line [0,2,4] conceptually)
+      // We use line [0,2,4] as a curved line (index 0 in fanoLines = [0,1,3])
+      // Let's just draw all 7 straight except the "odd" one which we make a circle arc
+      drawLineThrough3(curPts[a], curPts[b], curPts[c], la, lineColors[li]);
+    }
+    // Inscribed circle (7th "line" in the drawing tradition)
+    const circAppear = p2s + 5 * (p2d / numLines);
+    const circAlpha = clamp01((e - circAppear) / 0.5);
+    drawInscribedCircle(circAlpha, '#a0f0c0');
+
+    // Redraw points on top
+    for (let i = 0; i < 7; i++) {
+      const appear = p1s + i * (p1d / 7);
+      const ptAlpha = clamp01((e - appear) / 0.4);
+      drawPoint(curPts[i], ptAlpha, lineColors[i], 8);
+      drawLabel(curPts[i], labels[i], ptAlpha, lineColors[i]);
+    }
+  }
+
+  // ── PHASE 3 — ARROWS ─────────────────────────────────────────────────────
+  const p3s = phaseStart(3), p3d = phaseDur[3];
+  if (e > p3s) {
+    for (let li = 0; li < 7; li++) {
+      const appear = p3s + li * (p3d / 7);
+      const aa = clamp01((e - appear) / 0.4);
+      const [a, b, c] = directedTriples[li];
+      drawArrow(curPts[a], curPts[b], aa, lineColors[li]);
+      drawArrow(curPts[b], curPts[c], aa, lineColors[li]);
+      drawArrow(curPts[c], curPts[a], aa, lineColors[li]);
+    }
+    // Caption
+    const capA = clamp01((e - (p3s + 1.5)) / 0.5);
+    drawCaption('eᵢ · eⱼ = eₖ  for each directed triple', capA);
+  }
+
+  // ── PHASE 4 — ROTATE ─────────────────────────────────────────────────────
+  if (e > rotStart) {
+    const rt = clamp01((e - rotStart) / rotDur);
+    const capA = easeInOut(rt);
+    drawCaption('Rotation by 2π/7 maps the structure to itself', capA * 0.85);
+  }
+
+  // ── PHASE 5 — G₂ FLASH ───────────────────────────────────────────────────
+  const p5s = phaseStart(5), p5d = phaseDur[5];
+  if (e > p5s) {
+    const gt = clamp01((e - p5s) / p5d);
+    // Flash alternating point groups (two cosets of G₂ symmetry)
+    const flash = Math.sin(gt * Math.PI * 6) * 0.5 + 0.5;
+    for (let i = 0; i < 7; i += 2) {
+      drawPoint(curPts[i], flash * 0.8, '#ffffff', 13);
+    }
+    drawCaption('G₂ symmetry — rotations & reflections preserving incidence', clamp01(gt * 3), H - 90);
+    const sub = clamp01(gt * 2 - 0.5);
+    drawCaption('14-dimensional automorphism group', sub * 0.75, H - 55, 16);
+  }
+
+  // ── PHASE 6 — CAPTION ────────────────────────────────────────────────────
+  const p6s = phaseStart(6), p6d = phaseDur[6];
+  if (e > p6s) {
+    const ct = clamp01((e - p6s) / p6d);
+    const fadeIn = easeInOut(clamp01(ct * 3));
+    drawCaption('"Seven imaginary units. Every multiplication rule lives on a line."', fadeIn, H - 55, 19);
+    // Gently pulse the whole diagram
+    ctx.save();
+    ctx.globalAlpha = 0.08 + 0.06 * Math.sin(ct * Math.PI * 4);
+    ctx.fillStyle = '#8060ff';
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  }
+
+  if (!paused && elapsed < totalDur) {
+    animId = requestAnimationFrame(render);
+  } else if (elapsed >= totalDur) {
+    paused = true;
+    document.getElementById('btnPlay').textContent = '▶ Play';
+  }
+}
+
+// ── Controls ───────────────────────────────────────────────────────────────
+document.getElementById('btnPlay').addEventListener('click', () => {
+  if (paused) {
+    if (elapsed >= totalDur) elapsed = 0;
+    paused = false;
+    document.getElementById('btnPlay').textContent = '⏸ Pause';
+    lastTimestamp = null;
+    animId = requestAnimationFrame(render);
+  } else {
+    paused = true;
+    document.getElementById('btnPlay').textContent = '▶ Play';
+  }
+});
+
+document.getElementById('btnRestart').addEventListener('click', () => {
+  elapsed = 0;
+  paused = false;
+  document.getElementById('btnPlay').textContent = '⏸ Pause';
+  lastTimestamp = null;
+  if (animId) cancelAnimationFrame(animId);
+  animId = requestAnimationFrame(render);
+});
+
+// Draw initial frame
+requestAnimationFrame(render);
+</script>
+</body>
+</html>
