@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Phase Jump Lab</title>
+    <title>Tracked Response Lab</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
@@ -11,23 +11,26 @@
       <section class="hero">
         <div>
           <p class="eyebrow">Node + Web Audio</p>
-          <h1>Phase Jump Lab</h1>
+          <h1>Tracked Response Lab</h1>
           <p class="lede">
-            Hold a carrier tone, inject controlled phase discontinuities, and map the transient
-            frequency response as a heatmap.
+            Sweep a sine tone, follow the returned response nearest the driven frequency, and chart
+            its matched amplitude and width across the sweep.
           </p>
         </div>
         <div class="status-card">
           <p class="status-label">Status</p>
           <p id="statusText" class="status-value">Idle</p>
-          <p class="status-note">Phase-jump transient experiment for Chrome, Edge, or another modern browser on Windows.</p>
+          <p class="status-note">
+            Width is measured as full width at half maximum around the local peak nearest the drive
+            frequency.
+          </p>
         </div>
       </section>
 
       <section class="controls">
         <button id="startButton" class="primary">Start Audio</button>
         <button id="stopButton" disabled>Stop Audio</button>
-        <button id="resetFftButton">Reset Heatmap</button>
+        <button id="resetResponseButton">Reset Measurements</button>
 
         <label class="control">
           <span>Sine enabled</span>
@@ -35,7 +38,7 @@
         </label>
 
         <label class="control">
-          <span>Carrier frequency</span>
+          <span>Frequency</span>
           <div class="number-field">
             <input id="frequencyInput" type="number" min="20" max="20000" step="0.1" value="440" />
             <strong>Hz</strong>
@@ -59,27 +62,27 @@
         <div class="tab-bar" role="tablist" aria-label="Analysis views">
           <button
             id="waveformTab"
-            class="tab-button active"
+            class="tab-button"
             type="button"
             role="tab"
-            aria-selected="true"
+            aria-selected="false"
             aria-controls="waveformView"
           >
             Waveform
           </button>
           <button
-            id="heatmapTab"
-            class="tab-button"
+            id="responseTab"
+            class="tab-button active"
             type="button"
             role="tab"
-            aria-selected="false"
-            aria-controls="heatmapView"
+            aria-selected="true"
+            aria-controls="responseView"
           >
-            FFT Heatmap
+            Response Metrics
           </button>
         </div>
 
-        <article id="waveformView" class="tab-panel active" role="tabpanel">
+        <article id="waveformView" class="tab-panel" role="tabpanel" hidden>
           <div class="panel-header">
             <h2>Waveform</h2>
             <p>Recent microphone samples</p>
@@ -87,71 +90,103 @@
           <canvas id="waveformCanvas" width="1200" height="520"></canvas>
         </article>
 
-        <article id="heatmapView" class="tab-panel" role="tabpanel" hidden>
+        <article id="responseView" class="tab-panel active" role="tabpanel">
           <div class="panel-header">
-            <h2>FFT Heatmap</h2>
-            <p>Each phase-jump level records one full dwell interval as a separate row</p>
+            <h2>Tracked Response</h2>
+            <p>Matched return amplitude and width for each committed sweep step</p>
           </div>
-          <canvas id="fftCanvas" width="1200" height="520"></canvas>
+
+          <div class="chart-stack">
+            <div class="chart-card">
+              <div class="panel-header">
+                <h2>Amplitude</h2>
+                <p>Peak level nearest the driven frequency</p>
+              </div>
+              <canvas id="amplitudeChartCanvas" width="1200" height="360"></canvas>
+            </div>
+
+            <div class="chart-card">
+              <div class="panel-header">
+                <h2>Width</h2>
+                <p>Full width at half maximum around the matched peak</p>
+              </div>
+              <canvas id="widthChartCanvas" width="1200" height="360"></canvas>
+            </div>
+
+            <div class="chart-card">
+              <div class="panel-header">
+                <h2>Peak Offset</h2>
+                <p>Signed distance between the driven frequency and the matched return peak</p>
+              </div>
+              <canvas id="offsetChartCanvas" width="1200" height="360"></canvas>
+            </div>
+          </div>
         </article>
       </section>
 
       <section class="panel sweep-panel">
         <div class="panel-header">
-          <h2>Phase Jump Sweep</h2>
-          <p>Sweep phase-jump magnitude while holding carrier frequency fixed</p>
+          <h2>Sweep Controls</h2>
+          <p>Run the same bounded sweep flow as the main app and record one response measurement per step</p>
         </div>
 
         <div class="advanced-grid sweep-grid">
           <label class="control">
-            <span>Enable phase sweep</span>
+            <span>Enable sweep</span>
             <input id="sweepEnabledInput" type="checkbox" />
           </label>
 
           <label class="control">
-            <span>Start phase jump</span>
+            <span>Start frequency</span>
             <div class="number-field">
-              <input id="sweepStartHzInput" type="number" min="0" max="360" step="1" value="0" />
-              <strong>deg</strong>
+              <input id="sweepStartHzInput" type="number" min="20" max="20000" step="0.1" value="440" />
+              <strong>Hz</strong>
             </div>
           </label>
 
           <label class="control">
-            <span>End phase jump</span>
+            <span>End frequency</span>
             <div class="number-field">
-              <input id="sweepEndHzInput" type="number" min="0" max="360" step="1" value="180" />
-              <strong>deg</strong>
+              <input id="sweepEndHzInput" type="number" min="20" max="20000" step="0.1" value="880" />
+              <strong>Hz</strong>
             </div>
           </label>
 
           <label class="control">
-            <span>Phase levels</span>
+            <span>Number of steps</span>
             <div class="number-field">
               <input id="sweepStepsInput" type="number" min="2" step="1" value="50" />
-              <strong>levels</strong>
+              <strong>steps</strong>
             </div>
           </label>
 
           <label class="control">
-            <span>Jump delay</span>
-            <div class="number-field">
-              <input id="jumpIntervalSecondsInput" type="number" min="0.01" step="0.01" value="0.5" />
-              <strong>s</strong>
-            </div>
+            <span>Log spacing</span>
+            <input id="sweepLogInput" type="checkbox" checked />
           </label>
 
-          <input id="sweepLogInput" type="checkbox" hidden />
-          <input id="sweepContinuousInput" type="checkbox" hidden />
+          <label class="control">
+            <span>Continuous sweep</span>
+            <input id="sweepContinuousInput" type="checkbox" />
+          </label>
 
           <label class="control">
-            <span>Loop phase sweep</span>
+            <span>Loop sweep</span>
             <input id="sweepLoopInput" type="checkbox" checked />
           </label>
 
           <label class="control">
-            <span>Time per level</span>
+            <span>Time per step</span>
             <div class="number-field">
               <input id="sweepStepSecondsInput" type="number" min="0.1" step="0.1" value="60" />
+              <strong>s</strong>
+            </div>
+          </label>
+
+          <label class="control">
+            <span>Settle time</span>
+            <div class="number-field">
+              <input id="sweepSettleSecondsInput" type="number" min="0" step="0.1" value="0.5" />
               <strong>s</strong>
             </div>
           </label>
@@ -167,15 +202,15 @@
 
         <div class="metrics-grid sweep-metrics-grid">
           <div class="metric-card">
-            <span>Current phase jump</span>
-            <strong id="sweepCurrentFrequency">0 deg</strong>
+            <span>Current sweep frequency</span>
+            <strong id="sweepCurrentFrequency">440 Hz</strong>
           </div>
           <div class="metric-card">
-            <span>Level progress</span>
+            <span>Step progress</span>
             <strong id="sweepStepProgress">0.0 / 60.0 s</strong>
           </div>
           <div class="metric-card">
-            <span>Recorded levels</span>
+            <span>Recorded points</span>
             <strong id="sweepRecordedRows">0 rows</strong>
           </div>
         </div>
@@ -183,8 +218,8 @@
 
       <section class="panel advanced-panel">
         <div class="panel-header">
-          <h2>Advanced FFT Controls</h2>
-          <p>Tune resolution, smoothing, scale, and the displayed heatmap band</p>
+          <h2>Analysis Controls</h2>
+          <p>Tune FFT resolution and the dB floor used for the matched-response measurement</p>
         </div>
 
         <div class="advanced-grid">
@@ -207,22 +242,6 @@
           </label>
 
           <label class="control">
-            <span>Display start</span>
-            <div class="number-field">
-              <input id="displayStartInput" type="number" min="0" max="24000" step="1" value="0" />
-              <strong>Hz</strong>
-            </div>
-          </label>
-
-          <label class="control">
-            <span>Display end</span>
-            <div class="number-field">
-              <input id="displayEndInput" type="number" min="1" max="24000" step="1" value="12000" />
-              <strong>Hz</strong>
-            </div>
-          </label>
-
-          <label class="control">
             <span>Minimum dB</span>
             <div class="number-field">
               <input id="minDbInput" type="number" min="-160" max="-1" step="1" value="-100" />
@@ -237,27 +256,6 @@
               <strong>dB</strong>
             </div>
           </label>
-
-          <label class="control">
-            <span>Subtract column background</span>
-            <input id="subtractColumnBackgroundInput" type="checkbox" checked />
-          </label>
-
-          <label class="control">
-            <span>Background percentile</span>
-            <div class="number-field">
-              <input id="backgroundPercentileInput" type="number" min="0" max="50" step="1" value="20" />
-              <strong>%</strong>
-            </div>
-          </label>
-
-          <label class="control">
-            <span>Frequency scale</span>
-            <select id="freqScaleSelect">
-              <option value="linear" selected>Linear</option>
-              <option value="log">Log</option>
-            </select>
-          </label>
         </div>
 
         <div class="metrics-grid">
@@ -266,26 +264,31 @@
             <strong id="fftResolution">23.4 Hz/bin</strong>
           </div>
           <div class="metric-card">
-            <span>Visible band</span>
-            <strong id="fftVisibleBand">0 Hz to 12.0 kHz</strong>
+            <span>Tracked amplitude</span>
+            <strong id="trackedAmplitudeValue">n/a</strong>
           </div>
           <div class="metric-card">
-            <span>Displayed range</span>
-            <strong id="fftRange">-100 dB to -20 dB</strong>
+            <span>Tracked width</span>
+            <strong id="trackedWidthValue">n/a</strong>
+          </div>
+          <div class="metric-card">
+            <span>Peak offset</span>
+            <strong id="trackedOffsetValue">n/a</strong>
           </div>
           <div class="metric-card">
             <span>Current step frames</span>
             <strong id="fftAverageCount">0 frames</strong>
           </div>
           <div class="metric-card">
-            <span>Background mode</span>
-            <strong id="fftBackgroundStatus">Need 2 rows</strong>
+            <span>Export rows</span>
+            <strong id="exportStatusValue">0 rows</strong>
           </div>
         </div>
       </section>
     </main>
 
     <script src="/fft-heatmap-common.js" defer></script>
-    <script src="/transient-phase.js" defer></script>
+    <script src="/response-experiment-ui-common.js" defer></script>
+    <script src="/tracked-response.js" defer></script>
   </body>
 </html>

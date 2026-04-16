@@ -254,6 +254,16 @@ canvas {
   display: block;
 }
 
+.chart-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.chart-card {
+  display: grid;
+  gap: 12px;
+}
+
 .advanced-panel {
   padding: 18px 18px 22px;
 }
@@ -304,6 +314,10 @@ canvas {
 
 .sweep-metrics-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.adaptive-metrics-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 @media (max-width: 900px) {

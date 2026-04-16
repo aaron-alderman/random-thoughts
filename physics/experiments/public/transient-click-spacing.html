@@ -266,32 +266,6 @@
           </label>
 
           <label class="control">
-            <span>Reject hot frames</span>
-            <input id="rejectHotFramesInput" type="checkbox" checked />
-          </label>
-
-          <label class="control">
-            <span>Upper percentile</span>
-            <div class="number-field">
-              <input id="rejectPercentileInput" type="number" min="50" max="100" step="1" value="90" />
-              <strong>%</strong>
-            </div>
-          </label>
-
-          <label class="control">
-            <span>Suppress anomalous bins</span>
-            <input id="renderRejectHotBinsInput" type="checkbox" checked />
-          </label>
-
-          <label class="control">
-            <span>Anomaly percentile</span>
-            <div class="number-field">
-              <input id="renderRejectPercentileInput" type="number" min="50" max="100" step="1" value="95" />
-              <strong>%</strong>
-            </div>
-          </label>
-
-          <label class="control">
             <span>Subtract column background</span>
             <input id="subtractColumnBackgroundInput" type="checkbox" checked />
           </label>
@@ -331,14 +305,6 @@
             <strong id="fftAverageCount">0 frames</strong>
           </div>
           <div class="metric-card">
-            <span>Frame filter</span>
-            <strong id="fftFrameFilterStatus">P90 cutoff</strong>
-          </div>
-          <div class="metric-card">
-            <span>Display filter</span>
-            <strong id="fftRenderFilterStatus">Per-bin P95</strong>
-          </div>
-          <div class="metric-card">
             <span>Background mode</span>
             <strong id="fftBackgroundStatus">Need 2 rows</strong>
           </div>
@@ -349,6 +315,7 @@
     <script>
       window.TRANSIENT_CLICK_CONFIG = { mode: "spacing" };
     </script>
+    <script src="/fft-heatmap-common.js" defer></script>
     <script src="/transient-click.js" defer></script>
   </body>
 </html>

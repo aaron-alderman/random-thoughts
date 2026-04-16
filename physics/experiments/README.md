@@ -11,6 +11,9 @@ Node-based local web app for Windows that:
 
 - `server.js` is a tiny zero-dependency Node server.
 - `public/app.js` uses browser audio APIs: `getUserMedia`, `AudioContext`, `OscillatorNode`, and `AnalyserNode`.
+- `public/fft-heatmap-common.js` is the shared heatmap/display helper layer used by the main app and transient experiments.
+- `public/response-experiment-ui-common.js` is the shared waveform/chart helper layer used by the tracked-response and adaptive-response experiments.
+- `public/adaptive-response-model.js` holds the adaptive-response experiment's scheduler, measurement math, and running statistics, `public/adaptive-response-ui.js` owns the DOM and chart rendering, and `public/adaptive-response.js` is now a thinner audio/controller layer.
 - `public/styles.css` provides the UI and canvas styling.
 
 ## Requirements
@@ -48,6 +51,18 @@ http://127.0.0.1:3000/transient-click-count.html
 http://127.0.0.1:3000/transient-click-spacing.html
 ```
 
+Tracked response experiment:
+
+```text
+http://127.0.0.1:3000/tracked-response.html
+```
+
+Adaptive response experiment:
+
+```text
+http://127.0.0.1:3000/adaptive-response.html
+```
+
 ## Use
 
 1. Click `Start Audio`.
@@ -59,7 +74,7 @@ http://127.0.0.1:3000/transient-click-spacing.html
 7. The FFT panel is now a heatmap: each completed dwell interval becomes a new row.
 8. Use `Reset Heatmap` to clear the recorded rows and start fresh from the current point.
 9. Use `Export to CSV` to save the recorded heatmap rows, with one row per completed sweep step.
-10. Use the advanced FFT controls to change size, smoothing, dB range, hot-frame rejection percentile, display-only hot-bin suppression, per-column background subtraction, linear vs log frequency scale, and the visible start/end frequency window.
+10. Use the advanced FFT controls to change size, smoothing, dB range, per-column background subtraction, linear vs log frequency scale, and the visible start/end frequency window.
 11. All analysis and sweep options are saved in browser local storage and restored on refresh.
 
 ## Notes
@@ -74,10 +89,7 @@ http://127.0.0.1:3000/transient-click-spacing.html
 - The sweep now runs from the configured start frequency to the configured end frequency, and can loop back to the start automatically.
 - In continuous mode, the tone glides smoothly across the configured range while the heatmap still accumulates into the configured sweep bins.
 - Sweep spacing can be linear or logarithmic; logarithmic spacing is usually the more natural choice for audio work.
-- Hot-frame rejection stores the raw FFT frames for the current dwell interval only, then can reject the top percentile of high-power frames before committing that step's average.
-- Display-only anomalous-bin suppression compares each response-frequency bin against that same bin's recent history for the row, and only changes the rendered heatmap, not the stored/exported data.
 - Display-only column background subtraction learns a low-percentile baseline for each response-frequency column across the committed heatmap rows, then subtracts that baseline from every displayed row without changing the stored/exported data. It activates once at least two committed rows exist.
-- To keep unattended runs bounded, the display-only per-bin history uses a limited recent visit history per row rather than unbounded storage.
 - Automatic loop-back re-samples the same sweep frequencies and averages them into the existing heatmap rows; only `Reset Heatmap` or `Restart Sweep + Clear` wipes the stored rows.
 - The older Python prototype is still in the folder, but the Node/web version is now the recommended path.
 - `transient-phase.html` is a separate experiment page for fixed-carrier phase-jump transient testing, with the heatmap y-axis representing phase jump in degrees.
@@ -85,3 +97,9 @@ http://127.0.0.1:3000/transient-click-spacing.html
 - The click transient pages share the same FFT heatmap pipeline, but replace phase jumps with a simpler one-shot click train so the carrier can stay continuous.
 - `transient-click-width.html` sweeps click width, `transient-click-amplitude.html` sweeps click amplitude, `transient-click-count.html` sweeps click count, and `transient-click-spacing.html` sweeps click spacing.
 - In the click pages, the x-axis remains response frequency and the heatmap y-axis is whichever click parameter that page is sweeping.
+- `tracked-response.html` sweeps the drive frequency and records the returned peak nearest that same frequency, charting both matched amplitude and full width at half maximum across the sweep.
+- `tracked-response.html` also plots the signed peak offset, so you can see how far the matched return drifts away from the driven frequency across the sweep.
+- The tracked-response peak match is constrained to stay within `±5 Hz` of the driven frequency.
+- The tracked-response page includes an optional per-step settle window so the first part of each new frequency step can be ignored before measurements begin.
+- `adaptive-response.html` is a separate response-mapping experiment built around an open-ended adaptive scheduler: `explore` inserts new midpoint frequencies in the intervals with the largest amplitude and uncertainty changes, then `refine` re-samples existing points to tighten the estimate where the response is strongest or noisiest.
+- The adaptive response charts show running means with one-sigma uncertainty bands for amplitude, FWHM width, and peak offset, and the CSV export writes mean and standard deviation for each sampled frequency.
