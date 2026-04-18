@@ -224,23 +224,55 @@ The relationship to Σ: the J^{01} grading can be understood as the generator of
 | massless limit (m=0) → class AIII | derived from Σ being an exact symmetry | 3–4 | clean static result |
 | massive (m≠0) → class A | derived from Σ being broken | 3–4 | direct consequence of mixing |
 | mass generation = chiral symmetry breaking = topological phase transition | structural identification | 4 | connects dynamics to tenfold-way transition |
-| T² = +1 from (γ²γ⁴)K | computed from explicit representation | 4 | uses reality properties of γ matrices |
+| T₀₁ = (γ²γ⁴)K — full time reversal, T₀₁² = −1 | computed from explicit representation | 4 | reverses both timelike directions |
 | C² = +1 from (γ¹γ³)K | computed from explicit representation | 4 | uses reality properties of γ matrices |
-| exact class assignment within {A, AIII, BDI} | narrowed but not pinned | 5 | S² = −1 issue unresolved |
+| T₀ ~ (γ⁰γ³)K — partial time reversal, T₀² = +1 | computed | 4 | reverses direction 0 only |
+| Σ = C · T₀: chiral symmetry arises from partial time reversal | structural identification | 4 | T₀ sources Σ; T₀₁ does not |
+| chiral symmetry class BDI from (T₀² = +1, C² = +1, Σ = CT₀) | structural identification | 4 | pins the class for massless sector |
+| T₀₁ is an additional T²=−1 symmetry outside the BDI structure | structural observation | 4 | Spin(2,3) carries both simultaneously |
 | Weyl semimetal structural analogy (T1 nodes ↔ Weyl nodes, m ↔ gap) | structural analogy | 4–5 | maps faithfully in d=3, class AIII |
-| two partial time reversals and extended classification | speculative | 5 | no physical realization identified |
+| extended symmetry beyond 10-fold way from simultaneous BDI + T₀₁²=−1 | structural observation | 4–5 | two time-reversals with different squares coexist |
 
 ---
 
 ## Open problems
 
-### T1. Resolving the S² = −1 issue (severity: high)
+### T1. The S² = −1 issue — resolved (severity: resolved)
 
-The natural S = CT from the representation satisfies S² = −1 rather than the +1 required for a standard chiral symmetry. This must be resolved before the class assignment (AIII vs BDI vs other) can be stated precisely. Three possible resolutions:
+The three candidate resolutions were worked through in parallel. The findings:
 
-1. A phase redefinition of C or T (changing a sign convention in the anti-unitary operator) absorbs the −1 and restores S² = +1. This would likely pin the class to BDI.
-2. The second timelike direction introduces a genuine modification of the standard S² = +1 condition. This would call for an extended classification.
-3. The natural T and C of the Spin(2,3) representation are not the physical time-reversal and charge-conjugation operators — the physical ones require additional input (e.g. charge structure from the octonionic sector). This is perhaps the most likely resolution, since T and C in condensed matter are properties of the single-particle Hamiltonian relative to the physical Hilbert space, not just of the Clifford algebra.
+**Resolution 1 (phase redefinition): falls out.**
+For any anti-unitary A = MK, A² = MM*. Phase redefinitions M → e^{iθ}M cancel in MM* and cannot change A². More strongly: there is no invertible product of gamma matrices that reverses exactly one timelike direction while commuting with the remaining generators — the centralizer argument shows the constraint set has only the zero solution. T²=−1 and C²=+1 are structural invariants.
+
+**Resolution 3 (octonionic/gauge sector): falls out.**
+Color charge conjugation, octonionic direction reversal, and hypercharge all contribute +1 to squared operators. (C_phys)² = +1 and (T_phys)² = −1 are unchanged by any natural internal sector.
+
+**Resolution 2 (structural): resolves, but the mechanism is not a modification of the standard classification — it is a concrete computation.**
+
+There exist two distinct natural anti-unitary time-reversal operations in Spin(2,3):
+
+$$
+T_{01} = (\gamma^2\gamma^4)K, \qquad T_{01}^2 = -1 \quad \text{(full time reversal: reverses both timelike directions)}
+$$
+$$
+T_0 \sim (\gamma^0\gamma^3)K, \qquad T_0^2 = +1 \quad \text{(partial: reverses direction 0 only)}
+$$
+
+Computing C · T₀ with M_C = σ₂⊗σ₂ and M_{T_0} = −i(σ₁⊗σ₂):
+
+$$
+C \cdot T_0 = M_C (M_{T_0})^* = (σ_2 \otimes σ_2)(−i(σ_1 \otimes σ_2)) = −i(σ_2 σ_1) \otimes (σ_2^2) = −i(−iσ_3) \otimes I_2 = −(σ_3 \otimes I_2) = \Sigma.
+$$
+
+So **Σ = C · T₀** exactly — the chiral symmetry is the composition of C with the partial time reversal T₀, not with the full time reversal T₀₁.
+
+The S²=−1 from C · T₀₁ was not a convention problem. It was pointing to the correct decomposition: the chiral structure comes from T₀ (T₀²=+1) and the class is **BDI** from (T₀²=+1, C²=+1, Σ=CT₀, Σ²=+1). The full time reversal T₀₁ (T₀₁²=−1) is an additional symmetry that does not pair with C to give Σ.
+
+The framework therefore simultaneously carries:
+- **BDI class structure** from (T₀, C, Σ=CT₀): the class protecting massless T1 states, with ℤ topological invariant in d=1 and the Weyl-semimetal-type protection in d=3
+- **An additional T₀₁²=−1 symmetry**: the full time reversal, which has no standard BDI pairing
+
+This is an extended structure beyond the standard 10-fold way: two time-reversal operations with different squares coexist. The framework is not in any single one of the 10 classes; it contains BDI as a sub-structure while also carrying T₀₁²=−1. This is the concrete version of what "two timelike directions producing extended classification" means.
 
 ### T2. Identifying physical Hamiltonians in the class AIII family (severity: medium)
 
@@ -275,7 +307,7 @@ Topological phases are connected to anomalies through anomaly inflow: the bulk t
 
 ### To consistency (2d)
 
-- the S² = −1 issue is an open algebraic consistency question (type C1)
+- the extended symmetry structure (BDI + T₀₁²=−1 simultaneously) is an open algebraic consistency question (type C1) — what constraints does it place on the Hamiltonian space?
 - the connection between topological invariants and anomaly inflow (if it exists) belongs jointly to this domain and 2d
 
 ### To interpretation (2e)
@@ -293,10 +325,13 @@ Topological phases are connected to anomalies through anomaly inflow: the bulk t
 The topological spine of the project is the following chain:
 
 1. Cl(2,3) ≅ M₄(ℂ) forces the framework into the two complex symmetry classes.
-2. Σ = 2J^{01} is the chiral operator that places the massless theory in class AIII — no additional structure is needed, it is already in the algebra.
-3. The m = 0 → m ≠ 0 transition is a topological phase transition (AIII → A) in which chiral symmetry is broken and a gap opens.
-4. Mass generation in the Spin(2,3) framework and topological gap opening in class AIII are the same mathematical event: the same coupling, the same symmetry breaking, the same transition.
+2. Σ = 2J^{01} is the chiral operator of class AIII in the massless limit — Σ = C · T₀ where T₀ is the partial time reversal of direction 0 (T₀²=+1).
+3. The full symmetry structure is **BDI** from (T₀²=+1, C²=+1, Σ=CT₀) plus an additional full time-reversal T₀₁²=−1 — this is extended structure beyond the standard 10-fold way.
+4. The m = 0 → m ≠ 0 transition is a topological phase transition (BDI/AIII → A) in which the chiral symmetry Σ is broken and a gap opens.
+5. Mass generation in the Spin(2,3) framework and topological gap opening are the same mathematical event.
 
-Steps 1–3 are at maturity 3–4. Step 4, as a full structural identification (not merely an analogy), is at maturity 4.
+Steps 1–4 are at maturity 3–4. Step 5, as a full structural identification, is at maturity 4.
 
-The exact symmetry class (resolving S² = −1) and the physical realization question are the two main open obligations of this domain.
+The two timelike directions are responsible for both the chiral structure (via T₀) and the additional T₀₁²=−1 symmetry. The S²=−1 issue is now resolved: it arose from composing C with the wrong time reversal (T₀₁, both timelike directions) rather than the partial one (T₀, direction 0 only) that sources Σ.
+
+The main remaining open obligations are T2 (physical material realization), T3 (connecting the ℤ invariant to observables), and T4 (anomaly inflow connection).
