@@ -14,7 +14,7 @@ It does not replace the detailed kernel files (`1 - master framework`, `2a` thro
 2. Which domains of physics does this framework genuinely speak to?
 3. Which domains does it not yet address — and why is naming those boundaries useful?
 
-The adjacent background document (`0 - background.md`) covers the full arc of physics from atomic structure to holography, organized around the thread that symmetry breaking creates quantization, boundaries have enhanced symmetry, and coherence is the fundamental quantity. This compendium sits alongside that atlas and asks a different question: where, looking back across that same territory, does the Spin(2,3) lens produce genuine insight rather than force-fitting?
+The adjacent background document (`symmetry/0 - overview.md`) covers the full arc of physics from atomic structure to holography, organized around the thread that symmetry breaking creates quantization, boundaries have enhanced symmetry, and coherence is the fundamental quantity. This compendium sits alongside that atlas and asks a different question: where, looking back across that same territory, does the Spin(2,3) lens produce genuine insight rather than force-fitting?
 
 ---
 
@@ -115,6 +115,31 @@ The same geometry gives gravity at classical scales. Coupling to the `n = e₅` 
 | spin-½ as geometric rotation through `n` | re-reading, not new prediction | 3–4 |
 | `4π` closure as fact about the normal vector | geometric statement | 3–4 |
 | gravity and spin as two faces of coupling to `n` | interpretive synthesis | 5 |
+
+---
+
+### 1b-ii. KK-Style Spin Quantization via Spin(2,3) Representations
+
+The isomorphism $\mathrm{Spin}(2,3) \cong \mathrm{Sp}(4,\mathbb{R})$ means the transport slice carries a symplectic structure. The two conjugate branch amplitudes $(A, B) \in \mathbb{C}_u$ of an octonionic process package as a real 4-vector $X \in \mathbb{R}^4$, and the transport-coherence invariant $\mathcal{I} = A\bar{B}$ is precisely the symplectic pairing $\Omega(X, \cdot)$.
+
+This gives a KK-like mechanism for particle classification that is representation-theoretic rather than geometric:
+
+- In standard Kaluza-Klein theory, compactifying a geometric dimension yields momentum quantization from periodic boundary conditions
+- Here the "extra direction" is the mixing axis — an internal direction, not a geometric extra dimension
+- Quantization occurs through the **representation content of $\mathrm{Spin}(2,3)$**
+- Allowed states = irreducible representations of $\mathrm{Spin}(2,3) \cong \mathrm{Sp}(4,\mathbb{R})$
+- Observable particles = projections of these irreps onto the transport (T1) slice
+
+Under phase locking, the transport-coherence invariant $\mathcal{I}(s+T) = e^{u\Theta}\mathcal{I}(s)$ gives integer spin for $\Theta = 2\pi$ and half-integer spin for $\Theta = \pi$. Spin is the winding number of the conjugate branch pair around the transport axis.
+
+The metaplectic representations of $\mathrm{Sp}(4,\mathbb{R})$ are natural homes for the two-branch amplitude structure — they are built from pairs. This suggests the framework may be most naturally expressed as a metaplectic quantization of null transport, with the octonionic bulk providing the non-associative deformation of the symplectic structure (see `3- overflow.md`).
+
+| Claim | Status | Maturity |
+|---|---|---|
+| $\mathcal{I} = A\bar{B}$ is the Sp(4,ℝ) symplectic pairing of branch amplitudes | structural identification | 3–4 |
+| particle species as irreps of Spin(2,3) | KK-style proposal | 4–5 |
+| spin as winding number of conjugate branch pair | structural reading | 5 |
+| metaplectic representations as natural host for two-branch structure | direction | 5 |
 
 ---
 
@@ -228,6 +253,18 @@ The safe claim is that `J₃(O)` is a strong candidate organizer for three famil
 The current strongest generation hypothesis sits one level above `J₃(O)`: the `2/4/6` access ladder inside the six-dimensional remainder `u⊥ ≅ ℂ³`. At higher energy, more of the hidden octonionic space becomes dynamically accessible, and each additional `2`-dimensional access level corresponds to a heavier generation. Three access levels cap naturally because `ℂ³` is six-dimensional.
 
 The open step is making this access ladder dynamically forced rather than merely kinematically available (maturity 5 for the hypothesis; maturity 6 for a full proof).
+
+---
+
+### Forced Classification of Transport States
+
+The two-branch amplitude framework, operating at the level of conjugate bracket completions of octonionic products, derives a forced partition of the phase space $(\rho, \Phi)$ into four disjoint transport classes (Constructive, Inverted, Frustrated, Dephased) purely from the geometry of two boundaries: the locking boundary and the persistence boundary. The classification is not assumed — it is forced by the dynamics once the signed transport coupling $\kappa_u$ and the loss rate $\gamma$ are given. Particle-like states must satisfy both the locking condition $|\omega| \leq |\kappa_u|\cosh(2\rho)$ and the persistence condition $\kappa_u\cosh(2\rho)\cos\Phi > \gamma$. See `2b - dynamics.md` for the full derivation.
+
+| Claim | Status | Maturity |
+|---|---|---|
+| forced partition into four transport classes from geometry of two boundaries | derived within two-branch model | 4 |
+| particle-like state criterion: both locking and persistence conditions | derived consequence | 4 |
+| connection between two-branch picture and Lindblad-Markov reduction | missing derivation | 5 |
 
 ---
 
@@ -473,6 +510,9 @@ The other three claims sit outside the current proof reach of the framework. The
 | topological matter from Spin(2,3) Clifford structure | speculation | speculative | 5 |
 | dark matter as T2-sector matter | speculation | speculative | 5 |
 | three-generation forcing via `2/4/6` ladder | speculation | speculative | 5 |
+| $\mathcal{I} = A\bar{B}$ as Sp(4,ℝ) symplectic pairing; forced classification into four transport classes | structural identification | 3–4 |
+| particle species as Spin(2,3) irreps; spin as branch winding number | KK-style representation proposal | 4–5 |
+| $G_2 \cap \mathrm{Spin}(2,3)$ calculation: symmetry group seeing both octonionic structure and transport projection | open calculation | 5–6 |
 
 ---
 

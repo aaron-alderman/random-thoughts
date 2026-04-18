@@ -240,6 +240,89 @@ This is the strongest clean dynamical statement currently available in the reduc
 
 ---
 
+## Octonionic Two-Branch Transport
+
+This section records an amplitude-level picture complementary to the Lindblad-Markov reduction above. The Lindblad reduction operates at the density-matrix level after coarse-graining; this section describes the coherent two-branch amplitude structure that exists before coarse-graining and from which the Lindblad picture should ultimately be derived.
+
+### Setup
+
+Non-associativity means that for generic bulk elements $a, b, c \in \mathbb{O}$, the two bracket completions project differently onto the transport slice:
+
+$$A = P_u((ab)c), \qquad B = P_u(a(bc)) \in \mathbb{C}_u$$
+
+Rather than forcing $A = B$ — which would impose associativity by hand — the framework retains both. The **transport-coherence invariant** is:
+
+$$\mathcal{I} = A\bar{B}$$
+
+$|\mathcal{I}|$ encodes whether both branches survive; $\arg(\mathcal{I})$ encodes the interference structure; its evolution determines stability. This replaces the single amplitude as the fundamental object.
+
+**Spin(2,3) structural grounding.** Packaging the paired amplitudes as a real 4-vector $X = (\Re A, \Im_u A, \Re B, \Im_u B)^T \in \mathbb{R}^4$, the invariant $\mathcal{I} = A\bar{B}$ is precisely the symplectic pairing $\Omega(X, \cdot)$ for the canonical symplectic form on $\mathbb{R}^4$. Since $\mathrm{Sp}(4,\mathbb{R}) \cong \mathrm{Spin}(2,3)$, this identifies $\mathcal{I}$ as the natural Spin(2,3)-invariant object. Conjugate-branch pairing and symplectic structure are the same geometric datum.
+
+### The signed transport coupling
+
+The associator $[a,b,c] = (ab)c - a(bc)$ lives in $\mathrm{Im}\,\mathbb{O}$, as does the transport axis $u$. Their inner product is the natural Spin(2,3)-compatible signed scalar:
+
+$$\kappa_u(a,b,c) = \kappa_0 \, \frac{\langle u, [a,b,c] \rangle}{\Lambda^3}$$
+
+where $\Lambda$ is the octonionic scale and $\kappa_0$ is the transport coupling constant. The sign of $\kappa_u$ determines whether branch interaction is constructive ($\kappa_u > 0$), decoupled ($\kappa_u = 0$), or frustrated ($\kappa_u < 0$). An unsigned coupling could only strengthen coherence; the signed version allows the framework to classify states.
+
+The associator can be packaged as a 5-vector $\mu^I$ in the vector representation of Spin(2,3), with $Q(\mu) = \eta_{IJ}\mu^I\mu^J = |[a,b,c]|^2$. The signed coupling is then the Sp(4,$\mathbb{R}$)-compatible projection of $\mu^I$ onto the transport axis.
+
+### Two-branch evolution equations
+
+The minimal evolution equations preserving transport symmetry and conjugate pairing are:
+
+$$\dot{A} = (u\omega - \gamma)A + \kappa_u \bar{B}$$
+$$\dot{B} = (u\omega - \gamma)B + \kappa_u \bar{A}$$
+
+where $\omega$ is the null transport rotation frequency and $\gamma \geq 0$ is the loss rate into the mixing sector.
+
+**Derivation status.** These are the minimal ansatz consistent with the symmetry requirements. A derivation from a variational principle on the octonionic bulk has not been completed; the equations are structurally motivated. This is an open problem (see open-problems ledger below).
+
+### Reduced system
+
+Writing $A = r_1 e^{u\theta_1}$, $B = r_2 e^{u\theta_2}$ and defining:
+
+$$R = \sqrt{r_1 r_2}, \qquad \rho = \tfrac{1}{2}\ln(r_1/r_2), \qquad \Phi = \theta_1 + \theta_2$$
+
+**Proposition 1.** The two-branch dynamics reduce exactly to:
+
+$$\dot{R} = R\big(-\gamma + \kappa_u\cosh(2\rho)\cos\Phi\big)$$
+$$\dot{\rho} = -\kappa_u\sinh(2\rho)\cos\Phi$$
+$$\dot{\Phi} = 2\omega - 2\kappa_u\cosh(2\rho)\sin\Phi$$
+
+The effective coupling throughout is $\kappa_{\mathrm{eff}} = \kappa_u\cosh(2\rho) \geq |\kappa_u|$.
+
+**Proposition 2.** Branch asymmetry ($\rho \neq 0$) strictly enhances phase locking. The symmetric sector $\rho = 0$ gives the most restrictive locking condition. All three equations are governed by the single order parameter $\mathcal{O} = \kappa_u\cos\Phi$.
+
+### Classification theorem
+
+Two geometric boundaries organize the phase space $(\rho, \Phi)$:
+
+- **Locking boundary:** $|\omega| = |\kappa_u|\cosh(2\rho)$
+- **Persistence boundary:** $\kappa_u\cosh(2\rho)\cos\Phi = \gamma$
+
+**Theorem (forced classification).** These two boundaries partition the phase space into exactly four disjoint transport classes. The partition is forced by the geometry of the boundaries, not assumed.
+
+| Class | Conditions | Fixed-Point Type | Physical Reading |
+|-------|-----------|-----------------|-----------------|
+| Constructive | $\kappa_u > 0$, locked, $\mathcal{O}\cosh(2\rho) > \gamma$ | Stable node | Long-lived coherent transport |
+| Inverted | $\kappa_u < 0$, locked, $\lvert\mathcal{O}\rvert\cosh(2\rho) > \gamma$ | Stable node (opposite sector) | Phase-inverted coherent state |
+| Frustrated | Locked but $\mathcal{O}\cosh(2\rho) < \gamma$ | Unstable node | Decaying resonance |
+| Dephased | $\lvert\omega\rvert > \kappa_{\mathrm{eff}}$ | No fixed point | Incoherent, non-particle-like |
+
+A state is **particle-like** if and only if it satisfies both:
+$$|\omega| \leq |\kappa_u|\cosh(2\rho) \quad \text{(locking)}$$
+$$\kappa_u\cosh(2\rho)\cos\Phi > \gamma \quad \text{(persistence)}$$
+
+This is a geometric condition on $(\rho, \Phi, \kappa_u)$ determined entirely by the associator data and transport projection — not imposed externally.
+
+### Relation to the Lindblad picture
+
+The Lindblad-Markov reduction above is the density-matrix-level coarse-grained description. The two-branch amplitude picture is complementary: it operates at the coherent amplitude level before coarse-graining. How averaging the two-branch dynamics over bulk octonionic degrees of freedom produces the Lindblad reduction is an open derivation task. In the dephased class, where locking fails and amplitude decays as $\dot{R} \approx -\gamma R$, the $D \sim m^2/\gamma$ diffusion law should emerge from incoherent branch mixing.
+
+---
+
 ## What the dynamics domain really establishes
 
 The dynamics domain safely establishes the following.
@@ -317,6 +400,14 @@ This section records the main dynamical claims in kernel form.
 | Higgs-mediated mass generation may be what opens the `T1/T2` channel | interpretation / future work | 5 | promising but not established |
 | hidden-sector projection explains quantum uncertainty in general | interpretation / future work | 5 | suggestive but not established |
 | the hidden-sector correlator is derived from first principles | missing | 6 | major dynamical gap |
+| the transport-coherence invariant $\mathcal{I} = A\bar{B}$ is the Sp(4,ℝ)-invariant symplectic pairing of branch amplitudes | structural identification | 3–4 | $\mathcal{I}$ replaces single amplitude as fundamental object; connects to Spin(2,3) ≅ Sp(4,ℝ) |
+| the signed coupling $\kappa_u = \kappa_0\langle u, [a,b,c]\rangle/\Lambda^3$ is the Spin(2,3)-compatible projection of the associator | structural identification | 4 | sign determines constructive / frustrated / inverted class |
+| two-branch evolution equations are the minimal Spin(2,3)-compatible ansatz | structurally motivated ansatz | 4 | derivation from octonionic bulk action is open |
+| Propositions 1–2: exact reduction to $(R,\rho,\Phi)$ with effective coupling $\kappa_{\mathrm{eff}} = \kappa_u\cosh(2\rho)$ | derived within two-branch model | 4 | clean exact result once equations are accepted |
+| forced classification into four transport classes (Constructive, Inverted, Frustrated, Dephased) | derived from geometry of locking and persistence boundaries | 4 | classification is forced, not assumed |
+| particle-like state criterion: locking + persistence conditions are jointly necessary and sufficient | derived consequence of classification | 4 | geometric, not empirical |
+| derivation of two-branch evolution equations from variational principle on octonionic bulk | missing | 5 | would close the main gap in this section |
+| connection between two-branch amplitude picture and Lindblad-Markov density-matrix picture | missing | 5 | how coarse-graining recovers the Lindblad picture is an open task |
 
 ---
 

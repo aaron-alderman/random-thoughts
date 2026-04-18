@@ -179,6 +179,17 @@ This priority order matches the current maturity of the project.
 | no sharp experimental predictions yet | phenomenology | high | blocks PRD-style work |
 | interpretation can still outrun proof if not carefully disciplined | interpretation | medium | recurring writing risk |
 
+### Two-branch transport tasks (added from octonionic transport coherence framework)
+
+| Problem | Domain | Severity | Comment |
+|---|---|---|---|
+| derive the two-branch evolution equations $\dot{A} = (u\omega-\gamma)A + \kappa_u\bar{B}$ from a variational principle on the octonionic bulk | dynamics | high | the equations are structurally motivated but not yet derived; a Sp(4,ℝ) moment-map action is the natural candidate |
+| express $\kappa_u$ as a genuine Sp(4,ℝ) moment map of the associator — show it is the Hamiltonian generator of branch rotations, not merely an invariant projection | dynamics / statics | medium | would close the gap between structural motivation and geometric derivation |
+| compute $G_2 \cap \mathrm{Spin}(2,3)$ and determine its irrep content | statics | high | the intersection is the symmetry seeing both octonionic structure and transport projection simultaneously; if it contains $SU(3) \times SU(2) \times U(1)$ the framework has direct phenomenological potential |
+| render the explicit $(\rho,\Phi)$ phase portrait: locking boundary $\lvert\omega\rvert = \lvert\kappa_u\rvert\cosh(2\rho)$, persistence boundary $\mathcal{O}\cosh(2\rho) = \gamma$, four transport class regions, Branch 1 nodes, Branch 2 centers, flow arrows | dynamics | medium | makes the classification theorem visually transparent; needed for any publication on the two-branch system |
+| promote parameters to momentum-dependent functions $\omega(p)$, $\gamma(m,p)$, $\kappa_u(a,b,c;p,s)$; determine the locking boundary as a curve in momentum space | dynamics / phenomenology | medium | where kinematic regime structure appears — why some states are long-lived only at certain momenta |
+| derive the connection between the two-branch amplitude picture and the Lindblad-Markov density-matrix reduction | dynamics | high | the two pictures are complementary levels; how coarse-graining recovers the Lindblad equation with $D \sim m^2/\gamma$ from the incoherent (dephased) branch is the key link |
+
 ### NS programme bridge tasks (added from ns_to_spin23_integration.md)
 
 The NS/J3(O) regularity programme has identified several structural parallels with the Spin(2,3) framework. The following bridge arguments are required before any NS-derived structure can function as more than corroborating evidence.

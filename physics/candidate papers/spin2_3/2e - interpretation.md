@@ -110,6 +110,41 @@ The stronger version is still well beyond the present proof burden. So the inter
 
 ---
 
+## Spin as holonomy of transport coherence
+
+The transport-coherence invariant $\mathcal{I} = A\bar{B} = R^2 e^{u\Phi}$ carries a phase $\Phi$ that evolves under the locked two-branch dynamics. Over a traversal period $T$, the holonomy is:
+
+$$\mathcal{I}(s+T) = e^{u\Theta}\mathcal{I}(s)$$
+
+The winding number of the conjugate branch pair around the transport axis determines the spin:
+
+- $\Theta = 2\pi$: integer spin (bosonic)
+- $\Theta = \pi$: half-integer spin (fermionic)
+
+This is not imposed externally — it follows from the $U(1)_u$ holonomy of the locked phase $\Phi$ in the two-branch dynamics. Spin is the winding number of the conjugate branch pair.
+
+The safe version is: the two-branch locking structure admits integer and half-integer holonomy classes, and these correspond to the standard spin-statistics distinction. The stronger version — that this is the physical origin of spin-statistics — is consistent with the geometric reading from the compendium (spin-½ as $4\pi$ rotation through $n = e_5$) but the connection between the two levels has not been derived.
+
+## Interference as branch phase
+
+In the two-branch amplitude picture, interference arises structurally:
+
+$$\frac{d}{ds}\ln|\mathcal{I}| = 2\big(-\gamma + \kappa_u\cosh(2\rho)\cos\Phi\big)$$
+
+The phase $\Phi$ between the two bracket completions $(ab)c$ and $a(bc)$ is the interference term. Non-associativity does not create an inconsistency — it creates the interference structure. The associator is the phase source.
+
+This gives a geometric reading of interference: it is the relative phase between the two ways of completing a triple product in $\mathbb{O}$, observed after projection onto the transport slice. The connection to standard quantum-mechanical interference in a field-theoretic sense has not been derived.
+
+## Two distinct decay mechanisms
+
+The signed coupling $\kappa_u$ makes available two structurally distinct decay channels — a richer picture than the single loss-rate $\gamma$ alone provides:
+
+**Loss-driven decay:** The mixing leakage $\gamma$ dominates. Branch coherence $\mathcal{O}\cosh(2\rho)$ is insufficient to maintain persistence regardless of phase. This is the frustrated transport class.
+
+**Structure-driven decoherence:** $\kappa_u < 0$, placing the associator anti-aligned with the transport axis. The geometry itself is frustrating — the phase locks in a sector where $\cos\Phi > 0$ is impossible without violating the locking condition. No stable coherent sector exists at that kinematic point. This mechanism has no analogue with an unsigned coupling.
+
+The second mechanism provides a geometric origin for particle instability that does not require large loss rates, and enriches the "mass as sector mixing" picture: not only does mixing determine persistence, but the sign of the associator's alignment with the transport axis determines the mode of decay.
+
 ## Chirality as sector asymmetry
 
 The framework invites the thought that chirality is not an independent input, but a consequence of the asymmetry between sectors and the observational preference for one of them.
@@ -182,6 +217,9 @@ It should be treated carefully, because it is easy for it to sound like a comple
 | visible uncertainty reflects unresolved hidden-sector motion | interpretation grounded in reduced dynamics | 5 | attractive and coherent |
 | the `T1/T2` asymmetry provides a route to chirality | interpretation | 5 | promising but not yet proved |
 | several observed structures may arise from one common geometry | interpretive synthesis | 5 | high-level guiding idea |
+| spin as holonomy: winding number of conjugate branch pair around transport axis | structural reading of two-branch locking | 5 | consistent with geometric $4\pi$ reading; derivation connecting the two levels is open |
+| interference as branch phase: $\Phi$ between bracket completions is the interference term | structural reading | 5 | non-associativity as phase source, not field-theoretically derived |
+| two distinct decay mechanisms: loss-driven and structure-driven (anti-aligned associator) | structural reading of signed coupling | 5 | enriches "mass as mixing"; second mechanism available only with signed $\kappa_u$ |
 | the framework already constitutes a full interpretation of quantum mechanics | overreach at present | 6 | should be avoided |
 
 ---
