@@ -281,6 +281,8 @@ This section records the main static claims in kernel form.
 | `J3(O)` naturally supplies three slots | derived structural observation | 3 | safe and useful |
 | exactly three physical generations follow | strong claim under development | 5 | needs careful control |
 | a fourth generation is excluded in the relevant physical sense | significant proof burden | 6 | not yet safe to state strongly in paper form |
+| `Cl(2,3) ≅ M₄(ℂ)` — the Clifford algebra is complex | mathematical fact | 3 | constrains tenfold-way class to A or AIII; full analysis in 2h |
+| `Σ = 2J^{01}` is the chiral grading operator (S) of class AIII | structural identification | 3–4 | no additional structure needed; see 2h for the mass-transition consequence |
 
 ---
 
