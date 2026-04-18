@@ -177,6 +177,16 @@ The updated interpretive layer is:
 - the relevant hidden complex plane is carried locally by a quaternionic `H` slice inside `O`
 - the effective `Spin(2,3)` sector split is what remains after that hidden structure is folded into the reduced branch
 
+The current explicit local model for that `H` slice is:
+
+- fix a unit imaginary octonionic direction `u`
+- choose a unit `v \in u^\perp`
+- then `H(u,v) = \mathrm{span}_{\mathbf{R}}\{1,u,v,uv\}` is quaternionic because any two octonions generate an associative subalgebra
+- its intersection with the hidden remainder is the real `2`-plane `\Pi(u,v) = \mathrm{span}_{\mathbf{R}}\{v,uv\}`
+- left multiplication by `u` preserves this plane and squares to `-1`, so `\Pi(u,v)` is naturally a complex line inside `u^\perp \cong \mathbf{C}^3`
+
+This sharpens the local carrier claim, but it also makes the remaining gap more precise: the framework still lacks a canonical rule selecting `v`, so the quaternionic carrier is explicit locally but not yet global or unique.
+
 This folding picture is a working proposal suggested by the recent `Spin(3,3)` exploration. It is not yet a theorem of the framework.
 
 ---

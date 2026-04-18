@@ -1,10 +1,55 @@
 # Next Best Targets
 
-This file collects concrete next-step tasks that are ready to be worked — computations, derivations, or drafts that are well enough specified to begin immediately. Items here are Spin(2,3)-specific and have not yet been absorbed into a kernel file.
+This file collects concrete next-step tasks that are ready to be worked - computations, derivations, or drafts that are well enough specified to begin immediately. Items here are Spin(2,3)-specific and have not yet been absorbed into a kernel file.
 
 ---
 
-## T3 — DIII d=3 Winding Number (from topological work)
+## T6 - Ambient-to-Observable Reduction
+
+The single highest-value structural task is now to make the missing middle explicit: how the parent octonionic geometry reduces to the effective `Spin(2,3)` branch and then to the observable `T1` channel.
+
+This task now has a dedicated scaffold note:
+
+- `0d - ambient reduction scaffold.md`
+
+The current best reduction chain is:
+
+$$
+\mathbb{O}
+\supset
+\mathbf{R}u \oplus u^\perp
+\cong
+\mathbf{R}u \oplus \mathbf{C}^3
+\supset
+H_{\mathrm{loc}}
+\rightsquigarrow
+\text{hidden complex plane}
+\rightsquigarrow
+\text{effective two-sector branch}
+\rightsquigarrow
+\mathrm{Spin}(2,3)
+\rightsquigarrow
+(T1,T2)
+\rightsquigarrow
+\text{observable } T1.
+$$
+
+The important point is that the current `T1/T2` split should be treated as a reduced output, not as an unexplained primitive.
+
+**Immediate subproblems:**
+- `R1`: show how a local quaternionic `H` slice sits inside `u^\perp` and carries the relevant complex plane
+- `R2`: formalize the folding map from the exploratory `Spin(3,3)` lift into hidden complex-plane data
+- `R3`: derive the effective `J^{01}` grading and two-sector branch from that folded structure
+- `R4`: only then address why the observable channel should be `T1`
+
+**Why this matters:**
+- it is the bridge joining the parent inquiry map to the kernel files
+- it sharpens the input to the bulk derivation problem in `2b`
+- it prevents the epistemic story from floating free of the reduction story
+
+---
+
+## T3 - DIII d=3 Winding Number (from topological work)
 
 The winding-number computation has now been carried out for the natural **gapped chiral DIII extension** built from the `Spin(2,3)` Clifford frame. The result is:
 
@@ -30,7 +75,7 @@ $$q(X) = X_0 \mathbf{1}_2 - i(X_1\sigma^1 + X_2\sigma^2 + X_3\sigma^3).$$
 
 ---
 
-## T5 — Hydrogen Threshold Symmetry and Efimov Bridge
+## T5 - Hydrogen Threshold Symmetry and Efimov Bridge
 
 There is now a plausible structural bridge between the two-boundary transport classification and the known compact/noncompact symmetry split of the hydrogen problem:
 
@@ -74,16 +119,16 @@ For a specific representative parameter set (e.g. $\kappa_u = 1$, $\omega = 0.5$
 
 ---
 
-## Paper II Outline — Spin(2,3) Representations
+## Paper II Outline - Spin(2,3) Representations
 
 Paper I (the two-branch transport classification) is complete as a dynamical statement. Paper II would develop the representation theory side:
 
 **Scope:**
-1. Full irrep classification of $\mathrm{Spin}(2,3) \cong \mathrm{Sp}(4,\mathbb{R})$ relevant to the transport slice — including the metaplectic (half-integer) representations
-2. Identification of which irreps correspond to which transport class (Constructive ↔ which irrep? Inverted ↔ which?)
+1. Full irrep classification of $\mathrm{Spin}(2,3) \cong \mathrm{Sp}(4,\mathbb{R})$ relevant to the transport slice - including the metaplectic (half-integer) representations
+2. Identification of which irreps correspond to which transport class (Constructive <-> which irrep? Inverted <-> which?)
 3. Metaplectic representation as the natural quantum structure for the two-branch amplitude pair
-4. Connection to AdS₄/CFT₃ if the SO(2,3) structure is interpreted geometrically
-5. The $G_2 \cap \mathrm{Spin}(2,3)$ calculation and its irrep content — this is the phenomenological bridge
+4. Connection to AdS4/CFT3 if the SO(2,3) structure is interpreted geometrically
+5. The $G_2 \cap \mathrm{Spin}(2,3)$ calculation and its irrep content - this is the phenomenological bridge
 
 **Concrete first step for Paper II:**
 Classify the lowest-dimensional unitary irreps of $\mathrm{Sp}(4,\mathbb{R})$ and identify which ones admit the locking condition $|\omega| \leq |\kappa_u|\cosh(2\rho)$ at their natural $\omega$ and $\kappa_u$ values.
