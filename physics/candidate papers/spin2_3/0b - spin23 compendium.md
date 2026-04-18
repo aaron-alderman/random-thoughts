@@ -424,18 +424,19 @@ A qualitative feature with no Spin(1,3) analogue: Spin(2,3) has **two** time-lik
 | Result | Status | Maturity |
 |---|---|---|
 | `Cl(2,3) ≅ M₄(ℂ)` — complex Clifford algebra | mathematical fact | 3 |
-| Spin(2,3) representations live in the complex tenfold-way classes (A or AIII) | direct consequence | 3 |
-| `Σ = 2J^{01}` is the chiral operator `S` of class AIII | structural identification | 3–4 |
-| Massless limit (`m=0`) → class AIII; massive (`m≠0`) → class A | symmetry class transition | 4 |
+| Spin(2,3) representations live in the complex tenfold-way classes (A or AIII) before anti-unitary refinement | direct consequence | 3 |
+| `Σ = 2J^{01}` is the chiral grading operator; at the chiral-only level this is the AIII structure | structural identification | 3–4 |
+| `T_0^2 = -1`, `C^2 = +1`, and `Σ = C T_0` in the explicit Cl(2,3) representation | computed / structural identification | 4 |
+| Full massless class assignment: DIII | structurally pinned by `(T_0^2=-1, C^2=+1, Σ=CT_0)` | 4 |
+| Massive limit (`m≠0`) breaks `Σ` and lands in class D | derived consequence | 4 |
+| DIII `d=3` winding computation for the natural gapped extension gives `|W_3| = 1` | computed | 4 |
 | Mass generation = chiral-symmetry-breaking topological transition | structural identification | 4 |
-| `T² = +1`, `C² = +1` from the explicit Cl(2,3) representation | computed | 4 |
-| Full class assignment (BDI vs AIII vs other) | narrowed, not yet pinned | 5 |
-| Two partial time reversals producing extended classification | speculative | 5 |
+| A second time reversal `T_{01}` with `T_{01}^2 = -1` gives an extended two-`T` structure beyond the standard tenfold assumption | structural observation / open algebraic question | 4–5 |
 | Specific material realizations with Spin(2,3) symmetry | open | 6 |
 
-The cleanest conclusion at present: the T1/T2 splitting in Spin(2,3) is, under direct identification, the chiral symmetry of class AIII. Mass is the chiral-symmetry-breaking parameter that drives a transition from AIII to class A. This is not an analogy — the mathematics is the same structure.
+The cleanest conclusion at present: the T1/T2 splitting in Spin(2,3) gives the chiral grading `Σ = 2J^{01}`. At the refined anti-unitary level, the massless sector is DIII and the massive sector is D. The older AIII/A reading is still the correct chiral-only shadow, but it is no longer the sharpest statement.
 
-The full domain analysis — including the T and C computation, the S² = −1 open issue, the Weyl semimetal correspondence, and the open problems — lives in `2h - topological.md`.
+The full domain analysis — including the `T_0`, `T_{01}`, and `C` computation, the resolved `S^2 = -1` issue, the DIII winding computation, the Weyl semimetal correspondence, and the remaining open obligations — lives in `2h - topological.md`.
 
 ---
 

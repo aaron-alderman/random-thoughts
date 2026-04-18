@@ -191,6 +191,9 @@ This priority order matches the current maturity of the project.
 | promote parameters to momentum-dependent functions $\omega(p)$, $\gamma(m,p)$, $\kappa_u(a,b,c;p,s)$; determine the locking boundary as a curve in momentum space | dynamics / phenomenology | medium | where kinematic regime structure appears — why some states are long-lived only at certain momenta |
 | derive the connection between the two-branch amplitude picture and the Lindblad-Markov density-matrix reduction | dynamics | high | the two pictures are complementary levels; how coarse-graining recovers the Lindblad equation with $D \sim m^2/\gamma$ from the incoherent (dephased) branch is the key link |
 | derive the hydrogen/Efimov bridge: identify the `SO(4)`, `SO(3,1)`, and `SO(2,1)` subgroup data of the transport classification and test whether the Efimov exponent `s_0` is a function of `\omega/\kappa_u` at the persistence threshold | dynamics / phenomenology / interpretation | high | strongest check is quantitative: either recover or fail to recover `s_0 \approx 1.00624`; until then the bridge remains interpretive |
+| identify physically meaningful Hamiltonians or material realizations exhibiting the Spin(2,3) topological class structure | topological / phenomenology | medium | the class assignment is now much sharper, but the physical realization problem remains open |
+| identify what observable probes the DIII `\mathbb{Z}` invariant of the massless `T1` sector | topological / phenomenology | medium | the invariant exists and the natural gapped extension gives `|W_3| = 1`, but its physical measurement has not been identified |
+| determine whether the DIII topological structure participates in anomaly inflow and links to the anomaly-cancellation constraints | topological / consistency | medium-low | would connect the topological and consistency domains rather than leaving them parallel |
 
 ### NS programme bridge tasks (added from ns_to_spin23_integration.md)
 
