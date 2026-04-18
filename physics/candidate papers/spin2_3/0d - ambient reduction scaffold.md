@@ -280,6 +280,75 @@ Deliverable:
 - an explicit reduced decomposition
 - a statement of what information is lost in the reduction
 
+#### R3. Working reduced decomposition
+
+The most conservative reduced picture is to retain from the hidden complex line only its phase-rotation symmetry.
+
+Once `\Pi(u,v)` is identified as a complex line, it carries a natural unitary phase action
+
+$$
+z \mapsto e^{i\alpha} z,
+$$
+
+with generator `U(1)_{\Pi}`.
+
+The proposal is that the effective `Spin(2,3)` grading remembers this hidden phase action only through its lifted charge decomposition on the reduced spinor space.
+
+So, instead of keeping the full parent data of the quaternionic slice, the reduction keeps only a two-charge splitting:
+
+$$
+\mathcal{H}_{\mathrm{red}} = W_{-1/2} \oplus W_{+1/2},
+$$
+
+where each `W_{\pm 1/2}` is a real two-dimensional block, or equivalently a complex one-dimensional weight space together with the visible `SU(2)` doublet structure carried by the `Spin(2,3)` branch.
+
+At this level, the effective generator is
+
+$$
+J^{01}_{\mathrm{eff}}
+=
+\begin{pmatrix}
+-\tfrac12\,\mathbf{1}_2 & 0 \\
+0 & +\tfrac12\,\mathbf{1}_2
+\end{pmatrix},
+$$
+
+up to the project sign convention already used in `2a - statics.md`.
+
+This gives the reduced identification
+
+$$
+T1 = W_{-1/2}, \qquad T2 = W_{+1/2}.
+$$
+
+The point is not that the hidden complex line literally is `J^{01}`. The point is that, after folding and reduction, the only surviving imprint of that hidden line is an effective `U(1)` charge splitting, and this is exactly the role `J^{01}` plays in the reduced `Spin(2,3)` description.
+
+#### What the reduction forgets
+
+This reduced decomposition is intentionally lossy. It forgets:
+
+- which vector `v` inside `u^\perp` was chosen to define the local quaternionic slice
+- how the complex line `\Pi(u,v)` sits inside the full `\mathbf{C}^3` remainder
+- the frame data internal to the lifted two-plane
+- any parent information that does not survive as the effective `U(1)` grading and the two-sector split
+
+So `T1 \oplus T2` should be read as the reduced charge image of the hidden plane, not as a faithful copy of the full parent geometry.
+
+#### Why this is the right level of claim
+
+This proposal matches several things already present in the kernel:
+
+- `J^{01}` is the generator of the `U(1)` factor in the maximal compact subgroup
+- the spinor decomposes into two blocks of opposite `J^{01}` charge
+- the folded reading of the framework wants the split to arise from hidden complex-plane data rather than from literal surviving extra time directions
+
+What is still missing is the full derivation that takes a parent action of the hidden plane and proves that its reduced image is exactly the explicit `J^{01}` matrix in the chosen `Spin(2,3)` representation.
+
+So the safe status is:
+
+- reduced grading picture: structurally plausible and now explicit
+- full derivation of the grading map: still open
+
 ### R4. Observable selection
 
 Explain why the final observable channel should be `T1` rather than another equivalent two-block choice.
@@ -288,6 +357,732 @@ Deliverable:
 
 - either a dynamical selection argument
 - or a principled epistemic postulate stated sharply enough that it can be tracked as an assumption
+
+#### R4. Two legitimate routes
+
+At the present maturity of the project, `R4` should be split cleanly into two different routes.
+
+### Route A. Dynamical selection
+
+The stronger route would show that the observable channel is not chosen independently, but is forced by the interaction structure itself.
+
+In this route, one would try to prove:
+
+- the same selected octonionic direction `u` that fixes the hidden complex structure also fixes the privileged zero-mass traversal channel
+- zero-mass propagation couples directly only to one reduced charge sector
+- that sector is exactly the one called `T1`
+- `T2` enters only through massive mixing, hidden excursions, or off-diagonal corrections
+
+If this route succeeds, then projection onto `T1` is not a primitive axiom. It is the observational shadow of a dynamical selection rule.
+
+This is the strongest possible outcome, but it is not yet derived.
+
+### Route B. Epistemic postulate
+
+The weaker but still disciplined route is to state openly:
+
+- the reduction yields a two-sector branch `T1 \oplus T2`
+- one of those sectors is identified as the zero-mass readout channel
+- the framework postulates that observable access follows that channel
+
+In this route, the claim is not that `T1` has already been forced. The claim is that once the zero-mass interaction channel is chosen, projection onto `T1` is the correct effective observational rule.
+
+This route is weaker, but still coherent and honest. It matches the current maturity of the epistemics file better than pretending the full dynamical selection has already been earned.
+
+#### Present best status
+
+The project currently sits between these two routes:
+
+- stronger than a bare primitive projection axiom, because the observable channel is tied to the selected zero-mass interaction structure
+- weaker than a full dynamical theorem, because the forcing argument that uniquely identifies `T1` has not yet been completed
+
+So the clean current formulation is:
+
+> the observable rule is an effective postulate downstream of a partially structured channel-selection story
+
+That is the right level of honesty for the present framework.
+
+#### What would close R4
+
+`R4` would be in much better shape if the project could do either of the following:
+
+1. derive that zero-mass transport operators act only on `T1` in the reduced branch
+2. state a sharpened epistemic principle saying that observable access follows the selected zero-mass channel, with the identification of that channel as `T1` tracked explicitly as an assumption
+
+Either would be progress. The first is stronger. The second is already within reach and should be written clearly.
+
+#### Minimal Route A target
+
+The cleanest near-term version of Route A is not yet a full theorem. It is a disciplined operator target.
+
+Write the reduced generator as
+
+$$
+H = H_0 + H_{\mathrm{mix}},
+\qquad
+H_0 =
+\begin{pmatrix}
+H_{\mathrm{tr}} & 0 \\
+0 & 0
+\end{pmatrix},
+\qquad
+H_{\mathrm{mix}} =
+\begin{pmatrix}
+0 & mV \\
+mV^\dagger & H_2
+\end{pmatrix}.
+$$
+
+Then the Route A derivation problem becomes:
+
+- prove that the parent reduction forces the zero-mass transport operator into the `H_0` block
+- prove that `H_0` acts only on `T1`
+- prove that `T2` enters only through `H_{\mathrm{mix}}`
+
+The sharpest algebraic version of that target is:
+
+$$
+H_0 = P H_0 P,
+\qquad
+Q H_0 = 0,
+\qquad
+H_0 Q = 0,
+\qquad
+Q = 1-P,
+$$
+
+with `P` the spectral projector onto the reduced sector identified as `T1`.
+
+So the real Route A question is:
+
+- can those identities be obtained from the parent reduction and the selected zero-mass channel
+
+instead of merely being imposed as a convenient block ansatz?
+
+#### Minimal parent-side candidate
+
+The cleanest parent-side candidate currently available is to define the charge split first on the hidden complex line itself.
+
+On the local plane `\Pi(u,v)`, the complex structure is
+
+$$
+J_{\Pi} := J_u|_{\Pi},
+\qquad
+J_{\Pi}^2 = -1.
+$$
+
+After complexification of `\Pi(u,v)`, define the phase-charge operator
+
+$$
+K_{\Pi} := i J_{\Pi},
+$$
+
+so that `K_{\Pi}` has eigenvalues `\pm 1` on the complexified line. Its spectral projectors are
+
+$$
+P_{\Pi,\pm} = \frac12(1 \pm iJ_{\Pi}),
+$$
+
+up to the project sign convention for which sector is later called `T1`.
+
+This gives the first parent-level version of the reduced sector split:
+
+- one hidden phase-charge sector on `\Pi(u,v)` is designated as the zero-mass sector
+- the opposite phase-charge sector is its complementary partner
+
+The minimal parent-side zero-mass operator target is then:
+
+$$
+H_{\Pi}^{(0)} = P_{\Pi,-}\, H_{\Pi}^{(0)}\, P_{\Pi,-},
+$$
+
+again up to which sign is identified with `T1`.
+
+The reduction problem is then no longer completely opaque. It becomes:
+
+1. define a reduction map `\mathcal{R}` from the parent hidden-plane data to the reduced spinor branch
+2. require
+   $$
+   \mathcal{R}(P_{\Pi,-}) = P,
+   \qquad
+   \mathcal{R}(P_{\Pi,+}) = Q
+   $$
+   in the reduced description
+3. check whether
+   $$
+   \mathcal{R}(H_{\Pi}^{(0)}) = H_0
+   $$
+   then forces
+   $$
+   H_0 = P H_0 P, \qquad QH_0 = H_0Q = 0
+   $$
+
+This is still not a derivation, but it is the first concrete parent-side mechanism that could in principle generate the reduced projector identities instead of merely agreeing with them afterwards.
+
+#### What this would actually show if it worked
+
+If such a reduction map could be made explicit, the project would gain a real Route A bridge:
+
+- the hidden complex line would carry the primitive phase-charge split
+- the reduced `T1/T2` sectors would be images of that split
+- the zero-mass operator would act on one hidden charge sector before reduction
+- the reduced support of `H_0` on `T1` would therefore be inherited, not postulated
+
+That is the strongest currently visible candidate for how Route A might actually be earned.
+
+#### Toy-level reduction map `\mathcal{R}`
+
+The next useful step is not a full construction, but a toy-level specification of what sort of map `\mathcal{R}` must be for the projector story even to make sense.
+
+At minimum, `\mathcal{R}` should act on two kinds of parent objects:
+
+1. states or sectors on the hidden complex line
+2. operators acting on those sectors
+
+So the most economical working picture is:
+
+$$
+\mathcal{R}_{\mathrm{vec}} :
+\Pi(u,v)_{\mathbf{C}} \otimes S_{\mathrm{vis}}
+\longrightarrow
+\mathcal{H}_{\mathrm{spin}},
+$$
+
+with `S_{\mathrm{vis}}` a minimal visible carrier supplying the reduced `SU(2)` doublet structure, and
+
+$$
+\mathcal{R}_{\mathrm{op}}(A) :=
+\mathcal{R}_{\mathrm{vec}}\, A\, \mathcal{R}_{\mathrm{vec}}^{-1}
+$$
+
+whenever that inverse or an effective partial inverse makes sense on the reduced image.
+
+This is only a toy model, but it is enough to state the compatibility conditions.
+
+#### Minimal choice of `S_{\mathrm{vis}}`
+
+The smallest plausible choice is
+
+$$
+S_{\mathrm{vis}} \cong \mathbf{C}^2,
+$$
+
+interpreted as the visible `SU(2)` doublet carrier already present in the `Spin(2,3)` spinor decomposition.
+
+Then the dimensional bookkeeping works in the simplest possible way:
+
+- the real plane `\Pi(u,v)` becomes one complex line after choosing `J_\Pi`
+- after complexification, that line splits into two one-dimensional phase-charge sectors
+- each such sector tensored with `S_{\mathrm{vis}} \cong \mathbf{C}^2` gives a complex two-dimensional block
+
+So the toy reduced space becomes
+
+$$
+\Pi(u,v)_{\mathbf{C}} \otimes S_{\mathrm{vis}}
+\cong
+(\mathbf{1}_{-} \otimes \mathbf{2}) \oplus (\mathbf{1}_{+} \otimes \mathbf{2}),
+$$
+
+which is exactly a `2 + 2` decomposition of a complex `4`-dimensional space.
+
+This matches the reduced static structure
+
+$$
+\mathbf{4} = (\mathbf{2},-1/2) \oplus (\mathbf{2},+1/2),
+$$
+
+at the level of dimensions and charge splitting.
+
+That does **not** prove the reduction map. But it shows that the toy parent bookkeeping is at least consistent with the known `Spin(2,3)` spinor structure.
+
+#### Toy identification pattern
+
+Under this minimal choice, the most economical tentative identification is:
+
+$$
+\mathbf{1}_{-} \otimes \mathbf{2} \longmapsto T1,
+\qquad
+\mathbf{1}_{+} \otimes \mathbf{2} \longmapsto T2,
+$$
+
+again up to the sign convention for which phase-charge sector is called `T1`.
+
+So the toy picture is:
+
+- hidden phase charge supplies the `\pm` sector split
+- the visible `SU(2)` carrier supplies the doublet multiplicity inside each sector
+- together they reproduce the reduced four-component spinor as two doublets of opposite charge
+
+This is the first place where the reduction picture and the static `Spin(2,3)` representation data genuinely lock together rather than merely coexist.
+
+#### Minimal symmetry-compatibility requirement
+
+Dimensional agreement by itself is too weak. The toy reduction should also respect the symmetry that is already visible on the reduced side.
+
+On the parent toy space
+
+$$
+\Pi(u,v)_{\mathbf{C}} \otimes S_{\mathrm{vis}},
+$$
+
+there is a natural product action:
+
+- `U(1)_\Pi` acts on the hidden phase-charge line
+- `SU(2)_{\mathrm{vis}}` acts on `S_{\mathrm{vis}} \cong \mathbf{C}^2`
+
+So the parent toy symmetry is
+
+$$
+U(1)_\Pi \times SU(2)_{\mathrm{vis}}.
+$$
+
+On the reduced `Spin(2,3)` spinor, the maximal compact subgroup is
+
+$$
+K = U(1) \times SU(2),
+$$
+
+with the decomposition
+
+$$
+\mathbf{4} = (\mathbf{2},-1/2) \oplus (\mathbf{2},+1/2).
+$$
+
+The reduction map should therefore satisfy a minimal intertwining condition:
+
+$$
+\mathcal{R}_{\mathrm{vec}}\big((e^{i\alpha},g)\cdot \psi\big)
+=
+\rho_K(e^{i\alpha},g)\,\mathcal{R}_{\mathrm{vec}}(\psi),
+$$
+
+at least at the toy level, where `\rho_K` is the reduced action of the maximal compact subgroup on the spinor.
+
+In plain language:
+
+- hidden phase charge should reduce to the `U(1)` charge measured by `J^{01}`
+- the visible carrier `S_{\mathrm{vis}}` should reduce to the `SU(2)` doublet structure already present in each sector
+
+If this intertwining fails, then the toy reduction would only be dimensional bookkeeping, not a representation-theoretic bridge.
+
+If it holds, then the toy picture does more than count dimensions:
+
+- it explains why each reduced sector is an `SU(2)` doublet
+- it explains why the two sectors carry opposite `U(1)` charge
+- it makes the toy reduction consistent with the known maximal compact structure of `Spin(2,3)`
+
+#### Explicit toy action
+
+The most economical toy action is to assign the hidden phase-charge weights directly as
+
+$$
+(e^{i\alpha},g)\cdot(\xi_- \otimes s)
+=
+e^{-i\alpha/2}\,\xi_- \otimes (g s),
+$$
+$$
+(e^{i\alpha},g)\cdot(\xi_+ \otimes s)
+=
+e^{+i\alpha/2}\,\xi_+ \otimes (g s),
+$$
+
+with
+
+- `\xi_- \in \mathbf{1}_-`
+- `\xi_+ \in \mathbf{1}_+`
+- `s \in \mathbf{2} \cong S_{\mathrm{vis}}`
+
+So the parent toy representation is exactly
+
+$$
+(\mathbf{1}_{-} \otimes \mathbf{2}) \oplus (\mathbf{1}_{+} \otimes \mathbf{2})
+$$
+
+with `U(1)_\Pi` weights `-1/2` and `+1/2`.
+
+Under the tentative identifications
+
+$$
+\mathbf{1}_{-} \otimes \mathbf{2} \longmapsto T1,
+\qquad
+\mathbf{1}_{+} \otimes \mathbf{2} \longmapsto T2,
+$$
+
+the induced infinitesimal generator on the toy space is
+
+$$
+J_{\Pi,\mathrm{toy}}
+=
+\begin{pmatrix}
+-\tfrac12\,\mathbf{1}_2 & 0 \\
+0 & +\tfrac12\,\mathbf{1}_2
+\end{pmatrix},
+$$
+
+which matches the reduced block form already used for `J^{01}` in the static kernel, up to the fixed project convention for which block is called `T1`.
+
+So at the toy representation level:
+
+- the hidden phase action reproduces the reduced `U(1)` charges
+- the visible carrier reproduces the reduced `SU(2)` doublet structure
+- the product action reproduces the maximal compact `U(1) \times SU(2)` decomposition of the spinor
+
+This is not yet a proof that the full `Spin(2,3)` action is recovered. But it is the first explicit representation-level match, not just a dimensional one.
+
+#### Beyond the maximal compact subgroup
+
+The next sharp test is whether this bridge extends beyond
+
+$$
+K = U(1) \times SU(2)
+$$
+
+to more of the full `Spin(2,3)` action.
+
+At the Lie-algebra level one has the Cartan decomposition
+
+$$
+\mathfrak{so}(2,3) = \mathfrak{k} \oplus \mathfrak{p},
+\qquad
+\mathfrak{k} \cong \mathfrak{u}(1) \oplus \mathfrak{su}(2),
+$$
+
+with
+
+$$
+[\mathfrak{k},\mathfrak{k}] \subset \mathfrak{k},
+\qquad
+[\mathfrak{k},\mathfrak{p}] \subset \mathfrak{p},
+\qquad
+[\mathfrak{p},\mathfrak{p}] \subset \mathfrak{k}.
+$$
+
+The toy bridge already addresses the `\mathfrak{k}` part:
+
+- hidden phase charge -> the `\mathfrak{u}(1)` generator seen as `J^{01}`
+- visible doublet carrier -> the `\mathfrak{su}(2)` action on each sector
+
+What is missing is the parent-side origin of the `\mathfrak{p}` part, i.e. the generators that do not preserve the two charge sectors separately.
+
+At the reduced spinor level, these are exactly the operators that mix `T1` and `T2`. So the next extension problem is:
+
+> can one identify a parent family of operators on `\Pi(u,v)_{\mathbf{C}} \otimes S_{\mathrm{vis}}` whose reduced image lands in the off-diagonal `T1/T2` blocks and closes with the compact generators into the `\mathfrak{so}(2,3)` commutator structure?
+
+The safest current candidate is that the noncompact sector should come from operators that:
+
+- change the hidden phase charge
+- act nontrivially on the visible `SU(2)` carrier
+- therefore link `\mathbf{1}_{-} \otimes \mathbf{2}` to `\mathbf{1}_{+} \otimes \mathbf{2}`
+
+So the first toy extension target is not yet the whole group. It is the existence of a parent operator space `\mathcal{P}_{\mathrm{toy}}` such that:
+
+$$
+\mathcal{P}_{\mathrm{toy}} :
+\mathbf{1}_{-} \otimes \mathbf{2}
+\longleftrightarrow
+\mathbf{1}_{+} \otimes \mathbf{2},
+$$
+
+and such that, together with the compact generators, its reduced image obeys the expected closure relations.
+
+If that fails, then the current bridge only explains the maximal compact subgroup.
+
+If it works, then the bridge has a credible route from hidden phase data to the full reduced `Spin(2,3)` structure.
+
+#### What would count as progress here
+
+The next nontrivial gain would be any one of the following:
+
+1. a toy basis for `\mathcal{P}_{\mathrm{toy}}` whose reduced image is visibly off-diagonal in the `T1/T2` decomposition
+2. a commutator calculation showing that the compact toy generators and `\mathcal{P}_{\mathrm{toy}}` close in the same pattern as `\mathfrak{k} \oplus \mathfrak{p}`
+3. a clear obstruction showing that the current parent toy space is too small, forcing enlargement of the parent carrier before a full bridge can exist
+
+#### First toy candidate for `\mathcal{P}_{\mathrm{toy}}`
+
+There is a natural first guess for the noncompact toy sector.
+
+Keep the compact generators in block form:
+
+$$
+J_{\mathrm{toy}} =
+\begin{pmatrix}
+-\tfrac12\,\mathbf{1}_2 & 0 \\
+0 & +\tfrac12\,\mathbf{1}_2
+\end{pmatrix},
+\qquad
+S_a =
+\begin{pmatrix}
+\tfrac12\sigma_a & 0 \\
+0 & \tfrac12\sigma_a
+\end{pmatrix},
+\qquad a=1,2,3.
+$$
+
+Then define the off-diagonal triplet generators
+
+$$
+X_a =
+\begin{pmatrix}
+0 & \sigma_a \\
+\sigma_a & 0
+\end{pmatrix},
+\qquad
+Y_a =
+\begin{pmatrix}
+0 & -i\sigma_a \\
+i\sigma_a & 0
+\end{pmatrix},
+\qquad a=1,2,3.
+$$
+
+The real span
+
+$$
+\mathcal{P}_{\mathrm{toy}} =
+\mathrm{span}_{\mathbf{R}}\{X_1,X_2,X_3,Y_1,Y_2,Y_3\}
+$$
+
+has dimension `6`, which is exactly the right dimension for the noncompact complement `\mathfrak{p}` in
+
+$$
+\mathfrak{so}(2,3) = \mathfrak{k} \oplus \mathfrak{p}.
+$$
+
+This is already encouraging: it is the first toy operator space with the correct size, the correct off-diagonal `T1/T2` support, and the correct visible `SU(2)` triplet labeling.
+
+#### Why this candidate is natural
+
+It is not arbitrary.
+
+- off-diagonal support means these operators mix `T1` and `T2`, as noncompact generators should
+- the Pauli triplet gives the visible `SU(2)` adjoint structure
+- the pair `(X_a,Y_a)` for each `a` behaves like a two-component object under the hidden phase rotation generated by `J_{\mathrm{toy}}`
+
+Equivalently, if one defines
+
+$$
+Z_a^{\pm} := X_a \pm iY_a,
+$$
+
+then the `Z_a^\pm` are the natural charge-raising and charge-lowering combinations: they move states between the two phase-charge sectors.
+
+At the toy level, this is exactly the behavior one would want from the noncompact part of the bridge.
+
+#### What still needs to be checked
+
+The candidate becomes genuinely useful only if its commutators behave correctly.
+
+The next checks are:
+
+1. `[\mathfrak{k}_{\mathrm{toy}}, \mathcal{P}_{\mathrm{toy}}] \subset \mathcal{P}_{\mathrm{toy}}`
+2. `[\mathcal{P}_{\mathrm{toy}}, \mathcal{P}_{\mathrm{toy}}] \subset \mathfrak{k}_{\mathrm{toy}}`
+3. the `U(1)` action generated by `J_{\mathrm{toy}}` rotates `(X_a,Y_a)` into one another with the expected charge pattern
+4. the `SU(2)` action generated by the `S_a` rotates the index `a` as a triplet
+
+If those checks work, the toy bridge will have passed its first full Lie-algebra consistency test.
+
+#### Toy commutator check
+
+With the conventions above, the commutators close in the expected pattern up to normalization conventions.
+
+For the compact action:
+
+$$
+[S_a,S_b] = i\epsilon_{abc} S_c,
+$$
+
+so the `S_a` form the visible `\mathfrak{su}(2)` algebra.
+
+The compact generators act on the off-diagonal sector as
+
+$$
+[S_a,X_b] = i\epsilon_{abc} X_c,
+\qquad
+[S_a,Y_b] = i\epsilon_{abc} Y_c,
+$$
+
+so both `X_b` and `Y_b` transform as `SU(2)` triplets.
+
+For the hidden phase generator:
+
+$$
+[J_{\mathrm{toy}},X_a] = -i Y_a,
+\qquad
+[J_{\mathrm{toy}},Y_a] = +i X_a,
+$$
+
+so the pair `(X_a,Y_a)` is rotated by the `U(1)` charge generator exactly as expected. Equivalently,
+
+$$
+[J_{\mathrm{toy}}, Z_a^\pm] = \pm Z_a^\pm
+$$
+
+up to the overall normalization convention for `J_{\mathrm{toy}}`.
+
+Finally, the noncompact sector closes back into the compact one:
+
+$$
+[X_a,X_b] = 4i\epsilon_{abc} S_c,
+\qquad
+[Y_a,Y_b] = 4i\epsilon_{abc} S_c,
+\qquad
+[X_a,Y_b] = -4i\,\delta_{ab}\, J_{\mathrm{toy}}.
+$$
+
+So, schematically,
+
+$$
+[\mathfrak{k}_{\mathrm{toy}},\mathcal{P}_{\mathrm{toy}}] \subset \mathcal{P}_{\mathrm{toy}},
+\qquad
+[\mathcal{P}_{\mathrm{toy}},\mathcal{P}_{\mathrm{toy}}] \subset \mathfrak{k}_{\mathrm{toy}},
+$$
+
+which is exactly the `\mathfrak{k} \oplus \mathfrak{p}` closure pattern one wants.
+
+This does **not** prove that the toy algebra is canonically identical to the chosen `\mathfrak{so}(2,3)` basis. But it is the first place where the bridge has passed more than a bookkeeping test:
+
+- dimension count: works
+- maximal compact representation match: works
+- candidate noncompact closure pattern: works
+
+That is a substantial strengthening of the toy reduction picture.
+
+#### Candidate basis-level dictionary
+
+Using the explicit gamma-matrix realization already fixed in the static kernel,
+
+$$
+\gamma^0 = i\sigma^2 \otimes \mathbf{1}_2,\qquad
+\gamma^1 = i\sigma^1 \otimes \mathbf{1}_2,
+$$
+$$
+\gamma^2 = \sigma^3 \otimes \sigma^1,\qquad
+\gamma^3 = \sigma^3 \otimes \sigma^2,\qquad
+\gamma^4 = \sigma^3 \otimes \sigma^3,
+$$
+
+the Lie algebra generators
+
+$$
+J^{\mu\nu} = \frac{i}{4}[\gamma^\mu,\gamma^\nu]
+$$
+
+admit a basis-level reading that matches the toy bridge up to relabeling, sign, and normalization conventions.
+
+Write `\tau_a := \sigma_a` for the visible Pauli triplet acting on the second tensor factor, with `a=1,2,3` corresponding to the spatial labels `(2,3,4)` up to relabeling.
+
+Then:
+
+1. the compact `U(1)` generator is
+   $$
+   J^{01}
+   =
+   -\frac12
+   \begin{pmatrix}
+   \mathbf{1}_2 & 0\\
+   0 & -\mathbf{1}_2
+   \end{pmatrix},
+   $$
+   which matches `J_{\mathrm{toy}}`
+
+2. the spatial rotation generators `J^{23}, J^{34}, J^{42}` are block-diagonal and proportional to
+   $$
+   \mathbf{1}_2 \otimes \tau_a,
+   $$
+   so they match the toy compact triplet `S_a` up to basis choice in the spatial index
+
+3. the mixed generators `J^{0\hat a}` and `J^{1\hat a}` with `\hat a \in \{2,3,4\}` are off-diagonal and proportional to
+   $$
+   \sigma^1 \otimes \tau_a,
+   \qquad
+   i\sigma^2 \otimes \tau_a,
+   $$
+   respectively, so they match the toy noncompact triplets `X_a` and `Y_a` up to normalization and sign conventions
+
+This is the first explicit dictionary:
+
+$$
+J_{\mathrm{toy}} \leftrightarrow J^{01},
+$$
+$$
+S_a \leftrightarrow \text{spatial rotation triplet } J^{23},J^{34},J^{42},
+$$
+$$
+X_a,Y_a \leftrightarrow \text{mixed-generator triplets } J^{0\hat a},J^{1\hat a}.
+$$
+
+The important point is not the exact sign of each basis element. The important point is that:
+
+- the compact toy generators line up with the compact reduced generators
+- the off-diagonal toy generators line up with the reduced generators that mix `T1` and `T2`
+- together they supply the right `10 = 4 + 6` basis count for `\mathfrak{so}(2,3)`
+
+So the toy bridge has now reached the level of an explicit basis-level candidate, not just an abstract closure pattern.
+
+#### What is still not settled
+
+Even with this dictionary, some real gaps remain:
+
+- the basis identification is not yet canonical
+- the normalization and sign conventions have not been fixed by a single parent principle
+- the map is still built from the reduced gamma-matrix realization rather than derived directly from the octonionic parent
+
+So the honest status is:
+
+- explicit toy basis-level match: available
+- canonical parent derivation of that basis match: still open
+
+#### Minimal compatibility conditions
+
+For Route A, the reduction map should satisfy at least:
+
+1. **Charge-projector compatibility**
+   $$
+   \mathcal{R}_{\mathrm{op}}(P_{\Pi,-}) = P,
+   \qquad
+   \mathcal{R}_{\mathrm{op}}(P_{\Pi,+}) = Q
+   $$
+
+2. **Zero-mass support compatibility**
+   $$
+   \mathcal{R}_{\mathrm{op}}(H_{\Pi}^{(0)}) = H_0
+   $$
+   with
+   $$
+   H_{\Pi}^{(0)} = P_{\Pi,-} H_{\Pi}^{(0)} P_{\Pi,-}
+   $$
+
+3. **Sector-image compatibility**
+   the image of the parent `(-)` charge sector lands in `T1`, and the image of the parent `(+)` charge sector lands in `T2`
+
+4. **No spurious support**
+   reduction should not create `T2` support for a parent operator that was already confined to the parent `(-)` charge sector
+
+If those conditions hold, then the reduced identities
+
+$$
+H_0 = P H_0 P,
+\qquad
+QH_0 = H_0Q = 0
+$$
+
+follow by functorial transport of support, rather than by a separate ansatz.
+
+#### What remains underspecified
+
+Several things are still open even in this toy picture:
+
+- what exactly `S_{\mathrm{vis}}` should be before the full `Spin(2,3)` branch is reconstructed
+- whether `\mathcal{R}_{\mathrm{vec}}` is injective, surjective onto the reduced branch, or only defined up to gauge
+- whether `\mathcal{R}_{\mathrm{op}}` should be an algebra homomorphism, a partial intertwiner, or only a support-preserving coarse-graining map
+
+But these are now the right open questions. They are much sharper than the earlier vague hope that some unspecified reduction would "explain" the `T1` block.
+
+This is the first concrete place where Route A can stop being a slogan and become a derivation target.
+
+Until then, the project should say:
+
+- Route A closure condition: known in operator form, not yet derived
 
 ---
 

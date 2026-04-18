@@ -136,6 +136,106 @@ In the revised picture, the physical reading is:
 - the off-diagonal block becomes relevant when mass-generating structure allows departure from pure `T1` propagation
 - the parameterization by one visible and one complementary block is the reduced image of a deeper hidden complex-plane structure, not yet the full parent geometry itself
 
+### Minimal zero-mass transport operator
+
+If the project wants to sharpen Principle D2 beyond a slogan, the cleanest first target is the following minimal operator split:
+
+$$
+H_0 =
+\begin{pmatrix}
+H_{\mathrm{tr}} & 0 \\
+0 & 0
+\end{pmatrix},
+\qquad
+H_{\mathrm{mix}} =
+\begin{pmatrix}
+0 & m V \\
+m V^\dagger & H_2
+\end{pmatrix},
+\qquad
+H = H_0 + H_{\mathrm{mix}}.
+$$
+
+In this decomposition:
+
+- `H_0` is the candidate zero-mass transport operator
+- `H_{\mathrm{mix}}` collects everything that either mixes sectors or activates hidden-sector dynamics beyond pure transport
+
+The intended meaning is:
+
+- in the strict zero-mass limit, only `H_0` is active as the direct traversal operator
+- `H_0` acts nontrivially only on `T1`
+- `T2` contributes only once mixing or additional hidden-sector structure is turned on
+
+This is still an ansatz-level formulation, but it is sharper than the looser claim "zero-mass propagation stays on `T1`" because it isolates the exact operator statement that would need to be derived.
+
+### What would count as a derivation
+
+The project should be explicit about what would elevate this from model choice to derivation.
+
+At minimum, one would need to show that the parent reduction implies:
+
+1. the reduced zero-mass generator commutes with the projector onto `T1`
+2. the reduced zero-mass generator annihilates or decouples `T2`
+3. off-diagonal terms arise only when the structure corresponding to mass or hidden-sector activation is turned on
+4. the resulting block form is stable under the reduction, not merely chosen in a convenient basis
+
+### Projector and commutator form
+
+The same target can be written more sharply in projector language.
+
+Let
+
+$$
+P : \mathcal{H}_{\mathrm{spin}} \to T1,
+\qquad
+Q = 1-P.
+$$
+
+Then the minimal zero-mass operator claim is equivalent to:
+
+$$
+H_0 = P H_0 P,
+\qquad
+Q H_0 = 0,
+\qquad
+H_0 Q = 0.
+$$
+
+These imply in particular
+
+$$
+[H_0,P] = 0,
+$$
+
+and they say more than mere commutation: not only is `T1` invariant under `H_0`, but `H_0` has no support on `T2` at all.
+
+Because `P` is the spectral projector onto the `J^{01}` charge sector identified with `T1`, the same statement can be read as a reduced charge condition:
+
+- `H_0` preserves the `J^{01}` grading
+- the only nontrivial reduced charge sector seen by `H_0` is the `T1` sector
+
+So the derivation target is not merely "find a basis where the matrix looks block diagonal." The real target is:
+
+- derive `P H_0 P = H_0` from the parent reduction
+- derive `Q H_0 = H_0 Q = 0` from the zero-mass selection rule
+- derive `P H_{\mathrm{mix}} Q` and `Q H_{\mathrm{mix}} P` as the first activation of hidden-sector coupling
+
+The current best candidate parent mechanism for this lives one level up in the ambient-reduction scaffold: first define a phase-charge split on the hidden complex line `\Pi(u,v)` via the complex-structure operator `J_\Pi`, then ask the reduction map to carry the corresponding parent projectors into the reduced `T1/T2` projectors. If that can be made explicit, the support of `H_0` on `T1` would be inherited from the parent charge split rather than chosen directly in the reduced model.
+
+At the current toy level, this means looking for a reduction map that preserves support:
+
+- parent `(-)` phase-charge sector -> reduced `T1`
+- parent `(+)` phase-charge sector -> reduced `T2`
+- parent zero-mass operator supported only on the `(-)` sector -> reduced `H_0` supported only on `T1`
+
+This is the cleanest algebraic form of Route A currently available.
+
+Until those are shown, the safe status is:
+
+- minimal zero-mass operator: disciplined target ansatz
+- derivation of that ansatz from the parent structure: open
+
 ---
 
 ## Reduction regime

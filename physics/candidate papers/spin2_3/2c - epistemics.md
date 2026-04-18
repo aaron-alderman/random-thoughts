@@ -45,6 +45,11 @@ The present framework no longer needs to answer that only with a bare projection
 - the observable channel is determined by the selected axis of zero-mass interaction
 - projection onto `T1` is then the effective observable rule downstream of that interaction structure
 
+This should now be read alongside the ambient-reduction scaffold:
+
+- the `T1/T2` split is a reduced output of a deeper hidden complex-plane structure
+- the remaining open question is not whether one may postulate projection, but whether the identification of the zero-mass readout channel with `T1` can be dynamically forced rather than only epistemically imposed
+
 ---
 
 ## Epistemic inputs
@@ -74,6 +79,13 @@ The effective observable sector is the sector singled out by zero-mass traversal
 In the current framework, that channel is identified with `T1`.
 
 This is the deeper epistemic proposal. It explains why one sector matters observationally without needing to begin from an entirely separate visibility axiom.
+
+At present, the cleanest reading is:
+
+- the channel-selection story is more structured than a bare primitive axiom
+- but the final identification of that channel with `T1` is not yet a full theorem
+
+So Principle E1 should be treated as a sharpened framework principle, not as a closed derivation.
 
 ### Effective postulate E2: projected observables
 
@@ -162,6 +174,42 @@ Those remain open.
 
 ---
 
+## Two routes for `T1` observability
+
+The framework should keep two possible justifications distinct.
+
+### Route A: dynamical selection
+
+The strongest route would derive that zero-mass interaction acts directly only on one reduced charge sector, and that this sector is precisely `T1`.
+
+If that route succeeds, then:
+
+- `T1` is dynamically selected
+- projection onto `T1` is derivative rather than primitive
+
+This route is not yet complete.
+
+### Route B: epistemic selection
+
+The weaker but currently cleaner route is:
+
+- the reduction produces `T1 \oplus T2`
+- the framework identifies the zero-mass readout channel with `T1`
+- projection onto `T1` is then the effective observational rule
+
+This route is already coherent with the present kernel, as long as the identification of the readout channel with `T1` is tracked explicitly as an assumption rather than smuggled in as a theorem.
+
+### Present status
+
+The current project sits between these routes:
+
+- stronger than a bare projection axiom
+- weaker than a fully forced dynamical selection theorem
+
+That middle position is acceptable, but it should be named clearly.
+
+---
+
 ## Coarse-graining and effective access
 
 The epistemic role of coarse-graining is:
@@ -208,6 +256,7 @@ The second statement is much stronger and is not established by the current fram
 |---|---|---|---|
 | the effective observable channel is determined by zero-mass interaction | central framework proposal | 4 | new epistemic center |
 | observable quantities are evaluated after projection onto `T1` | effective postulate downstream of channel selection | 4 | still central, but not necessarily primitive |
+| the identification of the zero-mass readout channel with `T1` is dynamically forced | missing | 5 | strongest desired closure of the epistemic story |
 | `T2` is dynamically present but not directly observable through the zero-mass channel | framework consequence of interaction rule plus dynamics | 4 | core hidden-sector claim |
 | projection and coarse-graining are distinct operations | conceptual clarification | 4 | important for logical hygiene |
 | the effective observable description loses full microscopic information | derived at the reduced-description level | 4 | safe and useful |
@@ -250,7 +299,7 @@ The second statement is much stronger and is not established by the current fram
 The epistemic domain still owes:
 
 1. a deeper justification for why the selected zero-mass channel should be identified with `T1`
-2. a sharper account of whether projection is fundamental or emergent from the interaction structure
+2. a sharper account of whether projection is fundamental, emergent, or only effective downstream of channel selection
 3. a relation to standard quantum measurement theory
 4. a more careful treatment of whether any indirect observables of `T2` exist
 5. a cleaner bridge between epistemic coarse-graining and experimentally meaningful uncertainty relations

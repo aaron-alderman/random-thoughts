@@ -127,6 +127,33 @@ So, before any octonionic structure is introduced:
 - each sector is an `SU(2)` doublet
 - the two sectors are distinguished by opposite `U(1)` charge
 
+The current toy reduction picture is at least dimensionally consistent with this decomposition: a hidden complex line with two opposite phase-charge sectors, tensored with a visible `SU(2)` doublet carrier `\mathbf{2}`, gives
+
+$$
+(\mathbf{1}_{-} \otimes \mathbf{2}) \oplus (\mathbf{1}_{+} \otimes \mathbf{2}),
+$$
+
+which reproduces the same `2 + 2` structure as the reduced `Spin(2,3)` spinor. This does not yet derive the representation, but it is the first toy bookkeeping model that matches the known sector dimensions and charge split exactly.
+
+The next minimal requirement is symmetry compatibility, not just dimensional compatibility: the hidden phase `U(1)` on the complex line and the visible `SU(2)` on the doublet carrier should intertwine with the maximal compact `U(1) \times SU(2)` action on the reduced spinor. If that fails, the toy reduction is only numerology; if it holds, it becomes a genuine candidate bridge to the static representation structure.
+
+At the toy level, the most economical choice is to assign `U(1)` weights `-1/2` and `+1/2` to the two hidden phase-charge sectors and let the same `SU(2)` act on both visible doublets. Then the induced block generator is
+
+$$
+\begin{pmatrix}
+-\tfrac12\,\mathbf{1}_2 & 0 \\
+0 & +\tfrac12\,\mathbf{1}_2
+\end{pmatrix},
+$$
+
+which matches the reduced `J^{01}` block form already used in this file, up to the fixed convention for which block is named `T1`. So the toy reduction now matches not only the `2 + 2` dimensions but also the representation-level `U(1) \times SU(2)` action of the maximal compact subgroup.
+
+The next real test is extension beyond the maximal compact subgroup. Matching `U(1) \times SU(2)` is necessary, but the full `Spin(2,3)` bridge also needs parent-side operators whose reduced image mixes `T1` and `T2` and closes with the compact generators in the right `\mathfrak{k} \oplus \mathfrak{p}` pattern. Until that is shown, the current bridge should be read as a compact-subgroup match, not yet a full group-level derivation.
+
+At the current toy level, there is now a plausible first candidate for that extension: the real span of off-diagonal Pauli-triplet operators between the two charge doublets has the correct dimension `6` and, up to normalization conventions, closes with the compact generators in the expected `[\mathfrak{k},\mathfrak{p}] \subset \mathfrak{p}` and `[\mathfrak{p},\mathfrak{p}] \subset \mathfrak{k}` pattern. This is still only a toy bridge, but it is the first algebra-level evidence that the parent reduction picture may be able to reproduce more than the maximal compact subgroup.
+
+In the explicit gamma-matrix basis already chosen in this file, the same toy bridge now has a plausible basis-level dictionary: `J^{01}` matches the toy charge generator, the spatial rotation triplet matches the block-diagonal Pauli-triplet action, and the mixed generators `J^{0\hat a}, J^{1\hat a}` match the two off-diagonal Pauli-triplet families up to index relabeling, sign, and normalization conventions. So the bridge has reached the level of an explicit candidate matching to the chosen `Spin(2,3)` basis, even though a canonical derivation from the octonionic parent is still missing.
+
 ### What is genuinely static here
 
 - the existence of two sectors
@@ -186,6 +213,18 @@ The current explicit local model for that `H` slice is:
 - left multiplication by `u` preserves this plane and squares to `-1`, so `\Pi(u,v)` is naturally a complex line inside `u^\perp \cong \mathbf{C}^3`
 
 This sharpens the local carrier claim, but it also makes the remaining gap more precise: the framework still lacks a canonical rule selecting `v`, so the quaternionic carrier is explicit locally but not yet global or unique.
+
+The next reduced step is then to keep only the phase action of that hidden complex line. If `\Pi(u,v)` is treated as a local complex line, it carries a natural `U(1)` phase rotation. The working reduction claim is that the effective `J^{01}` grading remembers exactly this hidden phase action only through its lifted charge splitting on the reduced spinor space:
+
+$$
+\mathcal{H}_{\mathrm{spin}} = T1 \oplus T2
+\quad\text{with}\quad
+T1 \sim W_{-1/2}, \;\; T2 \sim W_{+1/2}.
+$$
+
+So the visible `T1/T2` decomposition is not being read as the full hidden plane itself. It is being read as the reduced opposite-charge image of that hidden plane after the fold into the `Spin(2,3)` branch. This is the strongest current local explanation of why `J^{01}` is the right reduced splitting generator.
+
+What is still open is the exact derivation of that charge map from the parent action on the quaternionic slice. So this remains a sharpened working proposal, not yet a theorem.
 
 This folding picture is a working proposal suggested by the recent `Spin(3,3)` exploration. It is not yet a theorem of the framework.
 
