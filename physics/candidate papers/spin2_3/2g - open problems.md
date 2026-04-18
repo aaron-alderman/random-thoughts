@@ -120,6 +120,7 @@ These are the problems that would turn the project from a coherent framework int
 - how can the model parameters be constrained?
 - what would count as a genuine falsifiable signature?
 - how much of the large ambient space can be ruled out experimentally without thereby invalidating the larger framework?
+- does the hydrogen hidden-symmetry split `SO(4) / SO(3,1)` admit a controlled reduction from the transport classification, and can the near-threshold `SO(2,1)` sector recover the Efimov exponent `s_0`?
 
 ---
 
@@ -189,6 +190,7 @@ This priority order matches the current maturity of the project.
 | render the explicit $(\rho,\Phi)$ phase portrait: locking boundary $\lvert\omega\rvert = \lvert\kappa_u\rvert\cosh(2\rho)$, persistence boundary $\mathcal{O}\cosh(2\rho) = \gamma$, four transport class regions, Branch 1 nodes, Branch 2 centers, flow arrows | dynamics | medium | makes the classification theorem visually transparent; needed for any publication on the two-branch system |
 | promote parameters to momentum-dependent functions $\omega(p)$, $\gamma(m,p)$, $\kappa_u(a,b,c;p,s)$; determine the locking boundary as a curve in momentum space | dynamics / phenomenology | medium | where kinematic regime structure appears — why some states are long-lived only at certain momenta |
 | derive the connection between the two-branch amplitude picture and the Lindblad-Markov density-matrix reduction | dynamics | high | the two pictures are complementary levels; how coarse-graining recovers the Lindblad equation with $D \sim m^2/\gamma$ from the incoherent (dephased) branch is the key link |
+| derive the hydrogen/Efimov bridge: identify the `SO(4)`, `SO(3,1)`, and `SO(2,1)` subgroup data of the transport classification and test whether the Efimov exponent `s_0` is a function of `\omega/\kappa_u` at the persistence threshold | dynamics / phenomenology / interpretation | high | strongest check is quantitative: either recover or fail to recover `s_0 \approx 1.00624`; until then the bridge remains interpretive |
 
 ### NS programme bridge tasks (added from ns_to_spin23_integration.md)
 

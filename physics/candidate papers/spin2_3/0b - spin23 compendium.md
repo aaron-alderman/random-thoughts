@@ -439,6 +439,14 @@ The full domain analysis — including the T and C computation, the S² = −1 o
 
 ---
 
+### Hydrogen Threshold Symmetry and the Efimov Bridge
+
+[*Speculative — maturity 5*: the two-boundary transport picture has the same compact/noncompact/threshold symmetry pattern as the hydrogen problem. In standard hydrogen, bound states carry hidden `SO(4)`, scattering states carry `SO(3,1)`, and the ionization threshold is the contraction point `ISO(3)` between them. In the present framework, the constructive locked/persistent sector is the natural analogue of the compact bound domain, the dephased side is the natural analogue of the noncompact free domain, and the persistence boundary `\kappa_u\cosh(2\rho)\cos\Phi = \gamma` is the marginal surface separating them. The safe claim is a structural correspondence of symmetry pattern, not a derivation of the hydrogen spectrum or of the exact Laplace-Runge-Lenz algebra inside the transport model.]
+
+[*Speculative — maturity 5-6*: on the free/dephased side, the subgroup chain `SO(3,1) \supset SO(2,1)` suggests a route to Efimov-type conformal dynamics for three-body states near the locking/persistence boundary. Near threshold, the reduced law `\dot{R} = R(-\gamma + \kappa_u\cosh(2\rho)\cos\Phi)` linearizes to `\dot{R} \approx \epsilon R`, which is scale-covariant in the radial variable and therefore a plausible entry point for conformal quantum mechanics. The stronger claim would be that three simultaneous near-boundary transport states realize an Efimov tower, with the geometric ratio fixed by an `SO(2,1)` Casimir and therefore by a threshold combination such as `\omega/\kappa_u`. That quantitative step has not been derived.]
+
+---
+
 ### Dark Matter
 
 [*Speculative — maturity 5*: T2-sector matter — matter that couples primarily to `T2` rather than `T1` — would not project onto the T1 observable algebra. It would have gravitational coupling (gravity lives in the T2/fifth-direction sector) but no electromagnetic or strong-force coupling. This is exactly the phenomenological signature of dark matter. The identification is structurally motivated by the framework; it does not yet amount to a model, a mass spectrum, or a prediction.]
@@ -451,13 +459,13 @@ The full domain analysis — including the T and C computation, the S² = −1 o
 
 ---
 
-## §4 — Where the Framework Currently Has Nothing to Say
+## §4 — Where the Framework Currently Has Little or Nothing to Say
 
-Naming the boundaries of a framework is as important as naming its content. The following domains from the broad physics atlas (`0 - background.md`) are not addressed by the Spin(2,3) program at present. No claim is being forced onto them.
+Naming the boundaries of a framework is as important as naming its content. The following domains from the broad physics atlas (`0 - background.md`) are mostly not addressed by the Spin(2,3) program at present, except where a narrow structural bridge has been noted. No broad claim is being forced onto them.
 
 | Domain | Status |
 |---|---|
-| Atomic energy levels (He, H, Rydberg) | not addressed — standard QM/QED is complete here and Spin(2,3) adds nothing |
+| Atomic energy levels (He, H, Rydberg) | quantitative spectra not addressed; hydrogen hidden-symmetry pattern now has a speculative threshold-symmetry bridge |
 | Electric dipole selection rules | not addressed |
 | Nuclear structure beyond isospin embedding | not addressed |
 | Chemical bonding and molecular physics | not addressed |
@@ -498,6 +506,8 @@ The other three claims sit outside the current proof reach of the framework. The
 | G₂ stabilizer of `e₇` is `SU(3)` | octonionic geometry | mathematical fact | 3 |
 | this `SU(3)` is physical color | color | physical identification | 4–5 |
 | octonionic direction aligns with zero-mass channel | framework proposal | central choice | 4 |
+| hydrogen bound/free split has a structural analogue in the transport classification | atomic / threshold symmetry | speculative structural correspondence | 5 |
+| Efimov scaling may be governed by a threshold `SO(2,1)` Casimir in the dephased sector | few-body / conformal dynamics | open conjecture | 6 |
 | `J₃(O ⊗ ℂ)` as full ambient algebra, `ℂ` encodes gravity | algebra | framework identification | 4–5 |
 | `u⊥ ≅ ℂ³` as parent of color, hidden planes, generation structure | parent geometry | working convergence | 4–5 |
 | `m` governs departure from pure `T1` transport | dynamics | derived in reduced model | 4 |
