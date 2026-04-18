@@ -1,0 +1,375 @@
+---
+title: "The DIII Winding Number and the Massless Spin(2,3) Sector"
+author: "Aaron Alderman"
+date: "18 April 2026"
+---
+
+## Abstract
+
+We study the topological invariant naturally associated with the corrected DIII reading of the Spin(2,3) spinor sector. Starting from the explicit gamma-matrix representation, we construct a chiral four-generator Clifford frame that anticommutes with the grading operator $\Sigma = 2J^{01}$ and defines a flattened chiral Hamiltonian $Q(X)$ on $S^3$. In the chiral basis, $Q$ has off-diagonal block $q(X) \in SU(2)$, and the DIII/AIII winding integral reduces to the degree of the map $q : S^3 \to SU(2) \cong S^3$. With the orientation and sign conventions adopted here, the invariant is
+$$
+W_3 = -1.
+$$
+The overall sign is convention-dependent, but the nontriviality of the invariant is not. The massless Spin(2,3) sector is therefore best understood not as a gapped phase carrying the invariant by itself, but as the equatorial slice inside the same nontrivial Spin(2,3) family.
+
+## 1. Introduction
+
+The purpose of this paper is narrow. We do not attempt a complete topological completion of the Spin(2,3) framework. Instead we isolate one technical question: once the corrected DIII class assignment is accepted, what is the corresponding $d=3$ winding number?
+
+This question matters because the existing topological spine already fixes most of the algebra. The spinor representation, the grading operator $\Sigma$, and the two relevant anti-unitary operators are already explicit. What remained open was the invariant itself. The aim here is to compute it in a convention-fixed, line-by-line way and to state clearly what the result does and does not imply.
+
+The outcome is simple. The natural chiral Spin(2,3) Hamiltonian built from the Clifford frame defines a map from $S^3$ into $SU(2)$, and that map has degree $-1$ in the conventions used below. Reversing orientation or replacing $q$ by $q^\dagger$ flips the sign, but not the fact that the invariant is nonzero. This is the robust content of the computation.
+
+## 2. Spin(2,3) Conventions and the Corrected Class Assignment
+
+We work with the four-component spinor representation
+$$
+\gamma^0 = i \sigma^2 \otimes \mathbf{1}_2, \qquad
+\gamma^1 = i \sigma^1 \otimes \mathbf{1}_2,
+$$
+$$
+\gamma^2 = \sigma^3 \otimes \sigma^1, \qquad
+\gamma^3 = \sigma^3 \otimes \sigma^2, \qquad
+\gamma^4 = \sigma^3 \otimes \sigma^3,
+$$
+with signature $(2,3)$.
+
+The grading operator is taken to be
+$$
+\Sigma = \sigma^3 \otimes \mathbf{1}_2,
+$$
+which agrees with the sector split up to the harmless overall sign convention relating $\Sigma$ and $2J^{01}$.
+
+The relevant anti-unitary symmetries are
+$$
+C = (\gamma^1 \gamma^3)K,
+$$
+and
+$$
+T_0 = -i(\gamma^0 \gamma^3)K,
+$$
+with
+$$
+C^2 = +1, \qquad T_0^2 = -1.
+$$
+The phase of $T_0$ matters here: the operator is defined only up to an overall phase, but the above choice is the one for which the chiral operator is recovered exactly from $C$ and $T_0$. Writing the anti-unitaries as $C = M_C K$ and $T_0 = M_{T_0}K$, with
+$$
+M_C = \gamma^1\gamma^3,
+\qquad
+M_{T_0} = -i\gamma^0\gamma^3,
+$$
+their product is linear and equals
+$$
+CT_0 = M_C M_{T_0}^*.
+$$
+In the present gamma-matrix representation one finds
+$$
+M_C = \sigma^2 \otimes \sigma^2,
+$$
+and
+$$
+M_{T_0}
+= -i\gamma^0\gamma^3
+=
+\begin{pmatrix}
+0 & 0 & 0 & 1 \\
+0 & 0 & -1 & 0 \\
+0 & 1 & 0 & 0 \\
+-1 & 0 & 0 & 0
+\end{pmatrix},
+$$
+so
+$$
+CT_0
+= M_C M_{T_0}^*
+=
+\begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & -1 & 0 \\
+0 & 0 & 0 & -1
+\end{pmatrix}
+= \Sigma.
+$$
+Thus the chiral operator is not imported from outside the Spin(2,3) algebra: it is generated internally by the corrected combination of charge conjugation and partial time reversal. Forgetting the anti-unitary symmetries yields the chiral unitary class AIII; retaining them refines the same Hamiltonian family to DIII.
+
+## 3. The Chiral Spin(2,3) Hamiltonian
+
+Define the following Hermitian matrices:
+$$
+\Gamma_0 = - i\gamma^0 = \sigma^2 \otimes \mathbf{1}_2,
+$$
+$$
+\Gamma_1 = \gamma^0\gamma^2 = - \sigma^1 \otimes \sigma^1,
+\qquad
+\Gamma_2 = \gamma^0\gamma^3 = - \sigma^1 \otimes \sigma^2,
+\qquad
+\Gamma_3 = \gamma^0\gamma^4 = - \sigma^1 \otimes \sigma^3.
+$$
+These obey
+$$
+\Gamma_a^\dagger = \Gamma_a,
+\qquad
+\Gamma_a^2 = \mathbf{1}_4,
+\qquad
+\{\Gamma_a,\Gamma_b\} = 2\delta_{ab}\mathbf{1}_4,
+$$
+for $a,b = 0,1,2,3$, and each anticommutes with $\Sigma$:
+$$
+\{\Sigma,\Gamma_a\} = 0.
+$$
+
+Hence the Spin(2,3) data contains a natural chiral four-generator Clifford frame.
+
+Let
+$$
+X = (X_0,X_1,X_2,X_3) \in S^3,
+\qquad
+X_0^2 + X_1^2 + X_2^2 + X_3^2 = 1,
+$$
+and define
+$$
+Q(X) = X_0 \Gamma_0 + X_1 \Gamma_1 + X_2 \Gamma_2 + X_3 \Gamma_3.
+$$
+Because the $\Gamma_a$ mutually anticommute and square to the identity,
+$$
+Q(X)^2 = \mathbf{1}_4,
+$$
+so $Q$ is already flattened.
+
+This is the correct place where the invariant is defined. The strictly massless sector is recovered by the equatorial slice $X_0 = 0$, but the winding number itself belongs to the full gapped chiral family on $S^3$.
+
+## 4. Chiral Basis and the $SU(2)$ Block
+
+Since $Q$ anticommutes with $\Sigma$, it is already off-diagonal in the chiral basis of $\Sigma = \sigma^3 \otimes \mathbf{1}_2$. In that basis one has
+$$
+Q(X)=
+\begin{pmatrix}
+0 & q_0(X) \\
+q_0(X)^\dagger & 0
+\end{pmatrix},
+$$
+with
+$$
+q_0(X)= -iX_0\mathbf{1}_2 - (X_1\sigma^1 + X_2\sigma^2 + X_3\sigma^3).
+$$
+This follows directly from the block forms
+$$
+\Gamma_0 =
+\begin{pmatrix}
+0 & -i\mathbf{1}_2 \\
+i\mathbf{1}_2 & 0
+\end{pmatrix},
+\qquad
+\Gamma_j =
+\begin{pmatrix}
+0 & -\sigma^j \\
+-\sigma^j & 0
+\end{pmatrix},
+\quad j=1,2,3,
+$$
+so the upper-right block of $Q(X)=X_0\Gamma_0+X_1\Gamma_1+X_2\Gamma_2+X_3\Gamma_3$ is exactly the stated $q_0(X)$.
+
+Now introduce the constant unitary
+$$
+U =
+\begin{pmatrix}
+e^{-i\pi/4}\mathbf{1}_2 & 0 \\
+0 & e^{i\pi/4}\mathbf{1}_2
+\end{pmatrix}.
+$$
+Then
+$$
+U^\dagger Q(X) U=
+\begin{pmatrix}
+0 & e^{i\pi/2}q_0(X) \\
+e^{-i\pi/2}q_0(X)^\dagger & 0
+\end{pmatrix},
+$$
+and since $e^{i\pi/2} = i$, the upper-right block becomes
+$$
+q(X)= i q_0(X) = X_0 \mathbf{1}_2 - i(X_1 \sigma^1 + X_2 \sigma^2 + X_3 \sigma^3).
+$$
+Thus after this explicit constant chiral rotation, $Q$ takes the standard form
+$$
+Q(X) =
+\begin{pmatrix}
+0 & q(X) \\
+q(X)^\dagger & 0
+\end{pmatrix},
+$$
+with
+$$
+q(X) = X_0 \mathbf{1}_2 - i(X_1 \sigma^1 + X_2 \sigma^2 + X_3 \sigma^3).
+$$
+Because $X \in S^3$,
+$$
+q(X)^\dagger q(X) = \mathbf{1}_2,
+\qquad
+\det q(X) = 1,
+$$
+so
+$$
+q : S^3 \to SU(2) \cong S^3.
+$$
+
+The winding number therefore reduces to the degree of this map. In the chiral formulation the invariant is
+$$
+W_3
+= \frac{1}{24\pi^2}
+\int_{S^3}
+\operatorname{tr}\!\left[(q^{-1}dq)^3\right].
+$$
+
+## 5. Explicit Computation of $W_3$
+
+Parameterize $S^3$ by
+$$
+X_0 = \cos\chi,
+\qquad
+X_1 = \sin\chi \cos\theta,
+$$
+$$
+X_2 = \sin\chi \sin\theta \cos\phi,
+\qquad
+X_3 = \sin\chi \sin\theta \sin\phi,
+$$
+with
+$$
+0 \le \chi \le \pi, \qquad 0 \le \theta \le \pi, \qquad 0 \le \phi < 2\pi.
+$$
+
+Write
+$$
+q = X_0 \mathbf{1}_2 - i \vec{X}\cdot\vec{\sigma},
+\qquad
+q^{-1} = q^\dagger = X_0 \mathbf{1}_2 + i \vec{X}\cdot\vec{\sigma}.
+$$
+Using the Pauli identity
+$$
+\sigma_i \sigma_j = \delta_{ij}\mathbf{1}_2 + i \epsilon_{ijk}\sigma_k,
+$$
+one finds
+$$
+q^{-1}dq
+= (X_0\mathbf{1}_2 + iX_i\sigma_i)(dX_0\mathbf{1}_2 - i\,dX_j\sigma_j).
+$$
+Expanding and using $X_0\,dX_0 + X_i\,dX_i = 0$ on $S^3$, the scalar part vanishes and the matrix part reduces to
+$$
+q^{-1}dq
+= i\alpha_i \sigma_i,
+$$
+where
+$$
+\alpha_i = X_i\,dX_0 - X_0\,dX_i + \epsilon_{ijk}X_j\,dX_k.
+$$
+Equivalently, defining $\omega_i = -\alpha_i$, one may write
+$$
+q^{-1}dq = -i \,\omega_i \sigma_i,
+$$
+where the one-forms $\omega_i$ are the standard left-invariant coframe on $SU(2) \cong S^3$.
+
+The cubic trace is then obtained directly from
+$$
+\operatorname{tr}(\sigma_i\sigma_j\sigma_k)=2i\epsilon_{ijk},
+$$
+which gives
+$$
+\operatorname{tr}\!\left[(q^{-1}dq)^3\right]
+= 2\,\epsilon_{ijk}\,\alpha_i\wedge\alpha_j\wedge\alpha_k.
+$$
+Substituting the coordinate parameterization of $S^3$, one obtains the explicit one-forms
+$$
+\alpha_1 = -\cos\theta\, d\chi + \cos\chi\sin\chi\sin\theta\, d\theta + \sin^2\chi\sin^2\theta\, d\phi,
+$$
+$$
+\alpha_2 = -\sin\theta\cos\phi\, d\chi + (-\cos\chi\sin\chi\cos\theta\cos\phi - \sin^2\chi\sin\phi)\, d\theta
++ (\cos\chi\sin\chi\sin\theta\sin\phi - \sin^2\chi\sin\theta\cos\theta\cos\phi)\, d\phi,
+$$
+$$
+\alpha_3 = -\sin\theta\sin\phi\, d\chi + (-\cos\chi\sin\chi\cos\theta\sin\phi + \sin^2\chi\cos\phi)\, d\theta
++ (-\cos\chi\sin\chi\sin\theta\cos\phi - \sin^2\chi\sin\theta\cos\theta\sin\phi)\, d\phi.
+$$
+Their coefficient matrix in the basis $(d\chi,d\theta,d\phi)$ has determinant
+$$
+\det(\alpha_i{}^\mu) = -\sin^2\chi \sin\theta,
+$$
+and hence
+$$
+\epsilon_{ijk}\,\alpha_i\wedge\alpha_j\wedge\alpha_k
+= -6 \sin^2\chi \sin\theta \, d\chi \wedge d\theta \wedge d\phi.
+$$
+Therefore
+$$
+\operatorname{tr}\!\left[(q^{-1}dq)^3\right]
+= -12 \sin^2\chi \sin\theta \, d\chi \wedge d\theta \wedge d\phi.
+$$
+With the domain orientation taken to be $d\chi \wedge d\theta \wedge d\phi$, this is the sign entering the winding integral in the present convention. This coordinate orientation is the standard outward orientation on $S^3$: indeed
+$$
+\det\!\bigl(X,\partial_\chi X,\partial_\theta X,\partial_\phi X\bigr)
+= \sin^2\chi \sin\theta > 0
+$$
+away from the coordinate singular sets. The minus sign in $W_3$ therefore does not come from the parameterization of $S^3$; it comes from the winding-number convention used here, namely
+$$
+W_3 = \frac{1}{24\pi^2}\int_{S^3}\operatorname{tr}\!\left[(q^{-1}dq)^3\right].
+$$
+Many references instead insert the opposite overall sign, or equivalently use the opposite Maurer-Cartan convention, in which case the same map $q(X)=X_0\mathbf{1}_2-i\vec X\cdot\vec\sigma$ would be assigned $+1$.
+
+Therefore
+$$
+W_3
+= \frac{1}{24\pi^2}
+\int_0^\pi \int_0^\pi \int_0^{2\pi}
+(-12)\sin^2\chi \sin\theta \, d\phi\, d\theta\, d\chi.
+$$
+Evaluating the integrals,
+$$
+\int_0^\pi \sin^2\chi\, d\chi = \frac{\pi}{2},
+\qquad
+\int_0^\pi \sin\theta\, d\theta = 2,
+\qquad
+\int_0^{2\pi} d\phi = 2\pi,
+$$
+so
+$$
+W_3
+= \frac{-12}{24\pi^2}
+\left(\frac{\pi}{2}\right)(2)(2\pi)
+= -1.
+$$
+
+Thus the topological invariant is nontrivial. Its overall sign depends on orientation and on the sign convention in the definition of $q$; replacing $q$ by $q^\dagger$, or reversing orientation on $S^3$, yields $+1$ instead. The convention-independent statement is therefore:
+
+> the Spin(2,3) chiral Hamiltonian carries $|W_3| = 1$.
+
+## 6. Interpretation of the Massless Sector
+
+The computation above applies to the gapped chiral family $Q(X)$ on $S^3$. The strictly massless sector corresponds to the equatorial slice
+$$
+X_0 = 0,
+$$
+for which
+$$
+q = - i(X_1 \sigma^1 + X_2 \sigma^2 + X_3 \sigma^3).
+$$
+This equator is not itself a gapped three-dimensional DIII phase carrying $W_3$. The computation above therefore does not by itself prove a full interface theorem. What it does show is that the massless slice sits naturally as the equator of a gapped chiral family with nontrivial unit winding. It is therefore reasonable to regard it as a candidate transition locus within that family, but that last interpretive step goes beyond the bare invariant calculation.
+
+The relation to the earlier AIII language is then straightforward. If one suppresses the anti-unitary symmetries and keeps only the chiral grading, the same flattened Hamiltonian lies in class AIII. Including $T_0$ and $C$ refines that same chiral Hamiltonian to class DIII. The integer computed here is therefore the same winding number under both descriptions, even though AIII and DIII classify different symmetry-constrained Hamiltonian families. It is most precise to present the result in DIII language because the corrected Spin(2,3) symmetry data contains those anti-unitaries explicitly.
+
+## 7. What the Result Does and Does Not Establish
+
+The result established here is exact and narrow. The corrected Spin(2,3) symmetry data yields a natural chiral Clifford frame, that frame defines a flattened Hamiltonian on $S^3$, and the associated winding number is nontrivial, equaling $-1$ in the present orientation convention. This is the firm mathematical content of the paper.
+
+What is not established is equally important. The calculation does not by itself provide a material realization of the corresponding DIII Hamiltonian, an anomaly-inflow statement, a generation-counting theorem from topology, or a full extension of the analysis to the broader two-time-reversal picture. Those questions remain open and should be treated separately from the invariant computed here.
+
+## 8. Numerical Cross-Check
+
+A numerical integration of the winding formula using a direct discretization of the $S^3$ coordinates reproduces the analytic result. With the current script and a uniform $28 \times 28 \times 28$ grid in $(\chi,\theta,\phi)$, one finds
+$$
+W_3 \approx -0.999.
+$$
+The residual error is discretization error and decreases under grid refinement. A script implementing this check is included with the source files for this paper.
+
+## 9. Conclusion
+
+The corrected topological Spin(2,3) story now has a concrete invariant. The natural chiral Hamiltonian extracted from the explicit gamma-matrix representation defines a map $S^3 \to SU(2)$ of degree one in magnitude, giving $W_3 = -1$ in the conventions adopted here. The strictly massless sector is therefore best viewed as the equatorial slice of a gapped chiral family with nontrivial unit winding, rather than as an isolated gapped phase carrying the invariant on its own. Interpreting that slice as a genuine transition locus is plausible, but it remains one step beyond what the winding-number calculation alone proves.

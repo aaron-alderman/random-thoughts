@@ -6,24 +6,50 @@ This file collects concrete next-step tasks that are ready to be worked — comp
 
 ## T3 — DIII d=3 Winding Number (from topological work)
 
-The corrected topological picture is:
+The winding-number computation has now been carried out for the natural **gapped chiral DIII extension** built from the `Spin(2,3)` Clifford frame. The result is:
 
-- $m=0$: class DIII ($T_0^2=-1$, $C^2=+1$, $\Sigma = CT_0$), $d=3$ invariant $\mathbb{Z}$
-- $m\neq 0$: class D ($T_0^2=-1$, $C^2=+1$, $\Sigma$ broken)
-- Two independent $T^2=-1$ operators ($T_0$, $T_{01}$) → possible 16-fold way structure
+- with the orientation and sign conventions used in the current draft, $W_3 = -1$
+- reversing orientation, or replacing $q$ by $q^\dagger$, flips the sign
+- the robust statement is therefore $|W_3| = 1$
 
-The highest-value open target is T3: compute the DIII $d=3$ winding number $W_3$ in terms of the Spin(2,3) data and determine what integer it equals. The computation is explicit:
+This is a stronger and cleaner result than the earlier open guesswork, but it also changes the interpretation. The invariant belongs to the **gapped chiral family on $S^3$**, not to the strictly gapless massless point by itself. The massless sector is best read as the equatorial critical slice separating opposite-sign gapped phases.
 
-$$W_3 = \frac{1}{24\pi^2} \int_{S^3} \mathrm{tr}\left[(Q\,dQ)^3\right]$$
+So the old speculative possibility $W_3 = 3$ is **not** supported by the natural first computation. At present, the topological result gives a nontrivial unit winding, not a generation count.
 
-where $Q$ is the flat-band matrix constructed from the eigenvectors of $H$ at $m=0$. In the Spin(2,3) framework, $H$ at $m=0$ is block-diagonal in T1/T2, and $Q$ is built from the $\Sigma$-grading. The question is whether $W_3$ evaluates to an integer with physical meaning — and the most interesting possibility is $W_3 = 3$ (generations).
+The corresponding integral is
 
-If $W_3 = 3$, the topological structure connects directly to the generation count — the most productive convergence the framework could hope for.
+$$W_3 = \frac{1}{24\pi^2} \int_{S^3} \mathrm{tr}\left[(Q\,dQ)^3\right],$$
 
-**Priority order among T-tasks:**
-1. T3 (winding number → observables/generations): highest-value
-2. T4 (anomaly inflow from DIII bulk): medium-value
-3. T2 (material realization): lower priority
+with $Q$ the flattened chiral Hamiltonian on $S^3$ and, in chiral basis, off-diagonal block
+$$q(X) = X_0 \mathbf{1}_2 - i(X_1\sigma^1 + X_2\sigma^2 + X_3\sigma^3).$$
+
+**Updated priority order among T-tasks:**
+1. T4 (anomaly inflow from the DIII bulk): highest-value next topological target
+2. T2/T3 bridge question: identify what observable, if any, measures the unit winding in the Spin(2,3) setting
+3. T2 (material realization): lower priority until a cleaner physical Hamiltonian story exists
+
+---
+
+## T5 — Hydrogen Threshold Symmetry and Efimov Bridge
+
+There is now a plausible structural bridge between the two-boundary transport classification and the known compact/noncompact symmetry split of the hydrogen problem:
+
+- constructive locked/persistent sector as the compact, bound-side analogue
+- persistence boundary as the marginal threshold surface
+- dephased side as the noncompact, scattering-side analogue
+
+The stronger extension is the Efimov bridge: on the free/dephased side, `SO(3,1) \supset SO(2,1)` suggests conformal near-threshold dynamics for three-body states. If the bridge is real, the Efimov exponent should be controlled by a threshold Casimir and therefore by a dimensionless combination of transport parameters such as `\omega/\kappa_u`.
+
+**What to compute:**
+- identify the precise subgroup chain from `Spin(2,3)` to the threshold `SO(4)` sector and then to the free-side `SO(3,1)` sector
+- determine whether the persistence boundary should be read as the analogue of the hydrogen ionization threshold or only as its transport-space image
+- derive the effective near-threshold radial generator from `\dot{R} = R(-\gamma + \kappa_u\cosh(2\rho)\cos\Phi)` and check whether it closes with dilation and special-conformal generators into `so(2,1)`
+- compute the relevant quadratic Casimir in terms of transport variables and test whether the Efimov constant `s_0` can be expressed as a function of `\omega/\kappa_u` at threshold
+- decide whether the result is genuinely predictive or only a structural analogy
+
+**Why this matters:**
+- a positive result would be the first concrete bridge from the transport classification to a known nontrivial few-body scaling law
+- a negative result would still be valuable, because it would sharply separate the hydrogen-threshold analogy from the Efimov claim instead of letting them travel together
 
 ---
 
