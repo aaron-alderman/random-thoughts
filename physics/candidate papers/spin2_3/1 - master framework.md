@@ -201,6 +201,8 @@ This is the layer of mathematical structure before effective dynamics is reduced
 - preferred octonion direction: choice
 - alignment between the preferred octonion direction and the massless-traversal direction: central framework proposal
 - local quaternionic carrier of the hidden complex plane: working proposal suggested by the folded `Spin(3,3)` analysis, not yet a theorem
+- hidden-line phase covariance forcing charge-diagonality of the parent zero-mass operator: sharpened bridge result
+- charge-generator intertwiner `J_{\Pi,\mathrm{toy}} \to J^{01}` as the cleanest route to support preservation: current reduction target
 - use of `J3(O)` for generations: structural proposal, partly derived and partly interpretive depending on claim strength
 - choice between `J3(O)` and `J3(C \otimes O)`: bridge-level choice not yet physically settled
 
@@ -233,6 +235,22 @@ This is the layer describing how the state evolves.
 ### Status
 
 - zero-mass propagation on `T1`: central framework proposal
+- one-sector zero-mass traversal: now narrowed to an oriented-direction plus unique-channel consistency burden
+- support preservation of `H_0` on `T1`: best current route is through a charge-generator intertwiner in the reduction map
+- remaining global `\mathbf Z_2` orientation: best current route is to tie it to the forward observable/readout arrow rather than treat it as a large unresolved basis freedom
+- strongest current sharpening: the physical orientation is the one aligning direct zero-mass support, observable readout, and forward reduced evolution on the same sector
+- best current bulk forcing candidate for that alignment: the sign of the odd transport scalar `\kappa_u`
+- strongest current operational version: in the readout-phase normalization, the direct observable branch should be constructive/persistent, hence `\kappa_u > 0`
+- current blocker status: `N2` is conditionally closed once that constructive-readout rule is adopted; the live burden is to derive it from the bulk rather than leave it as the final operational axiom
+- `N3` derivation target is now sharper: derive `\dot\Psi = u\omega\,\Psi - \gamma\,\Psi + \kappa_u\,\mathcal C\Psi` from a parent branch state, an anti-linear exchange operation, an odd moment map, and controlled hidden-sector leakage
+- stronger `N3` scaffold: the branch equations already form an exact Hamiltonian-plus-Rayleigh system on the selected `u`-complex line, so the bulk task is to derive that specific generator rather than guess one
+- reduced coupling structure is now explicit: `\kappa_u` multiplies the fixed exchange generator `\mathcal M_{\mathrm{ex}} = -\mathrm{Im}_u(AB)`
+- parent source for the exchange structure is now explicit: the anti-linear map `\mathfrak C_u = (C_\Pi \otimes 1)\circ \mathfrak K_u` descends to `\mathcal C(A,B) = (\bar B,\bar A)`
+- symmetry slot for `\kappa_u` is now explicit: compact-equivariant anti-linear exchange maps are unique up to scalar, so an odd parent moment can only descend into the coefficient of `\mathcal M_{\mathrm{ex}}`
+- reduced damping structure is now explicit: `\gamma` can arise as a positive hidden-sector elimination term of Schur-complement type
+- symmetry route for scalar damping is now explicit: compact-equivariant elimination gives sectorwise scalars, and charge-exchange symmetry collapses them to `\gamma I_4`
+- minimal admissible hidden coupling class is now explicit: compact-equivariant, charge-exchange-symmetric elimination is enough to force scalar damping
+- current `N3` descent criteria are now explicit: the parent odd moment must be compact-equivariant and exchange-odd to force `\kappa_u \mathcal M_{\mathrm{ex}}`, while hidden elimination must be compact-equivariant and charge-exchange symmetric to force scalar `\gamma`
 - full-space evolution: postulated model choice
 - reduced Markovian equation: derived under assumptions
 - diffusion law: derived under additional closure assumptions
@@ -260,7 +278,7 @@ This is the layer of what is visible, measurable, or retained after coarse-grain
 ### Status
 
 - `T1` as the effective observable channel for zero-mass interactions: central proposal
-- projection onto `T1`: possibly effective rather than primitive
+- projection onto `T1`: possibly effective rather than primitive; the remaining burden is now the uniqueness of one-sector readout
 - hidden-sector influence on visible dynamics: derived once the interaction rule and dynamics are combined
 - reading coarse-graining as epistemic limitation: interpretation
 
@@ -283,6 +301,7 @@ This is the layer of constraints, exclusions, and things that become forced once
 ### Project-specific consistency claims
 
 - The reduced projected dynamics should preserve trace and positivity in the appropriate regime.
+- If the selected direction is physically oriented and the zero-mass readout channel is unique, then one-sector traversal is the minimal selection-consistent realization.
 - Anomaly cancellation constrains the allowed right-handed matter content once the left-handed content is fixed.
 - Some hypercharge coefficients may be uniquely fixed by the charge-matching and anomaly conditions.
 - A fourth generation may be excluded if the `J3(O)` argument is mathematically sound in the intended form.

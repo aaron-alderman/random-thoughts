@@ -446,19 +446,26 @@ The single most important open problem is deriving the evolution equations:
 
 $$\dot{A} = (u\omega - \gamma)A + \kappa_u\bar{B}$$
 
-from first principles — specifically, from a variational principle on the octonionic bulk. The goal is to show that $\kappa_u$, $\omega$, and $\gamma$ are not free parameters but are determined by the associator structure.
+from first principles — specifically, from a bulk octonionic reduction that yields the effective Hamiltonian-plus-Rayleigh generator on the selected `u`-complex line. The goal is to show that $\kappa_u$, $\omega$, and $\gamma$ are not free parameters but descend from parent geometric data.
 
-The path: construct an action functional $S[A, B]$ on the transport slice, vary it, and show the Euler-Lagrange equations reproduce the two-branch system. The $\mathrm{Sp}(4,\mathbb{R})$ structure suggests a natural symplectic action. The moment-map construction — expressing $\kappa_u$ as an $\mathrm{Sp}(4,\mathbb{R})$ moment map of the associator — would close this gap.
+The path is now sharper than a generic "find an action." At the reduced level, the branch equations already form an exact Hamiltonian-plus-Rayleigh system. So the real task is to derive:
+
+- the `u`-adapted symplectic structure on branch space
+- the anti-linear exchange map behind `(\bar B,\bar A)`
+- the odd coupling coefficient `\kappa_u` as the scalar multiplying the unique exchange generator
+- the damping `\gamma` as a positive hidden-sector elimination term
+
+A variational principle would still be an excellent route, but it is no longer the only clean formulation of the bulk problem.
 
 ### 9.2 The Moment-Map Construction
 
-A more geometric statement of $\kappa_u$: packaging the associator into a 5-vector $\mu^I$ in the vector representation of $\mathrm{Spin}(2,3)$, the coupling is:
+A more geometric statement of $\kappa_u`: package the associator into a 5-vector $\mu^I$ in the vector representation of $\mathrm{Spin}(2,3)`. The signed coupling is then the projection onto the selected transport axis:
 
-$$\kappa_u = \kappa_0 \frac{\sqrt{Q(\mu)}}{\Lambda^3}$$
+$$\kappa_u = \kappa_0 \frac{\langle u,\mu\rangle}{\Lambda^3}$$
 
-where $Q(\mu) = \eta_{IJ}\mu^I\mu^J$ is the $\mathrm{Spin}(2,3)$-invariant quadratic form. The signed version then arises from projecting $\mu^I$ onto the preferred null direction — the transport axis.
+where $Q(\mu) = \eta_{IJ}\mu^I\mu^J$ is still the ambient $\mathrm{Spin}(2,3)$-invariant quadratic form, but the transport classification depends on the signed projection onto the preferred transport axis rather than only on $\sqrt{Q(\mu)}$.
 
-The next refinement: express $\kappa_u$ as a genuine moment-map of the $\mathrm{Sp}(4,\mathbb{R})$ action on the amplitude space, so that the coupling is not merely invariant but is the Hamiltonian generator of branch rotations.
+The next refinement is now more specific: express $\kappa_u$ as the coefficient of the unique compact-equivariant exchange generator `\mathcal M_{\mathrm{ex}} = -\mathrm{Im}_u(AB)`, so that the coupling is not merely invariant but is the Hamiltonian generator of branch exchange.
 
 ### 9.3 Momentum-Dependent Regimes
 

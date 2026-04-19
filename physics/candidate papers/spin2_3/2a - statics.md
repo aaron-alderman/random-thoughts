@@ -146,9 +146,28 @@ $$
 \end{pmatrix},
 $$
 
-which matches the reduced `J^{01}` block form already used in this file, up to the fixed convention for which block is named `T1`. So the toy reduction now matches not only the `2 + 2` dimensions but also the representation-level `U(1) \times SU(2)` action of the maximal compact subgroup.
+which matches the reduced `J^{01}` block form already used in this file. So once time orientation is fixed, the hidden `(-)` phase-charge sector is the parent preimage of the `J^{01}` eigenvalue `-1/2` block, namely `T1`, while the hidden `(+)` sector maps to `T2`. The toy reduction therefore matches not only the `2 + 2` dimensions but also the representation-level `U(1) \times SU(2)` action of the maximal compact subgroup.
 
-The next real test is extension beyond the maximal compact subgroup. Matching `U(1) \times SU(2)` is necessary, but the full `Spin(2,3)` bridge also needs parent-side operators whose reduced image mixes `T1` and `T2` and closes with the compact generators in the right `\mathfrak{k} \oplus \mathfrak{p}` pattern. Until that is shown, the current bridge should be read as a compact-subgroup match, not yet a full group-level derivation.
+The only remaining sign freedom is the global reversal that swaps the oriented choice of `u` together with the reduced time orientation. Within a fixed static convention, there is no further local ambiguity about which hidden charge sector maps to `T1`.
+
+This can now be written as an explicit basis-level intertwiner at the compact level. If `\xi_\pm` are hidden charge eigenvectors, `s_1,s_2` a basis of the visible doublet carrier, and `e_1,\dots,e_4` the fixed reduced spinor basis adapted to the `J^{01}` block split, then the map
+
+$$
+\xi_- \otimes s_1 \mapsto e_1,\quad
+\xi_- \otimes s_2 \mapsto e_2,\quad
+\xi_+ \otimes s_1 \mapsto e_3,\quad
+\xi_+ \otimes s_2 \mapsto e_4
+$$
+
+exactly intertwines the toy parent `U(1)\times SU(2)` action with the reduced maximal compact action. So at the level of `J^{01}` and the spatial rotation triplet, the bridge is no longer only schematic: it has an explicit basis map in the chosen representation.
+
+Even the parent basis choice is now less arbitrary than before. The hidden basis is adapted to the `K_\Pi` eigensplitting and fixed up to overall phase by the charge-flip involution `C_\Pi`; the visible basis is adapted to the quaternionic Cartan generator `L_u` and one ladder direction `L_v`. So the real remaining issue is no longer "which basis should one write down?" but whether these parent-adapted basis-fixing conditions are canonically forced by the octonionic reduction rather than still representing a residual local gauge choice.
+
+More sharply: after those basis-adaptation conditions, the residual freedom is essentially only a common overall phase and the global orientation reversal that swaps `u` together with the reduced time orientation. So the static canonicity problem has become a small residual-stabilizer question rather than a large unrestricted basis-choice problem.
+
+Even better, the same basis also carries the toy hidden charge-flip operators into the off-diagonal block families matching the mixed generators `J^{0\hat a}` and `J^{1\hat a}`. So the toy bridge is now explicit not only for the maximal compact subgroup but for the full toy `4+6` generator set. The remaining issue is no longer matrix-level existence; it is whether that generator set is canonically inherited from the octonionic parent rather than reconstructed in hindsight from the reduced basis.
+
+So the next real test is no longer "can one write the off-diagonal sector at all?" At the toy level one can. The next real test is whether the full `Spin(2,3)` bridge can be made genuinely parent-side, meaning that the operators mixing `T1` and `T2` arise canonically from the octonionic reduction rather than being recognized only after choosing the reduced gamma basis.
 
 At the current toy level, there is now a plausible first candidate for that extension: the real span of off-diagonal Pauli-triplet operators between the two charge doublets has the correct dimension `6` and, up to normalization conventions, closes with the compact generators in the expected `[\mathfrak{k},\mathfrak{p}] \subset \mathfrak{p}` and `[\mathfrak{p},\mathfrak{p}] \subset \mathfrak{k}` pattern. This is still only a toy bridge, but it is the first algebra-level evidence that the parent reduction picture may be able to reproduce more than the maximal compact subgroup.
 

@@ -255,6 +255,7 @@ Assume:
    $$
    P_{\Pi,-}, \qquad P_{\Pi,+}, \qquad P_{\Pi,-}+P_{\Pi,+}=1
    $$
+   with `P_{\Pi,-}` the parent sector whose reduced image is the `J^{01}` eigenvalue `-1/2` block `T1`
 2. **Parent zero-mass support**
    the parent zero-mass generator satisfies
    $$
@@ -322,6 +323,53 @@ This reduces the `N2` blocker substantially. The project does not need to derive
 2. one-sector traversal under the selected zero-mass channel
 3. support-preserving reduction into `T1/T2`
 
+At this point the sign dictionary itself is no longer part of the blocker. Once the static `J^{01}` convention is fixed, `P_{\Pi,-}` is by definition the parent charge sector whose reduced image is `T1`, and `P_{\Pi,+}` maps to `T2`. What remains open is the support statement, not the naming.
+
+There is also a cleaner way to package step 3. If the reduction map is built as a charge-generator intertwiner
+
+$$
+\mathcal{R}_{\mathrm{vec}}\, J_{\Pi,\mathrm{toy}}
+=
+J^{01}\,\mathcal{R}_{\mathrm{vec}},
+$$
+
+with
+
+$$
+J_{\Pi,\mathrm{toy}} = \frac12 K_{\Pi} \otimes \mathbf{1}_{\mathrm{vis}},
+$$
+
+then projector compatibility and support preservation follow from spectral transport rather than from an extra independent postulate. In that stronger formulation, the `N2` burden becomes:
+
+1. phase covariance gives charge-diagonality on the hidden line
+2. oriented one-sector traversal picks the parent `(-)` sector
+3. the `N1` reduction map intertwines `J_{\Pi,\mathrm{toy}}` with `J^{01}`
+
+and then the reduced `T1` support of `H_0` follows.
+
+At the present maturity of the notes, this is no longer merely abstract. The ambient-reduction scaffold now contains an explicit basis-level candidate for `\mathcal{R}_{\mathrm{vec}}` on `W_- \oplus W_+` that exactly intertwines the maximal compact generators in the chosen gamma-matrix basis. So the live open part of step 3 is no longer compact-level existence. It is extension of that explicit intertwiner beyond the maximal compact subgroup to the generators that mix `T1` and `T2`.
+
+Moreover, even the parent basis entering that intertwiner is now partially constrained from the parent side: hidden charge eigenvectors are fixed up to common phase by `K_\Pi` together with `C_\Pi`, and the visible basis is adapted to `L_u` and `L_v` on the quaternionic carrier. So the support-preservation problem is no longer tangled up with a completely free basis choice. The remaining dynamical burden is whether those parent-adapted conditions are enough to force the physically relevant reduction, not whether some basis can be chosen to make the formulas work.
+
+At this point the residual ambiguity is also much smaller than before: essentially one harmless overall phase and one global orientation reversal. So the live dynamical question is not about a large hidden gauge freedom in the reduction map. It is about whether the parent dynamics fixes the remaining orientation choice strongly enough to privilege one-sector traversal.
+
+There is now a cleaner way to state that last point. The reduced observable theory already comes with a forward coarse-grained arrow:
+
+$$
+\rho_1(t) = e^{\,t\mathcal L_1}\rho_1(0),
+\qquad t \ge 0.
+$$
+
+So the residual global reversal should exchange not only the two candidate readout sectors but also the sign of the reduced time parameter. In that language, the remaining dynamical choice is:
+
+- which oriented hidden sector is aligned with the forward reduced semigroup and the direct zero-mass generator?
+
+This yields a minimal forward-orientation criterion:
+
+- choose the orientation for which `H_0` has support on the same sector that carries forward observable semigroup evolution
+
+That still does not derive the choice from the bulk. But it does pin the final `\mathbf Z_2` to a concrete dynamical question rather than leaving it as a loose representational ambiguity.
+
 If 1 and 3 hold, but 2 does not, then the reduced zero-mass operator would still be block diagonal but would generically have support on both `T1` and `T2`.
 If 1, 2, and 3 all hold, then the strict `T1` support of `H_0` follows.
 
@@ -330,8 +378,23 @@ So the live derivation target is now more focused than before:
 - derive charge-diagonality from hidden phase covariance
 - derive one-sector traversal from the chosen direction and zero-mass channel
 - then transport that support through the reduction map
+- finally explain why that same sector is the one carrying forward reduced observable evolution
 
 That is a much cleaner blocker statement than the older undifferentiated demand to "derive why `H_0` lives on `T1`."
+
+There is now also a partial consistency route to step 2. Under `u \mapsto -u`, the hidden charge sectors are exchanged, so they should be read as the two orientations of one hidden line. For a charge-diagonal parent zero-mass operator
+
+$$
+H_{\Pi}^{(0)} = h_- P_{\Pi,-} + h_+ P_{\Pi,+},
+$$
+
+the cases are:
+
+- `h_- = h_+`: the direct channel is blind to orientation
+- `h_- \neq h_+` with both nonzero: there are two direct oriented zero-mass channels
+- exactly one nonzero coefficient: there is one direct oriented zero-mass channel
+
+So if the framework insists that the selected `u` remains an oriented physical choice and that zero-mass readout uses one privileged direct channel, one-sector traversal becomes the minimal consistent realization. This still falls short of a full derivation, but it is stronger than leaving step 2 as a completely free convention.
 
 ---
 
@@ -465,6 +528,119 @@ where $\Lambda$ is the octonionic scale and $\kappa_0$ is the transport coupling
 
 The associator can be packaged as a 5-vector $\mu^I$ in the vector representation of Spin(2,3), with $Q(\mu) = \eta_{IJ}\mu^I\mu^J = |[a,b,c]|^2$. The signed coupling is then the Sp(4,$\mathbb{R}$)-compatible projection of $\mu^I$ onto the transport axis.
 
+### Orientation-forcing target from `\kappa_u`
+
+This signed coupling gives the cleanest current bulk candidate for fixing the last global orientation choice.
+
+Under
+
+$$
+u \mapsto -u,
+$$
+
+one has
+
+$$
+\kappa_u \mapsto -\kappa_u.
+$$
+
+So `\kappa_u` is exactly the kind of odd bulk scalar that can distinguish the two residual global orientations.
+
+This matters because the transport classification already interprets the sign of `\kappa_u` physically:
+
+- `\kappa_u > 0`: constructive branch coupling
+- `\kappa_u < 0`: inverted or frustrated orientation
+
+That suggests a concrete next derivation target:
+
+> show that the sector carrying direct zero-mass readout is precisely the sector for which the bulk orientation makes the observable branch constructive/persistent.
+
+If such a result held, then the last `\mathbf Z_2` would no longer be fixed only by a readout convention. It would be fixed by the sign of a bulk odd scalar already present in the octonionic transport dynamics.
+
+The strongest clean version would be:
+
+1. the residual global reversal flips both the candidate readout sector and the sign of `\kappa_u`
+2. forward observable readout is required to lie on the constructive/persistent side of the transport dynamics
+3. therefore the physically chosen orientation is the one with the corresponding sign of `\kappa_u`
+
+This is not yet derived. But it is a much better target than an abstract request to "fix the last sign somehow," because it names the bulk quantity that would do the job if the programme succeeds.
+
+### Constructive-readout criterion
+
+The `\kappa_u` target can be sharpened one step further using the phase portrait itself.
+
+For a locked direct-readout branch, the phase reference may be chosen so that the readout fixed point sits at
+
+$$
+\Phi_* = 0.
+$$
+
+In that phase-normalized gauge, the order parameter becomes
+
+$$
+\mathcal O_* = \kappa_u,
+$$
+
+and the persistence condition reduces to
+
+$$
+\kappa_u \cosh(2\rho_*) > \gamma.
+$$
+
+In particular, any long-lived direct readout branch in this normalization must satisfy
+
+$$
+\kappa_u > 0.
+$$
+
+So the residual global reversal has a concrete dynamical effect:
+
+- `u \mapsto -u` flips `\kappa_u`
+- hence it exchanges the constructive and inverted orientations of the locked branch
+
+This yields the strongest current bulk-level orientation selector:
+
+> choose the global orientation for which the direct readout branch is phase-normalized to `\Phi_*=0` and lies in the constructive/persistent sector, equivalently `\kappa_u > 0`.
+
+This is stronger than the earlier statement "pick the forward readout arrow" because it ties the readout orientation directly to the exact reduced transport equations.
+
+What remains open is still nontrivial:
+
+- why the observable readout branch should be required to be constructive rather than inverted
+- whether that requirement can be derived from the bulk rather than imposed as the final operational rule
+
+### Conditional `N2` closure
+
+The zero-mass / mixing split is now much closer to closure than it was at the start of this programme.
+
+Already in place, at least conditionally, are:
+
+1. charge-diagonality of the parent zero-mass operator from hidden-line phase covariance
+2. support transport through the reduction map via the charge-generator intertwiner `J_{\Pi,\mathrm{toy}} \to J^{01}`
+3. a fixed sign dictionary sending the parent `(-)` charge sector to `T1`, up to the single global orientation reversal
+
+So the remaining live issue is best stated as one final operational axiom:
+
+> the unique direct observable readout branch is the phase-normalized locked branch lying on the constructive/persistent side of the transport dynamics, equivalently the branch with `\kappa_u > 0`.
+
+Under that axiom, the residual global reversal is fixed by the sign of `\kappa_u`, the direct-support parent sector is the `(-)` charge sector, and the reduced zero-mass operator obeys
+
+$$
+H_0 = P H_0 P,
+\qquad
+QH_0 = 0,
+\qquad
+H_0Q = 0.
+$$
+
+So the honest current state of `N2` is:
+
+- it is no longer blocked by missing projector bookkeeping or by lack of a basis-level intertwiner
+- it is conditionally closed once the constructive-readout axiom is adopted
+- the real remaining derivation burden is to obtain that axiom from the octonionic bulk rather than merely accepting it as the last operational rule
+
+But the last `\mathbf Z_2` is now tied to a concrete condition on the reduced dynamics, not merely to a naming convention.
+
 ### Two-branch evolution equations
 
 The minimal evolution equations preserving transport symmetry and conjugate pairing are:
@@ -475,6 +651,435 @@ $$\dot{B} = (u\omega - \gamma)B + \kappa_u \bar{A}$$
 where $\omega$ is the null transport rotation frequency and $\gamma \geq 0$ is the loss rate into the mixing sector.
 
 **Derivation status.** These are the minimal ansatz consistent with the symmetry requirements. A derivation from a variational principle on the octonionic bulk has not been completed; the equations are structurally motivated. This is an open problem (see open-problems ledger below).
+
+### Minimal `N3` derivation template
+
+The bulk derivation no longer needs to be treated as a blank box. A first real derivation draft would only need to produce the following reduced data.
+
+1. A branch state
+
+$$
+\Psi = (A,B)
+$$
+
+living in a two-component amplitude space over the selected complex line determined by `u`.
+
+2. An anti-linear branch-exchange involution
+
+$$
+\mathcal C(A,B) = (\bar B,\bar A),
+\qquad
+\mathcal C^2 = 1,
+$$
+
+which packages the conjugate pairing already built into the transport ansatz.
+
+3. A reduced first-order generator split into three conceptually distinct pieces:
+
+$$
+\dot{\Psi}
+=
+u\omega\,\Psi
+- \gamma\,\Psi
++ \kappa_u\,\mathcal C\Psi.
+$$
+
+In that split:
+
+- `u\omega` is the transport-axis phase rotation
+- `\gamma` is the positive leakage or coarse-grained loss into the hidden/mixing sector
+- `\kappa_u` is the odd associator moment along the selected axis
+
+So the minimal bulk derivation target is not yet a full field theory. It is the production of:
+
+- a symplectic or first-order pairing on the branch space
+- an odd moment map whose projection onto `u` gives `\kappa_u`
+- a hidden-sector elimination, Rayleigh term, or equivalent positive mechanism producing `\gamma \ge 0`
+- a parent exchange/conjugation operation reducing to `\mathcal C`
+
+If those four ingredients are obtained, then the two-branch equations cease to be only a strong structural ansatz. They become the reduced effective equations forced by the parent bulk data.
+
+What still has to be shown is also now much clearer:
+
+- that `\mathcal C` comes from the parent reduction rather than being inserted by hand
+- that `\kappa_u` is a genuine Hamiltonian or moment-map generator, not merely an invariant scalar projection
+- that `\gamma` emerges from hidden-sector elimination rather than being appended as a free loss term
+
+That is the right first target for `N3`.
+
+### Parent candidate for the exchange involution
+
+The good news is that `\mathcal C` does not have to be conjured out of thin air. The reduction picture already contains a natural parent candidate for it.
+
+On the hidden line, the parent charge-flip operator `C_\Pi` exchanges the two oriented charge sectors,
+
+$$
+C_\Pi \xi_- = \xi_+,
+\qquad
+C_\Pi \xi_+ = \xi_-.
+$$
+
+Once the selected `u`-complex line is fixed, ordinary conjugation on that line reverses the phase orientation. So the simplest reduced candidate for the amplitude-level exchange involution is:
+
+- hidden charge flip from `C_\Pi`
+- combined with conjugation on the selected complex line
+- read in branch variables as `\mathcal C(A,B) = (\bar B,\bar A)`
+
+So one piece of `N3` is already partly scaffolded by `N1/N2`. The live task is not to invent an exchange operation, but to show that the parent charge-flip-plus-conjugation structure is exactly the dynamical involution that appears in the two-branch transport equations.
+
+### Minimal Hamiltonian-Rayleigh scaffold
+
+The two-branch equations can also be sharpened one step further at the effective level. They are not merely an arbitrary pair of first-order equations; they already fit an exact Hamiltonian-plus-dissipation template on the selected `u`-complex line.
+
+Write
+
+$$
+A = a_1 + u a_2,
+\qquad
+B = b_1 + u b_2,
+$$
+
+and package the real branch coordinates as
+
+$$
+X = (a_1,a_2,b_1,b_2)^T \in \mathbb R^4.
+$$
+
+On this branch space, use the canonical `u`-adapted symplectic form
+
+$$
+\Omega_u(X,Y) = X^T J_u Y,
+\qquad
+J_u =
+\begin{pmatrix}
+0 & -1 & 0 & 0 \\
+1 & 0 & 0 & 0 \\
+0 & 0 & 0 & -1 \\
+0 & 0 & 1 & 0
+\end{pmatrix}.
+$$
+
+Then the quadratic effective Hamiltonian
+
+$$
+H_{\mathrm{eff}}
+=
+\frac{\omega}{2}\bigl(|A|^2 + |B|^2\bigr)
+- \kappa_u\,\mathrm{Im}_u(AB)
+$$
+
+together with the Rayleigh functional
+
+$$
+\mathcal R_{\mathrm{eff}}
+=
+\frac{\gamma}{2}\bigl(|A|^2 + |B|^2\bigr)
+$$
+
+produces the branch equations exactly through the Hamilton-Rayleigh system
+
+$$
+\dot X = J_u \nabla H_{\mathrm{eff}} - \nabla \mathcal R_{\mathrm{eff}}.
+$$
+
+Equivalently, since
+
+$$
+\mathrm{Im}_u(AB) = a_1 b_2 + a_2 b_1,
+$$
+
+the effective Hamiltonian is
+
+$$
+H_{\mathrm{eff}}
+=
+\frac{\omega}{2}(a_1^2+a_2^2+b_1^2+b_2^2)
+- \kappa_u(a_1 b_2 + a_2 b_1),
+$$
+
+and one checks directly that
+
+$$
+\dot X
+=
+\begin{pmatrix}
+0 & -\omega & \kappa_u & 0 \\
+\omega & 0 & 0 & -\kappa_u \\
+\kappa_u & 0 & 0 & -\omega \\
+0 & -\kappa_u & \omega & 0
+\end{pmatrix}X
+- \gamma X,
+$$
+
+which is exactly equivalent to
+
+$$
+\dot{A} = (u\omega - \gamma)A + \kappa_u \bar{B},
+\qquad
+\dot{B} = (u\omega - \gamma)B + \kappa_u \bar{A}.
+$$
+
+This is a real gain for `N3`. It means the bulk derivation no longer has to guess the form of the reduced dynamics. It only has to explain why the parent octonionic reduction yields:
+
+- the `u`-adapted symplectic structure on branch space
+- the rotation term `\frac{\omega}{2}(|A|^2+|B|^2)`
+- the odd coupling Hamiltonian `-\kappa_u\,\mathrm{Im}_u(AB)`
+- the positive Rayleigh term `\frac{\gamma}{2}(|A|^2+|B|^2)`
+
+So the transport system has now moved beyond "strong ansatz" in one specific sense: its minimal effective generator is explicit. The remaining problem is to derive that generator from the octonionic parent rather than merely write it down at the branch level.
+
+### Reduced generator slot for `\kappa_u`
+
+The Hamiltonian scaffold also clarifies the geometric role of the signed coupling. On branch space, define the fixed quadratic function
+
+$$
+\mathcal M_{\mathrm{ex}}(A,B)
+:=
+-\mathrm{Im}_u(AB)
+=
+-(a_1 b_2 + a_2 b_1).
+$$
+
+Its Hamiltonian vector field with respect to `\Omega_u` is exactly the conjugate branch-exchange flow:
+
+$$
+X_{\mathcal M_{\mathrm{ex}}}
+=
+J_u \nabla \mathcal M_{\mathrm{ex}}
+=
+(b_1,-b_2,a_1,-a_2)^T,
+$$
+
+which in complex form is precisely
+
+$$
+\dot A = \bar B,
+\qquad
+\dot B = \bar A.
+$$
+
+So at the reduced level, `\kappa_u` is not filling an arbitrary coupling slot. It multiplies a very specific Sp(4,`R`)-compatible quadratic generator:
+
+$$
+H_{\mathrm{cpl}} = \kappa_u\,\mathcal M_{\mathrm{ex}}.
+$$
+
+This sharpens the remaining parent task. The bulk does not need to invent the coupling structure from scratch. It needs to show that the octonionic associator moment projected onto `u` reduces to the coefficient of this already-identified exchange generator.
+
+### Why `\kappa_u` has a unique symmetry-allowed reduced slot
+
+The reduction data make the coupling slot more rigid than it may first appear.
+
+As a representation of the compact subgroup, the branch carrier is
+
+$$
+W
+=
+(\mathbf 1_- \otimes \mathbf 2)\oplus(\mathbf 1_+ \otimes \mathbf 2).
+$$
+
+Consider anti-linear maps `T : W \to W` with the following properties:
+
+- they intertwine the visible `SU(2)` action
+- they swap the hidden `U(1)` charge sectors
+- they square to the identity up to harmless overall phase
+
+Then `T` is unique up to an overall scalar. The reason is simple:
+
+- on the visible doublet factor, any `SU(2)`-equivariant map is proportional to the identity
+- on the hidden factor, charge swapping is already fixed by `C_\Pi`
+- anti-linearity is supplied by conjugation on the selected `u`-complex line
+
+So, up to normalization, the only compact-equivariant anti-linear exchange map is exactly
+
+$$
+\mathfrak C_u = (C_\Pi \otimes \mathbf 1_{\mathrm{vis}})\circ \mathfrak K_u.
+$$
+
+Consequently, the only quadratic Hamiltonian of this symmetry type is proportional to
+
+$$
+\mathcal M_{\mathrm{ex}}(\Psi)
+=
+-\frac12\,\Omega_u(\Psi,\mathfrak C_u\Psi)
+=
+-\mathrm{Im}_u(AB).
+$$
+
+This is a strong narrowing of `N3`. If the parent bulk preserves the compact reduction data and produces any odd scalar moment from the associator projected onto `u`, then that scalar has only one symmetry-allowed reduced destination: it must appear as the coefficient multiplying `\mathcal M_{\mathrm{ex}}`. In that sense, `\kappa_u` is not merely compatible with the exchange generator; it is the unique symmetry-allowed coefficient of that generator.
+
+This can be packaged as a practical descent criterion:
+
+> If the parent bulk produces a reduced quadratic Hamiltonian contribution that is compact-equivariant, anti-linear-exchange odd, and linear in the projected associator moment along `u`, then that contribution must take the form `\kappa_u \mathcal M_{\mathrm{ex}}` up to normalization.
+
+So one clean way to advance `N3` is not to derive the full equations at once, but to show that the parent odd scalar moment satisfies those hypotheses.
+
+### Parent anti-linear candidate for the exchange moment
+
+The reduction data also suggest a clean parent-level source for `\mathcal M_{\mathrm{ex}}`.
+
+Let `\mathfrak K_u` denote conjugation on the selected `u`-complex line, and let `C_\Pi` be the hidden charge-flip involution already fixed by the reduction scaffold. On the branch carrier, define the anti-linear map
+
+$$
+\mathfrak C_u := (C_\Pi \otimes \mathbf 1_{\mathrm{vis}})\circ \mathfrak K_u.
+$$
+
+In the adapted charge basis, this acts exactly as
+
+$$
+\mathfrak C_u(A,B) = (\bar B,\bar A).
+$$
+
+So the reduced exchange involution used in the transport equations is not floating freely; it is the direct descendant of parent charge flip plus `u`-conjugation.
+
+Moreover, the exchange Hamiltonian itself can be written as the symplectic pairing with this anti-linear map:
+
+$$
+\mathcal M_{\mathrm{ex}}(\Psi)
+=
+-\frac12\,\Omega_u(\Psi,\mathfrak C_u\Psi).
+$$
+
+In the real coordinate basis above this reduces exactly to
+
+$$
+\mathcal M_{\mathrm{ex}}(A,B) = -\mathrm{Im}_u(AB).
+$$
+
+This is useful because it localizes the parent task even more sharply. To derive the coupling term, the octonionic bulk does not need to guess a new quadratic form. It needs to produce the already-identified anti-linear exchange map `\mathfrak C_u` together with the `u`-adapted symplectic structure.
+
+### Minimal hidden-sector elimination template for `\gamma`
+
+The damping term can also be narrowed to a standard effective mechanism rather than a free appendage.
+
+Let `X` denote the branch coordinates above, and let `\chi` denote a hidden-sector variable coupled to them. Consider the linear parent-effective system
+
+$$
+\dot X = J_u \nabla H_{\mathrm{eff}} - \lambda K^T \chi,
+\qquad
+\dot \chi = -\Gamma \chi + \lambda K X,
+$$
+
+with `\Gamma` positive on the hidden sector.
+
+In the adiabatic or Markov regime,
+
+$$
+\chi \approx \lambda \Gamma^{-1} K X,
+$$
+
+so substitution gives
+
+$$
+\dot X
+\approx
+J_u \nabla H_{\mathrm{eff}}
+- \lambda^2 K^T \Gamma^{-1} K X.
+$$
+
+If the hidden coupling is isotropic on the branch sector, so that
+
+$$
+\lambda^2 K^T \Gamma^{-1} K = \gamma\,\mathbf 1_4,
+\qquad
+\gamma > 0,
+$$
+
+then the reduced branch equations become exactly
+
+$$
+\dot X = J_u \nabla H_{\mathrm{eff}} - \gamma X,
+$$
+
+which is the real-coordinate form of
+
+$$
+\dot{A} = (u\omega - \gamma)A + \kappa_u \bar B,
+\qquad
+\dot{B} = (u\omega - \gamma)B + \kappa_u \bar A.
+$$
+
+This does not yet derive the actual hidden operator `K` or decay matrix `\Gamma` from the octonionic bulk. But it does show something important: `\gamma` no longer has to be treated as a mysterious phenomenological insertion. It already has a minimal positive effective origin as a Schur-complement or reservoir-elimination term.
+
+### Why scalar `\gamma` is symmetry-natural
+
+The reduction scaffold gives a further reason the damping should appear as a scalar on branch space rather than as an arbitrary `4 \times 4` matrix.
+
+Let
+
+$$
+\mathcal D := \lambda^2 K^T \Gamma^{-1} K
+$$
+
+be the positive reduced dissipation operator obtained after hidden-sector elimination.
+
+If `\mathcal D` commutes with the compact reduction data transported by `\mathcal R_{\mathrm{vec}}`, namely:
+
+- the hidden `U(1)` charge generator
+- the visible `SU(2)` action
+
+then, on the branch space
+
+$$
+(\mathbf 1_- \otimes \mathbf 2) \oplus (\mathbf 1_+ \otimes \mathbf 2),
+$$
+
+it must have the form
+
+$$
+\mathcal D = \gamma_-\,\mathbf 1_2 \oplus \gamma_+\,\mathbf 1_2.
+$$
+
+That is already enough to say the damping is isotropic inside each charge sector. If, in addition, the hidden elimination respects the same charge-exchange symmetry implemented by `\mathfrak C_u`, then the two coefficients must agree:
+
+$$
+\gamma_- = \gamma_+ = \gamma.
+$$
+
+So the full reduced damping becomes
+
+$$
+\mathcal D = \gamma\,\mathbf 1_4.
+$$
+
+This is a meaningful narrowing of `N3`. Scalar damping no longer has to be postulated as a lucky simplification. It is the natural reduced outcome of:
+
+- compact-equivariant hidden elimination
+- plus symmetry under the parent charge-exchange involution
+
+What still remains open is whether the actual octonionic bulk coupling really has those symmetry properties.
+
+### Minimal admissible hidden coupling class
+
+The symmetry argument above can be packaged as a concrete admissibility criterion for parent hidden-sector couplings.
+
+Let the hidden reservoir carry some compact representation `R_{\mathrm{hid}}`, and let the branch space carry the compact reduction action already fixed by the scaffold. A hidden coupling pair `(K,\Gamma)` is minimally admissible if:
+
+1. `K` intertwines the compact action between branch and hidden sectors
+2. `\Gamma` commutes with the hidden compact action
+3. both `K` and `\Gamma` respect a lifted charge-exchange involution compatible with `\mathfrak C_u`
+
+Under these three conditions:
+
+- `\mathcal D = \lambda^2 K^T\Gamma^{-1}K` automatically commutes with the compact action
+- therefore `\mathcal D` is sectorwise scalar: `\gamma_- I_2 \oplus \gamma_+ I_2`
+- charge-exchange symmetry then forces `\gamma_- = \gamma_+`
+
+So one gets
+
+$$
+\mathcal D = \gamma\,\mathbf 1_4
+$$
+
+without having to impose scalar damping by hand.
+
+This gives the next bulk target a much cleaner form. To derive `\gamma`, it is enough to identify a physically credible parent hidden coupling class satisfying those admissibility properties. If such a class cannot be found, then the theory should expect anisotropic damping or charge-sector-dependent leakage rather than the present scalar `\gamma`.
+
+This can also be read as a falsifiable criterion:
+
+> If the actual parent hidden elimination fails compact equivariance, or fails charge-exchange symmetry, then the reduced damping should not be scalar. One should instead expect `\gamma_- \neq \gamma_+` or a more general positive matrix on branch space.
+
+That is useful because it tells us exactly what kind of bulk result would force a revision of the current transport ansatz, rather than merely leaving the status vague.
 
 ### Reduced system
 

@@ -162,6 +162,19 @@ $$
 
 where `P` and `Q` project onto `T1` and `T2`.
 
+At this stage the only acceptable sign ambiguity should be the global one coming from reversing the overall time orientation. Once the static convention
+
+$$
+J^{01}
+= -\frac12
+\begin{pmatrix}
+\mathbf{1}_2 & 0 \\
+0 & -\mathbf{1}_2
+\end{pmatrix}
+$$
+
+is fixed, `T1` is by definition the `J^{01}` eigenspace of eigenvalue `-1/2` and `T2` is the eigenspace of eigenvalue `+1/2`. The parent-to-reduced sign dictionary should therefore be chosen so that `P_{\Pi,-}` maps to `T1` and `P_{\Pi,+}` maps to `T2`.
+
 Then any parent zero-mass operator supported only on the `(-)` sector,
 
 $$
@@ -203,7 +216,7 @@ Second, add the **one-sector traversal principle**:
 - the same selected direction `u` that defines the privileged traversal channel also orients the hidden phase split
 - direct zero-mass traversal uses only one of the two oriented charge sectors
 
-Then, up to the sign convention for which sector is later named `T1`,
+Then the direct zero-mass target is
 
 $$
 H_{\Pi}^{(0)} = h_- P_{\Pi,-}
@@ -211,12 +224,64 @@ H_{\Pi}^{(0)} = h_- P_{\Pi,-}
 H_{\Pi}^{(0)} = P_{\Pi,-} H_{\Pi}^{(0)} P_{\Pi,-}.
 $$
 
+With the static `J^{01}` convention fixed, that sign choice can be made explicit: `P_{\Pi,-}` is the parent sector that maps to `T1`, and `P_{\Pi,+}` maps to `T2`.
+
 This is a real improvement in the blocker structure. The project no longer needs to treat parent zero-mass support on one sector as a single opaque assumption. It can instead say:
 
 1. phase covariance of the hidden line gives charge-diagonality
 2. one-sector traversal is the remaining nontrivial selection principle
 
 What is still not derived is the second step. The live question is why the chosen direction `u` should force one-sector traversal rather than allow both `h_-` and `h_+` to remain active.
+
+### Minimal oriented-channel consistency argument
+
+The remaining selection step can now be narrowed further by using the fact that `u` is meant to be an oriented physical choice, not just an unoriented axis.
+
+Under reversal of the selected direction,
+
+$$
+u \mapsto -u,
+$$
+
+the hidden complex structure changes sign on the local plane:
+
+$$
+J_{\Pi} \mapsto -J_{\Pi},
+\qquad
+K_{\Pi} \mapsto -K_{\Pi},
+$$
+
+so the two hidden charge projectors are exchanged:
+
+$$
+P_{\Pi,-} \leftrightarrow P_{\Pi,+}.
+$$
+
+This means the two charge sectors should be read as the two opposite orientations of the same hidden line, not as two unrelated slots.
+
+Now take the most general charge-diagonal parent zero-mass operator:
+
+$$
+H_{\Pi}^{(0)} = h_- P_{\Pi,-} + h_+ P_{\Pi,+}.
+$$
+
+There are then three qualitatively different cases.
+
+1. If `h_- = h_+`, the direct zero-mass channel is blind to the orientation of `u`; the selected direction survives only as an unoriented axis.
+2. If both `h_-` and `h_+` are nonzero and unequal, the theory has two direct oriented zero-mass channels on the same hidden line.
+3. If exactly one coefficient is nonzero, the selected oriented direction defines one direct zero-mass channel.
+
+The current framework already wants two further things:
+
+- the selected direction `u` should remain physically meaningful after reduction
+- the zero-mass readout channel should be unique rather than doubled
+
+Under those two requirements, the third case is the minimal consistent realization. So one-sector traversal is no longer just an arbitrary extra preference. It is the minimal way for an oriented choice of `u` to survive as a unique direct channel in the reduced theory.
+
+What this still does **not** prove is that the parent geometry by itself fixes the remaining global orientation convention. Once time orientation is fixed, the sign dictionary is fixed with it; the live issue is whether that global convention is geometrically forced or only fixed when one ties the reduction to the observable arrow of readout. But it does mean the remaining live issue is narrower:
+
+- not whether one-sector traversal is pure taste
+- but whether the framework's oriented-direction and unique-channel principles, together with a readout orientation choice, should be accepted as part of the reduction architecture
 
 ### Safe use of this kernel
 
@@ -604,7 +669,7 @@ $$
 P_{\Pi,\pm} = \frac12(1 \pm iJ_{\Pi}),
 $$
 
-up to the project sign convention for which sector is later called `T1`.
+with `P_{\Pi,-}` the `K_{\Pi}=-1` projector and `P_{\Pi,+}` the `K_{\Pi}=+1` projector.
 
 This gives the first parent-level version of the reduced sector split:
 
@@ -617,12 +682,12 @@ $$
 H_{\Pi}^{(0)} = P_{\Pi,-}\, H_{\Pi}^{(0)}\, P_{\Pi,-},
 $$
 
-again up to which sign is identified with `T1`.
+with `P_{\Pi,-}` fixed as the parent preimage of `T1` under the chosen time orientation.
 
 The more refined reading is now:
 
 - phase covariance on `\Pi(u,v)` already forces `H_{\Pi}^{(0)}` to be diagonal in the `P_{\Pi,\pm}` basis
-- the remaining burden is whether the selected direction `u` fixes one of those two sectors as the direct zero-mass traversal sector
+- the remaining burden is whether the selected direction `u` fixes one of those two sectors as the unique direct zero-mass traversal sector
 - if it does, the one-sector support condition above follows immediately
 
 The reduction problem is then no longer completely opaque. It becomes:
@@ -724,15 +789,13 @@ That does **not** prove the reduction map. But it shows that the toy parent book
 
 #### Toy identification pattern
 
-Under this minimal choice, the most economical tentative identification is:
+Under this minimal choice, the natural identification compatible with the static convention is:
 
 $$
 \mathbf{1}_{-} \otimes \mathbf{2} \longmapsto T1,
 \qquad
 \mathbf{1}_{+} \otimes \mathbf{2} \longmapsto T2,
 $$
-
-again up to the sign convention for which phase-charge sector is called `T1`.
 
 So the toy picture is:
 
@@ -827,7 +890,7 @@ $$
 
 with `U(1)_\Pi` weights `-1/2` and `+1/2`.
 
-Under the tentative identifications
+Under the fixed identification
 
 $$
 \mathbf{1}_{-} \otimes \mathbf{2} \longmapsto T1,
@@ -839,6 +902,7 @@ the induced infinitesimal generator on the toy space is
 
 $$
 J_{\Pi,\mathrm{toy}}
+= \frac12 K_{\Pi} \otimes \mathbf{1}_{\mathrm{vis}}
 =
 \begin{pmatrix}
 -\tfrac12\,\mathbf{1}_2 & 0 \\
@@ -846,7 +910,7 @@ J_{\Pi,\mathrm{toy}}
 \end{pmatrix},
 $$
 
-which matches the reduced block form already used for `J^{01}` in the static kernel, up to the fixed project convention for which block is called `T1`.
+which matches the reduced block form already used for `J^{01}` in the static kernel. So once time orientation is fixed there is no extra local sign ambiguity left in the toy reduction: the hidden `(-)` phase-charge sector is exactly the parent preimage of `T1`.
 
 So at the toy representation level:
 
@@ -855,6 +919,576 @@ So at the toy representation level:
 - the product action reproduces the maximal compact `U(1) \times SU(2)` decomposition of the spinor
 
 This is not yet a proof that the full `Spin(2,3)` action is recovered. But it is the first explicit representation-level match, not just a dimensional one.
+
+#### Explicit basis-level intertwiner `\mathcal{R}_{\mathrm{vec}}`
+
+The toy reduction can now be written explicitly on basis vectors.
+
+Choose a hidden charge basis
+
+$$
+K_{\Pi}\xi_- = -\xi_-,
+\qquad
+K_{\Pi}\xi_+ = +\xi_+,
+$$
+
+and a visible basis `s_1,s_2` of `S_{\mathrm{vis}} \cong \mathbf{C}^2`.
+
+Then define the ordered parent basis
+
+$$
+f_1 := \xi_- \otimes s_1,
+\qquad
+f_2 := \xi_- \otimes s_2,
+\qquad
+f_3 := \xi_+ \otimes s_1,
+\qquad
+f_4 := \xi_+ \otimes s_2.
+$$
+
+On the reduced side, let `e_1,e_2,e_3,e_4` be the standard spinor basis adapted to the fixed `J^{01}` block decomposition, so that
+
+$$
+T1 = \mathrm{span}_{\mathbf{C}}\{e_1,e_2\},
+\qquad
+T2 = \mathrm{span}_{\mathbf{C}}\{e_3,e_4\}.
+$$
+
+Define the vector-level reduction map by
+
+$$
+\mathcal{R}_{\mathrm{vec}}(f_a) = e_a,
+\qquad a=1,2,3,4.
+$$
+
+In this basis, the parent toy charge generator is exactly
+
+$$
+J_{\Pi,\mathrm{toy}}
+= \frac12 K_{\Pi}\otimes \mathbf{1}_{\mathrm{vis}}
+=
+\begin{pmatrix}
+-\tfrac12\,\mathbf{1}_2 & 0 \\
+0 & +\tfrac12\,\mathbf{1}_2
+\end{pmatrix},
+$$
+
+so one has the exact intertwining relation
+
+$$
+\mathcal{R}_{\mathrm{vec}}\, J_{\Pi,\mathrm{toy}}
+=
+J^{01}\,\mathcal{R}_{\mathrm{vec}}.
+$$
+
+This is stronger than the earlier abstract compatibility statement: in the chosen basis, the parent and reduced charge generators are literally the same matrix.
+
+#### Minimal parent-adapted basis-fixing conditions
+
+The basis above should not be thought of as completely arbitrary. The parent toy structures already constrain it strongly.
+
+On the hidden side, the charge operator `K_{\Pi}` fixes the decomposition
+
+$$
+\Pi(u,v)_{\mathbf C} = \mathbf C\,\xi_- \oplus \mathbf C\,\xi_+,
+\qquad
+K_{\Pi}\xi_- = -\xi_-,
+\qquad
+K_{\Pi}\xi_+ = +\xi_+.
+$$
+
+This still leaves a phase freedom on each eigenspace. The parent charge-flip involution removes the relative ambiguity: require
+
+$$
+C_\Pi \xi_- = \xi_+,
+\qquad
+C_\Pi \xi_+ = \xi_-.
+$$
+
+That fixes the hidden basis up to a common overall phase, which is harmless at the toy level.
+
+On the visible side, the quaternionic `SU(2)` structure supplies an equally natural adapted basis. Regard `H(u,v)` as a complex two-dimensional space over `\mathbf C_u` and choose `s_1,s_2` so that
+
+$$
+L_u s_1 = s_1\,u,
+\qquad
+L_u s_2 = -\,s_2\,u,
+$$
+
+so `s_1,s_2` are opposite-weight eigenvectors for the visible Cartan generator `L_u`. Then fix the remaining exchange/phase ambiguity by requiring
+
+$$
+L_v s_1 = s_2,
+\qquad
+L_v s_2 = -\,s_1.
+$$
+
+Once these conditions are imposed, the ordered parent basis
+
+$$
+f_1 = \xi_- \otimes s_1,\quad
+f_2 = \xi_- \otimes s_2,\quad
+f_3 = \xi_+ \otimes s_1,\quad
+f_4 = \xi_+ \otimes s_2
+$$
+
+is no longer chosen merely by hindsight from the reduced gamma basis. It is the minimal basis adapted simultaneously to
+
+- hidden phase charge `K_{\Pi}`
+- hidden charge flip `C_\Pi`
+- visible Cartan generator `L_u`
+- one visible ladder direction `L_v`
+
+The residual freedom is now much smaller:
+
+- a common global phase
+- the global reversal that swaps the orientation of `u` together with time orientation
+
+So the live question is narrower than before. The notes no longer need to ask "how do we choose any basis at all?" The sharper question is whether these parent-adapted basis-fixing conditions are themselves forced canonically by the octonionic reduction, or whether they remain the last local gauge choice.
+
+#### Residual stabilizer after basis adaptation
+
+It is useful to say exactly what survives after the basis-fixing conditions above.
+
+Before adaptation, the toy carrier
+
+$$
+\Pi(u,v)_{\mathbf C} \otimes S_{\mathrm{vis}}
+$$
+
+admits independent basis changes on the hidden and visible factors. After imposing:
+
+- hidden charge diagonalization by `K_\Pi`
+- relative hidden phase fixing by `C_\Pi`
+- visible Cartan diagonalization by `L_u`
+- visible ladder normalization by `L_v`
+
+the remaining stabilizer is very small.
+
+At the toy level it reduces to:
+
+1. a common overall complex phase
+   $$
+   f_a \mapsto e^{i\theta} f_a
+   $$
+   which does not change any generator matrices
+2. the global orientation reversal
+   $$
+   u \mapsto -u,
+   \qquad
+   J_\Pi \mapsto -J_\Pi,
+   \qquad
+   K_\Pi \mapsto -K_\Pi,
+   \qquad
+   T1 \leftrightarrow T2
+   $$
+   provided the reduced time orientation is reversed with it
+
+So the residual ambiguity is not a large hidden basis group anymore. It is essentially:
+
+- one harmless `U(1)` phase
+- one global `\mathbf Z_2` orientation choice
+
+That is a real structural gain. The canonicity problem has become:
+
+> can the octonionic parent reduction fix the remaining global `\mathbf Z_2` orientation choice and the adapted basis up to harmless overall phase?
+
+This is a much sharper question than the earlier vague request for a "canonical basis."
+
+#### Readout orientation principle
+
+The remaining `\mathbf Z_2` ambiguity can now be stated in a cleaner form.
+
+At the toy level, the parent reduction data determine everything except the simultaneous reversal
+
+$$
+u \mapsto -u,
+\qquad
+K_\Pi \mapsto -K_\Pi,
+\qquad
+T1 \leftrightarrow T2,
+\qquad
+t \mapsto -t.
+$$
+
+So the residual ambiguity is not a large internal gauge freedom. It is the choice of which global orientation is to be called the physical forward/readout orientation.
+
+This suggests the following disciplined principle:
+
+> Physical orientation is fixed by requiring that the direct zero-mass readout channel and the forward coarse-grained evolution arrow agree.
+
+In the present framework that means:
+
+1. choose the time orientation for which the reduced semigroup acts forward on the observed sector
+2. choose the hidden orientation so that its `(-)` charge sector maps to that same forward readout sector
+3. call the resulting reduced sector `T1`
+
+Under this principle, the residual `\mathbf Z_2` is not an extra unresolved hidden symmetry of the observable theory. It is the relative orientation between:
+
+- the parent hidden line
+- the reduced time orientation
+- the observable readout arrow
+
+What this does and does not achieve:
+
+- it does explain why the last sign choice belongs with epistemics and dynamics rather than pure statics
+- it does reduce the canonicity gap to a relative orientation principle
+- it does **not** yet derive that principle from the octonionic parent alone
+
+So the honest current closure is:
+
+- kinematics fixes the reduction almost completely
+- the last `\mathbf Z_2` is fixed once the framework chooses which orientation counts as forward observable readout
+- whether that final step can be derived rather than chosen remains open
+
+#### Minimal forward-semigroup criterion
+
+The readout orientation principle can be stated more concretely in dynamical language.
+
+The reduced observable theory is not just a static sector label. In the weak-coupling regime it is supposed to carry a forward coarse-grained evolution law of semigroup type:
+
+$$
+\rho_1(t) = e^{\,t\mathcal L_1}\rho_1(0),
+\qquad
+t \ge 0,
+$$
+
+on the observed sector, with `\mathcal L_1` the reduced generator and `H_0` its direct zero-mass part.
+
+Under the residual global reversal,
+
+$$
+u \mapsto -u,
+\qquad
+T1 \leftrightarrow T2,
+\qquad
+t \mapsto -t,
+$$
+
+the two oriented candidate readout sectors are exchanged together with the direction of the reduced time arrow.
+
+So the remaining `\mathbf Z_2` can be fixed by the following minimal criterion:
+
+> choose the global orientation for which the direct zero-mass channel, the projected observable sector, and the forward reduced semigroup are all aligned.
+
+Equivalently, the sector called `T1` is not merely the `J^{01}` block of eigenvalue `-1/2`; it is the block on which the framework places:
+
+- direct zero-mass support
+- observable readout
+- forward reduced evolution for `t \ge 0`
+
+This is stronger than a naming convention but weaker than a derivation from pure parent geometry. It says the last global orientation choice is fixed by demanding consistency between:
+
+- parent hidden orientation
+- reduced charge sector
+- observational arrow
+- coarse-grained dynamical arrow
+
+So the live open question is now very specific:
+
+- can the bulk parent dynamics force this alignment, or must it remain a final framework principle?
+
+One natural candidate for such a bulk forcing already exists elsewhere in the framework: the signed transport coupling `\kappa_u`. Because `\kappa_u` is odd under `u \mapsto -u`, any derivation that ties forward direct readout to the constructive/persistent side of the transport dynamics would automatically turn `\kappa_u` into an orientation selector rather than just a classification parameter.
+
+The reduced transport equations sharpen this further. In the phase convention where the direct locked readout branch is normalized to `\Phi_*=0`, the persistence condition becomes
+
+$$
+\kappa_u \cosh(2\rho_*) > \gamma,
+$$
+
+so direct long-lived readout requires `\kappa_u > 0`. Under the residual global reversal `u \mapsto -u`, `\kappa_u` changes sign and constructive versus inverted orientation are exchanged. So the current best bulk-level orientation selector is:
+
+- the physical readout orientation is the one for which the direct readout branch is constructive/persistent in the phase-normalized gauge
+
+This is still not derived from the octonionic parent alone, but it is much sharper than leaving the last sign as a purely representational leftover.
+
+That also means the `N2` blocker is no longer spread across several equally vague burdens. Three pieces are already conditionally in place:
+
+1. hidden-line phase covariance makes the parent zero-mass operator charge diagonal
+2. the reduction map is built to intertwine the parent charge generator with `J^{01}`
+3. the residual sign dictionary is fixed up to the single global orientation reversal isolated above
+
+So the live open step is now best stated as one final operational axiom:
+
+> the unique direct readout branch is the phase-normalized locked branch lying on the constructive/persistent side of the transport dynamics, equivalently the branch with `\kappa_u > 0`.
+
+If that axiom is accepted, then the remaining `\mathbf Z_2` is fixed by the sign of `\kappa_u`, the chosen direct-support sector is identified with the parent `(-)` charge sector, and the reduced zero-mass operator satisfies
+
+$$
+H_0 = P H_0 P,
+\qquad
+QH_0 = 0,
+\qquad
+H_0Q = 0.
+$$
+
+So the honest current closure is:
+
+- `N2` is conditionally closed once the constructive-readout axiom is adopted
+- the real remaining derivation burden is to obtain that axiom from the octonionic bulk rather than merely accept it as the final operational rule
+- this is a much more disciplined stopping point than the older situation, where the whole `T1` selection looked primitive
+
+The same can be done for the compact `SU(2)` sector. Define parent visible generators
+
+$$
+\widetilde S_{23} := \mathbf{1}_{\mathrm{hid}} \otimes \Big(-\frac12\sigma^3\Big),
+\qquad
+\widetilde S_{34} := \mathbf{1}_{\mathrm{hid}} \otimes \Big(-\frac12\sigma^1\Big),
+\qquad
+\widetilde S_{42} := \mathbf{1}_{\mathrm{hid}} \otimes \Big(-\frac12\sigma^2\Big).
+$$
+
+In the gamma-matrix basis already chosen in the static kernel, these satisfy
+
+$$
+\mathcal{R}_{\mathrm{vec}}\, \widetilde S_{23}
+=
+J^{23}\,\mathcal{R}_{\mathrm{vec}},
+$$
+$$
+\mathcal{R}_{\mathrm{vec}}\, \widetilde S_{34}
+=
+J^{34}\,\mathcal{R}_{\mathrm{vec}},
+$$
+$$
+\mathcal{R}_{\mathrm{vec}}\, \widetilde S_{42}
+=
+J^{42}\,\mathcal{R}_{\mathrm{vec}}.
+$$
+
+So the present status is sharper than before:
+
+- an explicit `\mathcal{R}_{\mathrm{vec}}` exists at the toy level
+- it exactly intertwines the whole maximal compact `U(1)\times SU(2)` action in the chosen basis
+- the sign dictionary and the `T1/T2` sector image are therefore no longer abstract desiderata at this level
+
+What remains open is not compact-level existence but canonical parent interpretation: why this toy basis map and this toy generator set should be the ones singled out by the octonionic parent reduction.
+
+#### Explicit off-diagonal image in the same basis
+
+The same basis map also makes the toy noncompact sector explicit.
+
+In the hidden charge basis `\xi_-,\xi_+`, define the charge-flip operators
+
+$$
+C_{\mathrm{hid}} :=
+\begin{pmatrix}
+0 & 1 \\
+1 & 0
+\end{pmatrix},
+\qquad
+D_{\mathrm{hid}} :=
+\begin{pmatrix}
+0 & -i \\
+i & 0
+\end{pmatrix}.
+$$
+
+On the visible carrier, define
+
+$$
+\tau_2 := \sigma^1,
+\qquad
+\tau_3 := \sigma^2,
+\qquad
+\tau_4 := \sigma^3.
+$$
+
+Then the parent toy off-diagonal generators are
+
+$$
+\widetilde X_{\hat a} := C_{\mathrm{hid}} \otimes \tau_{\hat a},
+\qquad
+\widetilde Y_{\hat a} := D_{\mathrm{hid}} \otimes \tau_{\hat a},
+\qquad
+\hat a \in \{2,3,4\}.
+$$
+
+Under the same ordered basis `f_1,\dots,f_4`, these are exactly the block matrices
+
+$$
+\widetilde X_{\hat a}
+=
+\begin{pmatrix}
+0 & \tau_{\hat a} \\
+\tau_{\hat a} & 0
+\end{pmatrix},
+\qquad
+\widetilde Y_{\hat a}
+=
+\begin{pmatrix}
+0 & -i\tau_{\hat a} \\
+i\tau_{\hat a} & 0
+\end{pmatrix}.
+$$
+
+So the vector-level intertwiner carries them directly into the reduced off-diagonal families:
+
+$$
+\mathcal{R}_{\mathrm{vec}}\, \widetilde X_{\hat a}\, \mathcal{R}_{\mathrm{vec}}^{-1}
+=
+\begin{pmatrix}
+0 & \tau_{\hat a} \\
+\tau_{\hat a} & 0
+\end{pmatrix},
+$$
+$$
+\mathcal{R}_{\mathrm{vec}}\, \widetilde Y_{\hat a}\, \mathcal{R}_{\mathrm{vec}}^{-1}
+=
+\begin{pmatrix}
+0 & -i\tau_{\hat a} \\
+i\tau_{\hat a} & 0
+\end{pmatrix}.
+$$
+
+In the chosen gamma-matrix basis, the reduced mixed generators satisfy the exact identities
+
+$$
+J^{0\hat a}
+=
+-\frac{i}{2}\,
+\mathcal{R}_{\mathrm{vec}}\, \widetilde X_{\hat a}\, \mathcal{R}_{\mathrm{vec}}^{-1},
+\qquad
+J^{1\hat a}
+=
+\frac{i}{2}\,
+\mathcal{R}_{\mathrm{vec}}\, \widetilde Y_{\hat a}\, \mathcal{R}_{\mathrm{vec}}^{-1},
+\qquad
+\hat a \in \{2,3,4\}.
+$$
+
+So at the toy matrix level the explicit intertwiner already reaches the whole `10`-generator set:
+
+- compact sector: exact
+- off-diagonal sector: exact
+- Cartan-style `4+6` split: exact
+
+This materially changes the status of the reduction programme. The live open problem is no longer whether one can write down a basis-level map whose image has the right matrices. One can. The live problem is whether these toy parent operators arise canonically from the octonionic parent geometry rather than being selected after the fact in the reduced basis.
+
+#### First `N3` descent consequences from the reduction map
+
+The same reduction data now also suggest a first disciplined route into the two-branch dynamics.
+
+On the branch carrier, let `\mathfrak K_u` denote conjugation on the selected `u`-complex line, and define the anti-linear exchange map
+
+$$
+\mathfrak C_u := (C_\Pi \otimes \mathbf 1_{\mathrm{vis}})\circ \mathfrak K_u.
+$$
+
+In the adapted hidden charge basis this acts as
+
+$$
+\mathfrak C_u(A,B) = (\bar B,\bar A),
+$$
+
+so it is exactly the reduced exchange involution already needed in the two-branch transport system.
+
+If `\Omega_u` is the `u`-adapted symplectic form on branch space, then the quadratic exchange generator may be written as
+
+$$
+\mathcal M_{\mathrm{ex}}(\Psi)
+=
+-\frac12\,\Omega_u(\Psi,\mathfrak C_u\Psi),
+$$
+
+which reduces in branch coordinates to
+
+$$
+\mathcal M_{\mathrm{ex}}(A,B) = -\mathrm{Im}_u(AB).
+$$
+
+So the coupling slot needed for `\kappa_u` is no longer mysterious at the reduced level. The parent task is now specifically to show that the octonionic associator moment projected onto `u` descends to the coefficient of this exchange generator.
+
+There is also a useful uniqueness statement here. On
+
+$$
+(\mathbf 1_- \otimes \mathbf 2)\oplus(\mathbf 1_+ \otimes \mathbf 2),
+$$
+
+any anti-linear map that:
+
+- intertwines the visible `SU(2)` action
+- swaps the hidden `U(1)` charge sectors
+- squares to the identity up to overall phase
+
+is unique up to scalar. The visible part is forced to be the identity by irreducibility of the doublet, the hidden part is forced to be `C_\Pi`, and anti-linearity is forced to come from `u`-conjugation. So the reduced exchange map `\mathfrak C_u` is not just a convenient example; it is the unique compact-equivariant anti-linear exchange map of this type.
+
+Consequently, the exchange generator
+
+$$
+\mathcal M_{\mathrm{ex}}(\Psi)
+=
+-\frac12\,\Omega_u(\Psi,\mathfrak C_u\Psi)
+$$
+
+is the unique quadratic Hamiltonian slot available for an odd parent scalar moment. This is why the associator projection onto `u` can only descend into the coefficient called `\kappa_u` if the compact reduction data are respected.
+
+Equivalently:
+
+> any reduced quadratic Hamiltonian contribution that is compact-equivariant, odd under the anti-linear exchange structure, and linear in the projected parent associator moment along `u` must be proportional to `\mathcal M_{\mathrm{ex}}`.
+
+So the live parent task is now very specific: show that the octonionic associator moment satisfies those symmetry and linearity hypotheses after reduction.
+
+The same reduction map also explains why scalar damping is a natural target rather than an arbitrary simplification. Let
+
+$$
+\mathcal D := \lambda^2 K^T \Gamma^{-1} K
+$$
+
+be the positive reduced operator obtained after hidden-sector elimination.
+
+If `\mathcal D` commutes with the compact reduction data, then on
+
+$$
+(\mathbf 1_- \otimes \mathbf 2)\oplus(\mathbf 1_+ \otimes \mathbf 2)
+$$
+
+it must be of the form
+
+$$
+\mathcal D = \gamma_-\,\mathbf 1_2 \oplus \gamma_+\,\mathbf 1_2.
+$$
+
+If it also respects the parent charge-exchange symmetry implemented by `\mathfrak C_u`, then
+
+$$
+\gamma_- = \gamma_+ = \gamma,
+$$
+
+and therefore
+
+$$
+\mathcal D = \gamma\,\mathbf 1_4.
+$$
+
+So a scalar `\gamma` on the branch equations is the natural reduced outcome of:
+
+- compact-equivariant hidden elimination
+- plus charge-exchange symmetry
+
+rather than a lucky simplification imposed after the fact.
+
+This can be phrased as a concrete admissibility criterion for parent hidden couplings. Let `(K,\Gamma)` denote the parent-hidden coupling and decay data. If:
+
+1. `K` intertwines the compact action between branch and hidden sectors
+2. `\Gamma` commutes with the hidden compact action
+3. both respect a lifted charge-exchange involution compatible with `\mathfrak C_u`
+
+then the reduced dissipation operator
+
+$$
+\mathcal D = \lambda^2 K^T \Gamma^{-1} K
+$$
+
+must reduce to
+
+$$
+\mathcal D = \gamma\,\mathbf 1_4.
+$$
+
+So the scalar damping used in the transport equations is the natural reduced consequence of a whole symmetry class of hidden eliminations, not merely a lucky matrix ansatz.
+
+This also tells us what failure would look like. If the actual hidden elimination breaks compact equivariance or charge-exchange symmetry, then the reduced damping should not collapse to scalar `\gamma\,\mathbf 1_4`. The observable consequence would be anisotropic or charge-sector-dependent leakage instead of the present uniform damping term.
 
 #### Beyond the maximal compact subgroup
 
@@ -865,6 +1499,8 @@ K = U(1) \times SU(2)
 $$
 
 to more of the full `Spin(2,3)` action.
+
+At the toy matrix level, the answer is now yes. What remains open is whether that extension is genuinely parent-side and canonical rather than only an exact reconstruction in the chosen reduced basis.
 
 At the Lie-algebra level one has the Cartan decomposition
 
@@ -1547,6 +2183,7 @@ For Route A, the reduction map should satisfy at least:
    \qquad
    \mathcal{R}_{\mathrm{op}}(P_{\Pi,+}) = Q
    $$
+   with `P` the `J^{01}` eigenspace projector of eigenvalue `-1/2` and `Q` the projector of eigenvalue `+1/2`
 
 2. **Zero-mass support compatibility**
    $$
@@ -1572,6 +2209,61 @@ QH_0 = H_0Q = 0
 $$
 
 follow by functorial transport of support, rather than by a separate ansatz.
+
+#### Support preservation from a charge-generator intertwiner
+
+The compatibility conditions above can be repackaged more economically.
+
+Let
+
+$$
+J_{\Pi,\mathrm{toy}} = \frac12 K_{\Pi} \otimes \mathbf{1}_{\mathrm{vis}}
+$$
+
+on the parent toy space and let `J^{01}` be the fixed reduced charge generator on `\mathcal{H}_{\mathrm{spin}}`. If the vector-level reduction map satisfies the intertwining condition
+
+$$
+\mathcal{R}_{\mathrm{vec}}\, J_{\Pi,\mathrm{toy}}
+=
+J^{01}\, \mathcal{R}_{\mathrm{vec}},
+$$
+
+then the whole spectral dictionary follows automatically.
+
+Because `W_-` and `W_+` are the eigenspaces of `J_{\Pi,\mathrm{toy}}` with eigenvalues `-1/2` and `+1/2`, while `T1` and `T2` are the eigenspaces of `J^{01}` with the same eigenvalues, the intertwining condition forces
+
+$$
+\mathcal{R}_{\mathrm{vec}}(W_-) \subseteq T1,
+\qquad
+\mathcal{R}_{\mathrm{vec}}(W_+) \subseteq T2.
+$$
+
+If `\mathcal{R}_{\mathrm{vec}}` is onto the reduced branch, this becomes
+
+$$
+\mathcal{R}_{\mathrm{vec}}(W_-) = T1,
+\qquad
+\mathcal{R}_{\mathrm{vec}}(W_+) = T2.
+$$
+
+Then, at the operator level,
+
+$$
+\mathcal{R}_{\mathrm{op}}(P_{\Pi,-}) = P,
+\qquad
+\mathcal{R}_{\mathrm{op}}(P_{\Pi,+}) = Q,
+$$
+
+and any parent operator supported only on `W_-` reduces automatically to an operator supported only on `T1`.
+
+So a stronger but cleaner Route A statement is available:
+
+- if the reduction intertwines the parent and reduced charge generators
+- and the parent zero-mass operator is supported on `W_-`
+
+then the reduced zero-mass operator support identities follow without needing an extra no-spurious-support postulate.
+
+This is useful because it pushes part of the old `N2` burden back into the `N1` reduction problem, where it belongs. The live question is no longer "can the reduction somehow preserve support?" but "can the reduction be built as a charge-generator intertwiner?"
 
 #### What remains underspecified
 

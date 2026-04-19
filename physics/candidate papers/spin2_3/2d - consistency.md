@@ -99,6 +99,72 @@ So the kernel form is:
 
 This prevents overstating what has actually been shown.
 
+### Channel-selection consistency
+
+There is also a narrower consistency issue before one even reaches the Markov regime:
+
+- does the selected direction define one direct zero-mass channel, or more than one?
+
+In the current reduction picture, the hidden line splits into two charge sectors that are exchanged by
+
+$$
+u \mapsto -u.
+$$
+
+So they are best read as the two opposite orientations of the same hidden line. Once phase covariance has forced the parent zero-mass operator to be charge diagonal,
+
+$$
+H_{\Pi}^{(0)} = h_- P_{\Pi,-} + h_+ P_{\Pi,+},
+$$
+
+the remaining possibilities are:
+
+- `h_- = h_+`: direct traversal is blind to the orientation of `u`
+- `h_- \neq h_+` with both nonzero: direct traversal uses two oriented channels
+- exactly one nonzero coefficient: direct traversal uses one oriented channel
+
+If the framework wants both of the following:
+
+1. the selected direction `u` to remain physically meaningful as an oriented choice
+2. the observable zero-mass channel to be unique
+
+then one-sector traversal is the minimal selection-consistent outcome.
+
+This does not yet prove one-sector traversal from pure mathematics alone. But it does show that, within the current architecture, one-sector support is not an arbitrary embellishment. It is the only option that preserves both oriented directionality and a unique direct readout channel.
+
+There is also a further narrowing of the remaining ambiguity. After the parent-adapted basis conditions are imposed, the only nontrivial residual freedom is the simultaneous global orientation reversal of hidden line and time direction. So the consistency problem is no longer "which of many reductions should be chosen?" It is:
+
+- which global orientation should count as the physical forward/readout orientation?
+
+This is useful because it localizes the unfinished work. Pure algebra does not obviously remove that last `\mathbf Z_2`; the best current route is to tie it to the same forward semigroup/readout arrow that defines the observable sector in the reduced theory.
+
+So the consistency question can now be written more sharply:
+
+- does the same sector carry direct zero-mass support, observable readout, and forward reduced semigroup evolution?
+
+If yes, the residual global orientation is fixed consistently.
+If not, the framework would be assigning incompatible meanings to its last remaining `\mathbf Z_2` choice.
+
+The transport system suggests one more consistency check of the same type:
+
+- in the phase normalization where the direct readout branch sits at `\Phi_*=0`, does that same sector lie on the constructive/persistent side, hence have `\kappa_u > 0`?
+
+If yes, the residual orientation is being fixed coherently by readout, semigroup direction, and transport stability all at once.
+If not, the framework would be mixing incompatible orientation conventions across its static, dynamical, and epistemic layers.
+
+So the consistency problem has effectively collapsed to one final question:
+
+- is the unique direct readout channel required to be the constructive/persistent one?
+
+If yes, then the same rule fixes:
+
+- which parent orientation is physical
+- which reduced block is called `T1`
+- which sector carries direct zero-mass support
+- which sector carries forward observable evolution
+
+If not, then the last `\mathbf Z_2` remains genuinely free and the current `T1` identification stays only conditionally fixed.
+
 ---
 
 ## Matter-content consistency
