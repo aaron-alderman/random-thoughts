@@ -609,21 +609,60 @@ What remains open is still nontrivial:
 - why the observable readout branch should be required to be constructive rather than inverted
 - whether that requirement can be derived from the bulk rather than imposed as the final operational rule
 
+### Physical content of the orientation axiom
+
+The constructive/inverted distinction has a concrete geometric reading that converts the orientation axiom from a pure sign convention into a statement about the branch amplitudes.
+
+At the symmetric (`\rho = 0`) locked fixed point, the persistence condition gives
+
+$$
+\kappa_u \cos\Phi_* = \gamma > 0.
+$$
+
+The real part of the transport-coherence invariant at the fixed point is
+
+$$
+\mathrm{Re}_u(AB)\big|_{*} = R^2 \cos\Phi_*.
+$$
+
+Substituting the persistence condition:
+
+$$
+\mathrm{Re}_u(AB)\big|_{*} = \frac{R^2\,\gamma}{\kappa_u}.
+$$
+
+**Constructive class (`\kappa_u > 0`).** The fixed-point phase satisfies `\cos\Phi_* > 0`, so `\mathrm{Re}_u(AB) > 0`. The two bracket completions `A = P_u((ab)c)` and `B = P_u(a(bc))` interfere constructively at the fixed point: their product `AB` has positive real part on the `u`-line.
+
+**Inverted class (`\kappa_u < 0`).** The fixed-point phase satisfies `\cos\Phi_* < 0`, so `\mathrm{Re}_u(AB) < 0`. The two bracket completions interfere destructively: their product has negative real part on the `u`-line.
+
+So the orientation axiom can be stated without reference to a gauge convention:
+
+> **Orientation axiom.** The observable direct readout selects the branch class for which the two octonionic bracket completions are in constructive interference at the transport fixed point, i.e., `\mathrm{Re}_u(AB)|_* > 0`. This selects the constructive class and forces `\kappa_u > 0`.
+
+This is a physically motivated statement: constructive interference means the two bracketings reinforce each other, sustaining the transport amplitude. Destructive interference means they partially cancel, which is the physically disfavoured outcome for a stable readout channel.
+
+**Why this is still an axiom, not a derivation.** The statement above identifies what `\kappa_u > 0` means geometrically, but it does not derive from the octonionic bulk which states have `\mathrm{Re}_u(AB) > 0` at their transport fixed points. That would require tracking specific octonionic data `(a,b,c)` through the reduction to the branch fixed point, which is a further derivation task. At present, `\kappa_u > 0` is the cleanly named final orientation axiom, with its geometric content now explicit.
+
 ### Conditional `N2` closure
 
-The zero-mass / mixing split is now much closer to closure than it was at the start of this programme.
+The zero-mass / mixing split is now conditionally closed.
 
-Already in place, at least conditionally, are:
+In place without further assumption:
 
 1. charge-diagonality of the parent zero-mass operator from hidden-line phase covariance
 2. support transport through the reduction map via the charge-generator intertwiner `J_{\Pi,\mathrm{toy}} \to J^{01}`
 3. a fixed sign dictionary sending the parent `(-)` charge sector to `T1`, up to the single global orientation reversal
+4. the coupling term `\kappa_u \mathcal M_{\mathrm{ex}}` is symmetry-forced: `\kappa_u` is `K`-invariant and exchange-odd, so by the uniqueness argument it can only descend as the coefficient of `\mathcal M_{\mathrm{ex}}`
 
-So the remaining live issue is best stated as one final operational axiom:
+The remaining live issue is one named final axiom:
 
-> the unique direct observable readout branch is the phase-normalized locked branch lying on the constructive/persistent side of the transport dynamics, equivalently the branch with `\kappa_u > 0`.
+> **Orientation axiom.** The unique direct observable readout branch is the constructive locked branch — the one for which `\mathrm{Re}_u(AB)|_* > 0` at the transport fixed point, equivalently `\kappa_u > 0`.
 
-Under that axiom, the residual global reversal is fixed by the sign of `\kappa_u`, the direct-support parent sector is the `(-)` charge sector, and the reduced zero-mass operator obeys
+Under that axiom:
+
+- the residual global `\mathbf Z_2` is fixed by the sign of `\kappa_u`
+- the direct-support parent sector is the `(-)` charge sector
+- the reduced zero-mass operator satisfies
 
 $$
 H_0 = P H_0 P,
@@ -633,13 +672,7 @@ QH_0 = 0,
 H_0Q = 0.
 $$
 
-So the honest current state of `N2` is:
-
-- it is no longer blocked by missing projector bookkeeping or by lack of a basis-level intertwiner
-- it is conditionally closed once the constructive-readout axiom is adopted
-- the real remaining derivation burden is to obtain that axiom from the octonionic bulk rather than merely accepting it as the last operational rule
-
-But the last `\mathbf Z_2` is now tied to a concrete condition on the reduced dynamics, not merely to a naming convention.
+**Honest current state.** `N2` is conditionally closed. The projector bookkeeping, basis-level intertwiner, charge-generator intertwining, and coupling slot are all in place. The one remaining open task is to derive the orientation axiom (`\kappa_u > 0`) from the octonionic bulk geometry — or to accept it as the named final axiom and move the programme forward. The project can proceed under the axiom now; the bulk derivation is a sharpening task, not a blocker.
 
 ### Two-branch evolution equations
 
@@ -828,6 +861,48 @@ This is a real gain for `N3`. It means the bulk derivation no longer has to gues
 
 So the transport system has now moved beyond "strong ansatz" in one specific sense: its minimal effective generator is explicit. The remaining problem is to derive that generator from the octonionic parent rather than merely write it down at the branch level.
 
+### Parent origin of the transport frequency `\omega`
+
+The rotation term `\frac{\omega}{2}(|A|^2+|B|^2)` already has a clean Lie-theoretic origin in the reduction data, parallel to the `\kappa_u` descent.
+
+**The compact `U(1)` generator on branch space.** The compact `U(1)` factor in `K = U(1) \times SU(2)` is generated by phase rotation on the selected `u`-complex line. In branch variables this acts as
+
+$$
+L_u : (A,B) \mapsto (uA,\, uB).
+$$
+
+In real coordinates `X = (a_1,a_2,b_1,b_2)^T`, left-multiplication by `u` is exactly the symplectic matrix `J_u`. So the `U(1)` generator on branch space is
+
+$$
+V_{U(1)} = J_u X.
+$$
+
+**The `\omega` term as the `U(1)` moment map.** For the Hamiltonian system on branch space with symplectic form `\Omega_u`, the moment map of the `U(1)` action is the function whose Hamiltonian vector field is `J_u X`:
+
+$$
+\mu_{U(1)}(X)
+=
+\frac{1}{2}\,\Omega_u(X, J_u X)
+=
+\frac{1}{2}(a_1^2 + a_2^2 + b_1^2 + b_2^2)
+=
+\frac{1}{2}(|A|^2 + |B|^2).
+$$
+
+The rotation term in `H_{\mathrm{eff}}` is
+
+$$
+\frac{\omega}{2}(|A|^2 + |B|^2) = \omega\,\mu_{U(1)}(X).
+$$
+
+So `\omega` is not an independent phenomenological frequency. It is the `U(1)` moment map value: the symplectic charge conjugate to the phase-rotation angle on branch space.
+
+**Parent identification.** In the octonionic bulk, the `U(1)` is the phase rotation on `\mathbb C_u = \mathbb R \oplus u\mathbb R`. The preferred direction `u` generates a `U(1) \subset G_2` that is already contained in `\mathrm{Stab}_{G_2}(u)` (acting by left-multiplication). The moment map value for this action, evaluated on the branch amplitudes, is exactly `(1/2)(|A|^2+|B|^2)`. So `\omega` is the octonionic transport phase momentum projected onto the selected axis — the null transport frequency inherited from the parent `U(1)` charge.
+
+**What this closes.** The rotation term `\frac{\omega}{2}(|A|^2+|B|^2)` in `H_{\mathrm{eff}}` is now identified as the `U(1)` moment map of the compact reduction data. It is not a free term chosen to match the transport ansatz. It is the unique quadratic `U(1)`-Hamiltonian on branch space, fixed by the same compact reduction data that determines the coupling slot.
+
+**What remains.** The moment map value `\omega` is a number — the actual transport phase momentum of a given state — not a universal constant of the theory. Its dependence on the parent octonionic data (the specific amplitudes `a, b, c` entering the transport slice) is not yet derived. That is a further reduction question, but it is now a quantitative question about the `U(1)` charge of physical states, not a structural question about the form of the Hamiltonian.
+
 ### Reduced generator slot for `\kappa_u`
 
 The Hamiltonian scaffold also clarifies the geometric role of the signed coupling. On branch space, define the fixed quadratic function
@@ -947,6 +1022,66 @@ $$
 $$
 
 This is useful because it localizes the parent task even more sharply. To derive the coupling term, the octonionic bulk does not need to guess a new quadratic form. It needs to produce the already-identified anti-linear exchange map `\mathfrak C_u` together with the `u`-adapted symplectic structure.
+
+### Compact equivariance and exchange-odd character of the associator moment
+
+The previous two sections establish: (a) there is a unique compact-equivariant anti-linear-exchange odd coupling slot; and (b) the parent exchange involution reduces to `\mathfrak C_u`. This section shows that the associator moment `\kappa_u` itself satisfies the required properties, so the descent is forced rather than merely compatible.
+
+**Compact equivariance.** The compact subgroup is `K = U(1) \times SU(2)`. By construction, `K` is contained in the stabilizer of `u` in `G_2`:
+
+$$
+K \subset \mathrm{Stab}_{G_2}(u).
+$$
+
+This is not additional input. The compact reduction data — the charge structure on the hidden line, the visible `SU(2)` action — are defined relative to the fixed direction `u`. Any element `g \in K` preserves the octonionic product (since `K \subset G_2`) and fixes `u` (since `K \subset \mathrm{Stab}_{G_2}(u)`).
+
+For `g \in G_2`, the associator is `G_2`-covariant:
+
+$$
+[ga,\, gb,\, gc] = g[a,b,c].
+$$
+
+This follows from the automorphism property: `(ga \cdot gb) \cdot gc - ga \cdot (gb \cdot gc) = g(ab) \cdot gc - ga \cdot g(bc) = g((ab)c) - g(a(bc)) = g[a,b,c]`.
+
+Therefore
+
+$$
+\kappa_u(ga,\, gb,\, gc)
+=
+\langle u,\, g[a,b,c]\rangle
+=
+\langle g^{-1}u,\, [a,b,c]\rangle
+=
+\langle u,\, [a,b,c]\rangle
+=
+\kappa_u(a,b,c).
+$$
+
+The third equality uses `g^{-1}u = u`, which holds because `K \subset \mathrm{Stab}_{G_2}(u)`. So `\kappa_u` is `K`-invariant.
+
+**Exchange-odd character.** The exchange involution is `\mathfrak C_u = (C_\Pi \otimes \mathbf 1_{\mathrm{vis}}) \circ \mathfrak K_u`. The `\mathfrak K_u` factor is conjugation on the selected `u`-complex line. Under `\mathfrak K_u`, the imaginary unit reverses:
+
+$$
+\mathfrak K_u : u \mapsto \bar u = -u.
+$$
+
+This is standard complex conjugation: on `\mathbb C_u = \mathbb R \oplus u\mathbb R`, conjugation sends `u \mapsto -u`. Since `\kappa_u = \langle u, [a,b,c]\rangle` is linear in `u`:
+
+$$
+\kappa_u \;\mapsto\; \langle -u,\, [a,b,c]\rangle = -\kappa_u.
+$$
+
+So `\kappa_u` is exchange-odd: it changes sign under the `\mathfrak K_u` component of `\mathfrak C_u`.
+
+**Forced descent.** Combining: `\kappa_u` is `K`-invariant (compact-equivariant) and negated by `\mathfrak K_u` (exchange-odd). The uniqueness criterion already established says that any parent coupling satisfying those two properties must descend as `\kappa_u \mathcal M_{\mathrm{ex}}` up to normalization. Therefore the coupling term in the two-branch equations is not a free parameter. It is the symmetry-mandated image of the octonionic associator moment projected onto `u`.
+
+**What this closes.** The `N3` live proof target — show the octonionic associator moment is compact-equivariant and anti-linear-exchange odd, forcing it to descend as `\kappa_u \mathcal M_{\mathrm{ex}}` — is answered at the Lie-algebraic symmetry level. The two-branch coupling term `\kappa_u \mathcal M_{\mathrm{ex}}` is the unique symmetry-allowed image, and the associator moment is the unique `G_2`-covariant bulk scalar carrying those properties for fixed `u`.
+
+**Residual gaps.** Two gaps survive this argument.
+
+1. **Variational origin.** This is a symmetry descent, not a variational derivation. The reduced effective Hamiltonian `H_{\mathrm{eff}}` is the unique compatible quadratic form on branch space, but obtaining it as the Legendre transform or moment map of a parent octonionic action remains open.
+
+2. **Orientation.** Compact equivariance and exchange-odd character together fix the reduced coupling slot but not the sign of `\kappa_u`. Whether the direct readout branch must be constructive (`\kappa_u > 0`) or whether the sign can be derived from a bulk forcing argument is still open. At present the sign is fixed by the forward-semigroup / readout alignment criterion rather than from the parent geometry.
 
 ### Minimal hidden-sector elimination template for `\gamma`
 
@@ -1081,6 +1216,31 @@ This can also be read as a falsifiable criterion:
 
 That is useful because it tells us exactly what kind of bulk result would force a revision of the current transport ansatz, rather than merely leaving the status vague.
 
+### Why `\gamma > 0` is forced by full hidden-sector coupling
+
+The admissibility argument establishes that `\mathcal D = \gamma\,\mathbf 1_4` (scalar damping), but it does not by itself guarantee `\gamma > 0`. A zero or negative value would be pathological (no damping or anti-damping). The following argument closes this.
+
+The reduced dissipation operator is
+
+$$
+\mathcal D = \lambda^2 K^T \Gamma^{-1} K.
+$$
+
+Since `\Gamma` is positive on the hidden sector (`\Gamma > 0`), `\Gamma^{-1}` exists and is also positive. Therefore `\mathcal D` is positive semi-definite for any `K`. It is strictly positive definite if and only if `K : \mathbb R^4_{\mathrm{branch}} \to \mathbb R^{n_{\mathrm{hid}}}` is injective — equivalently, if no branch-space direction lies in the kernel of the hidden coupling.
+
+Physically, injectivity of `K` means every branch mode is coupled to the hidden reservoir. No branch direction is hidden-sector-transparent. This is the content of "full coupling": the reservoir damps all branch-space modes, not just some of them.
+
+Under the admissibility scalar argument, `\mathcal D = \gamma\,\mathbf 1_4`. Strict positivity of `\mathcal D` then forces `\gamma > 0`.
+
+**Summary.** Under two natural assumptions:
+
+1. the hidden sector is stable/dissipative (`\Gamma > 0`)
+2. the hidden coupling is full (`K` injective, no branch mode is invisible to the reservoir)
+
+the scalar damping coefficient satisfies `\gamma > 0`. Neither assumption requires additional structure beyond what the admissibility criterion already takes as input.
+
+**What remains open.** The actual value of `\gamma` — its dependence on the parent octonionic couplings, its momentum dependence, and its relation to the hidden-sector correlation timescale — requires the first-principles hidden correlator derivation. What is established here is only the sign, not the magnitude.
+
 ### Reduced system
 
 Writing $A = r_1 e^{u\theta_1}$, $B = r_2 e^{u\theta_2}$ and defining:
@@ -1204,11 +1364,15 @@ This section records the main dynamical claims in kernel form.
 | the hidden-sector correlator is derived from first principles | missing | 6 | major dynamical gap |
 | the transport-coherence invariant $\mathcal{I} = A\bar{B}$ is the Sp(4,ℝ)-invariant symplectic pairing of branch amplitudes | structural identification | 3–4 | $\mathcal{I}$ replaces single amplitude as fundamental object; connects to Spin(2,3) ≅ Sp(4,ℝ) |
 | the signed coupling $\kappa_u = \kappa_0\langle u, [a,b,c]\rangle/\Lambda^3$ is the Spin(2,3)-compatible projection of the associator | structural identification | 4 | sign determines constructive / frustrated / inverted class |
-| two-branch evolution equations are the minimal Spin(2,3)-compatible ansatz | structurally motivated ansatz | 4 | derivation from octonionic bulk action is open |
+| $\kappa_u$ is $K$-invariant (compact-equivariant) and exchange-odd, forcing it to descend as the unique coefficient of $\mathcal M_{\mathrm{ex}}$ | symmetry descent established | 3 | $K \subset \mathrm{Stab}_{G_2}(u)$ gives equivariance; $\mathfrak K_u: u \mapsto -u$ gives odd sign; uniqueness argument then forces the coupling slot — variational origin and orientation sign remain open |
+| two-branch evolution equations are the minimal Spin(2,3)-compatible ansatz | coupling term symmetry-forced; full variational derivation open | 4 | the $\kappa_u \mathcal M_{\mathrm{ex}}$ coupling is now forced by symmetry descent; the remaining open task is deriving $\omega$ and $\gamma$ from a parent action |
 | Propositions 1–2: exact reduction to $(R,\rho,\Phi)$ with effective coupling $\kappa_{\mathrm{eff}} = \kappa_u\cosh(2\rho)$ | derived within two-branch model | 4 | clean exact result once equations are accepted |
 | forced classification into four transport classes (Constructive, Inverted, Frustrated, Dephased) | derived from geometry of locking and persistence boundaries | 4 | classification is forced, not assumed |
 | particle-like state criterion: locking + persistence conditions are jointly necessary and sufficient | derived consequence of classification | 4 | geometric, not empirical |
-| derivation of two-branch evolution equations from variational principle on octonionic bulk | missing | 5 | would close the main gap in this section |
+| $\omega$ is the $U(1)$ moment map value on branch space — the null transport phase momentum | moment map identification established | 3 | $H_\omega = \omega\,\mu_{U(1)} = \frac{\omega}{2}(\lvert A\rvert^2+\lvert B\rvert^2)$ is the unique $U(1)$-Hamiltonian; $\omega$ is the symplectic charge conjugate to the phase-rotation angle |
+| $\gamma > 0$ from full hidden-sector coupling: $\mathcal D = \lambda^2 K^T\Gamma^{-1}K > 0$ under $\Gamma > 0$ and $K$ injective | conditionally established | 3–4 | sign forced; magnitude requires hidden correlator derivation |
+| $\kappa_u > 0$ is equivalent to $\mathrm{Re}_u(AB)\rvert_* > 0$ at the transport fixed point: constructive branch interference | orientation axiom named with geometric content | 4 | this is the final named axiom; bulk derivation of the sign remains open |
+| derivation of two-branch evolution equations from variational principle on octonionic bulk | partially closed: $\kappa_u \mathcal M_{\mathrm{ex}}$ and $\omega\,\mu_{U(1)}$ terms are symmetry-derived; $\gamma$ mechanism identified; full parent action derivation open | 5 | the remaining open task is a parent action from which all three generator pieces descend simultaneously |
 | connection between two-branch amplitude picture and Lindblad-Markov density-matrix picture | missing | 5 | how coarse-graining recovers the Lindblad picture is an open task |
 
 ---

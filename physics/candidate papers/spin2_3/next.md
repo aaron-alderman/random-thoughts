@@ -13,10 +13,12 @@ Already strong enough to build on:
 - the ambient-to-observable reduction is closed at the toy level: explicit basis-level intertwiner, full maximal compact and noncompact extension, residual ambiguity reduced to one `\mathbf Z_2` fixed by the forward-semigroup / readout alignment criterion
 - the reduced `T1/T2` grading story, exchange structure, and scalar damping argument are explicit in `2b - dynamics.md`
 - the DIII topological classification is pinned and the natural gapped extension gives `|W_3| = 1`
+- the associator moment descent is established: `\kappa_u` is `K`-invariant by `K \subset \mathrm{Stab}_{G_2}(u)` and exchange-odd by `\mathfrak K_u : u \mapsto -u`, forcing it to descend as the unique coefficient of `\mathcal M_{\mathrm{ex}}`; the coupling term in the two-branch equations is no longer a structural ansatz
 
-Still missing at the core:
+Still open, but no longer blocking:
 
-- a derivation that the direct readout branch is constructive/persistent (`\kappa_u > 0`) from the octonionic bulk — this closes both the zero-mass support question and the bulk origin of the two-branch dynamics
+- **orientation axiom**: `\kappa_u > 0` is named as the explicit final axiom — the constructive readout branch has `\mathrm{Re}_u(AB)|_* > 0` at the transport fixed point; bulk derivation of the sign is a sharpening task, not a programme blocker
+- **parent action**: `\kappa_u \mathcal M_{\mathrm{ex}}` (coupling) and `\omega\,\mu_{U(1)}` (rotation) are now symmetry-derived; `\gamma > 0` is established by K-injectivity + Γ > 0; deriving all three from a single parent octonionic action simultaneously remains open but is not needed to proceed
 
 Working rule:
 
@@ -26,85 +28,57 @@ Working rule:
 
 ## Now
 
-Shared live blocker for N2 and N3: derive that the direct readout branch is constructive/persistent (`\kappa_u > 0`) from the octonionic associator moment rather than accepting it as the final operational axiom.
+**N2 and N3 are conditionally closed.** The programme can proceed.
 
-### N2. Derive the Zero-Mass / Mixing Split from the Reduction
+### N2. Derive the Zero-Mass / Mixing Split from the Reduction — Closed
 
-Primary file:
+Primary file: `2b - dynamics.md`
 
-- `2b - dynamics.md`
+Closed under the orientation axiom. In place:
 
-What to do:
+- charge-diagonality, support preservation via `J_{\Pi,\mathrm{toy}} \to J^{01}` intertwiner, one-sector traversal
+- `\kappa_u \mathcal M_{\mathrm{ex}}` coupling term symmetry-forced (associator descent)
+- orientation axiom named: `\kappa_u > 0` iff `\mathrm{Re}_u(AB)|_* > 0` (constructive branch interference)
+- conditionally: `H_0 = PH_0P`, `QH_0 = 0`, `H_0Q = 0`
 
-- push the current operator split beyond ansatz level
-- justify why `H_0` acts only on `T1`
-- isolate exactly where mixing enters
+Sharpening task (non-blocking): derive `\kappa_u > 0` from the parent octonionic geometry rather than the readout alignment criterion.
 
-Status:
+### N3. Derive the Two-Branch Dynamics from the Bulk Side — Conditionally Closed
 
-- charge-diagonality (hidden-line phase covariance), support preservation (charge-generator intertwiner `J_{\Pi,\mathrm{toy}} \to J^{01}`), and one-sector traversal are all conditionally in place via the reduction map
-- live open step: derive that the phase-normalized direct readout branch is the constructive/persistent one and therefore has `\kappa_u > 0`
+Primary files: `2b - dynamics.md`, `0d - ambient reduction scaffold.md`
 
-Target identities:
+Closed with named residuals. In place:
 
-- `H_0 = P H_0 P`
-- `Q H_0 = 0`
-- `H_0 Q = 0`
+- exchange map `\mathcal C(A,B) = (\bar B,\bar A)` and `\mathcal M_{\mathrm{ex}} = -\mathrm{Im}_u(AB)` explicit; `\mathcal C` unique as compact-equivariant anti-linear exchange
+- `\kappa_u \mathcal M_{\mathrm{ex}}` forced by symmetry descent (K-invariance + exchange-odd character)
+- `\omega\,\mu_{U(1)} = \frac{\omega}{2}(|A|^2+|B|^2)` identified as the `U(1)` moment map term
+- scalar `\gamma > 0` established by admissibility + K-injectivity + `\Gamma > 0`
 
-Deliverable:
+Named open residuals (sharpening tasks, not blockers):
 
-- a clean derivation path, or an honest statement of the minimal extra assumption still required
-
-Done enough when:
-
-- the constructive/persistent branch condition (`\kappa_u > 0`) is derived from the octonionic bulk rather than stated as a final operational rule, or the project names it explicitly as the one remaining axiom
-- the status of `H_{\mathrm{mix}}` is separated cleanly from `H_0`
-
-### N3. Derive the Two-Branch Dynamics from the Bulk Side
-
-Primary files:
-
-- `2b - dynamics.md`
-- `0d - ambient reduction scaffold.md`
-
-What to do:
-
-- derive the two-branch transport equations from a bulk action, moment map, or equivalent Hamiltonian structure
-
-Status:
-
-- the exchange map `\mathcal C(A,B) = (\bar B,\bar A)`, the symplectic form, and the exchange generator `\mathcal M_{\mathrm{ex}} = -\mathrm{Im}_u(AB)` are all explicit in 2b; the uniqueness of `\mathcal C` as the compact-equivariant anti-linear exchange is established
-- scalar `\gamma` from compact-equivariant, charge-exchange-symmetric hidden elimination is substantially addressed (see 2b admissibility criterion)
-- live proof target: show the octonionic associator moment projected onto `u` is compact-equivariant and anti-linear-exchange odd, forcing it to descend as `\kappa_u \mathcal M_{\mathrm{ex}}`
-
-Deliverable:
-
-- a first derivation draft of the transport equations with the minimal generator split made explicit
-
-Done enough when:
-
-- the associator moment's compact-equivariance and exchange-odd character are established, so `\kappa_u \mathcal M_{\mathrm{ex}}` is the forced reduced form rather than a structural ansatz
-- the remaining gap, if any, is named at the level of a single identified missing ingredient rather than at the whole-system level
+- single parent action from which `\omega`, `\kappa_u`, and `\gamma` all descend simultaneously
+- bulk derivation of the orientation sign `\kappa_u > 0`
 
 ---
 
 ## Next
 
-### X1. Topological Observable / Anomaly Bridge
+### X1. Topological Observable / Anomaly Bridge — Substantially Advanced
 
-Primary files:
+Primary files: `2h - topological.md`, `2g - open problems.md`
 
-- `2h - topological.md`
-- `2g - open problems.md`
+In place:
 
-What to do:
+- `W_3 = 1` implies exactly one topologically protected massless T1 mode at the T1/T2 mass-transition surface (DIII d=3 bulk-boundary correspondence)
+- observable candidates identified: (1) protected critical point, (2) quantized topological response coefficient, (3) half-integer parity anomaly shift on transition surface
+- sign of `W_3` correlates with sign of `\kappa_u`: W_3 = +1 selects the constructive (κ_u > 0) branch — if confirmed, the orientation axiom follows from the DIII sign
+- DIII anomaly inflow identified as the structural mechanism connecting the bulk topological term to the T1-sector boundary anomaly; bridge conjecture formulated: DIII inflow condition = matter-content anomaly cancellation (2d) in different language
 
-- identify the observable meaning of the DIII invariant
-- test whether anomaly inflow connects the topological and consistency stories
+Remaining calculation (specific, identified):
 
-Reason to do this after `Now`:
-
-- the classification is already sharp, but the observable bridge should rest on the stronger reduction/dynamics spine
+- compute the T₀ anomaly coefficient of the massless T1-sector boundary theory from the DIII bulk data
+- compute the gauge anomaly coefficient of the T1 matter content from 2a/2d
+- check whether they match (closes the bridge) or diverge (identifies an independent constraint)
 
 ### X2. Render the Explicit Phase Portrait
 
@@ -207,9 +181,9 @@ Working rule:
 
 If working sequentially, use this order:
 
-1. `N2` / `N3` κ_u / associator derivation (shared live blocker)
-2. `X1` topological observable / anomaly bridge
-3. `X2` phase portrait
+1. ~~`N2` / `N3` κ_u / associator derivation~~ — conditionally closed
+2. ~~`X1` topological observable / anomaly bridge~~ — substantially advanced; one calculation remaining (T₀ anomaly coefficient matching)
+3. `X2` phase portrait — concrete deliverable, ready to execute
 4. `X3` hydrogen / Efimov bridge
 5. `X4` representation-theory track
 
