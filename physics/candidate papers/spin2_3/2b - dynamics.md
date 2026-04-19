@@ -62,6 +62,12 @@ The dynamical layer adds the question:
 
 - what happens if evolution takes place in the full space, but observables are extracted only after projection?
 
+The current dynamics kernel should now be read against the working reduction kernel in [0d - ambient reduction scaffold.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\candidate papers\spin2_3\0d - ambient reduction scaffold.md). In that reduced reading:
+
+- `T1/T2` is the effective image of a hidden phase-charge split on a local complex line
+- the quaternionic slice is local reduction geometry, not a new dynamical interaction sector by default
+- the zero-mass derivation target is to inherit support on `T1` from parent `(-)`-charge support rather than choosing the `T1` block by hand
+
 ---
 
 ## Dynamical postulates
@@ -235,6 +241,97 @@ Until those are shown, the safe status is:
 
 - minimal zero-mass operator: disciplined target ansatz
 - derivation of that ansatz from the parent structure: open
+
+This is already enough to sharpen the burden of proof. The project no longer needs to ask vaguely whether "something in the parent geometry explains `T1`." The sharper question is whether the reduction map preserves charge support strongly enough that the parent zero-mass channel lands entirely in `T1`.
+
+### Minimal Route A closure statement
+
+The current best blocker-level target can now be written as a conditional derivation rather than only as an ansatz.
+
+Assume:
+
+1. **Parent charge split**
+   the local hidden line carries projectors
+   $$
+   P_{\Pi,-}, \qquad P_{\Pi,+}, \qquad P_{\Pi,-}+P_{\Pi,+}=1
+   $$
+2. **Parent zero-mass support**
+   the parent zero-mass generator satisfies
+   $$
+   H_{\Pi}^{(0)} = P_{\Pi,-} H_{\Pi}^{(0)} P_{\Pi,-}
+   $$
+3. **Support-preserving reduction**
+   the reduced map satisfies
+   $$
+   \mathcal{R}_{\mathrm{op}}(P_{\Pi,-}) = P,
+   \qquad
+   \mathcal{R}_{\mathrm{op}}(P_{\Pi,+}) = Q,
+   \qquad
+   \mathcal{R}_{\mathrm{op}}(H_{\Pi}^{(0)}) = H_0
+   $$
+   and does not create support on `T2` from a parent operator already confined to the `(-)` sector.
+
+Then the reduced zero-mass operator obeys
+
+$$
+H_0 = P H_0 P,
+\qquad
+QH_0 = 0,
+\qquad
+H_0Q = 0.
+$$
+
+So the immediate `N2` burden is no longer mysterious. It is to justify those three assumptions at the parent-reduction level, or else state exactly which one still has to be postulated.
+
+This is a useful stopping point because it separates three logically different questions:
+
+- whether the hidden line really carries the needed charge split
+- whether the parent zero-mass channel is really supported only on one charge sector
+- whether the reduction map really preserves that support
+
+If only the first two hold, the framework still needs a stronger reduction map.
+If only the third holds, the framework still needs a real parent zero-mass selection rule.
+If all three hold, the reduced `T1` support of `H_0` follows without choosing the block structure by hand.
+
+### Breaking assumption 2 into smaller burdens
+
+The parent zero-mass support condition can now be decomposed into a structural part and a residual selection part.
+
+First impose hidden-line phase covariance:
+
+$$
+[H_{\Pi}^{(0)},J_{\Pi}] = 0.
+$$
+
+Because the complexified hidden line splits into the `P_{\Pi,-}` and `P_{\Pi,+}` charge sectors, this already implies
+
+$$
+H_{\Pi}^{(0)} = h_- P_{\Pi,-} + h_+ P_{\Pi,+}.
+$$
+
+So covariance alone removes off-diagonal zero-mass mixing between the two hidden charge sectors. That is already nontrivial progress, because it means the direct zero-mass generator is forced to be charge-diagonal before reduction.
+
+What then remains is the narrower **one-sector traversal** question:
+
+- why should the strict zero-mass channel keep only `h_-` and set `h_+ = 0`
+- or equivalently, why should the selected direction `u` pick one oriented charge sector as the direct traversal sector
+
+This reduces the `N2` blocker substantially. The project does not need to derive one-sector support from nothing. It only needs to justify:
+
+1. phase covariance on the hidden line
+2. one-sector traversal under the selected zero-mass channel
+3. support-preserving reduction into `T1/T2`
+
+If 1 and 3 hold, but 2 does not, then the reduced zero-mass operator would still be block diagonal but would generically have support on both `T1` and `T2`.
+If 1, 2, and 3 all hold, then the strict `T1` support of `H_0` follows.
+
+So the live derivation target is now more focused than before:
+
+- derive charge-diagonality from hidden phase covariance
+- derive one-sector traversal from the chosen direction and zero-mass channel
+- then transport that support through the reduction map
+
+That is a much cleaner blocker statement than the older undifferentiated demand to "derive why `H_0` lives on `T1`."
 
 ---
 

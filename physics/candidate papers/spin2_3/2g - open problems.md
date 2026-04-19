@@ -85,6 +85,7 @@ These are the problems that would turn the project from a coherent framework int
 - what exactly in the large ambient space is physical structure, and what is redundancy, gauge, or filtered-out data?
 - can the octonionic remainder `u^\perp \cong \mathbf{C}^3` be shown to be the primary parent geometry from which color, wandering planes, and generation structure all descend?
 - can the local quaternionic carrier of the hidden complex plane be identified canonically inside the broader octonionic parent?
+  This is now best read as an important bridge-cleanup problem rather than a stop-everything blocker; the local quaternionic slice can be bracketed as a non-blocking reduction device unless later results force a stronger physical interpretation.
 
 ### Dynamics
 
@@ -172,7 +173,7 @@ This priority order matches the current maturity of the project.
 | hypercharge uniqueness still needs a sharper proof structure | consistency | high | important for static papers |
 | generation-counting and fourth-generation exclusion remain heavy proof burdens | statics / consistency | high | one of the biggest weak spots |
 | ambient-to-observable reduction is not yet sharply defined | cross-domain | high | central missing-middle object |
-| projection onto `T1` lacks a deeper justification | epistemics | medium-high | central conceptual obligation |
+| projection onto `T1` lacks a deeper justification | epistemics | medium-high | now sharpened to one-sector traversal plus support-preserving reduction |
 | parent octonionic geometry has not yet been rigorously reduced to the effective `Spin(2,3)` branch | statics / cross-domain | high | now a central parent-program task |
 | folded `Spin(3,3)` insight has not yet been formalized as a precise reduction map into hidden quaternionic complex-plane structure | statics / cross-domain | high | new central bridge task |
 | Heisenberg-type structure is not yet derived from a hidden antisymmetric sector | dynamics / epistemics | high | requires more than diffusion |

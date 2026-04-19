@@ -116,6 +116,127 @@ These conjectures are central, but they are not yet theorems.
 
 ---
 
+## Working reduction kernel
+
+This is the short version of the scaffold that the rest of the project can cite without importing every exploratory step.
+
+### Inputs
+
+1. Fix a preferred imaginary octonionic direction `u` with `u^2 = -1`.
+2. Use the resulting complex remainder
+   $$
+   u^\perp \cong \mathbf{C}^3
+   $$
+   as the hidden parent sector.
+3. Choose a local unit `v \in u^\perp` and form
+   $$
+   H(u,v) = \mathrm{span}_{\mathbf{R}}\{1,u,v,uv\},
+   \qquad
+   \Pi(u,v) = \mathrm{span}_{\mathbf{R}}\{v,uv\}.
+   $$
+4. Read `\Pi(u,v)` as the local hidden complex line and `J_u|_{\Pi}` as its phase generator.
+
+### Reduced output
+
+The reduced branch is required to keep only the phase-charge information of the hidden line and forget the internal frame data used to describe it.
+
+At the current safe level, this means:
+
+1. the effective spinor space decomposes as
+   $$
+   \mathcal{H}_{\mathrm{spin}} = T1 \oplus T2
+   $$
+   with `J^{01}` acting as the reduced grading generator
+2. the `T1/T2` split is interpreted as the reduced opposite-charge image of the hidden phase split on `\Pi(u,v)`
+3. the quaternionic slice is treated as local reduction geometry, not yet as a new physical interaction sector
+
+### Minimal operator statement
+
+If the parent hidden line admits charge projectors `P_{\Pi,-}` and `P_{\Pi,+}`, then the reduction should preserve support in the minimal sense
+
+$$
+\mathcal{R}_{\mathrm{op}}(P_{\Pi,-}) = P,
+\qquad
+\mathcal{R}_{\mathrm{op}}(P_{\Pi,+}) = Q,
+$$
+
+where `P` and `Q` project onto `T1` and `T2`.
+
+Then any parent zero-mass operator supported only on the `(-)` sector,
+
+$$
+H_{\Pi}^{(0)} = P_{\Pi,-} H_{\Pi}^{(0)} P_{\Pi,-},
+$$
+
+reduces to an operator satisfying
+
+$$
+H_0 = P H_0 P,
+\qquad
+QH_0 = H_0Q = 0.
+$$
+
+This is the cleanest current Route A bridge from the parent hidden line to the reduced zero-mass transport claim.
+
+### Minimal parent zero-mass selection rule
+
+The support assumption on the parent zero-mass operator can itself be decomposed into two smaller claims.
+
+First, require **phase covariance** on the hidden line:
+
+$$
+[H_{\Pi}^{(0)},J_{\Pi}] = 0
+\qquad\text{equivalently}\qquad
+[H_{\Pi}^{(0)},K_{\Pi}] = 0.
+$$
+
+Because the complexified hidden line splits into the two one-dimensional charge sectors of `K_{\Pi}`, this already forces
+
+$$
+H_{\Pi}^{(0)} = h_- P_{\Pi,-} + h_+ P_{\Pi,+}
+$$
+
+for some scalars or reduced transport generators `h_\pm`. So phase covariance by itself rules out zero-mass mixing between the two hidden charge sectors.
+
+Second, add the **one-sector traversal principle**:
+
+- the same selected direction `u` that defines the privileged traversal channel also orients the hidden phase split
+- direct zero-mass traversal uses only one of the two oriented charge sectors
+
+Then, up to the sign convention for which sector is later named `T1`,
+
+$$
+H_{\Pi}^{(0)} = h_- P_{\Pi,-}
+\qquad\text{or equivalently}\qquad
+H_{\Pi}^{(0)} = P_{\Pi,-} H_{\Pi}^{(0)} P_{\Pi,-}.
+$$
+
+This is a real improvement in the blocker structure. The project no longer needs to treat parent zero-mass support on one sector as a single opaque assumption. It can instead say:
+
+1. phase covariance of the hidden line gives charge-diagonality
+2. one-sector traversal is the remaining nontrivial selection principle
+
+What is still not derived is the second step. The live question is why the chosen direction `u` should force one-sector traversal rather than allow both `h_-` and `h_+` to remain active.
+
+### Safe use of this kernel
+
+The project may now safely say:
+
+- the local quaternionic slice gives an explicit carrier of hidden complex-plane data
+- the visible `T1/T2` split is the reduced image of hidden phase-charge structure, not an unexplained doubling
+- the quaternionic sector is important bridge structure but is non-blocking if its final canonical status remains unresolved
+
+### What this kernel does not yet prove
+
+It does not yet prove:
+
+- that the choice of `v` is canonical
+- that the reduction map is uniquely fixed
+- that the operator identities above have been fully derived rather than reduced to a sharp target
+- that the full bulk transport equations have already been obtained
+
+---
+
 ## Concrete subproblems
 
 The reduction problem splits into four bounded tasks.
@@ -498,6 +619,12 @@ $$
 
 again up to which sign is identified with `T1`.
 
+The more refined reading is now:
+
+- phase covariance on `\Pi(u,v)` already forces `H_{\Pi}^{(0)}` to be diagonal in the `P_{\Pi,\pm}` basis
+- the remaining burden is whether the selected direction `u` fixes one of those two sectors as the direct zero-mass traversal sector
+- if it does, the one-sector support condition above follows immediately
+
 The reduction problem is then no longer completely opaque. It becomes:
 
 1. define a reduction map `\mathcal{R}` from the parent hidden-plane data to the reduced spinor branch
@@ -868,6 +995,150 @@ then the `Z_a^\pm` are the natural charge-raising and charge-lowering combinatio
 
 At the toy level, this is exactly the behavior one would want from the noncompact part of the bridge.
 
+#### More parent-side reading of the noncompact sector
+
+The off-diagonal Pauli-triplet picture can now be rewritten in a more genuinely parent-side way.
+
+On the real hidden plane `\Pi(u,v) = \mathrm{span}_{\mathbf{R}}\{v,uv\}`, fix a real-linear involution `C_\Pi` by
+
+$$
+C_\Pi(v) = v,
+\qquad
+C_\Pi(uv) = -\,uv.
+$$
+
+Then `C_\Pi` anticommutes with the hidden complex structure:
+
+$$
+C_\Pi J_\Pi = - J_\Pi C_\Pi.
+$$
+
+So after complexification, `C_\Pi` exchanges the two hidden phase-charge sectors. Define also
+
+$$
+D_\Pi := J_\Pi C_\Pi,
+$$
+
+which gives the second independent charge-flipping direction. Together, `C_\Pi` and `D_\Pi` are the natural parent-side analogues of the two off-diagonal charge-changing directions.
+
+On the same local quaternionic slice, let
+
+$$
+L_u,\; L_v,\; L_{uv}
+$$
+
+be left multiplication by the three imaginary quaternion units. These generate the visible `\mathfrak{su}(2)` action on the complex two-dimensional carrier.
+
+This gives a more intrinsic parent candidate for the noncompact sector:
+
+$$
+\mathcal{P}_{\mathrm{parent,toy}}
+=
+\mathrm{span}_{\mathbf{R}}
+\{
+C_\Pi \otimes L_u,\;
+C_\Pi \otimes L_v,\;
+C_\Pi \otimes L_{uv},\;
+D_\Pi \otimes L_u,\;
+D_\Pi \otimes L_v,\;
+D_\Pi \otimes L_{uv}
+\}.
+$$
+
+Its dimension is again `2 \times 3 = 6`, but now each factor has a direct parent meaning:
+
+- `C_\Pi, D_\Pi` are hidden charge-flipping operators
+- `L_u, L_v, L_{uv}` are the visible quaternionic `SU(2)` generators
+
+So the toy noncompact sector can be read as:
+
+> charge flip on the hidden plane tensor visible quaternionic rotation.
+
+That is conceptually much better than treating the six off-diagonal generators as unexplained matrix blocks.
+
+#### Why this helps
+
+This parent-side factorization explains the earlier toy `X_a,Y_a` pattern:
+
+- the hidden `2` comes from operators that anticommute with the complex structure and therefore exchange the `\pm` charge sectors
+- the visible `3` comes from the quaternionic imaginary triplet acting by left multiplication
+
+So the `2 \times 3 = 6` count is no longer just a coincidence. It is the natural product of:
+
+- one hidden charge-flip doublet
+- one visible `SU(2)` adjoint triplet
+
+#### Hidden three-generator algebra on the plane
+
+The hidden operators on `\Pi(u,v)` are not arbitrary either. They already form a closed three-generator system.
+
+Recall:
+
+$$
+J_\Pi^2 = -1,
+\qquad
+C_\Pi^2 = +1,
+\qquad
+D_\Pi = J_\Pi C_\Pi.
+$$
+
+From `C_\Pi J_\Pi = -J_\Pi C_\Pi`, one gets
+
+$$
+[J_\Pi,C_\Pi] = 2D_\Pi,
+$$
+$$
+[J_\Pi,D_\Pi] = -2C_\Pi,
+$$
+$$
+[C_\Pi,D_\Pi] = -2J_\Pi.
+$$
+
+So the hidden plane already carries a closed `3`-generator algebra made from:
+
+- one phase generator `J_\Pi`
+- two charge-flipping generators `C_\Pi, D_\Pi`
+
+This is the hidden-side origin of the earlier `U(1)` plus charge-flip doublet picture.
+
+The noncompact parent toy sector then appears naturally as:
+
+$$
+\{C_\Pi,D_\Pi\}
+\otimes
+\{L_u,L_v,L_{uv}\},
+$$
+
+while the compact part uses:
+
+$$
+J_\Pi
+\otimes
+1,
+\qquad
+1
+\otimes
+\{L_u,L_v,L_{uv}\}.
+$$
+
+So even before reduction, the parent toy structure already splits into:
+
+- one hidden phase generator
+- one hidden charge-flip pair
+- one visible quaternionic `SU(2)` triplet
+
+That is exactly the structural content needed for the later
+
+$$
+\mathfrak{k} \oplus \mathfrak{p}
+=
+(\mathfrak{u}(1)\oplus\mathfrak{su}(2))
+\oplus
+(\mathbf{2}\otimes\mathbf{3})
+$$
+
+bookkeeping.
+
 #### What still needs to be checked
 
 The candidate becomes genuinely useful only if its commutators behave correctly.
@@ -1031,6 +1302,240 @@ So the honest status is:
 
 - explicit toy basis-level match: available
 - canonical parent derivation of that basis match: still open
+
+#### Parent-side candidate for the visible Pauli triplet
+
+There is now a much cleaner parent candidate for the visible `SU(2)` than simply importing the Pauli matrices from the reduced gamma basis.
+
+Inside the local quaternionic slice
+
+$$
+H(u,v) = \mathrm{span}_{\mathbf{R}}\{1,u,v,uv\},
+$$
+
+there are two natural actions:
+
+1. **right multiplication by `u`**
+   - this gives the complex structure already used for the hidden phase direction
+2. **left multiplication by the imaginary quaternion units**
+   - this gives a natural `\mathfrak{su}(2)` action
+
+The key structural point is that in the associative quaternionic slice, left and right multiplication commute:
+
+$$
+L_q R_u = R_u L_q
+\qquad
+(q \in H(u,v)).
+$$
+
+So the hidden phase `U(1)` and the visible `SU(2)` can arise from commuting parent-side structures rather than from unrelated postulates.
+
+#### Minimal realization on a complex two-dimensional carrier
+
+Regard `H(u,v)` as a complex vector space over `\mathbf{C}_u` using right multiplication by `u`. Then it has complex dimension `2`, with a convenient basis
+
+$$
+e_1 = 1, \qquad e_2 = v.
+$$
+
+In this basis:
+
+- right multiplication by `u` gives the hidden complex structure
+- left multiplication by `u`, `v`, and `uv` gives three complex-linear endomorphisms of the same two-dimensional space
+
+Their action is:
+
+$$
+L_u(e_1) = e_1\,u,
+\qquad
+L_u(e_2) = -\,e_2\,u,
+$$
+
+so `L_u` acts as the diagonal Pauli generator;
+
+$$
+L_v(e_1) = e_2,
+\qquad
+L_v(e_2) = -e_1,
+$$
+
+so `L_v` acts as an off-diagonal Pauli generator;
+
+and
+
+$$
+L_{uv}(e_1) = -\,e_2\,u,
+\qquad
+L_{uv}(e_2) = -\,e_1\,u,
+$$
+
+so `L_{uv}` gives the third Pauli-type generator.
+
+Up to the usual basis and normalization conventions, this is exactly the Pauli triplet.
+
+So the visible carrier `S_{\mathrm{vis}} \cong \mathbf{C}^2` no longer needs to be introduced as a free extra factor. A cleaner toy reading is:
+
+$$
+S_{\mathrm{vis}}
+\cong
+H(u,v)
+\quad\text{as a complex vector space over } \mathbf{C}_u,
+$$
+
+with
+
+- hidden phase structure from the right `\mathbf{C}_u` action
+- visible `SU(2)` structure from left multiplication by the imaginary quaternion units
+
+#### Why this is a real improvement
+
+This is the first place where the bridge gives a parent-side source for both parts of the maximal compact subgroup at once:
+
+- `U(1)` from right multiplication by the selected imaginary direction
+- `SU(2)` from left multiplication inside the same quaternionic slice
+
+and the two structures commute automatically inside the associative quaternionic carrier.
+
+That is much stronger than merely tensoring an unexplained visible `\mathbf{2}` onto the hidden phase line.
+
+#### Parent-toy commutator check
+
+The decisive point is that this parent-side factorization already reproduces the right closure pattern at the toy level.
+
+Let
+
+$$
+K_0 := J_\Pi \otimes 1,
+\qquad
+K_a := 1 \otimes L_a,
+\qquad
+P_{C,a} := C_\Pi \otimes L_a,
+\qquad
+P_{D,a} := D_\Pi \otimes L_a,
+$$
+
+where `L_a` stands for the visible quaternionic triplet `L_u, L_v, L_{uv}` with the obvious relabeling.
+
+Using
+
+$$
+[J_\Pi,C_\Pi] = 2D_\Pi,
+\qquad
+[J_\Pi,D_\Pi] = -2C_\Pi,
+\qquad
+[C_\Pi,D_\Pi] = -2J_\Pi,
+$$
+
+and the quaternionic left-multiplication relations
+
+$$
+[L_a,L_b] = 2\epsilon_{abc}L_c,
+\qquad
+\{L_a,L_b\} = -2\delta_{ab}\,1,
+$$
+
+one gets the following parent-side toy commutators.
+
+For the compact sector:
+
+$$
+[K_a,K_b] = 2\epsilon_{abc}K_c,
+\qquad
+[K_0,K_a] = 0.
+$$
+
+So `K_0` and the `K_a` already realize the expected compact `\mathfrak{u}(1)\oplus\mathfrak{su}(2)` structure up to normalization.
+
+For compact acting on noncompact:
+
+$$
+[K_0,P_{C,a}] = 2P_{D,a},
+\qquad
+[K_0,P_{D,a}] = -2P_{C,a},
+$$
+
+and
+
+$$
+[K_a,P_{C,b}] = 2\epsilon_{abc}P_{C,c},
+\qquad
+[K_a,P_{D,b}] = 2\epsilon_{abc}P_{D,c}.
+$$
+
+So the noncompact sector transforms as:
+
+- a hidden charge-flip doublet under `K_0`
+- a visible triplet under the quaternionic `SU(2)`
+
+Finally, the noncompact sector closes back into the compact one:
+
+$$
+[P_{C,a},P_{C,b}] = 2\epsilon_{abc}K_c,
+\qquad
+[P_{D,a},P_{D,b}] = 2\epsilon_{abc}K_c,
+$$
+
+and
+
+$$
+[P_{C,a},P_{D,b}] = 2\delta_{ab}K_0.
+$$
+
+So, at the parent toy level,
+
+$$
+[\mathfrak{k}_{\mathrm{parent,toy}},\mathfrak{k}_{\mathrm{parent,toy}}]\subset \mathfrak{k}_{\mathrm{parent,toy}},
+\qquad
+[\mathfrak{k}_{\mathrm{parent,toy}},\mathfrak{p}_{\mathrm{parent,toy}}]\subset \mathfrak{p}_{\mathrm{parent,toy}},
+\qquad
+[\mathfrak{p}_{\mathrm{parent,toy}},\mathfrak{p}_{\mathrm{parent,toy}}]\subset \mathfrak{k}_{\mathrm{parent,toy}},
+$$
+
+with the right `4 + 6` dimensional split.
+
+This is a stronger statement than the earlier block-matrix closure check. The same closure pattern now appears directly from:
+
+- hidden phase-plus-charge-flip structure on the plane
+- visible quaternionic left-multiplication structure
+
+before one matches anything to the reduced gamma-matrix basis.
+
+#### What this does and does not establish
+
+What it establishes:
+
+- the parent toy ingredients are sufficient to realize the right algebraic shape
+- the `2 \times 3 = 6` noncompact sector is structurally natural, not ad hoc
+- the compact/noncompact split can be read directly from parent-side operators
+
+What it does not yet establish:
+
+- that this parent toy algebra is canonically the physically relevant one
+- that the normalization and signature conventions are fixed uniquely
+- that the full octonionic parent reduction forces exactly this slice and this operator choice
+
+So this is not the final derivation, but it is the first real obstruction test that the parent-side bridge has passed.
+
+#### Non-blocking interpretation of the quaternionic sector
+
+At this point the project does not need to decide that the quaternionic slice is a new physical sector.
+
+The safer reading is:
+
+- the quaternionic slice is part of the octonionic basis reduction
+- it supplies a local geometric carrier for hidden complex directions and their mixing
+- its `SU(2)` structure is reduction geometry or bookkeeping for the reduced doublet structure
+- the unresolved canonical status of that slice is a real hole, but not a reason to stop the rest of the program
+
+So the quaternionic-sector question can now be bracketed as follows:
+
+> it is strong enough to organize the reduction story locally, but not yet strong enough to demand promotion into new fundamental physics
+
+This means the remaining tasks here should be treated as:
+
+- valuable bridge work
+- important for cleanup and conceptual honesty
+- but non-blocking for the rest of the framework unless later results force a stronger interpretation
 
 #### Minimal compatibility conditions
 

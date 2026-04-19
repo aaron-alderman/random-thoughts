@@ -154,6 +154,14 @@ At the current toy level, there is now a plausible first candidate for that exte
 
 In the explicit gamma-matrix basis already chosen in this file, the same toy bridge now has a plausible basis-level dictionary: `J^{01}` matches the toy charge generator, the spatial rotation triplet matches the block-diagonal Pauli-triplet action, and the mixed generators `J^{0\hat a}, J^{1\hat a}` match the two off-diagonal Pauli-triplet families up to index relabeling, sign, and normalization conventions. So the bridge has reached the level of an explicit candidate matching to the chosen `Spin(2,3)` basis, even though a canonical derivation from the octonionic parent is still missing.
 
+The parent side is now a little sharper too: inside the local quaternionic slice `H(u,v)`, right multiplication by `u` supplies the hidden complex structure while left multiplication by the imaginary quaternion units supplies a natural `SU(2)` action on the same complex two-dimensional carrier. Because left and right multiplication commute in the quaternionic slice, this gives a genuine parent-side candidate source for the maximal compact `U(1) \times SU(2)` structure rather than treating the visible `SU(2)` doublet as an unexplained extra factor.
+
+The same improvement now reaches the first noncompact toy sector as well: instead of reading the six off-diagonal generators only as block matrices, one can factor them parent-side as "charge flip on the hidden complex line" tensored with "visible quaternionic rotation" from the imaginary triplet of the local quaternionic slice. So the `2 \times 3 = 6` structure of the noncompact toy sector now has a direct parent interpretation, not just an algebraic one.
+
+Moreover, the hidden plane itself already carries a nontrivial three-generator system: the complex-structure operator together with two real charge-flipping operators that anticommute with it. That means the parent side is no longer just "one hidden line plus one visible triplet" by hand; it already has the phase-plus-charge-flip structure needed to underwrite the later `\mathfrak{u}(1)` plus noncompact `\mathbf{2}` bookkeeping.
+
+The present best reading of this whole quaternionic sector is still conservative: it is a local octonionic reduction frame, not yet a new physical interaction sector. The remaining hole here is real - especially the lack of a canonical global slice - but it no longer needs to block the rest of the framework. It can be bracketed as an important local bridge structure whose final physical status may be settled later.
+
 ### What is genuinely static here
 
 - the existence of two sectors
@@ -225,6 +233,14 @@ $$
 So the visible `T1/T2` decomposition is not being read as the full hidden plane itself. It is being read as the reduced opposite-charge image of that hidden plane after the fold into the `Spin(2,3)` branch. This is the strongest current local explanation of why `J^{01}` is the right reduced splitting generator.
 
 What is still open is the exact derivation of that charge map from the parent action on the quaternionic slice. So this remains a sharpened working proposal, not yet a theorem.
+
+Even so, the burden has narrowed. Once `u` is fixed and `\Pi(u,v)` is used as the local hidden line, any parent zero-mass operator compatible with the hidden phase action should commute with `J_\Pi`. On the complexified line this forces a decomposition of the form
+
+$$
+H_{\Pi}^{(0)} = h_- P_{\Pi,-} + h_+ P_{\Pi,+}.
+$$
+
+So the remaining alignment question is no longer whether the parent structure has any relevant charge split at all. The sharper question is whether the zero-mass traversal channel selects exactly one of these two oriented sectors. That is the current best static form of the bridge from the selected octonionic direction to the later `T1` observable channel.
 
 This folding picture is a working proposal suggested by the recent `Spin(3,3)` exploration. It is not yet a theorem of the framework.
 

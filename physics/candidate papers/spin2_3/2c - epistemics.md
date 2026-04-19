@@ -208,6 +208,13 @@ The current project sits between these routes:
 
 That middle position is acceptable, but it should be named clearly.
 
+The recent reduction sharpening improves this picture slightly. If hidden-line phase covariance is granted, then the zero-mass channel is already forced to be charge-diagonal before reduction. The remaining epistemic burden is narrower:
+
+- not "why project at all from an arbitrary split?"
+- but "why does direct zero-mass readout use only one of the two oriented charge sectors?"
+
+That does not finish Route A, but it does make Route B less ad hoc. The projection rule is no longer floating over a completely unexplained decomposition; it sits downstream of a hidden charge split and a still-open one-sector traversal principle.
+
 ---
 
 ## Coarse-graining and effective access
@@ -256,7 +263,7 @@ The second statement is much stronger and is not established by the current fram
 |---|---|---|---|
 | the effective observable channel is determined by zero-mass interaction | central framework proposal | 4 | new epistemic center |
 | observable quantities are evaluated after projection onto `T1` | effective postulate downstream of channel selection | 4 | still central, but not necessarily primitive |
-| the identification of the zero-mass readout channel with `T1` is dynamically forced | missing | 5 | strongest desired closure of the epistemic story |
+| the identification of the zero-mass readout channel with `T1` is dynamically forced | missing | 5 | now reduced to one-sector traversal plus support-preserving reduction |
 | `T2` is dynamically present but not directly observable through the zero-mass channel | framework consequence of interaction rule plus dynamics | 4 | core hidden-sector claim |
 | projection and coarse-graining are distinct operations | conceptual clarification | 4 | important for logical hygiene |
 | the effective observable description loses full microscopic information | derived at the reduced-description level | 4 | safe and useful |
