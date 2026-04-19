@@ -10,15 +10,13 @@ It is organized by what should be done now, what should come next, and what is e
 
 Already strong enough to build on:
 
-- the local quaternionic reduction frame is explicit enough to use as bridge structure
-- the reduced `T1/T2` grading story is explicit enough to support the next derivation steps
+- the ambient-to-observable reduction is closed at the toy level: explicit basis-level intertwiner, full maximal compact and noncompact extension, residual ambiguity reduced to one `\mathbf Z_2` fixed by the forward-semigroup / readout alignment criterion
+- the reduced `T1/T2` grading story, exchange structure, and scalar damping argument are explicit in `2b - dynamics.md`
 - the DIII topological classification is pinned and the natural gapped extension gives `|W_3| = 1`
 
 Still missing at the core:
 
-- a disciplined ambient-to-observable reduction
-- a derivation of why the zero-mass operator lives on `T1`
-- a bulk derivation of the two-branch dynamics
+- a derivation that the direct readout branch is constructive/persistent (`\kappa_u > 0`) from the octonionic bulk — this closes both the zero-mass support question and the bulk origin of the two-branch dynamics
 
 Working rule:
 
@@ -28,33 +26,7 @@ Working rule:
 
 ## Now
 
-### N1. Close the Ambient-to-Observable Reduction Enough to Use It
-
-Primary file:
-
-- `0d - ambient reduction scaffold.md`
-
-What to do:
-
-- turn the current bridge into the cleanest possible reduction story
-- keep only the parent structure needed for the main derivation chain
-- state clearly what is established, what is toy-level, and what remains conjectural
-- make the reduction explicit enough to intertwine the parent toy charge generator with `J^{01}`
-
-Deliverable:
-
-- a short reduction kernel that can be cited without dragging the whole scaffold behind it
-
-Done enough when:
-
-- the map from parent hidden-plane data to reduced `T1/T2` structure is stated sharply
-- the quaternionic slice is explicitly treated as local reduction geometry, not a new interaction sector
-- the reduction story is strong enough to support `N2`
-- the basis-level intertwiner is explicit at least for the maximal compact subgroup
-- the parent-adapted basis conditions are stated so the remaining ambiguity is only genuinely residual
-- the residual stabilizer is identified explicitly, so the canonicity gap is small and named
-- the last global `\mathbf Z_2` is located at the readout/time-orientation interface rather than left as a vague basis problem
-- the last global `\mathbf Z_2` is sharpened into a forward-semigroup/readout alignment criterion
+Shared live blocker for N2 and N3: derive that the direct readout branch is constructive/persistent (`\kappa_u > 0`) from the octonionic associator moment rather than accepting it as the final operational axiom.
 
 ### N2. Derive the Zero-Mass / Mixing Split from the Reduction
 
@@ -68,12 +40,10 @@ What to do:
 - justify why `H_0` acts only on `T1`
 - isolate exactly where mixing enters
 
-Current sub-burdens:
+Status:
 
-1. keep the already-built charge-diagonality argument explicit: hidden-line phase covariance is the parent source of the zero-mass charge split
-2. keep the intertwiner statement explicit: support preservation is now carried by `J_{\Pi,\mathrm{toy}} \to J^{01}` rather than by separate projector postulates
-3. keep the one-sector traversal issue honest: the reduction isolates two oriented candidates, but only one may serve as the unique direct readout channel
-4. live open step: derive, rather than merely impose, that the phase-normalized direct readout branch is the constructive/persistent one and therefore has `\kappa_u > 0`
+- charge-diagonality (hidden-line phase covariance), support preservation (charge-generator intertwiner `J_{\Pi,\mathrm{toy}} \to J^{01}`), and one-sector traversal are all conditionally in place via the reduction map
+- live open step: derive that the phase-normalized direct readout branch is the constructive/persistent one and therefore has `\kappa_u > 0`
 
 Target identities:
 
@@ -87,8 +57,7 @@ Deliverable:
 
 Done enough when:
 
-- these identities follow from the reduction map together with a derived parent selection principle
-- or the project states explicitly that only one final operational axiom remains: direct readout uses the constructive/persistent branch (`\kappa_u > 0` in phase-normalized gauge)
+- the constructive/persistent branch condition (`\kappa_u > 0`) is derived from the octonionic bulk rather than stated as a final operational rule, or the project names it explicitly as the one remaining axiom
 - the status of `H_{\mathrm{mix}}` is separated cleanly from `H_0`
 
 ### N3. Derive the Two-Branch Dynamics from the Bulk Side
@@ -102,20 +71,11 @@ What to do:
 
 - derive the two-branch transport equations from a bulk action, moment map, or equivalent Hamiltonian structure
 
-Current sub-burdens:
+Status:
 
-1. identify the reduced branch state and the anti-linear branch-exchange operation `\mathcal C(A,B) = (\bar B,\bar A)`
-   Current best route: derive `\mathcal C` as the reduced image of the parent charge flip `C_\Pi` combined with conjugation on the selected `u`-complex line
-2. derive the `u`-adapted branch symplectic form that gives the exact effective Hamilton-Rayleigh system
-3. realize the fixed exchange generator `\mathcal M_{\mathrm{ex}} = -\mathrm{Im}_u(AB)` as the reduced slot whose bulk coefficient is `\kappa_u`
-   Best current symmetry route: compact-equivariant anti-linear maps swapping the two charge sectors are unique up to scalar, so any odd parent scalar moment can only land in this exchange slot
-4. explain the Rayleigh term `\frac{\gamma}{2}(|A|^2+|B|^2)` as hidden-sector leakage or elimination, ideally through a positive Schur-complement term `K^T\Gamma^{-1}K`
-   Best current symmetry route: compact-equivariant elimination gives `\gamma_- I_2 \oplus \gamma_+ I_2`, and charge-exchange symmetry collapses this to scalar `\gamma I_4`
-
-Immediate proof targets:
-
-1. show the reduced odd associator moment is compact-equivariant and anti-linear-exchange odd, so it must descend as `\kappa_u \mathcal M_{\mathrm{ex}}`
-2. identify a parent hidden coupling class `(K,\Gamma)` with compact equivariance and charge-exchange symmetry, so scalar `\gamma` is forced
+- the exchange map `\mathcal C(A,B) = (\bar B,\bar A)`, the symplectic form, and the exchange generator `\mathcal M_{\mathrm{ex}} = -\mathrm{Im}_u(AB)` are all explicit in 2b; the uniqueness of `\mathcal C` as the compact-equivariant anti-linear exchange is established
+- scalar `\gamma` from compact-equivariant, charge-exchange-symmetric hidden elimination is substantially addressed (see 2b admissibility criterion)
+- live proof target: show the octonionic associator moment projected onto `u` is compact-equivariant and anti-linear-exchange odd, forcing it to descend as `\kappa_u \mathcal M_{\mathrm{ex}}`
 
 Deliverable:
 
@@ -123,10 +83,8 @@ Deliverable:
 
 Done enough when:
 
-- the equations no longer stand only as a strong structural ansatz
-- the Hamiltonian-plus-Rayleigh scaffold is derived rather than merely written down
-- the role of `\kappa_u`, damping, and branch mixing is tied back to bulk structure
-- the remaining open gap is localized to one of the ingredients above rather than to the whole transport system at once
+- the associator moment's compact-equivariance and exchange-odd character are established, so `\kappa_u \mathcal M_{\mathrm{ex}}` is the forced reduced form rather than a structural ansatz
+- the remaining gap, if any, is named at the level of a single identified missing ingredient rather than at the whole-system level
 
 ---
 
@@ -249,13 +207,11 @@ Working rule:
 
 If working sequentially, use this order:
 
-1. `N1` ambient-to-observable reduction
-2. `N2` zero-mass / mixing split
-3. `N3` bulk derivation of the two-branch dynamics
-4. `X1` topological observable / anomaly bridge
-5. `X2` phase portrait
-6. `X3` hydrogen / Efimov bridge
-7. `X4` representation-theory track
+1. `N2` / `N3` κ_u / associator derivation (shared live blocker)
+2. `X1` topological observable / anomaly bridge
+3. `X2` phase portrait
+4. `X3` hydrogen / Efimov bridge
+5. `X4` representation-theory track
 
 ---
 
