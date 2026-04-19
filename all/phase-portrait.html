@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Two-Branch Transport — Phase Portrait (ρ, Φ)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0d0d12;
+    color: #ccc;
+    font-family: 'Georgia', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 20px 40px;
+  }
+  h1 { font-size: 17px; letter-spacing: 0.04em; color: #e8e8e8; margin-bottom: 4px; font-weight: normal; }
+  .subtitle { font-size: 12.5px; color: #777; margin-bottom: 16px; font-style: italic; }
+  canvas { display: block; }
+
+  .controls {
+    display: flex; flex-wrap: wrap; gap: 24px;
+    margin-top: 14px; margin-bottom: 4px;
+    justify-content: center;
+  }
+  .ctrl { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .ctrl label { font-size: 12px; color: #999; }
+  .ctrl input[type=range] {
+    width: 140px;
+    accent-color: #4ec994;
+  }
+  .ctrl .val { font-size: 13px; color: #e8e8e8; font-family: monospace; width: 44px; text-align: center; }
+
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    margin-top: 14px; justify-content: center;
+  }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #aaa; }
+  .swatch { width: 16px; height: 16px; border-radius: 2px; }
+
+  .note {
+    max-width: 780px; margin-top: 18px;
+    font-size: 12.5px; color: #777; line-height: 1.75;
+    border-left: 2px solid #1e1e2e;
+    padding-left: 14px;
+  }
+  .note strong { color: #999; }
+  em.hi { color: #4ec994; font-style: normal; }
+  em.hi2 { color: #e09040; font-style: normal; }
+  em.hi3 { color: #e06060; font-style: normal; }
+</style>
+</head>
+<body>
+
+<h1>Two-Branch Transport — Phase Portrait in (ρ, Φ)</h1>
+<p class="subtitle">
+  ρ = ½ ln(r₁/r₂) &nbsp;·&nbsp; Φ = θ₁ + θ₂ &nbsp;·&nbsp;
+  ρ̇ = −κ<sub>u</sub>sinh(2ρ)cosΦ &nbsp;·&nbsp; Φ̇ = 2ω − 2κ<sub>u</sub>cosh(2ρ)sinΦ
+</p>
+
+<canvas id="c" width="860" height="540"></canvas>
+
+<div class="controls">
+  <div class="ctrl">
+    <label>κ<sub>u</sub></label>
+    <input type="range" id="sKu"  min="0.2" max="2.0" step="0.05" value="1.0">
+    <div class="val" id="vKu">1.00</div>
+  </div>
+  <div class="ctrl">
+    <label>ω</label>
+    <input type="range" id="sOm"  min="0.1" max="2.5" step="0.05" value="0.60">
+    <div class="val" id="vOm">0.60</div>
+  </div>
+  <div class="ctrl">
+    <label>γ</label>
+    <input type="range" id="sGam" min="0.02" max="1.2" step="0.02" value="0.25">
+    <div class="val" id="vGam">0.25</div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="swatch" style="background:#1a3d28"></div> Constructive (locked, persistent)</div>
+  <div class="legend-item"><div class="swatch" style="background:#2a2414"></div> Frustrated (locked, decaying)</div>
+  <div class="legend-item"><div class="swatch" style="background:#2d1212"></div> Inverted / anti-phase</div>
+  <div class="legend-item"><div class="swatch" style="background:#141420;border:1px solid #333"></div> Dephased (unlocked)</div>
+  <div class="legend-item">
+    <svg width="32" height="10"><line x1="0" y1="5" x2="32" y2="5" stroke="#4ec994" stroke-width="1.5" stroke-dasharray="4,3"/></svg>
+    Persistence boundary
+  </div>
+  <div class="legend-item">
+    <svg width="32" height="10"><line x1="0" y1="5" x2="32" y2="5" stroke="#e06060" stroke-width="1.5"/></svg>
+    Locking boundary
+  </div>
+  <div class="legend-item">
+    <svg width="14" height="14"><circle cx="7" cy="7" r="5.5" fill="#4ec994"/></svg>
+    Stable node
+  </div>
+  <div class="legend-item">
+    <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="none" stroke="#e09040" stroke-width="1.8"/><circle cx="7" cy="7" r="2" fill="#e09040"/></svg>
+    Saddle / unstable
+  </div>
+</div>
+
+<div class="note">
+  <strong>Boundaries.</strong>
+  The <em class="hi">persistence boundary</em> (dashed teal) is κ<sub>u</sub>cosh(2ρ)cosΦ = γ;
+  inside the green band the transport amplitude grows (particle-like); outside it decays.
+  The <em class="hi3">locking boundary</em> (solid red) is |ω| = κ<sub>u</sub>cosh(2ρ);
+  it is a vertical line at ρ = ±ρ<sub>L</sub> = ±½arccosh(ω/κ<sub>u</sub>), visible only when ω > κ<sub>u</sub>.
+  Inside the locking boundary the state is <em class="hi">dephased</em> (no phase-locked fixed point).
+  &nbsp; <strong>Try dragging ω above κ<sub>u</sub></strong> to see the dephased band open at small ρ.
+  <br><br>
+  <strong>Fixed points.</strong>
+  When ω ≤ κ<sub>u</sub>: two fixed points at ρ = 0, sinΦ = ω/κ<sub>u</sub>.
+  The stable node (filled, Φ ≈ arcsin(ω/κ<sub>u</sub>)) is the <em class="hi">Constructive attractor</em>
+  — both branches phase-lock and the amplitude persists;
+  by the orientation axiom (κ<sub>u</sub> > 0, Re<sub>u</sub>(AB)|<sub>*</sub> > 0)
+  this is the direct observable readout state.
+  The <em class="hi2">unstable</em> node (open circle, Φ ≈ π − arcsin(ω/κ<sub>u</sub>)) divides basins.
+  When ω > κ<sub>u</sub>: the two roots merge onto the locking boundary at Φ = π/2 (degenerate).
+  <br><br>
+  <strong>Classification.</strong>
+  Constructive: κ<sub>u</sub> > 0, locked, κ<sub>u</sub>cosh(2ρ)cosΦ > γ.
+  Frustrated: locked, |κ<sub>u</sub>cosh(2ρ)cosΦ| < γ (amplitude decays slowly).
+  Inverted: locked, κ<sub>u</sub>cosh(2ρ)cosΦ &lt; −γ (anti-phase; decays rapidly).
+  Dephased: |ω| > κ<sub>u</sub>cosh(2ρ) (no phase locking; incoherent transport).
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx    = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+
+const ML = 68, MR = 28, MT = 28, MB = 50;
+const PW = W - ML - MR;
+const PH = H - MT - MB;
+
+let ku = 1.0, om = 0.6, gam = 0.25;
+
+// ─── Coordinate helpers ───────────────────────────────────────────────────
+const rhoMin = -2.2, rhoMax = 2.2;
+const phiMin = -Math.PI, phiMax = Math.PI;
+
+function toCanvas(rho, phi) {
+  return [
+    ML + (rho - rhoMin) / (rhoMax - rhoMin) * PW,
+    MT + (phiMax - phi) / (phiMax - phiMin) * PH,
+  ];
+}
+function fromCanvas(cx, cy) {
+  return [
+    rhoMin + (cx - ML) / PW * (rhoMax - rhoMin),
+    phiMax - (cy - MT) / PH * (phiMax - phiMin),
+  ];
+}
+
+// ─── Physics ──────────────────────────────────────────────────────────────
+function flow(rho, phi) {
+  return [
+    -ku * Math.sinh(2*rho) * Math.cos(phi),
+     2*om - 2*ku * Math.cosh(2*rho) * Math.sin(phi),
+  ];
+}
+
+// Returns 0=constructive, 1=frustrated, 2=inverted, 3=dephased
+function region(rho, phi) {
+  const c2r = Math.cosh(2*rho);
+  if (Math.abs(om) > ku * c2r) return 3;
+  const op = ku * c2r * Math.cos(phi);
+  if (op > gam)  return 0;
+  if (op < -gam) return 2;
+  return 1;
+}
+
+// ─── Render ───────────────────────────────────────────────────────────────
+const regionRGB = [
+  [26,  61, 40],   // 0 constructive
+  [42,  36, 20],   // 1 frustrated
+  [45,  18, 18],   // 2 inverted
+  [20,  20, 32],   // 3 dephased
+];
+
+// Offscreen buffer for background
+const offCvs = document.createElement('canvas');
+offCvs.width = W; offCvs.height = H;
+const offCtx = offCvs.getContext('2d');
+
+function render() {
+  // 1. Background
+  ctx.fillStyle = '#0d0d12';
+  ctx.fillRect(0, 0, W, H);
+
+  const img = offCtx.createImageData(W, H);
+  const d   = img.data;
+  for (let px = ML; px < ML+PW; px++) {
+    for (let py = MT; py < MT+PH; py++) {
+      const [rho, phi] = fromCanvas(px, py);
+      const reg = region(rho, phi);
+      const [r,g,b] = regionRGB[reg];
+      const i = (py*W + px)*4;
+      d[i]   = r; d[i+1] = g; d[i+2] = b; d[i+3] = 255;
+    }
+  }
+  offCtx.putImageData(img, 0, 0);
+  ctx.drawImage(offCvs, 0, 0);
+
+  // 2. Persistence boundary: |op| = gam  →  cosΦ = ±gam/(ku*cosh(2ρ))
+  ctx.save();
+  ctx.strokeStyle = '#4ec994';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([5,4]);
+  const NB = 600;
+  for (const sign of [1,-1]) {
+    for (const branch of [0,1]) {
+      ctx.beginPath();
+      let go = false;
+      for (let i = 0; i <= NB; i++) {
+        const rho   = rhoMin + i/NB*(rhoMax-rhoMin);
+        const ratio = gam / (ku * Math.cosh(2*rho));
+        if (ratio > 1) { go=false; continue; }
+        const phi = sign * (branch===0 ? Math.acos(ratio) : Math.PI-Math.acos(ratio));
+        if (phi < phiMin || phi > phiMax) { go=false; continue; }
+        const [cx,cy] = toCanvas(rho, phi);
+        go ? ctx.lineTo(cx,cy) : (ctx.moveTo(cx,cy), go=true);
+      }
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+
+  // 3. Locking boundary (vertical lines at ±rhoL)
+  if (Math.abs(om) > ku) {
+    const rhoL = 0.5 * Math.acosh(Math.abs(om)/ku);
+    ctx.save();
+    ctx.strokeStyle = 'rgba(224,80,80,0.75)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([]);
+    for (const rsign of [1,-1]) {
+      const [cx,] = toCanvas(rsign*rhoL, 0);
+      ctx.beginPath();
+      ctx.moveTo(cx, MT);
+      ctx.lineTo(cx, MT+PH);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // 4. Vector field
+  const gn = 26;
+  const al = 10;
+  ctx.save();
+  ctx.lineWidth = 0.85;
+  for (let i = 0; i <= gn; i++) {
+    for (let j = 0; j <= gn; j++) {
+      const rho = rhoMin + (i/gn)*(rhoMax-rhoMin);
+      const phi = phiMin + (j/gn)*(phiMax-phiMin);
+      const [dr, dp] = flow(rho, phi);
+
+      const rhoScale = PW/(rhoMax-rhoMin);
+      const phiScale = PH/(phiMax-phiMin);
+      const dx =  dr * rhoScale;
+      const dy = -dp * phiScale;
+      const len = Math.sqrt(dx*dx+dy*dy);
+      if (len < 1e-8) continue;
+      const ux=dx/len, uy=dy/len;
+      const [cx,cy] = toCanvas(rho, phi);
+
+      const reg = region(rho, phi);
+      const alpha = reg===3 ? 0.30 : 0.50;
+      ctx.strokeStyle = `rgba(200,200,220,${alpha})`;
+      ctx.fillStyle   = `rgba(200,200,220,${alpha})`;
+
+      ctx.beginPath();
+      ctx.moveTo(cx-ux*al*0.4, cy-uy*al*0.4);
+      ctx.lineTo(cx+ux*al*0.6, cy+uy*al*0.6);
+      ctx.stroke();
+
+      const tip = [cx+ux*al*0.6, cy+uy*al*0.6];
+      const ah  = 3.2;
+      const px2 = -uy, py2 = ux;
+      ctx.beginPath();
+      ctx.moveTo(tip[0], tip[1]);
+      ctx.lineTo(tip[0]-ux*ah+px2*ah*0.45, tip[1]-uy*ah+py2*ah*0.45);
+      ctx.lineTo(tip[0]-ux*ah-px2*ah*0.45, tip[1]-uy*ah-py2*ah*0.45);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+  ctx.restore();
+
+  // 5. Fixed points
+  // Case ω ≤ κu: two roots at ρ=0, sinΦ = ω/κu
+  // Case ω > κu: one degenerate root at ρ=rhoL, Φ=π/2
+  const ratio = om/ku;
+  if (ratio <= 1 + 1e-6) {
+    // Stable fixed point
+    const fp1 = [0, Math.asin(Math.min(ratio, 1))];
+    const fp2 = [0, Math.PI - Math.asin(Math.min(ratio, 1))];
+    drawFP(fp1, true);
+    drawFP(fp2, false);
+    // Labels
+    labelFP(fp1, true);
+    labelFP(fp2, false);
+  } else {
+    // Degenerate fixed point on locking boundary
+    const rhoL = 0.5*Math.acosh(Math.abs(om)/ku);
+    drawFP([rhoL, Math.PI/2], null);
+    drawFP([-rhoL, Math.PI/2], null);
+  }
+
+  // 6. Axes
+  ctx.save();
+  ctx.strokeStyle = '#555';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(ML, MT, PW, PH);
+
+  ctx.setLineDash([3,4]);
+  ctx.strokeStyle = 'rgba(140,140,160,0.25)';
+  // ρ=0
+  const [z0x,] = toCanvas(0,0);
+  ctx.beginPath(); ctx.moveTo(z0x, MT); ctx.lineTo(z0x, MT+PH); ctx.stroke();
+  // Φ=0
+  const [,z0y] = toCanvas(0,0);
+  ctx.beginPath(); ctx.moveTo(ML, z0y); ctx.lineTo(ML+PW, z0y); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  // 7. Ticks and labels
+  ctx.save();
+  ctx.fillStyle = '#888';
+  ctx.font = '12px Georgia';
+  ctx.textAlign = 'center';
+  for (const rho of [-2,-1,0,1,2]) {
+    const [cx,] = toCanvas(rho,0);
+    ctx.fillRect(cx, MT+PH, 1, 4);
+    ctx.fillText(rho.toFixed(0), cx, MT+PH+16);
+  }
+  ctx.fillStyle = '#aaa';
+  ctx.font = 'italic 13px Georgia';
+  ctx.fillText('ρ = ½ ln(r₁ / r₂)', ML+PW/2, MT+PH+36);
+
+  ctx.textAlign = 'right';
+  ctx.font = '12px Georgia';
+  ctx.fillStyle = '#888';
+  for (const [phi, label] of [[-Math.PI,'−π'],[-Math.PI/2,'−π/2'],[0,'0'],[Math.PI/2,'π/2'],[Math.PI,'π']]) {
+    const [,cy] = toCanvas(0, phi);
+    ctx.fillRect(ML-4, cy, 4, 1);
+    ctx.fillText(label, ML-6, cy+4);
+  }
+  ctx.save();
+  ctx.translate(ML-50, MT+PH/2);
+  ctx.rotate(-Math.PI/2);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#aaa';
+  ctx.font = 'italic 13px Georgia';
+  ctx.fillText('Φ = θ₁ + θ₂', 0, 0);
+  ctx.restore();
+
+  ctx.restore();
+
+  // 8. Status bar
+  const locked = Math.abs(om) <= ku;
+  const rhoLStr = locked ? 'all locked (ω ≤ κu)' :
+    'ρL = ±' + (0.5*Math.acosh(om/ku)).toFixed(3);
+  const phi1str = locked ?
+    ('±' + (Math.asin(om/ku)*180/Math.PI).toFixed(1) + '°, ' +
+     (180 - Math.asin(om/ku)*180/Math.PI).toFixed(1) + '°') : 'π/2 (degenerate)';
+
+  ctx.save();
+  ctx.fillStyle = 'rgba(20,35,28,0.65)';
+  ctx.fillRect(ML+2, MT+2, PW-4, 20);
+  ctx.fillStyle = '#7db898';
+  ctx.font = '11.5px Georgia';
+  ctx.textAlign = 'left';
+  ctx.fillText(
+    `κu = ${ku.toFixed(2)}   ω = ${om.toFixed(2)}   γ = ${gam.toFixed(2)}`
+    + `   |   Locking: ${rhoLStr}`
+    + `   |   Fixed-point Φ: ${phi1str}`,
+    ML+8, MT+15
+  );
+  ctx.restore();
+}
+
+function drawFP([rho, phi], stable) {
+  const [cx, cy] = toCanvas(rho, phi);
+  ctx.save();
+  ctx.beginPath();
+  if (stable === true) {
+    ctx.arc(cx, cy, 7, 0, 2*Math.PI);
+    ctx.fillStyle = '#4ec994';
+    ctx.fill();
+    ctx.strokeStyle = '#0d2018'; ctx.lineWidth = 1; ctx.stroke();
+  } else if (stable === false) {
+    ctx.arc(cx, cy, 6, 0, 2*Math.PI);
+    ctx.strokeStyle = '#e09040'; ctx.lineWidth = 1.8; ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(cx, cy, 2.5, 0, 2*Math.PI);
+    ctx.fillStyle = '#e09040'; ctx.fill();
+  } else {
+    // Degenerate
+    ctx.arc(cx, cy, 5, 0, 2*Math.PI);
+    ctx.strokeStyle = '#aaa'; ctx.lineWidth = 1; ctx.setLineDash([2,2]); ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function labelFP([rho, phi], stable) {
+  const [cx, cy] = toCanvas(rho, phi);
+  ctx.save();
+  ctx.font = '11px Georgia';
+  const deg = (phi*180/Math.PI).toFixed(0);
+  const op = ku * Math.cosh(0) * Math.cos(phi);
+  const persistent = op > gam;
+  ctx.fillStyle = stable ? '#4ec994' : '#e09040';
+  const label = stable
+    ? `★ Φ=${deg}° ${persistent?'✔':'✗'}`
+    : `○ Φ=${deg}°`;
+  ctx.fillText(label, cx+11, cy+4);
+  ctx.restore();
+}
+
+// ─── Controls ─────────────────────────────────────────────────────────────
+function setupSlider(id, valId, setter) {
+  const el  = document.getElementById(id);
+  const vel = document.getElementById(valId);
+  vel.textContent = parseFloat(el.value).toFixed(2);
+  el.addEventListener('input', () => {
+    const v = parseFloat(el.value);
+    vel.textContent = v.toFixed(2);
+    setter(v);
+    render();
+  });
+}
+setupSlider('sKu',  'vKu',  v => { ku  = v; });
+setupSlider('sOm',  'vOm',  v => { om  = v; });
+setupSlider('sGam', 'vGam', v => { gam = v; });
+
+render();
+</script>
+</body>
+</html>

@@ -80,21 +80,20 @@ Remaining calculation (specific, identified):
 - compute the gauge anomaly coefficient of the T1 matter content from 2a/2d
 - check whether they match (closes the bridge) or diverge (identifies an independent constraint)
 
-### X2. Render the Explicit Phase Portrait
+### X2. Render the Explicit Phase Portrait — Done
 
-Primary context:
+Primary context: two-branch transport system in `(\rho,\Phi)`
 
-- two-branch transport system in `(\rho,\Phi)`
+Deliverable: `all/phase-portrait.html` — interactive canvas figure with:
 
-What to do:
+- background shaded by transport class (Constructive / Frustrated / Inverted / Dephased)
+- vector field arrows (`\dot\rho`, `\dot\Phi`) at each grid point
+- persistence boundary (dashed teal): `\kappa_u\cosh(2\rho)\cos\Phi = \gamma`
+- locking boundary (solid red): appears as vertical lines `\rho = \pm\rho_L` when `\omega > \kappa_u`; invisible when `\omega \leq \kappa_u`
+- stable node (filled, green) and saddle (open, amber) fixed points with live labels
+- sliders for `\kappa_u`, `\omega`, `\gamma`: drag `\omega` above `\kappa_u` to open the dephased band
 
-- render the locking boundary
-- render the persistence boundary
-- mark the transport classes, fixed points, and flow directions
-
-Deliverable:
-
-- one clear figure and a short explanatory note
+Explanatory note is embedded in the HTML page itself.
 
 ### X3. Hydrogen / Efimov Bridge
 
@@ -183,7 +182,7 @@ If working sequentially, use this order:
 
 1. ~~`N2` / `N3` κ_u / associator derivation~~ — conditionally closed
 2. ~~`X1` topological observable / anomaly bridge~~ — substantially advanced; one calculation remaining (T₀ anomaly coefficient matching)
-3. `X2` phase portrait — concrete deliverable, ready to execute
+3. ~~`X2` phase portrait~~ — done; `all/phase-portrait.html`
 4. `X3` hydrogen / Efimov bridge
 5. `X4` representation-theory track
 
