@@ -55,6 +55,6 @@ Acceptance:
 - the calculation recovers `s_0 ~= 1.00624`, or
 - it fails cleanly and identifies which assumption breaks.
 
-## Promotion Rule
+## Status Rule
 
 Only after Gates 1-5 are satisfied may `casimir-faddeev-conjecture.md` be promoted from conjecture to target theorem or theorem. Partial progress should be recorded as `conditional`, not `established`.

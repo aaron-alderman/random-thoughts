@@ -9,6 +9,6 @@ This directory contains the spine of the Spin(2,3) programme.
 3. `parent-inquiry-map.md` - ranked parent-geometry hypotheses and convergence points.
 4. `ambient-reduction-scaffold.md` - the current missing-middle scaffold from parent data to observable structure.
 
-## Stability Rule
+## Claim Status
 
 Core files should state only established, conditional, or explicitly marked conjectural claims. Research-track material belongs in `research/` until it has passed through `CLAIM_LEDGER.md`.

@@ -15,6 +15,6 @@ Kernel files are the domain-level working documents for the framework. They are 
 | `topological.md` | Tenfold/DIII/topological transition track |
 | `open-problems.md` | Proof debts, blockers, and priority order |
 
-## Stability Rule
+## Claim Status
 
 Kernel files may identify conjectures, but strong claims should be mirrored in `../CLAIM_LEDGER.md` before they become paper-facing.

@@ -4,16 +4,16 @@ This track houses the conjectural bridge between Spin(2,3) threshold dynamics, S
 
 ## Contents
 
-- `spin23-efimov-bridge.md`: conservative bridge overview.
-- `casimir-faddeev-conjecture.md`: merged and demoted target theorem.
+- `spin23-efimov-bridge.md`: bridge overview.
+- `casimir-faddeev-conjecture.md`: target-theorem conjecture.
 - `proof-obligations.md`: gates required before the bridge can feed the core.
 - `derivations/`: imported Efimov derivation notes.
 - `experiments/`: imported Python checks and visualizations.
 
-## Current Posture
+## Status
 
 The bridge is a quantitative test target, not established framework content. The safe version is:
 
 > Spin(2,3) threshold dynamics suggests an SO(2,1) scaling sector; Efimov physics supplies a concrete three-body SO(2,1)-controlled system that may realize this structure.
 
-The unsafe theorem-level version is retired.
+The theorem-level bridge claim is not used as framework content.

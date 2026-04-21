@@ -1,6 +1,6 @@
 # Spin(2,3) Programme
 
-This repository is the working corpus for the Spin(2,3) research programme. The current organization separates core framework material, kernels, research tracks, papers, and archived snapshots so claims do not drift across maturity levels.
+This repository contains the working documents for the Spin(2,3) research programme. The structure separates core framework material, kernels, research tracks, papers, and archived snapshots.
 
 ## How To Read This Repo
 
@@ -21,18 +21,7 @@ This repository is the working corpus for the Spin(2,3) research programme. The 
 | `research/faddeev-efimov/` | Conjectural Faddeev/Casimir/Efimov bridge track |
 | `papers/` | Draft paper artifacts and supporting scripts |
 | `archive/` | Snapshots, overflow, and non-live synthesis material |
-| `checks/` | Corpus maintenance checks |
 
-## Governance Rule
+## Claim Status
 
 Research tracks may suggest new core claims, but they must pass through `CLAIM_LEDGER.md` before they are treated as part of the framework.
-
-## Stability Checks
-
-Before treating the corpus as stable after a reorg, run:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\checks\check-corpus.ps1
-```
-
-The check scans for stale flat-corpus references, retired bridge-overclaim phrases, broken backticked markdown references, and core Efimov references that are not marked as conjectural/open.

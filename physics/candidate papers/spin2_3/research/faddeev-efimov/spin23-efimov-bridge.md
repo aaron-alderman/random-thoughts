@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document houses the speculative Spin(2,3) -> Efimov bridge after the recovery reorganization. It keeps the useful comparison while preventing the bridge from being treated as established core structure.
+This document houses the speculative Spin(2,3) -> Efimov bridge. It keeps the useful comparison while preventing the bridge from being treated as established core structure.
 
 Status: `conjecture`.
 

@@ -124,7 +124,7 @@ $brokenMarkdownRefs = foreach ($file in $markdownFiles) {
     }
 }
 
-Show-Section "stale flat-corpus references" @($staleMatches)
+Show-Section "stale path references" @($staleMatches)
 Show-Section "retired bridge overclaim phrases" @($overclaimMatches)
 Show-Section "unqualified core Efimov scaling references" @($badEfimovCoreMatches)
 Show-Section "broken backticked markdown references" @($brokenMarkdownRefs)
@@ -134,5 +134,5 @@ if ($failed) {
 }
 
 if (-not $Quiet) {
-    Write-Host "Corpus checks passed." -ForegroundColor Green
+    Write-Host "Checks passed." -ForegroundColor Green
 }

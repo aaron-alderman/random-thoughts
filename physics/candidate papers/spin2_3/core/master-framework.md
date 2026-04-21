@@ -16,7 +16,7 @@ The goal is to keep separate:
 
 This is the project-facing map.
 
-The reusable generic version lives outside this stabilized corpus as the earlier meta-framework note.
+The reusable generic version lives outside this project folder as the earlier meta-framework note.
 
 ---
 

@@ -1,6 +1,6 @@
 # Claim Ledger
 
-This file is the global claim-control surface for the Spin(2,3) programme.
+This file indexes the current status of major claims in the Spin(2,3) programme.
 
 Allowed statuses:
 
@@ -94,7 +94,7 @@ Allowed statuses:
 | Anomaly cancellation constrains completion of the matter content | established | Standard consistency condition. |
 | Coefficients in `Y = a J^{01} + b Q7` can be fixed inside the chosen ansatz | conditional | Constrained fit, not full uniqueness. |
 | Reduced positivity/complete positivity holds in the Lindblad regime | conditional | Covered dynamically; consistency layer records the same regime caveat. |
-| Strong uniqueness/exclusion claims must be separated from constrained fits | established | Governance rule for static and paper-facing claims. |
+| Strong uniqueness/exclusion claims must be separated from constrained fits | established | Writing rule for static and paper-facing claims. |
 
 ## Topological Claims
 
@@ -119,7 +119,7 @@ Allowed statuses:
 | Parametrized symmetric operators exhibit gap-amplified projector sensitivity | established | General spectral mathematics in `research/spectral-transition/`. |
 | Boundary-restricted projectors inherit inverse-gap sensitivity | conditional | Depends on the chosen bulk-boundary splitting. |
 | Efimov scaling may be governed by a threshold SO(2,1) Casimir in the Spin(2,3) dephased sector | conjecture | Lives in `research/faddeev-efimov/`; not core until proof obligations are met. |
-| The Faddeev 3x3 channel matrix is the restricted Spin-derived SO(2,1) Casimir | conjecture | Target theorem only after normalization and `s_0` recovery are explicit. |
+| The Faddeev 3x3 channel matrix is the restricted Spin-derived SO(2,1) Casimir | conjecture | Target theorem only after normalization and explicit `s_0` calculation. |
 | The Faddeev/Casimir bridge has theorem-level status | retired | Replaced by the conjectural bridge track and proof-obligation gate. |
 | The Efimov bridge is closed at matrix level | retired | Requires explicit Spin-derived operator and normalization match. |
 
@@ -139,8 +139,8 @@ Allowed statuses:
 | The framework is ready for a PRD-level phenomenology paper | retired | Premature until phenomenology is sharper. |
 | The framework already constitutes a full interpretation of quantum mechanics | retired | Overreach at present. |
 
-## Intake Rule
+## Use
 
-When a document introduces a strong claim, route it here before treating it as framework content. Use the lowest defensible status first, then promote only after the needed derivation, calculation, or proof obligation is recorded.
+When a document introduces a strong claim, list it here before treating it as framework content. Use the lowest defensible status first, then strengthen the status only after the needed derivation, calculation, or proof obligation is recorded.
 
 Paper-local theorems may remain in paper drafts when their assumptions are stated inside the paper. They become framework-level claims only after they appear in this ledger.
