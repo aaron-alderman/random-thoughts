@@ -1391,17 +1391,17 @@ The NS programme identifies a 1D curve in the Q-R invariant plane — the strain
 
 **What this addresses here (Level 4):**
 
-The central dynamical claim of this framework is that zero-mass interactions propagate only on T1, with T2 entering through off-diagonal mixing once mass is present (Principle D2). The question of why T1-pure propagation should be dynamically unstable — equivalently, why the hidden sector relaxation γ > 0 is forced rather than assumed — is an open problem.
+The central dynamical claim of this framework is that zero-mass interactions propagate only on the induced observable sector, conventionally named T1 after orientation is fixed, with T2 entering through off-diagonal mixing once mass is present (Principle D2). The question of why pure observable-sector propagation should be dynamically unstable — equivalently, why the hidden sector relaxation γ > 0 is forced rather than assumed — is an open problem.
 
 **Proposed bridge identification (Level 5):**
 
-The strain-only ray corresponds to the T1-pure sector. More precisely: T1-pure propagation = no transverse coupling = strain-only ray (J̃ = 0); T2 mixing = transverse triadic coupling = off-strain-ray deviation (J̃ ≠ 0). NS regularity = T2 mixing prevents T1 collapse. Under this identification, the NS result that T1-pure blow-up is prevented by transverse (T2) terms translates into: the T1 channel is stable precisely because T2 mixing is present.
+The strain-only ray corresponds to the pure observable-sector limit, named T1 in the current orientation. More precisely: pure T1 propagation = no transverse coupling = strain-only ray (J̃ = 0); T2 mixing = transverse triadic coupling = off-strain-ray deviation (J̃ ≠ 0). NS regularity = T2 mixing prevents pure-sector collapse. Under this identification, the NS result that pure T1 blow-up is prevented by transverse (T2) terms translates into: the observable channel is stable precisely because T2 mixing is present.
 
 This belongs in discussion at Level 5 as structural corroboration of the hidden-sector picture. It should not appear as a derivation.
 
 **What this file still needs:**
 
-An independent argument that T1-pure propagation is dynamically unstable in the Spin(2,3) setting, or that hidden sector relaxation γ > 0 is forced by the dynamics. This is the Spin(2,3) analogue of Gap A in the NS programme.
+An independent argument that pure observable-sector propagation is dynamically unstable in the Spin(2,3) setting, or that hidden sector relaxation γ > 0 is forced by the dynamics. This is the Spin(2,3) analogue of Gap A in the NS programme.
 
 ---
 

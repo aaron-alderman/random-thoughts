@@ -55,7 +55,7 @@ At minimum, the reduction has to explain:
 3. how a local quaternionic `H` slice carries the hidden complex-plane data
 4. how the exploratory `Spin(3,3)` lift folds into that hidden complex-plane structure
 5. how the effective `T1/T2` split and `J^{01}` grading emerge from that folded data
-6. why the final observable channel is the `T1`-organized branch rather than an arbitrary two-block decomposition
+6. what ambient, dynamical, or epistemic selector induces the final observable projector, conventionally named `T1` after orientation is fixed
 
 If those six points are not addressed, the project still lacks its missing middle.
 
@@ -537,7 +537,7 @@ So the safe status is:
 
 ### R4. Observable selection
 
-Explain why the final observable channel should be `T1` rather than another equivalent two-block choice.
+Explain what selects the final observable projector, rather than treating the block name `T1` as intrinsically preferred.
 
 Deliverable:
 
@@ -572,6 +572,61 @@ J^{01}\text{ two-sector split}
 $$
 
 Under this convention, `T1` means "the reduced sector aligned with the induced forward/readout flow." The name is conventional; the induced projector is the object that would have invariant content.
+
+#### Minimal ambient-selector test
+
+The simplest way to make the previous caveat operational is to introduce an ambient selector object
+
+$$
+D_{\mathrm{amb}} \in \mathfrak{so}(2,4)
+$$
+
+or an equivalent ambient scale-flow vector field whose infinitesimal action is represented by such a generator.
+
+Let the reduced `Spin(2,3)` slice be obtained by fixing the spacelike normal `n`, so that at the vector level
+
+$$
+V_{2,3} = n^\perp \subset V_{2,4}.
+$$
+
+Then the selector test is:
+
+1. restrict or project `D_{\mathrm{amb}}` to the slice-preserving component
+   $$
+   D_{\mathrm{red}} := \operatorname{pr}_{\mathfrak{so}(2,3)}(D_{\mathrm{amb}});
+   $$
+2. check whether `D_{\mathrm{red}}` is conjugate, with orientation, to the reduced compact charge generator `J^{01}`;
+3. define the observable projector as the negative-charge or positive-charge spectral projector of `D_{\mathrm{red}}`, according to the forward orientation selected by the ambient flow;
+4. name that sector `T1`.
+
+In this formulation, the sign is the only real convention. If
+
+$$
+D_{\mathrm{red}} = J^{01},
+$$
+
+then the current naming is retained. If
+
+$$
+D_{\mathrm{red}} = -J^{01},
+$$
+
+then the labels `T1` and `T2` should be swapped. No physical content changes, because the invariant content is the induced projector
+
+$$
+P_{\mathrm{obs}}
+=
+\chi_{\mathrm{forward}}(D_{\mathrm{red}}),
+$$
+
+not the bare sector name.
+
+This turns the `AdS_5` / `SO(2,4)` suspicion into a finite check rather than a new philosophical burden:
+
+- identify the ambient scale-flow generator;
+- restrict it to the `SO(2,3)` slice fixed by `n`;
+- compare the result with `J^{01}`;
+- use the resulting spectral projector as the observable projector.
 
 #### R4. Two legitimate routes
 
@@ -652,7 +707,7 @@ $$
 Then the Route A derivation problem becomes:
 
 - prove that the parent reduction forces the zero-mass transport operator into the `H_0` block
-- prove that `H_0` acts only on `T1`
+- prove that `H_0` acts only on the sector selected by the induced observable projector
 - prove that `T2` enters only through `H_{\mathrm{mix}}`
 
 The sharpest algebraic version of that target is:
@@ -667,11 +722,11 @@ H_0 Q = 0,
 Q = 1-P,
 $$
 
-with `P` the spectral projector onto the reduced sector identified as `T1`.
+with `P` the induced observable projector, named `T1` after the readout orientation is fixed.
 
 So the real Route A question is:
 
-- can those identities be obtained from the parent reduction and the selected zero-mass channel
+- can those identities be obtained from the parent reduction, the selected zero-mass channel, and, if needed, the ambient scale-flow selector
 
 instead of merely being imposed as a convenient block ansatz?
 
@@ -2094,7 +2149,7 @@ For Route A, the reduction map should satisfy at least:
    \qquad
    \mathcal{R}_{\mathrm{op}}(P_{\Pi,+}) = Q
    $$
-   with `P` the `J^{01}` eigenspace projector of eigenvalue `-1/2` and `Q` the projector of eigenvalue `+1/2`
+   with `P = P_{\mathrm{obs}}` the `J^{01}` eigenspace projector selected by the forward readout orientation, conventionally named `T1`, and `Q = 1-P`
 
 2. **Zero-mass support compatibility**
    $$
@@ -2106,7 +2161,7 @@ For Route A, the reduction map should satisfy at least:
    $$
 
 3. **Sector-image compatibility**
-   the image of the parent `(-)` charge sector lands in `T1`, and the image of the parent `(+)` charge sector lands in `T2`
+   the image of the parent `(-)` charge sector lands in the sector named `T1` after orientation is fixed, and the image of the parent `(+)` charge sector lands in the opposite sector named `T2`
 
 4. **No spurious support**
    reduction should not create `T2` support for a parent operator that was already confined to the parent `(-)` charge sector
@@ -2141,7 +2196,7 @@ $$
 
 then the whole spectral dictionary follows automatically.
 
-Because `W_-` and `W_+` are the eigenspaces of `J_{\Pi,\mathrm{toy}}` with eigenvalues `-1/2` and `+1/2`, while `T1` and `T2` are the eigenspaces of `J^{01}` with the same eigenvalues, the intertwining condition forces
+Because `W_-` and `W_+` are the eigenspaces of `J_{\Pi,\mathrm{toy}}` with eigenvalues `-1/2` and `+1/2`, while the reduced sectors named `T1` and `T2` are the eigenspaces of `J^{01}` with the same eigenvalues after orientation is fixed, the intertwining condition forces
 
 $$
 \mathcal{R}_{\mathrm{vec}}(W_-) \subseteq T1,

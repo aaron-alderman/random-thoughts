@@ -43,12 +43,12 @@ The central epistemic question of the framework is:
 The present framework no longer needs to answer that only with a bare projection principle. A stronger version is available:
 
 - the observable channel is determined by the selected axis of zero-mass interaction
-- projection onto `T1` is then the effective observable rule downstream of that interaction structure
+- projection onto the induced observable sector, currently named `T1`, is then the effective observable rule downstream of that interaction structure
 
 This should now be read alongside the ambient-reduction scaffold:
 
 - the `T1/T2` split is a reduced output of a deeper hidden complex-plane structure
-- the remaining open question is not whether one may postulate projection, but whether the identification of the zero-mass readout channel with `T1` can be dynamically forced rather than only epistemically imposed
+- the remaining open question is not whether one may postulate projection, but whether the zero-mass readout projector can be dynamically or ambient-geometrically forced rather than only epistemically imposed
 
 ---
 
@@ -76,20 +76,20 @@ The decisive epistemic move is therefore not just "project onto `T1`," but:
 
 The effective observable sector is the sector singled out by zero-mass traversal or interaction.
 
-In the current framework, that channel is identified with `T1`.
+In the current framework, that channel is conventionally named `T1` after the readout orientation is fixed.
 
 This is the deeper epistemic proposal. It explains why one sector matters observationally without needing to begin from an entirely separate visibility axiom.
 
 At present, the cleanest reading is:
 
 - the channel-selection story is more structured than a bare primitive axiom
-- but the final identification of that channel with `T1` is not yet a full theorem
+- but the final derivation of that projector from bulk dynamics or ambient scale-flow geometry is not yet a full theorem
 
 So Principle E1 should be treated as a sharpened framework principle, not as a closed derivation.
 
 ### Effective postulate E2: projected observables
 
-Physical observables are evaluated after projection onto `T1`.
+Physical observables are evaluated after projection onto the induced observable sector.
 
 At the operator level, if `O` is an observable acting on the accessible sector, then its physical expectation value is taken to be
 $$
@@ -101,6 +101,8 @@ $$
 $$
 
 This is not yet a theorem in the current framework. But in the revised backbone it is best read as the effective observational rule induced by Principle E1.
+
+In the current orientation convention, `P` is the projector onto the sector named `T1`. The projector is the invariant object; the sector name is bookkeeping.
 
 ---
 
@@ -155,12 +157,12 @@ The framework is strongest when it keeps them separate:
 
 ## Observable algebra
 
-At the kernel level, the observable algebra is taken to be the algebra generated on `T1`, or equivalently the subalgebra selected by `P O P`.
+At the kernel level, the observable algebra is taken to be the algebra generated on the induced observable sector, or equivalently the subalgebra selected by `P O P`.
 
 Safe consequences:
 
 - expectation values are determined by the projected state
-- effective measured densities live in the `T1` sector
+- effective measured densities live in the sector named `T1` after orientation is fixed
 - hidden-sector influence enters indirectly through the evolution of the projected state
 - this algebra is physically privileged because it is the one reached by the selected zero-mass interaction channel
 
@@ -178,14 +180,14 @@ Those remain open.
 
 The framework should keep two possible justifications distinct.
 
-### Route A: dynamical selection
+### Route A: dynamical or ambient selection
 
-The strongest route would derive that zero-mass interaction acts directly only on one reduced charge sector, and that this sector is precisely `T1`.
+The strongest route would derive that zero-mass interaction acts directly only on one reduced charge sector, and that this sector is the reduced image of the forward readout or scale-flow selector.
 
 If that route succeeds, then:
 
-- `T1` is dynamically selected
-- projection onto `T1` is derivative rather than primitive
+- the observable projector is dynamically or ambient-geometrically selected
+- projection onto the sector named `T1` is derivative rather than primitive
 
 This route is not yet complete.
 
@@ -194,10 +196,10 @@ This route is not yet complete.
 The weaker but currently cleaner route is:
 
 - the reduction produces `T1 \oplus T2`
-- the framework identifies the zero-mass readout channel with `T1`
-- projection onto `T1` is then the effective observational rule
+- the framework identifies one reduced sector as the zero-mass readout channel and names it `T1`
+- projection onto that induced sector is then the effective observational rule
 
-This route is already coherent with the present kernel, as long as the identification of the readout channel with `T1` is tracked explicitly as an assumption rather than smuggled in as a theorem.
+This route is already coherent with the present kernel, as long as the naming of the readout channel as `T1` is tracked explicitly as an orientation convention rather than smuggled in as a theorem.
 
 ### Present status
 
@@ -298,8 +300,8 @@ The second statement is much stronger and is not established by the current fram
 | Claim | Role | Level | Comment |
 |---|---|---|---|
 | the effective observable channel is determined by zero-mass interaction | central framework proposal | 4 | new epistemic center |
-| observable quantities are evaluated after projection onto `T1` | effective postulate downstream of channel selection | 4 | still central, but not necessarily primitive |
-| the identification of the zero-mass readout channel with `T1` is dynamically or ambient-geometrically forced | missing | 5 | now reduced to one final issue: derive why the unique direct readout branch must be the constructive/persistent one (`\kappa_u > 0` in phase-normalized gauge), or show that a larger ambient scale-flow selector induces the same reduced projector; with either rule, the `T1` identification is conditionally fixed |
+| observable quantities are evaluated after projection onto the sector named `T1` | effective postulate downstream of channel selection | 4 | still central, but not necessarily primitive; invariant object is the induced projector |
+| the observable projector is dynamically or ambient-geometrically forced | missing | 5 | now reduced to one final issue: derive why the unique direct readout branch must be the constructive/persistent one (`\kappa_u > 0` in phase-normalized gauge), or show that a larger ambient scale-flow selector induces the same reduced projector; with either rule, the sector may be named `T1` conditionally |
 | `T2` is dynamically present but not directly observable through the zero-mass channel | framework consequence of interaction rule plus dynamics | 4 | core hidden-sector claim |
 | projection and coarse-graining are distinct operations | conceptual clarification | 4 | important for logical hygiene |
 | the effective observable description loses full microscopic information | derived at the reduced-description level | 4 | safe and useful |
@@ -341,7 +343,7 @@ The second statement is much stronger and is not established by the current fram
 
 The epistemic domain still owes:
 
-1. a deeper justification for why the selected zero-mass channel should be identified with `T1`
+1. a deeper justification for what induces the observable projector, whether bulk dynamics or an ambient scale-flow selector
 2. a sharper account of whether projection is fundamental, emergent, or only effective downstream of channel selection
 3. a relation to standard quantum measurement theory
 4. a more careful treatment of whether any indirect observables of `T2` exist
@@ -359,7 +361,7 @@ At its safest level, it says:
 
 1. the full model evolves in a larger space than the one directly observed
 2. a selected zero-mass interaction channel defines the effective observable sector
-3. in the present framework that channel is identified with `T1`
+3. in the present framework that channel is named `T1` after the readout orientation is fixed
 4. the hidden sector `T2` remains dynamically active but not directly visible through that channel
 5. coarse-graining over that hidden structure reduces accessible information
 6. the resulting observable theory can display broadening not present in the purely projected transport law

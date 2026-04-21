@@ -400,7 +400,7 @@ This is the layer of what the framework still owes.
 - a clear ambient-to-observable reduction map from the large space to the Standard-Model-like visible sector
 - a bridge argument for whether the physically relevant exceptional Jordan object is `J3(O)`, `J3(C \otimes O)`, or a relation between them; the NS programme suggests this can be resolved by counting independent gauge-invariant nonlocal observables
 - an independent argument that the preferred octonionic direction is the unique fixed point of a rescaling group analogous to BKM, which would promote the alignment claim from a central proposal to a derived result
-- a derivation that T1-pure propagation is dynamically unstable or that hidden-sector relaxation γ > 0 is forced, which is the Spin(2,3) analogue of NS Gap A
+- a derivation that pure observable-sector propagation is dynamically unstable or that hidden-sector relaxation γ > 0 is forced, which is the Spin(2,3) analogue of NS Gap A
 
 ### Project-specific publication lesson
 

@@ -97,7 +97,7 @@ These are the problems that would turn the project from a coherent framework int
 
 ### Epistemics
 
-- why is `T1` the observable sector rather than `T2` or some other subspace?
+- what induces the observable projector, and does the induced sector match the current `T1` naming convention?
 - is projection fundamental or emergent?
 - what is the relation to standard quantum measurement theory?
 - how does the ambient-to-observable reduction act on the full space before one reaches the final visible sector?
@@ -173,7 +173,7 @@ This priority order matches the current level of the project.
 | hypercharge uniqueness still needs a sharper proof structure | consistency | high | important for static papers |
 | generation-counting and fourth-generation exclusion remain heavy proof burdens | statics / consistency | high | one of the biggest weak spots |
 | ambient-to-observable reduction is not yet sharply defined | cross-domain | high | central missing-middle object |
-| projection onto `T1` lacks a deeper justification | epistemics | medium-high | now reduced to one final issue: derive why the unique direct readout branch must be the constructive/persistent one (`\kappa_u > 0` in phase-normalized gauge); with that rule, the support-preserving reduction to `T1` is conditionally closed |
+| projection onto the sector named `T1` lacks a deeper justification | epistemics | medium-high | now reduced to one final issue: derive why the unique direct readout branch must be the constructive/persistent one (`\kappa_u > 0` in phase-normalized gauge), or show that an ambient scale-flow selector induces the same observable projector |
 | parent octonionic geometry has not yet been rigorously reduced to the effective `Spin(2,3)` branch | statics / cross-domain | high | now a central parent-program task |
 | folded `Spin(3,3)` insight has not yet been formalized as a precise reduction map into hidden quaternionic complex-plane structure | statics / cross-domain | high | new central bridge task |
 | Heisenberg-type structure is not yet derived from a hidden antisymmetric sector | dynamics / epistemics | high | requires more than diffusion |
@@ -204,7 +204,7 @@ The NS/J3(O) regularity programme has identified several structural parallels wi
 |---|---|---|---|
 | find a rescaling group in the Spin(2,3) setting for which the preferred octonionic direction is the unique fixed point, analogous to BKM scale-invariance of s* | statics | high | would promote the octonionic alignment claim from Level 4 to derived |
 | count the independent gauge-invariant nonlocal observables of the theory and compare to 12 | statics / consistency | medium | decides J3(O) vs J3(C⊗O) from the observable-algebra side |
-| establish that T1-pure propagation is dynamically unstable in the Spin(2,3) setting, or that γ > 0 is forced by the dynamics | dynamics | high | Spin(2,3) analogue of NS Gap A |
+| establish that pure observable-sector propagation is dynamically unstable in the Spin(2,3) setting, or that γ > 0 is forced by the dynamics | dynamics | high | Spin(2,3) analogue of NS Gap A |
 | derive from Spin(2,3) representation theory that the relevant scaling exponents are forced to differ by 1/2 | dynamics / consistency | medium | would independently verify the NS exponent gap |
 | prove or disprove that Jordan algebra positivity N_lifted ≥ 0 is inconsistent with violation of reflection positivity in the dual theory | consistency | medium | potential route to close Gap A from the gauge-theory side |
 | physically justify the identification m ~ strain rate a(t) and γ ~ vorticity correlation |b_ij| in the NS/Spin(2,3) parameter mapping | dynamics | medium-low | dimensional analogy only at present; needs an independent physical argument |

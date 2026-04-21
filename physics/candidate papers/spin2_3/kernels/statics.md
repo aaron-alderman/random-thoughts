@@ -459,7 +459,7 @@ The static domain hands the following objects to the rest of the framework:
 
 The static domain does not settle:
 
-- why `T1` should be observable
+- what induces the observable projector, and therefore which reduced sector is named `T1`
 - why `T2` should be hidden
 - why the selected octonionic direction should align with the massless traversal channel rather than some other structural direction
 - why the microscopic dynamics should mix the sectors in the proposed way
