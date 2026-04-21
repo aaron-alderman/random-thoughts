@@ -22,7 +22,7 @@ The result is a concise but complete theory stack. It can serve equally well as 
 
 ---
 
-# Phase II — Mathematical Core
+# Phase II - Mathematical Core
 
 ## 1. Object of Study
 
@@ -97,8 +97,7 @@ $$
 The eigenvalues are
 
 $$
-\lambda_\pm(\theta)
-=
+\lambda_\pm(\theta)=
 \frac{a_1+a_2}{2}
 \pm
 \sqrt{\left(\frac{\Delta}{2}\right)^2+b^2}.
@@ -109,7 +108,7 @@ This formula shows immediately that there are two competing mechanisms:
 1. **Diagonal detuning**, encoded by \(\Delta\).
 2. **Off-diagonal mixing**, encoded by \(b\).
 
-If \(|\Delta|\gg |b|\), the matrix is nearly diagonal in the chosen basis, and the eigenvectors remain close to basis directions. If \(|b|\gg |\Delta|\), mixing dominates and the eigenvectors are strongly hybridized. The transition zone occurs when these quantities are comparable.
+If $\lvert\Delta\rvert \gg \lvert b\rvert$, the matrix is nearly diagonal in the chosen basis, and the eigenvectors remain close to basis directions. If $\lvert b\rvert \gg \lvert\Delta\rvert$, mixing dominates and the eigenvectors are strongly hybridized. The transition zone occurs when these quantities are comparable.
 
 The reduced \(2\times 2\) model is minimal in a precise sense. Whenever exactly two modes become close while the rest remain well separated, the local spectral behavior is governed by an effective two-dimensional invariant subspace. Thus the formulas in this section are not merely illustrative: they are the universal local model of pairwise mode transition.
 
@@ -159,7 +158,7 @@ The purpose of this normalization is notational and conceptual:
 - \(y\) measures perturbation amplitude relative to coupling;
 - \(\tau\) compares characteristic variation scales.
 
-In particular, expressions such as \(|\Delta|\sim |b|\) become statements about dimensionless ratios rather than dimensional quantities. The transition analysis then depends on relative scale, not on arbitrary units.
+In particular, expressions such as $\lvert\Delta\rvert \sim \lvert b\rvert$ become statements about dimensionless ratios rather than dimensional quantities. The transition analysis then depends on relative scale, not on arbitrary units.
 
 ## 6. Spectral Gap
 
@@ -190,10 +189,8 @@ $$
 For \(n=2\), using the angle parametrization,
 
 $$
-\mathcal I
-=
-\cos^4\phi+\sin^4\phi
-=
+\mathcal I=
+\cos^4\phi+\sin^4\phi=
 \frac12+\frac12\cos^2(2\phi).
 $$
 
@@ -231,7 +228,7 @@ $$
 In the reduced \(2\times 2\) setting, this is equivalently characterized by
 
 $$
-|\Delta(\theta)|\sim |b(\theta)|.
+\lvert\Delta(\theta)\rvert\sim \lvert b(\theta)\rvert.
 $$
 
 This is the region in which neither diagonal imbalance nor off-diagonal mixing completely dominates. Spectrally, the two eigenvalues are close. Geometrically, the eigendirections interpolate rapidly between limiting configurations.
@@ -279,11 +276,11 @@ This property is the first formulation of the transition mechanism: **small spec
 The parameter space can be divided into four structural regions:
 
 | Region | Condition | Interpretation |
-|---|---|---|
-| Gap-dominated | \(|\Delta|\gg |b|\) | Eigenvectors stay close to basis directions |
-| Mixing-dominated | \(|b|\gg |\Delta|\) | Eigenvectors are strongly hybridized |
-| Mixed regime | \(|\Delta|\sim |b|\) | Transition zone, neither effect dominates |
-| Degenerate | \(\Delta=0,\ b=0\) | Eigenbasis not uniquely defined |
+| --- | --- | --- |
+| Gap-dominated | $\lvert\Delta\rvert \gg \lvert b\rvert$ | Eigenvectors stay close to basis directions |
+| Mixing-dominated | $\lvert b\rvert \gg \lvert\Delta\rvert$ | Eigenvectors are strongly hybridized |
+| Mixed regime | $\lvert\Delta\rvert \sim \lvert b\rvert$ | Transition zone, neither effect dominates |
+| Degenerate | $\Delta=0,\ b=0$ | Eigenbasis not uniquely defined |
 
 This classification is minimal but complete in the \(2\times 2\) model. It separates stable modal regimes from transition and from exact degeneracy.
 
@@ -301,7 +298,7 @@ b & b & a_3
 \qquad a_1+a_2+a_3=\text{const}.
 $$
 
-This “democratic” form preserves equal off-diagonal coupling but allows nontrivial diagonal imbalance. The same structural ingredients appear:
+This "democratic" form preserves equal off-diagonal coupling but allows nontrivial diagonal imbalance. The same structural ingredients appear:
 
 - spectral gaps between nearby eigenvalues;
 - codimension conditions for degeneracy;
@@ -317,7 +314,7 @@ $$
 \text{Transition behavior is governed by the geometry of eigenvectors near small spectral gap.}
 $$
 
-This statement is deliberately stronger than “transition occurs when eigenvalues are close.” Spectral proximity is necessary, but the actual transition phenomenon is geometric: the modes themselves reorganize, rotate, and redistribute.
+This statement is deliberately stronger than "transition occurs when eigenvalues are close." Spectral proximity is necessary, but the actual transition phenomenon is geometric: the modes themselves reorganize, rotate, and redistribute.
 
 ## 15. Minimal Working Procedure
 
@@ -344,7 +341,7 @@ This procedure is sufficient for the minimal core. Later phases replace \(\psi_i
 
 ---
 
-# Phase III — Analytical Layer
+# Phase III - Analytical Layer
 
 ## 17. Spectral Projector Formulation
 
@@ -372,8 +369,7 @@ $$
 If \(\lambda_i(\theta)\) is simple, differentiation of the eigenvalue equation and orthonormality yields
 $$
 \boxed{
-\frac{\partial \lambda_i}{\partial \theta_j}
-=
+\frac{\partial \lambda_i}{\partial \theta_j}=
 \psi_i^\top(\partial_j K)\psi_i.
 }
 $$
@@ -390,8 +386,7 @@ $$
 Then the first derivative of the eigenvector is
 $$
 \boxed{
-\frac{\partial \psi_i}{\partial \theta_j}
-=
+\frac{\partial \psi_i}{\partial \theta_j}=
 \sum_{m\neq i}
 \frac{\psi_m^\top(\partial_j K)\psi_i}{\lambda_i-\lambda_m}\,\psi_m.
 }
@@ -399,7 +394,7 @@ $$
 
 This is the key perturbation formula of the framework. It says that eigenvector variation is built from couplings to all complementary modes, each weighted by an inverse spectral separation. The numerator encodes how strongly the derivative \(\partial_j K\) mixes mode \(i\) with mode \(m\); the denominator amplifies this effect when the modes are nearly degenerate.
 
-The formula is the higher-dimensional analogue of the two-mode angle derivative and makes precise the phrase “small gap implies rapid mode variation.”
+The formula is the higher-dimensional analogue of the two-mode angle derivative and makes precise the phrase "small gap implies rapid mode variation."
 
 ## 20. Fundamental Sensitivity Bound
 
@@ -415,7 +410,7 @@ $$
 
 Defining
 $$
-\operatorname{gap}_i(\theta)=\min_{m\neq i}|\lambda_i(\theta)-\lambda_m(\theta)|,
+\mathrm{gap}_i(\theta)=\min_{m\neq i}\lvert\lambda_i(\theta)-\lambda_m(\theta)\rvert,
 $$
 one obtains the clean bound
 $$
@@ -424,7 +419,7 @@ $$
 \frac{\partial \psi_i}{\partial \theta_j}
 \right\|
 \le
-\frac{\|\partial_j K\|}{\operatorname{gap}_i(\theta)}.
+\frac{\|\partial_j K\|}{\mathrm{gap}_i(\theta)}.
 }
 $$
 
@@ -438,8 +433,7 @@ P_i=\psi_i\psi_i^\top
 $$
 gives
 $$
-\frac{\partial P_i}{\partial \theta_j}
-=
+\frac{\partial P_i}{\partial \theta_j}=
 \frac{\partial \psi_i}{\partial \theta_j}\psi_i^\top
 +
 \psi_i\left(\frac{\partial \psi_i}{\partial \theta_j}\right)^\top.
@@ -448,8 +442,7 @@ $$
 Substituting the eigenvector derivative formula yields
 $$
 \boxed{
-\frac{\partial P_i}{\partial \theta_j}
-=
+\frac{\partial P_i}{\partial \theta_j}=
 \sum_{m\neq i}
 \frac{\psi_m^\top(\partial_j K)\psi_i}{\lambda_i-\lambda_m}
 \left(\psi_m\psi_i^\top+\psi_i\psi_m^\top\right).
@@ -467,7 +460,7 @@ $$
 \frac{\partial P_i}{\partial \theta_j}
 \right\|
 \le
-\frac{2\|\partial_j K\|}{\operatorname{gap}_i(\theta)}.
+\frac{2\|\partial_j K\|}{\mathrm{gap}_i(\theta)}.
 }
 $$
 
@@ -478,14 +471,13 @@ The factor of \(2\) reflects the two terms in the derivative of \(\psi_i\psi_i^\
 For a chosen mode \(i\), define
 $$
 \boxed{
-\mathcal D_i=\{\theta:\, \operatorname{gap}_i(\theta)=0\}.
+\mathcal D_i=\{\theta:\, \mathrm{gap}_i(\theta)=0\}.
 }
 $$
 
 Equivalently,
 $$
-\mathcal D_i
-=
+\mathcal D_i=
 \{\theta:\, \exists\, m\neq i \text{ such that } \lambda_i(\theta)=\lambda_m(\theta)\}.
 $$
 
@@ -512,13 +504,13 @@ $$
 \frac{\partial \psi_i}{\partial \theta_j}
 \right\|
 \lesssim
-\frac{\|\partial_j K\|}{\operatorname{gap}_i(\theta)},
+\frac{\|\partial_j K\|}{\mathrm{gap}_i(\theta)},
 \qquad
 \left\|
 \frac{\partial P_i}{\partial \theta_j}
 \right\|
 \lesssim
-\frac{\|\partial_j K\|}{\operatorname{gap}_i(\theta)}.
+\frac{\|\partial_j K\|}{\mathrm{gap}_i(\theta)}.
 $$
 
 The exact constants are secondary. What matters is the inverse power of the gap.
@@ -535,7 +527,7 @@ This completes the minimal perturbative structure of the framework.
 
 ---
 
-# Phase IV — Geometric Layer (Spectral Geometry)
+# Phase IV - Geometric Layer (Spectral Geometry)
 
 ## 27. Geometric Object
 
@@ -550,7 +542,7 @@ For a simple eigenvalue, \(P_i(\theta)\) is a rank-one orthogonal projector sati
 $$
 P_i(\theta)^2=P_i(\theta),\qquad
 P_i(\theta)^\top=P_i(\theta),\qquad
-\operatorname{Tr}P_i(\theta)=1.
+\mathrm{Tr}P_i(\theta)=1.
 $$
 
 The set of all rank-one orthogonal projectors is naturally identified with real projective space:
@@ -566,8 +558,7 @@ Indeed, a line \([\psi]\in \mathbb{RP}^{n-1}\) corresponds exactly to the projec
 
 From the projector derivative formula,
 $$
-\frac{\partial P_i}{\partial \theta_j}
-=
+\frac{\partial P_i}{\partial \theta_j}=
 \sum_{m\neq i}
 \frac{\psi_m^\top(\partial_j K)\psi_i}{\lambda_i-\lambda_m}
 (\psi_m\psi_i^\top+\psi_i\psi_m^\top).
@@ -582,7 +573,7 @@ $$
 \frac{\partial P_i}{\partial \theta_j}
 \right\|
 \le
-\frac{2\|\partial_j K\|}{\operatorname{gap}_i(\theta)}
+\frac{2\|\partial_j K\|}{\mathrm{gap}_i(\theta)}
 }
 $$
 implies that the tangent structure becomes singular as the gap collapses.
@@ -593,7 +584,7 @@ Define the pullback metric on parameter space by
 $$
 \boxed{
 g_{jk}(\theta)=
-\operatorname{Tr}\!\left(
+\mathrm{Tr}\!\left(
 \frac{\partial P_i}{\partial \theta_j}
 \frac{\partial P_i}{\partial \theta_k}
 \right).
@@ -607,7 +598,7 @@ Interpretationally:
 - \(g_{jj}\) measures squared speed in the \(\theta_j\)-direction;
 - mixed terms \(g_{jk}\) capture directional coupling in parameter space.
 
-Large values of \(g\) indicate rapid rotation of the eigenspace. Thus the induced metric gives a quantitative version of “transition steepness.”
+Large values of \(g\) indicate rapid rotation of the eigenspace. Thus the induced metric gives a quantitative version of "transition steepness."
 
 ## 30. Curvature / Second Variation
 
@@ -622,7 +613,7 @@ $$
 \frac{\partial^2 P_i}{\partial \theta^2}
 \right\|
 \sim
-\frac{\|\partial K\|^2}{\operatorname{gap}^2}
+\frac{\|\partial K\|^2}{\mathrm{gap}^2}
 }
 $$
 up to additional lower-order terms involving \(\partial^2 K\).
@@ -634,11 +625,10 @@ Thus second variation is typically more singular than first variation. Intuitive
 The transition region can now be stated geometrically:
 $$
 \boxed{
-\mathcal M_i
-=
+\mathcal M_i=
 \left\{
 \theta:\,
-\operatorname{gap}_i(\theta)\ \text{small},
+\mathrm{gap}_i(\theta)\ \text{small},
 \quad
 g(\theta)\ \text{large}
 \right\}.
@@ -648,7 +638,7 @@ $$
 At the level of scaling,
 $$
 \boxed{
-g(\theta)\sim \frac{\|\partial K\|^2}{\operatorname{gap}^2}.
+g(\theta)\sim \frac{\|\partial K\|^2}{\mathrm{gap}^2}.
 }
 $$
 
@@ -662,8 +652,7 @@ P_i(t)=P_i(\theta(t))
 $$
 and
 $$
-\frac{dP_i}{dt}
-=
+\frac{dP_i}{dt}=
 \sum_j
 \frac{\partial P_i}{\partial \theta_j}\dot\theta_j.
 $$
@@ -677,7 +666,7 @@ $$
 \boxed{
 \left\|\frac{dP_i}{dt}\right\|
 \le
-\frac{2\|\dot K\|}{\operatorname{gap}_i}.
+\frac{2\|\dot K\|}{\mathrm{gap}_i}.
 }
 $$
 
@@ -742,9 +731,9 @@ This object remains canonical even when the internal basis of the cluster is not
 The geometric content of the framework may be summarized by
 $$
 \boxed{
-\|dP_i\|\sim \frac{1}{\operatorname{gap}},
+\|dP_i\|\sim \frac{1}{\mathrm{gap}},
 \qquad
-\|d^2P_i\|\sim \frac{1}{\operatorname{gap}^2},
+\|d^2P_i\|\sim \frac{1}{\mathrm{gap}^2},
 }
 $$
 modulo the size of matrix derivatives.
@@ -759,9 +748,9 @@ This closes the geometric layer.
 
 ---
 
-# Phase V — Boundary / Surface Layer
+# Phase V - Boundary / Surface Layer
 
-## 38. Bulk–Boundary Decomposition
+## 38. Bulk-Boundary Decomposition
 
 Assume that the finite-dimensional state space admits an orthogonal decomposition
 $$
@@ -804,7 +793,7 @@ $$
 
 Then
 $$
-\operatorname{Tr}(P_i^\partial)=B_i(\theta).
+\mathrm{Tr}(P_i^\partial)=B_i(\theta).
 $$
 
 Thus total boundary weight is encoded directly as the trace of the boundary-compressed projector. This is the natural boundary analogue of the projector formalism developed in Phases III and IV.
@@ -814,8 +803,7 @@ Thus total boundary weight is encoded directly as the trace of the boundary-comp
 In a basis adapted to the bulk-boundary decomposition, define
 $$
 \boxed{
-\mathcal I_{\partial}(\psi_i)
-=
+\mathcal I_{\partial}(\psi_i)=
 \sum_{j\in \partial\Omega} |\psi_{i,j}|^4.
 }
 $$
@@ -832,11 +820,10 @@ The quartic functional \(\mathcal I_\partial\) separates these regimes. Large \(
 To detect transitions controlled specifically by boundary-supported modes, define
 $$
 \boxed{
-\mathcal M_i^\partial(\eta,\beta)
-=
+\mathcal M_i^\partial(\eta,\beta)=
 \left\{
 \theta:\,
-\operatorname{gap}_i(\theta)\le \eta,
+\mathrm{gap}_i(\theta)\le \eta,
 \quad
 B_i(\theta)\ge \beta
 \right\}.
@@ -854,8 +841,7 @@ $$
 
 Then
 $$
-\frac{\partial B_i}{\partial \theta_j}
-=
+\frac{\partial B_i}{\partial \theta_j}=
 2\,\Re\left\langle
 \frac{\partial \psi_i}{\partial \theta_j},
 \Pi_{\partial}\psi_i
@@ -865,8 +851,7 @@ $$
 Substituting the eigenvector derivative formula gives
 $$
 \boxed{
-\frac{\partial B_i}{\partial \theta_j}
-=
+\frac{\partial B_i}{\partial \theta_j}=
 2\Re\sum_{m\neq i}
 \frac{\psi_m^\top(\partial_j K)\psi_i}{\lambda_i-\lambda_m}
 \langle \psi_m,\Pi_{\partial}\psi_i\rangle.
@@ -877,7 +862,7 @@ This identity is the boundary analogue of the projector sensitivity formula. It 
 
 ## 43. Boundary Sensitivity Bound
 
-By Cauchy–Schwarz,
+By Cauchy-Schwarz,
 $$
 \left|
 \frac{\partial B_i}{\partial \theta_j}
@@ -901,7 +886,7 @@ $$
 \frac{\partial \psi_i}{\partial \theta_j}
 \right\|
 \le
-\frac{\|\partial_j K(\theta)\|}{\operatorname{gap}_i(\theta)},
+\frac{\|\partial_j K(\theta)\|}{\mathrm{gap}_i(\theta)},
 $$
 one obtains
 $$
@@ -910,7 +895,7 @@ $$
 \frac{\partial B_i}{\partial \theta_j}
 \right|
 \le
-\frac{2\|\partial_j K(\theta)\|}{\operatorname{gap}_i(\theta)}
+\frac{2\|\partial_j K(\theta)\|}{\mathrm{gap}_i(\theta)}
 \sqrt{B_i(\theta)}.
 }
 $$
@@ -926,7 +911,7 @@ $$
 }
 $$
 
-Equivalently, if the gap is small, then \(|\partial_{\theta_j}B_i|\) can become large. Thus transition may be bulk-dominated, boundary-dominated, or mixed depending on where the modal weight concentrates and how that concentration changes.
+Equivalently, if the gap is small, then \(\lvert\partial_{\theta_j}B_i\rvert\) can become large. Thus transition may be bulk-dominated, boundary-dominated, or mixed depending on where the modal weight concentrates and how that concentration changes.
 
 ## 45. Surface-to-Volume Scaling Regimes
 
@@ -961,8 +946,7 @@ $$
 Its boundary restriction is
 $$
 \boxed{
-P_{\mathcal C}^{\partial}
-=
+P_{\mathcal C}^{\partial}=
 \Pi_{\partial}P_{\mathcal C}\Pi_{\partial}.
 }
 $$
@@ -983,11 +967,10 @@ There are now three coupled layers of structure:
 A natural transition set is therefore
 $$
 \boxed{
-\mathcal T_i
-=
+\mathcal T_i=
 \left\{
 \theta:\,
-\operatorname{gap}_i(\theta)\ \text{small},
+\mathrm{gap}_i(\theta)\ \text{small},
 \;
 \|\nabla P_i(\theta)\|\ \text{large},
 \;
@@ -1042,7 +1025,7 @@ Nothing further is required for the minimal theory. Any deeper surface analysis 
 
 # Conclusion
 
-Across Phases II–V, a unified picture emerges. A smooth symmetric matrix family determines spectral data that may reorganize sharply in narrow parameter regions. The primary mechanism is the collapse of spectral separation. Analytical perturbation theory shows that eigenvector and projector sensitivity scale inversely with gap. Geometric reformulation shows that the projector map into projective space becomes steep and sharply bent in the same regime. Boundary compression shows that surface observables inherit this same amplification principle.
+Across Phases II-V, a unified picture emerges. A smooth symmetric matrix family determines spectral data that may reorganize sharply in narrow parameter regions. The primary mechanism is the collapse of spectral separation. Analytical perturbation theory shows that eigenvector and projector sensitivity scale inversely with gap. Geometric reformulation shows that the projector map into projective space becomes steep and sharply bent in the same regime. Boundary compression shows that surface observables inherit this same amplification principle.
 
 The reduced \(2\times 2\) model identifies the local normal form of pairwise transition. The projector formalism lifts this to arbitrary finite dimension. The boundary layer adds a distinguished subspace without altering the underlying mechanism. Thus the entire framework is governed by a single mathematical principle:
 
@@ -1062,8 +1045,7 @@ For convenience, we record the main formulas in theorem-style form.
 
 If \(K(\theta)\) is \(C^1\) and \(\lambda_i(\theta)\) is simple, then
 $$
-\frac{\partial \lambda_i}{\partial \theta_j}
-=
+\frac{\partial \lambda_i}{\partial \theta_j}=
 \psi_i^\top(\partial_j K)\psi_i.
 $$
 
@@ -1075,8 +1057,7 @@ $$
 $$
 is imposed, then
 $$
-\frac{\partial \psi_i}{\partial \theta_j}
-=
+\frac{\partial \psi_i}{\partial \theta_j}=
 \sum_{m\neq i}
 \frac{\psi_m^\top(\partial_j K)\psi_i}{\lambda_i-\lambda_m}\,\psi_m.
 $$
@@ -1089,15 +1070,14 @@ $$
 \frac{\partial \psi_i}{\partial \theta_j}
 \right\|
 \le
-\frac{\|\partial_j K\|}{\operatorname{gap}_i(\theta)}.
+\frac{\|\partial_j K\|}{\mathrm{gap}_i(\theta)}.
 $$
 
 ## Proposition D (Projector derivative)
 
 If \(\lambda_i\) is simple, then
 $$
-\frac{\partial P_i}{\partial \theta_j}
-=
+\frac{\partial P_i}{\partial \theta_j}=
 \sum_{m\neq i}
 \frac{\psi_m^\top(\partial_j K)\psi_i}{\lambda_i-\lambda_m}
 (\psi_m\psi_i^\top+\psi_i\psi_m^\top).
@@ -1110,7 +1090,7 @@ $$
 \frac{\partial P_i}{\partial \theta_j}
 \right\|
 \le
-\frac{2\|\partial_j K\|}{\operatorname{gap}_i(\theta)}.
+\frac{2\|\partial_j K\|}{\mathrm{gap}_i(\theta)}.
 $$
 
 ## Proposition F (Boundary sensitivity)
@@ -1121,8 +1101,7 @@ B_i(\theta)=\|\Pi_{\partial}\psi_i(\theta)\|^2,
 $$
 one has
 $$
-\frac{\partial B_i}{\partial \theta_j}
-=
+\frac{\partial B_i}{\partial \theta_j}=
 2\Re\sum_{m\neq i}
 \frac{\psi_m^\top(\partial_j K)\psi_i}{\lambda_i-\lambda_m}
 \langle \psi_m,\Pi_{\partial}\psi_i\rangle.
@@ -1135,7 +1114,7 @@ $$
 \frac{\partial B_i}{\partial \theta_j}
 \right|
 \le
-\frac{2\|\partial_j K(\theta)\|}{\operatorname{gap}_i(\theta)}
+\frac{2\|\partial_j K(\theta)\|}{\mathrm{gap}_i(\theta)}
 \sqrt{B_i(\theta)}.
 $$
 
