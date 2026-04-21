@@ -1,4 +1,3 @@
-
 # Parametrized Spectral Framework for Mode Transition
 
 ## Abstract
@@ -11,7 +10,7 @@ The framework is organized in five layers. The first layer isolates the reduced 
 
 ## Introduction
 
-Many finite-dimensional systems exhibit parameter regimes in which dominant modes reorganize rapidly. In the simplest cases, eigenvalues approach each other without crossing exactly, while the associated eigenvectors rotate sharply in a narrow parameter window. In higher-dimensional settings the same phenomenon appears as rapid variation of spectral subspaces, concentration of weight on distinguished degrees of freedom, and instability of mode assignment near near-degenerate clusters.
+Many finite-dimensional systems exhibit parameter regimes in which dominant modes reorganize rapidly. In the simplest cases, eigenvalues approach each other without crossing exactly, while the associated eigenvectors rotate sharply in a narrow parameter window. In higher-dimensional settings the same phenomenon appears as rapid variation of spectral subspaces, concentration of weight on distinguished degrees of freedom, and instability of mode assignment near-degenerate clusters.
 
 The present manuscript isolates the minimal mathematics behind this phenomenon for smooth families of real symmetric matrices. The restriction to real symmetric operators gives a particularly transparent setting. Eigenvalues are real, orthonormal bases of eigenvectors exist away from degeneracy, and perturbation theory is clean enough that the core mechanism can be written explicitly. The main thesis is simple: **mode transition is governed not only by spectral proximity, but by the geometry of eigenvectors and projectors near small spectral gap**.
 
@@ -148,10 +147,8 @@ In particular, expressions such as \(|\Delta|\sim |b|\) become statements about 
 
 Define the spectral gap between the top two modes by
 \[
-\boxed{
 \Delta_\lambda(\theta)=\lambda_1(\theta)-\lambda_2(\theta)
 =2\sqrt{\left(\frac{\Delta}{2}\right)^2+b^2}.
-}
 \]
 
 In the reduced \(2\times 2\) model, this quantity summarizes proximity to degeneracy. It is always nonnegative and vanishes exactly when both \(\Delta=0\) and \(b=0\).
@@ -167,9 +164,7 @@ This second role is the deeper one. A small gap is not merely a sign that two ei
 
 Define the quartic functional
 \[
-\boxed{
 \mathcal I(\theta)=\sum_{i=1}^n |\psi_i(\theta)|^4.
-}
 \]
 
 For \(n=2\), using the angle parametrization,
@@ -192,9 +187,7 @@ Thus \(\mathcal I\) distinguishes basis alignment from mixing. It is not a spect
 
 Define the degeneracy set
 \[
-\boxed{
 \mathcal D=\{\theta:\, b(\theta)=0,\ \Delta(\theta)=0\}.
-}
 \]
 
 At every \(\theta\in \mathcal D\),
@@ -209,9 +202,7 @@ This is the singular locus of the two-mode model. Away from \(\mathcal D\), the 
 
 Define the mixed or transition region by
 \[
-\boxed{
 \mathcal M=\{\theta:\, \Delta_\lambda(\theta)\ \text{is small}\}.
-}
 \]
 
 In the reduced \(2\times 2\) setting, this is equivalently characterized by
@@ -232,9 +223,7 @@ For eigenvalues, define first-order sensitivity with respect to parameter \(\the
 
 For eigenvectors, define
 \[
-\boxed{
 S(\theta)=\left\|\frac{\partial \psi}{\partial \theta}\right\|.
-}
 \]
 
 In a one-parameter setting this is simply the norm of the derivative. In a multiparameter setting one may interpret it componentwise or as the operator norm of the Jacobian. Either way, \(S\) measures the rate at which the eigendirection changes under parameter variation.
@@ -245,9 +234,7 @@ This is the first genuinely geometric quantity in the framework. It does not mer
 
 Near the degeneracy set \(\mathcal D\), eigenvector sensitivity becomes large:
 \[
-\boxed{
 S(\theta)\to \text{large as }\theta\to \mathcal D.
-}
 \]
 
 In the two-mode model this follows directly from the angle formula. Since
@@ -296,9 +283,7 @@ Although the explicit formulas are more involved than in the \(2\times 2\) model
 
 The central claim of the mathematical core is
 \[
-\boxed{
 \text{Transition behavior is governed by the geometry of eigenvectors near small spectral gap.}
-}
 \]
 
 This statement is deliberately stronger than “transition occurs when eigenvalues are close.” Spectral proximity is necessary, but the actual transition phenomenon is geometric: the modes themselves reorganize, rotate, and redistribute.
@@ -355,11 +340,9 @@ Let
 
 If \(\lambda_i(\theta)\) is simple, differentiation of the eigenvalue equation and orthonormality yields
 \[
-\boxed{
 \frac{\partial \lambda_i}{\partial \theta_j}
 =
 \psi_i^\top(\partial_j K)\psi_i.
-}
 \]
 
 This is the Rayleigh perturbation formula. It shows that the first derivative of the eigenvalue is determined by the matrix derivative tested against the active mode. Unlike the eigenvector derivative, no small-gap denominator appears. Eigenvalues can therefore remain comparatively well behaved even where eigenvectors become highly sensitive.
@@ -373,12 +356,10 @@ Assume \(\lambda_i\) is simple and impose the gauge condition
 
 Then the first derivative of the eigenvector is
 \[
-\boxed{
 \frac{\partial \psi_i}{\partial \theta_j}
 =
 \sum_{m\neq i}
 \frac{\psi_m^\top(\partial_j K)\psi_i}{\lambda_i-\lambda_m}\,\psi_m.
-}
 \]
 
 This is the key perturbation formula of the framework. It says that eigenvector variation is built from couplings to all complementary modes, each weighted by an inverse spectral separation. The numerator encodes how strongly the derivative \(\partial_j K\) mixes mode \(i\) with mode \(m\); the denominator amplifies this effect when the modes are nearly degenerate.
@@ -403,13 +384,11 @@ Defining
 \]
 one obtains the clean bound
 \[
-\boxed{
 \left\|
 \frac{\partial \psi_i}{\partial \theta_j}
 \right\|
 \le
 \frac{\|\partial_j K\|}{\operatorname{gap}_i(\theta)}.
-}
 \]
 
 This estimate is the analytical backbone of the whole manuscript. It identifies inverse spectral gap as the universal amplification factor for eigenvector sensitivity.
@@ -431,13 +410,11 @@ gives
 
 Substituting the eigenvector derivative formula yields
 \[
-\boxed{
 \frac{\partial P_i}{\partial \theta_j}
 =
 \sum_{m\neq i}
 \frac{\psi_m^\top(\partial_j K)\psi_i}{\lambda_i-\lambda_m}
 \left(\psi_m\psi_i^\top+\psi_i\psi_m^\top\right).
-}
 \]
 
 This formula shows that the tangent directions to the projector manifold are precisely cross-mode couplings between the active mode and complementary modes.
@@ -446,13 +423,11 @@ This formula shows that the tangent directions to the projector manifold are pre
 
 Using the previous identity,
 \[
-\boxed{
 \left\|
 \frac{\partial P_i}{\partial \theta_j}
 \right\|
 \le
 \frac{2\|\partial_j K\|}{\operatorname{gap}_i(\theta)}.
-}
 \]
 
 The factor of \(2\) reflects the two terms in the derivative of \(\psi_i\psi_i^\top\). Up to this harmless constant, the projector has the same inverse-gap sensitivity as the eigenvector. This is conceptually cleaner, since \(P_i\) is canonical while \(\psi_i\) is not.
@@ -461,9 +436,7 @@ The factor of \(2\) reflects the two terms in the derivative of \(\psi_i\psi_i^\
 
 For a chosen mode \(i\), define
 \[
-\boxed{
 \mathcal D_i=\{\theta:\, \operatorname{gap}_i(\theta)=0\}.
-}
 \]
 
 Equivalently,
@@ -485,9 +458,7 @@ This principle justifies the reduced model introduced in Phase II. The two-mode 
 
 The content of the perturbation formulas can be summarized as
 \[
-\boxed{
 \text{Small spectral gap amplifies eigenspace sensitivity.}
-}
 \]
 
 More explicitly,
@@ -525,9 +496,7 @@ This completes the minimal perturbative structure of the framework.
 
 The fundamental geometric object is now the spectral projector map
 \[
-\boxed{
 P_i:\theta\mapsto P_i(\theta).
-}
 \]
 
 For a simple eigenvalue, \(P_i(\theta)\) is a rank-one orthogonal projector satisfying
@@ -539,9 +508,7 @@ P_i(\theta)^\top=P_i(\theta),\qquad
 
 The set of all rank-one orthogonal projectors is naturally identified with real projective space:
 \[
-\boxed{
 \mathbb{RP}^{n-1}.
-}
 \]
 
 Indeed, a line \([\psi]\in \mathbb{RP}^{n-1}\) corresponds exactly to the projector \(\psi\psi^\top\). Thus the spectral problem defines a map from parameter space into projective space.
@@ -561,13 +528,11 @@ This shows that tangent vectors to the projector manifold are built from cross-m
 
 The associated norm bound
 \[
-\boxed{
 \left\|
 \frac{\partial P_i}{\partial \theta_j}
 \right\|
 \le
 \frac{2\|\partial_j K\|}{\operatorname{gap}_i(\theta)}
-}
 \]
 implies that the tangent structure becomes singular as the gap collapses.
 
@@ -575,13 +540,11 @@ implies that the tangent structure becomes singular as the gap collapses.
 
 Define the pullback metric on parameter space by
 \[
-\boxed{
 g_{jk}(\theta)=
 \operatorname{Tr}\!\left(
 \frac{\partial P_i}{\partial \theta_j}
 \frac{\partial P_i}{\partial \theta_k}
 \right).
-}
 \]
 
 This is the natural metric induced by the embedding of the projector manifold into the space of matrices. It measures how rapidly the eigenspace changes under parameter variation.
@@ -601,13 +564,11 @@ The second derivative
 \]
 measures nonlinear bending of the projector map. Differentiating the first-order perturbation formulas shows that the dominant small-gap scaling is
 \[
-\boxed{
 \left\|
 \frac{\partial^2 P_i}{\partial \theta^2}
 \right\|
 \sim
 \frac{\|\partial K\|^2}{\operatorname{gap}^2}
-}
 \]
 up to additional lower-order terms involving \(\partial^2 K\).
 
@@ -617,7 +578,6 @@ Thus second variation is typically more singular than first variation. Intuitive
 
 The transition region can now be stated geometrically:
 \[
-\boxed{
 \mathcal M_i
 =
 \left\{
@@ -626,14 +586,11 @@ The transition region can now be stated geometrically:
 \quad
 g(\theta)\ \text{large}
 \right\}.
-}
 \]
 
 At the level of scaling,
 \[
-\boxed{
 g(\theta)\sim \frac{\|\partial K\|^2}{\operatorname{gap}^2}.
-}
 \]
 
 This formulation is sharper than one based on eigenvalues alone. It says that the relevant transition set is not merely where eigenvalues are close, but where the projector map becomes metrically steep.
@@ -658,11 +615,9 @@ If
 \]
 then
 \[
-\boxed{
 \left\|\frac{dP_i}{dt}\right\|
 \le
 \frac{2\|\dot K\|}{\operatorname{gap}_i}.
-}
 \]
 
 This estimate links geometric variation directly to dynamical parameter motion. It implies:
@@ -702,9 +657,7 @@ one observes the characteristic pattern of avoided crossing:
 
 The key fact is
 \[
-\boxed{
 \text{maximum rotation occurs where the spectral gap is minimal.}
-}
 \]
 
 Thus avoided crossing is not merely a spectral picture. It is the geometric signature of near-degeneracy.
@@ -713,9 +666,7 @@ Thus avoided crossing is not merely a spectral picture. It is the geometric sign
 
 At exact gap closure, individual projectors become ill-defined. The correct object is the cluster projector
 \[
-\boxed{
 P_{\mathcal C}=\sum_{m\in\mathcal C} P_m,
-}
 \]
 where \(\mathcal C\) indexes the degenerate spectral cluster.
 
@@ -725,11 +676,9 @@ This object remains canonical even when the internal basis of the cluster is not
 
 The geometric content of the framework may be summarized by
 \[
-\boxed{
 \|dP_i\|\sim \frac{1}{\operatorname{gap}},
 \qquad
 \|d^2P_i\|\sim \frac{1}{\operatorname{gap}^2},
-}
 \]
 modulo the size of matrix derivatives.
 
@@ -760,15 +709,11 @@ denote the corresponding orthogonal projectors.
 
 For a normalized eigenvector \(\psi_i(\theta)\), define the boundary weight
 \[
-\boxed{
 B_i(\theta)=\|\Pi_{\partial}\psi_i(\theta)\|^2
-}
 \]
 and the bulk weight
 \[
-\boxed{
 Q_i(\theta)=\|\Pi_{\mathrm{bulk}}\psi_i(\theta)\|^2=1-B_i(\theta).
-}
 \]
 
 These are the first boundary observables. They measure how strongly a mode lives on the distinguished boundary subspace as opposed to the bulk.
@@ -781,9 +726,7 @@ P_i(\theta)=\psi_i(\theta)\psi_i(\theta)^\top,
 \]
 define the boundary restriction
 \[
-\boxed{
 P_i^\partial(\theta)=\Pi_{\partial}P_i(\theta)\Pi_{\partial}.
-}
 \]
 
 Then
@@ -797,11 +740,9 @@ Thus total boundary weight is encoded directly as the trace of the boundary-comp
 
 In a basis adapted to the bulk-boundary decomposition, define
 \[
-\boxed{
 \mathcal I_{\partial}(\psi_i)
 =
 \sum_{j\in \partial\Omega} |\psi_{i,j}|^4.
-}
 \]
 
 This quantity refines boundary support. The total boundary weight \(B_i\) records how much of the mode lies on the boundary, but does not distinguish between:
@@ -815,7 +756,6 @@ The quartic functional \(\mathcal I_\partial\) separates these regimes. Large \(
 
 To detect transitions controlled specifically by boundary-supported modes, define
 \[
-\boxed{
 \mathcal M_i^\partial(\eta,\beta)
 =
 \left\{
@@ -824,7 +764,6 @@ To detect transitions controlled specifically by boundary-supported modes, defin
 \quad
 B_i(\theta)\ge \beta
 \right\}.
-}
 \]
 
 Here \(\eta\) is a near-degeneracy threshold and \(\beta\) is a boundary-dominance threshold. This definition refines the earlier mixed regime by requiring not only small spectral gap, but significant boundary concentration.
@@ -848,13 +787,11 @@ Then
 
 Substituting the eigenvector derivative formula gives
 \[
-\boxed{
 \frac{\partial B_i}{\partial \theta_j}
 =
 2\Re\sum_{m\neq i}
 \frac{\psi_m^\top(\partial_j K)\psi_i}{\lambda_i-\lambda_m}
 \langle \psi_m,\Pi_{\partial}\psi_i\rangle.
-}
 \]
 
 This identity is the boundary analogue of the projector sensitivity formula. It shows explicitly that boundary-weight variation is built from mode coupling, overlap with the boundary component, and inverse spectral separation.
@@ -889,14 +826,12 @@ and the eigenvector sensitivity bound
 \]
 one obtains
 \[
-\boxed{
 \left|
 \frac{\partial B_i}{\partial \theta_j}
 \right|
 \le
 \frac{2\|\partial_j K(\theta)\|}{\operatorname{gap}_i(\theta)}
 \sqrt{B_i(\theta)}.
-}
 \]
 
 This is the basic boundary estimate. It states that boundary concentration becomes highly sensitive in the same small-gap regime that destabilizes eigenspace geometry.
@@ -905,9 +840,7 @@ This is the basic boundary estimate. It states that boundary concentration becom
 
 The instability principle can now be refined:
 \[
-\boxed{
 \text{Near-degeneracy amplifies not only eigenspace sensitivity, but also boundary-weight sensitivity.}
-}
 \]
 
 Equivalently, if the gap is small, then \(|\partial_{\theta_j}B_i|\) can become large. Thus transition may be bulk-dominated, boundary-dominated, or mixed depending on where the modal weight concentrates and how that concentration changes.
@@ -944,11 +877,9 @@ P_{\mathcal C}=\sum_{m\in\mathcal C}P_m.
 
 Its boundary restriction is
 \[
-\boxed{
 P_{\mathcal C}^{\partial}
 =
 \Pi_{\partial}P_{\mathcal C}\Pi_{\partial}.
-}
 \]
 
 The trace of this matrix gives the total boundary weight of the nearly degenerate cluster. This is the right boundary observable when individual modes lose canonical meaning.
@@ -966,7 +897,6 @@ There are now three coupled layers of structure:
 
 A natural transition set is therefore
 \[
-\boxed{
 \mathcal T_i
 =
 \left\{
@@ -977,7 +907,6 @@ A natural transition set is therefore
 \;
 B_i(\theta)\ \text{large or rapidly varying}
 \right\}.
-}
 \]
 
 This combines the spectral, geometric, and surface layers into one criterion.
@@ -986,9 +915,7 @@ This combines the spectral, geometric, and surface layers into one criterion.
 
 The full framework can now be summarized by
 \[
-\boxed{
 \text{Mode transition is governed by spectral projector geometry; surface effects enter through boundary-projected projectors and their gap-amplified sensitivity.}
-}
 \]
 
 This statement contains every previous phase in compressed form: reduced two-mode structure, analytical inverse-gap bounds, geometric steepness of the projector map, and boundary observables derived from compressed projectors.
@@ -1031,9 +958,7 @@ Across Phases II–V, a unified picture emerges. A smooth symmetric matrix famil
 The reduced \(2\times 2\) model identifies the local normal form of pairwise transition. The projector formalism lifts this to arbitrary finite dimension. The boundary layer adds a distinguished subspace without altering the underlying mechanism. Thus the entire framework is governed by a single mathematical principle:
 
 \[
-\boxed{
 \text{small spectral gap amplifies geometric and boundary sensitivity of spectral projectors.}
-}
 \]
 
 This gives a complete minimal theory stack for mode transition in finite-dimensional symmetric systems.
@@ -1128,4 +1053,3 @@ one has
 The minimal theory can be read in one sentence:
 
 > A parametrized symmetric operator defines spectral projectors whose first and second variations scale like inverse powers of the spectral gap; when a bulk-boundary decomposition is present, the same inverse-gap mechanism controls boundary concentration and its instability.
-
