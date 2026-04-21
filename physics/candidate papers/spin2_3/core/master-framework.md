@@ -237,11 +237,12 @@ This is the layer describing how the state evolves.
 - zero-mass propagation on `T1`: central framework proposal
 - one-sector zero-mass traversal: now narrowed to an oriented-direction plus unique-channel consistency burden
 - support preservation of `H_0` on `T1`: best current route is through a charge-generator intertwiner in the reduction map
-- remaining global `\mathbf Z_2` orientation: best current route is to tie it to the forward observable/readout arrow rather than treat it as a large unresolved basis freedom
-- strongest current sharpening: the physical orientation is the one aligning direct zero-mass support, observable readout, and forward reduced evolution on the same sector
+- `T1` as a label: conventional after orientation is fixed; the invariant target is the projector induced by the selected forward readout or scale-flow direction
+- remaining global `\mathbf Z_2` orientation: best current route is to tie it to the forward observable/readout arrow, or to an ambient scale-flow selector, rather than treat it as a large unresolved basis freedom
+- strongest current sharpening: the physical orientation is the one aligning ambient scale/readout flow, direct zero-mass support, observable readout, and forward reduced evolution on the same sector
 - best current bulk forcing candidate for that alignment: the sign of the odd transport scalar `\kappa_u`
 - strongest current operational version: in the readout-phase normalization, the direct observable branch should be constructive/persistent, hence `\kappa_u > 0`
-- current blocker status: `N2` is conditionally closed once that constructive-readout rule is adopted; the live burden is to derive it from the bulk rather than leave it as the final operational axiom
+- current blocker status: `N2` is conditionally closed once that constructive-readout rule is adopted; the live burden is to derive it from the bulk or a larger ambient scale-flow geometry rather than leave it as the final operational axiom
 - `N3` derivation target is now sharper: derive `\dot\Psi = u\omega\,\Psi - \gamma\,\Psi + \kappa_u\,\mathcal C\Psi` from a parent branch state, an anti-linear exchange operation, an odd moment map, and controlled hidden-sector leakage
 - stronger `N3` scaffold: the branch equations already form an exact Hamiltonian-plus-Rayleigh system on the selected `u`-complex line, so the bulk task is to derive that specific generator rather than guess one
 - reduced coupling structure is now explicit: `\kappa_u` multiplies the fixed exchange generator `\mathcal M_{\mathrm{ex}} = -\mathrm{Im}_u(AB)`

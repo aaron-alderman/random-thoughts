@@ -18,8 +18,9 @@ This file indexes the claim level of major claims in the Spin(2,3) programme.
 | Claim | Level | Name | Notes |
 | --- | --- | --- | --- |
 | `SO(2,3)` is the isometry group of `AdS_4` | 2 | Solid established | Standard mathematical identification. |
+| `SO(2,4)` can serve as a conformal parent arena reducing to `SO(2,3)` after fixing a spacelike normal | 3 | Established structural input | Standard conformal-group geometry; physical role in this programme remains interpretive. |
 | `Spin(2,3)` admits a four-component spinor representation | 2 | Solid established | Framework input. |
-| Choosing conventions/time orientation gives a `J^{01}` split into two two-component sectors | 3 | Established | Known once the reduced conventions are fixed. |
+| Choosing conventions/time orientation gives a `J^{01}` split into two two-component sectors | 3 | Established | Known once the reduced conventions are fixed; the names `T1/T2` are labels after orientation is chosen. |
 | Each `J^{01}` sector carries `SU(2)` doublet structure under the maximal compact subgroup | 3 | Established | Standard representation result within the chosen setup. |
 | The `J^{01}` split should be read as an effective reduced branch rather than a literal extra-time remnant | 4 | Being established in this paper | Current parent-reduction interpretation. |
 | `Cl(2,3) ~= M4(C)` | 3 | Established | Standard Clifford algebra fact used by the topology track. |
@@ -48,8 +49,9 @@ This file indexes the claim level of major claims in the Spin(2,3) programme.
 | Claim | Level | Name | Notes |
 | --- | --- | --- | --- |
 | The ambient-to-observable reduction can be modeled by the current toy intertwiner | 4 | Being established in this paper | Useful local scaffold; still owes canonical parent derivation. |
-| Zero-mass direct traversal is supported on `T1` | 4 | Being established in this paper | Depends on reduction/intertwiner and orientation assumptions. |
-| Observables are evaluated after projection onto `T1` | 4 | Being established in this paper | Effective rule downstream of channel selection. |
+| The observable projector may be induced by an ambient scale/readout flow above the reduced `Spin(2,3)` slice | 5 | Plausible but future work | New sharper selector target; would make `T1` a reduced label rather than an intrinsic preference. |
+| Zero-mass direct traversal is supported on the sector named `T1` | 4 | Being established in this paper | Depends on reduction/intertwiner and orientation assumptions; `T1` is the label for the sector selected by the forward readout/scale-flow orientation. |
+| Observables are evaluated after projection onto the sector named `T1` | 4 | Being established in this paper | Effective rule downstream of channel selection; invariant content should be the induced observable projector, not the bare label. |
 | `T2` is dynamically present but not directly observable through the zero-mass channel | 4 | Being established in this paper | Follows inside the current interaction/readout picture. |
 | Sector mixing can be modeled by an off-diagonal block term | 4 | Being established in this paper | Minimal model choice, not unique. |
 | The leading reduced correction is second order in `m` | 4 | Being established in this paper | Derived under weak coupling. |

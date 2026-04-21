@@ -641,7 +641,7 @@ So the orientation axiom can be stated without reference to a gauge convention:
 
 This is a physically motivated statement: constructive interference means the two bracketings reinforce each other, sustaining the transport amplitude. Destructive interference means they partially cancel, which is the physically disfavoured outcome for a stable readout channel.
 
-**Why this is still an axiom, not a derivation.** The statement above identifies what `\kappa_u > 0` means geometrically, but it does not derive from the octonionic bulk which states have `\mathrm{Re}_u(AB) > 0` at their transport fixed points. That would require tracking specific octonionic data `(a,b,c)` through the reduction to the branch fixed point, which is a further derivation task. At present, `\kappa_u > 0` is the cleanly named final orientation axiom, with its geometric content now explicit.
+**Why this is still an axiom, not a derivation.** The statement above identifies what `\kappa_u > 0` means geometrically, but it does not derive from the octonionic bulk which states have `\mathrm{Re}_u(AB) > 0` at their transport fixed points. It also does not rule out the possibility that the actual selector lives one level higher, as an ambient scale-flow or readout vector whose reduced image fixes the sign. Either route would require tracking the selecting data through the reduction to the branch fixed point, which is a further derivation task. At present, `\kappa_u > 0` is the cleanly named final orientation axiom, with its geometric content now explicit.
 
 ### Conditional `N2` closure
 
@@ -672,7 +672,7 @@ QH_0 = 0,
 H_0Q = 0.
 $$
 
-**Honest current state.** `N2` is conditionally closed. The projector bookkeeping, basis-level intertwiner, charge-generator intertwining, and coupling slot are all in place. The one remaining open task is to derive the orientation axiom (`\kappa_u > 0`) from the octonionic bulk geometry — or to accept it as the named final axiom and move the programme forward. The project can proceed under the axiom now; the bulk derivation is a sharpening task, not a blocker.
+**Honest current state.** `N2` is conditionally closed. The projector bookkeeping, basis-level intertwiner, charge-generator intertwining, and coupling slot are all in place. The one remaining open task is to derive the orientation axiom (`\kappa_u > 0`) from the octonionic bulk geometry or from a larger ambient scale-flow selector, or else to accept it as the named final axiom and move the programme forward. The project can proceed under the axiom now; the selector derivation is a sharpening task, not a blocker.
 
 ### Two-branch evolution equations
 
@@ -1371,7 +1371,7 @@ This section records the main dynamical claims in kernel form.
 | particle-like state criterion: locking + persistence conditions are jointly necessary and sufficient | derived consequence of classification | 4 | geometric, not empirical |
 | $\omega$ is the $U(1)$ moment map value on branch space — the null transport phase momentum | moment map identification established | 3 | $H_\omega = \omega\,\mu_{U(1)} = \frac{\omega}{2}(\lvert A\rvert^2+\lvert B\rvert^2)$ is the unique $U(1)$-Hamiltonian; $\omega$ is the symplectic charge conjugate to the phase-rotation angle |
 | $\gamma > 0$ from full hidden-sector coupling: $\mathcal D = \lambda^2 K^T\Gamma^{-1}K > 0$ under $\Gamma > 0$ and $K$ injective | conditionally established | 3–4 | sign forced; magnitude requires hidden correlator derivation |
-| $\kappa_u > 0$ is equivalent to $\mathrm{Re}_u(AB)\rvert_* > 0$ at the transport fixed point: constructive branch interference | orientation axiom named with geometric content | 4 | this is the final named axiom; bulk derivation of the sign remains open |
+| $\kappa_u > 0$ is equivalent to $\mathrm{Re}_u(AB)\rvert_* > 0$ at the transport fixed point: constructive branch interference | orientation axiom named with geometric content | 4 | this is the final named axiom; derivation of the sign from bulk dynamics or an ambient scale-flow selector remains open |
 | derivation of two-branch evolution equations from variational principle on octonionic bulk | partially closed: $\kappa_u \mathcal M_{\mathrm{ex}}$ and $\omega\,\mu_{U(1)}$ terms are symmetry-derived; $\gamma$ mechanism identified; full parent action derivation open | 5 | the remaining open task is a parent action from which all three generator pieces descend simultaneously |
 | connection between two-branch amplitude picture and Lindblad-Markov density-matrix picture | missing | 5 | how coarse-graining recovers the Lindblad picture is an open task |
 

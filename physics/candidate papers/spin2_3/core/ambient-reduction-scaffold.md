@@ -544,6 +544,35 @@ Deliverable:
 - either a dynamical selection argument
 - or a principled epistemic postulate stated sharply enough that it can be tracked as an assumption
 
+#### Scale-flow selector caveat
+
+There is a sharper way to state the live issue.
+
+The label `T1` is not itself expected to be intrinsically preferred. It is a reduced-sector name fixed only after an orientation convention has been supplied. The invariant object should be the sector selected by the ambient readout or scale-flow direction, with `T1` used as the name of that sector once the reduced basis has been oriented.
+
+In that reading, the question is not:
+
+- why does `Spin(2,3)` internally prefer the block called `T1`?
+
+but rather:
+
+- what ambient scale-flow or readout vector induces the reduced projector onto the observable sector?
+- does the induced projector agree with the `J^{01}` eigenspace convention currently called `T1`?
+
+This matters because `Spin(2,3)` is naturally tied to the reduced `AdS_4`/`SO(2,3)` geometry. If the selector lives instead in a larger scale or conformal geometry, for example an `AdS_5`/`SO(2,4)`-type ambient layer, then the selection principle belongs one level above the reduced `Spin(2,3)` branch. In that case the scaffold should not try to prove that `T1` is special from `Spin(2,3)` alone. It should try to prove the descent diagram:
+
+$$
+\text{ambient scale/readout flow}
+\longrightarrow
+\text{reduced } Spin(2,3) \text{ slice}
+\longrightarrow
+J^{01}\text{ two-sector split}
+\longrightarrow
+\text{observable projector}.
+$$
+
+Under this convention, `T1` means "the reduced sector aligned with the induced forward/readout flow." The name is conventional; the induced projector is the object that would have invariant content.
+
 #### R4. Two legitimate routes
 
 At the present level of the project, `R4` should be split cleanly into two different routes.
@@ -554,9 +583,9 @@ The stronger route would show that the observable channel is not chosen independ
 
 In this route, one would try to prove:
 
-- the same selected octonionic direction `u` that fixes the hidden complex structure also fixes the privileged zero-mass traversal channel
+- the ambient readout or scale-flow direction descends to the same reduced orientation as the selected octonionic direction `u`
 - zero-mass propagation couples directly only to one reduced charge sector
-- that sector is exactly the one called `T1`
+- that sector is the one named `T1` after the induced orientation is fixed
 - `T2` enters only through massive mixing, hidden excursions, or off-diagonal corrections
 
 If this route succeeds, then projection onto `T1` is not a primitive axiom. It is the observational shadow of a dynamical selection rule.
@@ -569,9 +598,9 @@ The weaker but still disciplined route is to state openly:
 
 - the reduction yields a two-sector branch `T1 \oplus T2`
 - one of those sectors is identified as the zero-mass readout channel
-- the framework postulates that observable access follows that channel
+- the framework postulates that observable access follows the sector induced by the ambient readout or scale-flow orientation
 
-In this route, the claim is not that `T1` has already been forced. The claim is that once the zero-mass interaction channel is chosen, projection onto `T1` is the correct effective observational rule.
+In this route, the claim is not that the label `T1` has already been forced. The claim is that once the zero-mass interaction channel and forward readout orientation are chosen, the sector named `T1` is the correct effective observational sector.
 
 This route is weaker, but still coherent and honest. It matches the current level of the epistemics file better than pretending the full dynamical selection has already been earned.
 
@@ -592,10 +621,11 @@ That is the right level of honesty for the present framework.
 
 `R4` would be in much better shape if the project could do either of the following:
 
-1. derive that zero-mass transport operators act only on `T1` in the reduced branch
-2. state a sharpened epistemic principle saying that observable access follows the selected zero-mass channel, with the identification of that channel as `T1` tracked explicitly as an assumption
+1. derive that the ambient scale/readout flow induces a reduced projector agreeing with the `J^{01}` sector named `T1`
+2. derive that zero-mass transport operators act only on that induced sector in the reduced branch
+3. state a sharpened epistemic principle saying that observable access follows the selected zero-mass channel, with the naming of that channel as `T1` tracked explicitly as an orientation convention
 
-Either would be progress. The first is stronger. The second is already within reach and should be written clearly.
+Any of these would be progress. The first two are stronger. The third is already within reach and should be written clearly.
 
 #### Minimal Route A target
 
@@ -1091,7 +1121,7 @@ So the residual ambiguity is not a large hidden basis group anymore. It is essen
 
 That is a real structural gain. The canonicity problem has become:
 
-> can the octonionic parent reduction fix the remaining global `\mathbf Z_2` orientation choice and the adapted basis up to harmless overall phase?
+> can the ambient parent reduction, possibly through a scale-flow/readout vector above the reduced `Spin(2,3)` slice, fix the remaining global `\mathbf Z_2` orientation choice and the adapted basis up to harmless overall phase?
 
 This is a much sharper question than the earlier vague request for a "canonical basis."
 
@@ -1113,6 +1143,8 @@ $$
 
 So the residual ambiguity is not a large internal gauge freedom. It is the choice of which global orientation is to be called the physical forward/readout orientation.
 
+If the selector belongs to a larger ambient scale geometry, this should be read as a descent problem rather than as an intrinsic `Spin(2,3)` choice. `Spin(2,3)` supplies the two-sector reduced representation. The ambient scale/readout flow supplies, if it exists, the orientation that tells the reduced theory which sector is the forward observable one.
+
 This suggests the following disciplined principle:
 
 > Physical orientation is fixed by requiring that the direct zero-mass readout channel and the forward coarse-grained evolution arrow agree.
@@ -1132,13 +1164,13 @@ Under this principle, the residual `\mathbf Z_2` is not an extra unresolved hidd
 What this does and does not achieve:
 
 - it does explain why the last sign choice belongs with epistemics and dynamics rather than pure statics
-- it does reduce the canonicity gap to a relative orientation principle
-- it does **not** yet derive that principle from the octonionic parent alone
+- it does reduce the canonicity gap to a relative orientation or scale-flow descent principle
+- it does **not** yet derive that principle from the octonionic parent or from a larger ambient scale geometry
 
 So the honest current closure is:
 
 - kinematics fixes the reduction almost completely
-- the last `\mathbf Z_2` is fixed once the framework chooses which orientation counts as forward observable readout
+- the last `\mathbf Z_2` is fixed once the framework chooses, or derives from an ambient scale-flow selector, which orientation counts as forward observable readout
 - whether that final step can be derived rather than chosen remains open
 
 #### Minimal forward-semigroup criterion
@@ -1186,7 +1218,7 @@ This is stronger than a naming convention but weaker than a derivation from pure
 
 So the live open question is now very specific:
 
-- can the bulk parent dynamics force this alignment, or must it remain a final framework principle?
+- can the bulk parent dynamics or a larger ambient scale-flow geometry force this alignment, or must it remain a final framework principle?
 
 One natural candidate for such a bulk forcing already exists elsewhere in the framework: the signed transport coupling `\kappa_u`. Because `\kappa_u` is odd under `u \mapsto -u`, any derivation that ties forward direct readout to the constructive/persistent side of the transport dynamics would automatically turn `\kappa_u` into an orientation selector rather than just a classification parameter.
 
@@ -1211,6 +1243,10 @@ That also means the `N2` blocker is no longer spread across several equally vagu
 So the live open step is now best stated as one final operational axiom:
 
 > the unique direct readout branch is the phase-normalized locked branch lying on the constructive/persistent side of the transport dynamics, equivalently the branch with `\kappa_u > 0`.
+
+Equivalently, in the ambient-selector reading:
+
+> the sector called `T1` is the reduced name for the sector selected by the ambient forward scale/readout flow.
 
 If that axiom is accepted, then the remaining `\mathbf Z_2` is fixed by the sign of `\kappa_u`, the chosen direct-support sector is identified with the parent `(-)` charge sector, and the reduced zero-mass operator satisfies
 
@@ -2165,9 +2201,10 @@ The fastest honest sequence from here is:
 1. write the algebraic form of `R1`
 2. write the generator-level version of `R2`
 3. write the reduced decomposition for `R3`
-4. only then revisit the epistemic burden in `R4`
+4. decide whether the readout selector is internal to the parent octonionic reduction or descends from a larger scale-flow geometry
+5. only then revisit the epistemic burden in `R4`
 
-This order matters because the project should not try to justify `T1` before it has said clearly what `T1` is the reduction of.
+This order matters because the project should not try to justify `T1` before it has said clearly what `T1` is the reduction of, or whether `T1` is merely the reduced name for a sector selected by an ambient flow.
 
 ---
 
@@ -2206,7 +2243,8 @@ This scaffold will have done its job if the project can eventually state:
 2. what is reduced away
 3. what becomes the hidden complex plane
 4. what becomes the `Spin(2,3)` branch
-5. what becomes `T1/T2`
-6. what finally becomes observable
+5. what supplies the scale/readout orientation, if it is not internal to `Spin(2,3)`
+6. what becomes `T1/T2`
+7. what finally becomes observable
 
 That is the missing-middle statement the project currently owes most.

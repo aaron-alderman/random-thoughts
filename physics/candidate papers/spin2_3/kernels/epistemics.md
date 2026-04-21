@@ -227,7 +227,9 @@ So the strongest clean formulation currently available is:
 
 - the parent reduction fixes the two oriented candidate readout sectors
 - consistency and uniqueness force direct readout to use only one of them
-- the final `T1` label is fixed by the orientation chosen as the forward observable/readout arrow
+- the final `T1` label is fixed by the orientation chosen, or derived from an ambient scale-flow selector, as the forward observable/readout arrow
+
+This means `T1` should not be treated as intrinsically preferred by its name. The name is conventional after the orientation is fixed. The invariant object is the reduced projector onto the sector selected by the forward readout or scale-flow direction.
 
 This can now be stated a little more operationally. The observable arrow is not just a philosophical preference; it is the same arrow used when the reduced theory is written as a forward semigroup for `t \ge 0`. So the last global sign is best read as the requirement that:
 
@@ -239,13 +241,15 @@ are all the same sector.
 
 At the current stage there is also a more dynamical version of the same idea: in the phase convention where the direct locked readout branch is normalized to `\Phi_*=0`, that branch must lie on the constructive/persistent side of the transport dynamics and therefore has `\kappa_u > 0`. So the observable arrow is starting to look less like a free epistemic label and more like the readout sector singled out by the constructive branch of the reduced dynamics.
 
+There is also a possible ambient version of the same point. If the scale/readout selector lives above the reduced `Spin(2,3)` slice, for example in a larger conformal or `AdS_5`/`SO(2,4)`-type setting, then epistemics should not demand an internal proof that `Spin(2,3)` prefers `T1`. It should demand a descent statement: the larger ambient flow induces the reduced observable projector, and the sector named `T1` is the reduced label for that induced projector.
+
 This also shrinks the remaining epistemic burden. Route B no longer has to justify projection onto `T1` from scratch. It only has to justify one final operational rule:
 
 - the unique direct readout channel is the constructive/persistent locked branch, hence the one with `\kappa_u > 0` in the phase-normalized gauge
 
 If that rule is accepted, the `T1` identification is conditionally fixed by the reduction kernel already in hand. If it can be derived from the bulk, then the remaining gap between Route B and Route A largely disappears.
 
-That does not yet derive the observable arrow from pure kinematics. But it does show exactly where the last sign choice lives: at the interface between reduction, observability, and forward effective evolution.
+That does not yet derive the observable arrow from pure kinematics. But it does show exactly where the last sign choice lives: at the interface between reduction, observability, forward effective evolution, and possibly a larger ambient scale-flow geometry.
 
 ---
 
@@ -295,7 +299,7 @@ The second statement is much stronger and is not established by the current fram
 |---|---|---|---|
 | the effective observable channel is determined by zero-mass interaction | central framework proposal | 4 | new epistemic center |
 | observable quantities are evaluated after projection onto `T1` | effective postulate downstream of channel selection | 4 | still central, but not necessarily primitive |
-| the identification of the zero-mass readout channel with `T1` is dynamically forced | missing | 5 | now reduced to one final issue: derive why the unique direct readout branch must be the constructive/persistent one (`\kappa_u > 0` in phase-normalized gauge); with that rule, the `T1` identification is conditionally fixed |
+| the identification of the zero-mass readout channel with `T1` is dynamically or ambient-geometrically forced | missing | 5 | now reduced to one final issue: derive why the unique direct readout branch must be the constructive/persistent one (`\kappa_u > 0` in phase-normalized gauge), or show that a larger ambient scale-flow selector induces the same reduced projector; with either rule, the `T1` identification is conditionally fixed |
 | `T2` is dynamically present but not directly observable through the zero-mass channel | framework consequence of interaction rule plus dynamics | 4 | core hidden-sector claim |
 | projection and coarse-graining are distinct operations | conceptual clarification | 4 | important for logical hygiene |
 | the effective observable description loses full microscopic information | derived at the reduced-description level | 4 | safe and useful |

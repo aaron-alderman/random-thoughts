@@ -49,8 +49,12 @@ $$
 
 Each sector is an `SU(2)` doublet. The two sectors carry opposite `U(1)` charge.
 
-- `T1` is identified with the observable sector — the sector reached by zero-mass interaction
-- `T2` is hidden but dynamically real — it participates in evolution but is not directly accessed through the massless channel
+At this level, the names `T1` and `T2` are labels after an orientation has been fixed. The invariant question is which reduced projector is induced by the upstream selection data. Since the framework already passes through the parent `SO(2,4)` conformal arena before reaching `SO(2,3)`, the final readout selector may belong to that ambient scale geometry rather than to `Spin(2,3)` alone.
+
+- `T1` names the sector aligned with the selected forward readout/scale-flow orientation
+- `T2` names the opposite sector; it is hidden but dynamically real and can participate in evolution without being directly accessed through the massless channel
+
+So the open selection problem is not to prove that the bare label `T1` is special. It is to show that the parent `SO(2,4)`/ambient scale data, the selected octonionic direction, and the reduced `J^{01}` convention all induce the same observable projector.
 
 ### What the sectors mean
 
@@ -79,7 +83,7 @@ The AdS/CFT correspondence maps:
 - bulk fields propagating in the interior ↔ operators in the boundary theory
 - boundary-to-bulk propagator ↔ the map from observables to interior dynamics
 
-In the Spin(2,3) framework, the `T1/T2` split maps directly onto this picture:
+In the Spin(2,3) framework, the `T1/T2` split can be read against this picture once the readout orientation has been fixed:
 
 - `T1` (observable sector, massless channel) corresponds to the boundary of `AdS₄`
 - `T2` (hidden, dynamically real sector) corresponds to the bulk interior
