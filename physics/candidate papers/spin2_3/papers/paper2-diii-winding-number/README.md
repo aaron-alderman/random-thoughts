@@ -1,6 +1,6 @@
 # Paper 2: DIII Winding Number
 
-Status: draft paper artifact.
+Artifact: draft paper.
 
 ## Contents
 

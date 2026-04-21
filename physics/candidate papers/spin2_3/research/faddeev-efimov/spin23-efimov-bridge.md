@@ -2,9 +2,9 @@
 
 ## Purpose
 
-This document houses the speculative Spin(2,3) -> Efimov bridge. It keeps the useful comparison while preventing the bridge from being treated as established core structure.
+This document houses the Level 5 Spin(2,3) -> Efimov bridge. It keeps the useful comparison while preventing the bridge from being treated as established core structure.
 
-Status: `conjecture`.
+Claim level: 5, plausible but future work.
 
 ## Safe Statement
 
@@ -34,13 +34,13 @@ The Efimov derivations in `derivations/` supply:
 
 ## Bridge Map
 
-| Spin(2,3) object | Efimov/Faddeev object | Current status |
+| Spin(2,3) object | Efimov/Faddeev object | Current level |
 | --- | --- | --- |
-| Three near-boundary transport states | Symmetric Faddeev channel triplet | conjectural embedding |
-| Threshold SO(2,1) Casimir | Supercritical inverse-square strength | conjectural equality |
-| `dot R ~= epsilon R` | Hyperradial scaling law | structural analogy |
-| `omega/kappa_u` threshold data | Unitarity-limit scaling data | open quantitative test |
-| Collective eigenvalue flow | Efimov universality class | useful shared language |
+| Three near-boundary transport states | Symmetric Faddeev channel triplet | Level 5 embedding |
+| Threshold SO(2,1) Casimir | Supercritical inverse-square strength | Level 5 equality |
+| `dot R ~= epsilon R` | Hyperradial scaling law | Level 5 structural analogy |
+| `omega/kappa_u` threshold data | Unitarity-limit scaling data | Level 5 quantitative test |
+| Collective eigenvalue flow | Efimov universality class | Level 5 shared language |
 
 ## Main Gaps
 

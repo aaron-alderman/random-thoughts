@@ -1,6 +1,6 @@
 # Paper 1: Octonionic Two-Branch Transport
 
-Status: draft paper artifact.
+Artifact: draft paper.
 
 ## Contents
 

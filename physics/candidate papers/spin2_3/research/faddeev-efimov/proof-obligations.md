@@ -55,6 +55,6 @@ Acceptance:
 - the calculation recovers `s_0 ~= 1.00624`, or
 - it fails cleanly and identifies which assumption breaks.
 
-## Status Rule
+## Level Rule
 
-Only after Gates 1-5 are satisfied may `casimir-faddeev-conjecture.md` be promoted from conjecture to target theorem or theorem. Partial progress should be recorded as `conditional`, not `established`.
+Only after Gates 1-5 are satisfied may `casimir-faddeev-conjecture.md` move from Level 5 to Level 4 or stronger. Partial progress should be recorded as Level 4 only when the assumptions and limits are explicit; theorem-level language requires Level 3 or better.

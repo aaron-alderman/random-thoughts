@@ -1,10 +1,10 @@
 # Conjecture: Faddeev Collective Mode as an SO(2,1) Casimir Eigenstate
 
-## Status
+## Claim Level
 
 This file is a conjectural bridge target, not a theorem. It merges the earlier theorem-sketch material with the stronger Faddeev embedding draft, but demotes the claim until the Spin-derived Casimir calculation and the Faddeev kernel normalization are explicitly matched.
 
-Current status: `conjecture`.
+Current level: 5, plausible but future work.
 
 ## Target Claim
 

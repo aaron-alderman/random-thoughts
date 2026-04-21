@@ -350,7 +350,7 @@ If this holds, then the spectrum forced by anomaly cancellation (from the partic
 
 If they agree, the two analyses are the same constraint. If not, the two analyses impose independent conditions, and the bridge fails in its strongest form.
 
-**Current status.** The bridge is a concrete candidate (maturity 4), not an established result (maturity 3). The conceptual structure is right; the explicit coefficient matching has not been done. This matching is the specific calculation that would either close the bridge or expose an inconsistency between the topological and consistency layers.
+**Current level.** The bridge is a Level 5 candidate, not a Level 3 established result. The conceptual structure is right; the explicit coefficient matching has not been done. This matching is the specific calculation that would either close the bridge or expose an inconsistency between the topological and consistency layers.
 
 **If the bridge holds.** The topological and consistency domains would no longer be parallel but mutually reinforcing: the DIII topological invariant would underwrite the anomaly-cancellation conditions, and the anomaly-cancellation conditions would confirm the DIII classification. This is the strongest possible internal consistency check available to the framework.
 

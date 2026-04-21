@@ -31,7 +31,7 @@ The interference mechanism becomes structural: paths with $\mathcal{O} = \kappa_
 - The relationship between this formulation and the standard path integral in the limit where associativity is recovered ($[a,b,c] \to 0$)
 - Whether the four transport classes have a natural interpretation as saddle-point sectors of this integral
 
-**Status:** Speculative direction — maturity 5. The two-branch amplitude framework makes it well-motivated but the concrete construction is not yet specified.
+**Level:** 5, plausible but future work. The two-branch amplitude framework makes it well-motivated but the concrete construction is not yet specified.
 
 ---
 
@@ -62,4 +62,4 @@ The two-branch amplitude pair $(A, B)$ lives in a 4-dimensional real symplectic 
 - Non-commutative symplectic geometry as a deformation framework for non-associative structures
 - AdS₄/CFT₃ in the $\mathrm{Sp}(4,\mathbb{R})$ language and its relation to the transport slice
 
-**Status:** Speculative direction — maturity 5. The identification is structurally motivated and the representation-theoretic ingredients are well-developed independently. The non-associative deformation of metaplectic quantization is the genuinely new piece and has not been constructed.
+**Level:** 5, plausible but future work. The identification is structurally motivated and the representation-theoretic ingredients are well-developed independently. The non-associative deformation of metaplectic quantization is the genuinely new piece and has not been constructed.

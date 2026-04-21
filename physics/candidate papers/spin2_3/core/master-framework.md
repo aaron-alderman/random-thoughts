@@ -412,11 +412,11 @@ Different papers should stop at different layers:
 
 ---
 
-## Logical status and claim maturity matrix
+## Logical category and claim level matrix
 
-The project is easiest to manage if each claim is tagged by category, logical status, and claim maturity.
+The project is easiest to manage if each claim is tagged by category, logical role, and claim level.
 
-### Main statuses
+### Main logical roles
 
 - `Axiom/Postulate`
 - `Choice`
@@ -424,7 +424,7 @@ The project is easiest to manage if each claim is tagged by category, logical st
 - `Interpretation`
 - `Missing`
 
-### Claim maturity levels
+### Claim levels
 
 - `1`: trivial
 - `2`: solid established
@@ -435,7 +435,7 @@ The project is easiest to manage if each claim is tagged by category, logical st
 
 ### Examples from this project
 
-| Claim | Category | Status | Maturity |
+| Claim | Category | Role | Level |
 |---|---|---|---|
 | `Spin(2,3)` has a four-component spinor representation | Statics | Axiom/input to framework | 2 |
 | Choosing a time orientation induces a `T1/T2` split through `J^{01}` | Statics | Choice plus derived consequence | 3 |

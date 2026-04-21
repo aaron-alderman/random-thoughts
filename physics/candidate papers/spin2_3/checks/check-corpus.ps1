@@ -93,7 +93,7 @@ $overclaimMatches = foreach ($file in $markdownFiles) {
 
 $badEfimovCoreMatches = foreach ($file in Get-ChildItem -Path (Join-Path $repoRoot "core") -Recurse -File -Filter "*.md") {
     foreach ($match in Select-String -LiteralPath $file.FullName -Pattern "Efimov scaling" -SimpleMatch) {
-        if ($match.Line -notmatch "open conjecture|conjectur|speculative") {
+        if ($match.Line -notmatch "open conjecture|conjectur|speculative|Level 5|Level 6|plausible|future work|significant issue") {
             [pscustomobject]@{
                 File = $file.FullName.Substring($repoRoot.Length + 1)
                 Line = $match.LineNumber
@@ -125,7 +125,7 @@ $brokenMarkdownRefs = foreach ($file in $markdownFiles) {
 }
 
 Show-Section "stale path references" @($staleMatches)
-Show-Section "retired bridge overclaim phrases" @($overclaimMatches)
+Show-Section "bridge overclaim phrases" @($overclaimMatches)
 Show-Section "unqualified core Efimov scaling references" @($badEfimovCoreMatches)
 Show-Section "broken backticked markdown references" @($brokenMarkdownRefs)
 

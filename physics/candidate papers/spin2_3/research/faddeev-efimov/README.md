@@ -10,9 +10,9 @@ This track houses the conjectural bridge between Spin(2,3) threshold dynamics, S
 - `derivations/`: imported Efimov derivation notes.
 - `experiments/`: imported Python checks and visualizations.
 
-## Status
+## Claim Level
 
-The bridge is a quantitative test target, not established framework content. The safe version is:
+The bridge sits at Level 5: plausible but future work. It is a quantitative test target, not established framework content. The safe version is:
 
 > Spin(2,3) threshold dynamics suggests an SO(2,1) scaling sector; Efimov physics supplies a concrete three-body SO(2,1)-controlled system that may realize this structure.
 
