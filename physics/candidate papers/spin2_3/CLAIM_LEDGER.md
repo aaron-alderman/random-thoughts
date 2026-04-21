@@ -53,3 +53,9 @@ Allowed statuses:
 | --- | --- | --- |
 | The Faddeev/Casimir bridge has theorem-level status | retired | Replaced by the conjectural bridge track and proof-obligation gate. |
 | The Efimov bridge is closed at matrix level | retired | Requires explicit Spin-derived operator and normalization match. |
+
+## Intake Rule
+
+When a document introduces a strong claim, route it here before treating it as framework content. Use the lowest defensible status first, then promote only after the needed derivation, calculation, or proof obligation is recorded.
+
+Paper-local theorems may remain in paper drafts when their assumptions are stated inside the paper. They become framework-level claims only after they appear in this ledger.

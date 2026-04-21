@@ -12,3 +12,5 @@ This directory holds draft paper artifacts and supporting scripts. Papers should
 ## Stability Rule
 
 Before polishing a paper, check `../CLAIM_LEDGER.md` and `../ROADMAP.md` for the current status of any strong claim it uses.
+
+Paper drafts may contain theorem statements about their own reduced models. Those theorem statements are paper-local unless mirrored in `../CLAIM_LEDGER.md`.
