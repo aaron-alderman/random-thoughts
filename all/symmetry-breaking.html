@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A3 — Symmetry Breaking Cascade</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#000; display:flex; flex-direction:column; align-items:center;
+         justify-content:center; min-height:100vh; font-family:'Georgia',serif; }
+  canvas { display:block; }
+  #controls { margin-top:16px; display:flex; gap:12px; }
+  button { background:#1a1a2e; color:#ccc; border:1px solid #444;
+           padding:7px 18px; cursor:pointer; border-radius:4px; font-size:14px; }
+  button:hover { background:#2a2a4e; color:#fff; }
+</style>
+</head>
+<body>
+<canvas id="c" width="900" height="600"></canvas>
+<div id="controls">
+  <button id="btnPlay">&#9654; Play</button>
+  <button id="btnRestart">&#8635; Restart</button>
+</div>
+<script>
+const canvas = document.getElementById('c');
+const ctx    = canvas.getContext('2d');
+const W = 900, H = 600, PI = Math.PI;
+const CX = W/2, CY = H/2;
+
+// ═══════════════════════════════════════════════════════════════════
+// E₈ DYNKIN DIAGRAM
+// 7 nodes in a row + 1 branching down from node 3 (0-indexed)
+// Layout: ●─●─●─●─●─●─●
+//                  │
+//                  ●
+// ═══════════════════════════════════════════════════════════════════
+const NS  = 72;          // node spacing (px)
+const NX0 = CX - 3*NS;  // leftmost x = 450-216 = 234
+const NY  = 195;         // node row y
+
+const nodePt = [
+  {x:NX0,       y:NY},      // 0 ←── U(1) in the final SM picture
+  {x:NX0+  NS,  y:NY},      // 1 ←── SU(2) in final
+  {x:NX0+2*NS,  y:NY},      // 2
+  {x:NX0+3*NS,  y:NY},      // 3  ←  branch point
+  {x:NX0+4*NS,  y:NY},      // 4 ←── SU(3) node a
+  {x:NX0+5*NS,  y:NY},      // 5 ←── SU(3) node b
+  {x:NX0+6*NS,  y:NY},      // 6
+  {x:NX0+3*NS,  y:NY+NS},   // 7  ←  branch
+];
+const E8_EDGES = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[3,7]];
+
+// ═══════════════════════════════════════════════════════════════════
+// CASCADE STEPS
+// Each step: group name, generator count, active node indices, colour
+// Visual story: 8 → 5 → 2 → 2(recolour) → 2(recolour) → 1 → (SM combo)
+// ═══════════════════════════════════════════════════════════════════
+const CASCADE = [
+  // 0
+  { group:'E₈',           gens:248, active:[0,1,2,3,4,5,6,7], col:'#e0d0a0',
+    caption:'Full, undifferentiated symmetry — all 248 generators active' },
+  // 1
+  { group:'Spin(2,3)',     gens:10,  active:[0,1,2,3,4],       col:'#88aaff',
+    caption:'"Spin(2,3) — operative kernel. n is fixed, not absent."' },
+  // 2
+  { group:'G₂',           gens:14,  active:[0,1],              col:'#ffaa33',
+    caption:'"G₂ — automorphism group of the octonions. 14 generators."' },
+  // 3
+  { group:'SU(3)',         gens:8,   active:[0,1],              col:'#33dd77',
+    caption:'"SU(3) — strong force. Quarks carry three colour charges."' },
+  // 4  (after Mexican hat — electroweak survives)
+  { group:'SU(2)×U(1)',   gens:4,   active:[0,1],              col:'#ffcc44',
+    caption:'"SU(2)×U(1) — electroweak symmetry. The Higgs chose a vacuum."' },
+  // 5
+  { group:'U(1)',          gens:1,   active:[0],                col:'#ffee44',
+    caption:'"U(1) — electromagnetism alone survives at low energy."' },
+];
+
+// ═══════════════════════════════════════════════════════════════════
+// PHASES
+// ═══════════════════════════════════════════════════════════════════
+const PHASES = [
+  {dur:0.8},   // 0  black
+  {dur:4.0},   // 1  E₈ intro
+  {dur:5.5},   // 2  break → Spin(2,3)
+  {dur:2.0},   // 3  caption 1
+  {dur:5.0},   // 4  break → G₂
+  {dur:2.0},   // 5  caption 2
+  {dur:4.5},   // 6  G₂ → SU(3) (colour shift)
+  {dur:2.0},   // 7  caption 3
+  {dur:8.5},   // 8  Mexican-hat interlude
+  {dur:4.0},   // 9  → SU(2)×U(1)
+  {dur:2.0},   // 10 caption 4
+  {dur:4.0},   // 11 → U(1)
+  {dur:6.5},   // 12 final nested view
+  {dur:5.0},   // 13 closing caption
+];
+const totalDur   = PHASES.reduce((s,p)=>s+p.dur, 0);
+const phaseStart = (()=>{ const a=[]; let c=0; PHASES.forEach(p=>{a.push(c);c+=p.dur;}); return a; })();
+function ps(i){ return phaseStart[i]; }
+
+// ═══════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════
+function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
+function fade(e,s,d){  return clamp((e-s)/d, 0, 1); }
+function eio(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t; }
+function lerp(a,b,t){ return a+(b-a)*t; }
+
+function hexToRgb(h){
+  h=h.replace('#','');
+  return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
+}
+function lerpCol(c1,c2,t){
+  const [r1,g1,b1]=hexToRgb(c1), [r2,g2,b2]=hexToRgb(c2);
+  return `rgb(${Math.round(lerp(r1,r2,t))},${Math.round(lerp(g1,g2,t))},${Math.round(lerp(b1,b2,t))})`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DRAW — DYNKIN DIAGRAM
+// fromStep / toStep are CASCADE indices; transT is 0→1 cross-fade
+// ═══════════════════════════════════════════════════════════════════
+function drawDynkin(fromIdx, toIdx, transT, alpha) {
+  const from = CASCADE[fromIdx];
+  const to   = CASCADE[toIdx];
+
+  // ── Edges ────────────────────────────────────────────────────────
+  E8_EDGES.forEach(([a,b]) => {
+    const fAlive = from.active.includes(a) && from.active.includes(b);
+    const tAlive = to.active.includes(a)   && to.active.includes(b);
+    const col  = fAlive && tAlive ? lerpCol(from.col, to.col, transT) :
+                 fAlive           ? lerpCol(from.col, '#151d15', transT) :
+                 tAlive           ? lerpCol('#151d15', to.col, transT) : '#151d15';
+    const ea   = fAlive || tAlive ? alpha * 0.7 : alpha * 0.12;
+    ctx.save();
+    ctx.globalAlpha = ea;
+    ctx.strokeStyle = col; ctx.lineWidth = 2.5;
+    ctx.shadowColor = col; ctx.shadowBlur = 6;
+    ctx.beginPath();
+    ctx.moveTo(nodePt[a].x, nodePt[a].y);
+    ctx.lineTo(nodePt[b].x, nodePt[b].y);
+    ctx.stroke(); ctx.restore();
+  });
+
+  // ── Nodes ────────────────────────────────────────────────────────
+  for (let i=0; i<8; i++) {
+    const {x,y} = nodePt[i];
+    const inF = from.active.includes(i);
+    const inT = to.active.includes(i);
+    let col, na, nr, glow;
+
+    if (inF && inT) {
+      col  = lerpCol(from.col, to.col, transT);
+      na   = alpha; nr = 13; glow = 14;
+    } else if (inF && !inT) {
+      // dying: flash red then fade to dark
+      const d = transT;
+      if (d < 0.38) {
+        col  = lerpCol(from.col, '#ff2222', d/0.38);
+        na   = alpha; nr = lerp(13,17,d/0.38); glow = 18;
+      } else {
+        col  = lerpCol('#ff2222', '#111811', (d-0.38)/0.62);
+        na   = alpha * lerp(1, 0.22, (d-0.38)/0.62);
+        nr   = lerp(17, 7, (d-0.38)/0.62); glow = 4;
+      }
+    } else if (!inF && inT) {
+      col  = to.col; na = alpha * transT; nr = 13; glow = 14 * transT;
+    } else {
+      col  = '#111811'; na = alpha * 0.18; nr = 7; glow = 2;
+    }
+
+    ctx.save();
+    ctx.globalAlpha = na;
+    ctx.fillStyle   = col;
+    ctx.shadowColor = col; ctx.shadowBlur = glow;
+    ctx.beginPath(); ctx.arc(x, y, nr, 0, PI*2); ctx.fill();
+    ctx.restore();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DRAW — BACKGROUND SPHERE  (shrinks & dims as cascade progresses)
+// ═══════════════════════════════════════════════════════════════════
+function drawBgSphere(stepFrac, alpha) {
+  const r   = lerp(185, 42, stepFrac);
+  const a   = lerp(0.55, 0.06, stepFrac);
+  const col = lerpCol('#2838b0', '#0a0a12', stepFrac);
+  ctx.save();
+  ctx.globalAlpha = alpha * a;
+  ctx.beginPath(); ctx.arc(CX, NY+18, r, 0, PI*2);
+  ctx.strokeStyle = col; ctx.lineWidth = 1.5;
+  ctx.shadowColor = col; ctx.shadowBlur = 35;
+  ctx.stroke();
+  ctx.globalAlpha = alpha * a * 0.25;
+  ctx.fillStyle   = col; ctx.fill();
+  ctx.restore();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DRAW — GROUP LABEL BLOCK
+// ═══════════════════════════════════════════════════════════════════
+function drawGroupBlock(fromIdx, toIdx, transT, alpha) {
+  const from = CASCADE[fromIdx], to = CASCADE[toIdx];
+  const col  = lerpCol(from.col, to.col, transT);
+  const gens = Math.round(lerp(from.gens, to.gens, eio(transT)));
+  const name = transT < 0.5 ? from.group : to.group;
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.textAlign   = 'center';
+
+  ctx.font        = 'bold 31px Georgia';
+  ctx.fillStyle   = col;
+  ctx.shadowColor = col; ctx.shadowBlur = 16;
+  ctx.fillText(name, CX, NY + 100);
+
+  ctx.font        = 'italic 16px Georgia';
+  ctx.fillStyle   = '#999'; ctx.shadowBlur = 0;
+  ctx.fillText(`${gens} generators`, CX, NY + 125);
+  ctx.restore();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DRAW — MEXICAN HAT POTENTIAL
+// t: 0→1 over the mexhat phase
+// ═══════════════════════════════════════════════════════════════════
+function drawMexHat(t, alpha) {
+  const MHX = CX, MHY = CY + 20;
+  const XS = 165, VS = 115;   // x-scale, V-scale
+
+  function V(x){ return (x*x - 1)*(x*x - 1); }
+  function sx(x){ return MHX + x*XS; }
+  function sy(x){ return MHY + 58 - V(x)*VS; }
+
+  // ── Potential curve ───────────────────────────────────────────────
+  const curveA = clamp(t/0.22, 0, 1) * alpha;
+  if (curveA > 0) {
+    ctx.save();
+    ctx.globalAlpha = curveA * 0.85;
+    ctx.strokeStyle = '#9b59b6'; ctx.lineWidth = 2.5;
+    ctx.shadowColor = '#9b59b6'; ctx.shadowBlur = 8;
+    ctx.beginPath();
+    const N = 140;
+    for (let i=0; i<=N; i++) {
+      const x = -1.6 + 3.2*i/N;
+      if (i===0) ctx.moveTo(sx(x),sy(x)); else ctx.lineTo(sx(x),sy(x));
+    }
+    ctx.stroke();
+
+    // Axis hints
+    ctx.font = 'italic 15px Georgia'; ctx.fillStyle = '#888'; ctx.textAlign = 'center';
+    ctx.globalAlpha = curveA * 0.55;
+    ctx.fillText('φ',    MHX + 182, MHY + 75);
+    ctx.fillText('V(φ)', MHX - 10,  MHY - 68);
+
+    // Trough dashed verticals
+    ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
+    ctx.setLineDash([4,3]);
+    for (const xv of [-1, 1]) {
+      ctx.beginPath(); ctx.moveTo(sx(xv), MHY+75); ctx.lineTo(sx(xv), sy(xv)); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+    ctx.font = 'italic 13px Georgia'; ctx.fillStyle = '#666';
+    ctx.fillText('−v', sx(-1), MHY+86);
+    ctx.fillText('+v', sx(+1), MHY+86);
+    ctx.restore();
+  }
+
+  // ── Rolling ball ──────────────────────────────────────────────────
+  const ballA = clamp((t-0.18)/0.14, 0, 1) * alpha;
+  let bx = 0;
+  if (t > 0.44) {
+    const rt = clamp((t-0.44)/0.38, 0, 1);
+    bx = rt*rt * 1.02;   // ease-in roll, slightly overshoot to 1.02
+    bx = Math.min(bx, 1.0);
+  }
+  if (ballA > 0) {
+    ctx.save();
+    ctx.globalAlpha = ballA;
+    ctx.fillStyle   = '#e74c3c';
+    ctx.shadowColor = '#e74c3c'; ctx.shadowBlur = 14;
+    ctx.beginPath(); ctx.arc(sx(bx), sy(bx)-10, 12, 0, PI*2); ctx.fill();
+    ctx.restore();
+  }
+
+  // ── Annotations (Goldstone + Higgs) ──────────────────────────────
+  const annA = clamp((t-0.80)/0.16, 0, 1) * alpha;
+  if (annA > 0) {
+    const tx = sx(1.0), ty = sy(1.0)-10;
+
+    // Goldstone: tangent to trough (left-right)
+    ctx.save();
+    ctx.globalAlpha = annA * 0.88;
+    ctx.strokeStyle = '#2ecc71'; ctx.fillStyle = '#2ecc71';
+    ctx.lineWidth = 2.5; ctx.shadowColor = '#2ecc71'; ctx.shadowBlur = 8;
+    ctx.beginPath(); ctx.moveTo(tx-50, ty); ctx.lineTo(tx+50, ty); ctx.stroke();
+    for (const d of [-1, 1]) {
+      const ex = tx + d*50;
+      ctx.beginPath();
+      ctx.moveTo(ex, ty);
+      ctx.lineTo(ex - d*10, ty-6); ctx.lineTo(ex - d*10, ty+6);
+      ctx.closePath(); ctx.fill();
+    }
+    ctx.font = 'italic 13px Georgia'; ctx.textAlign = 'center';
+    ctx.fillText('Goldstone — massless', tx, ty-22);
+    ctx.restore();
+
+    // Higgs: radial (up the slope)
+    ctx.save();
+    ctx.globalAlpha = annA * 0.88;
+    ctx.strokeStyle = '#e67e22'; ctx.fillStyle = '#e67e22';
+    ctx.lineWidth = 2.5; ctx.shadowColor = '#e67e22'; ctx.shadowBlur = 8;
+    const dx = 55, dy = -65;
+    ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(tx+dx, ty+dy); ctx.stroke();
+    const ang = Math.atan2(dy, dx);
+    ctx.beginPath();
+    ctx.moveTo(tx+dx, ty+dy);
+    ctx.lineTo(tx+dx-13*Math.cos(ang-0.42), ty+dy-13*Math.sin(ang-0.42));
+    ctx.lineTo(tx+dx-13*Math.cos(ang+0.42), ty+dy-13*Math.sin(ang+0.42));
+    ctx.closePath(); ctx.fill();
+    ctx.font = 'italic 13px Georgia'; ctx.textAlign = 'left';
+    ctx.fillText('Higgs — massive', tx+dx+5, ty+dy-8);
+    ctx.restore();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DRAW — STANDARD MODEL "NESTED" FINAL VIEW
+// ═══════════════════════════════════════════════════════════════════
+function drawSMFinal(t, alpha) {
+  // Faint large sphere (E₈ mostly dark)
+  drawBgSphere(0.0, alpha * 0.28);
+
+  // Dim all 8 nodes
+  drawDynkin(5, 5, 0, alpha * 0.3);
+
+  // Glowing inner ring
+  const ringA = clamp(t/0.5, 0, 1) * alpha;
+  ctx.save();
+  ctx.globalAlpha = ringA * 0.65;
+  ctx.beginPath(); ctx.arc(CX, NY+18, 65, 0, PI*2);
+  ctx.strokeStyle = '#ffcc44'; ctx.lineWidth = 1.5;
+  ctx.setLineDash([5,3]);
+  ctx.shadowColor = '#ffcc44'; ctx.shadowBlur = 12;
+  ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+
+  // Three separate SM group labels
+  const sm1A = clamp((t-0.2)/0.4, 0, 1) * alpha;
+  const sm2A = clamp((t-0.4)/0.4, 0, 1) * alpha;
+  const sm3A = clamp((t-0.6)/0.4, 0, 1) * alpha;
+
+  function smLabel(txt, x, y, col, a) {
+    ctx.save(); ctx.globalAlpha = a;
+    ctx.font = 'bold 18px Georgia'; ctx.fillStyle = col;
+    ctx.textAlign = 'center'; ctx.shadowColor = col; ctx.shadowBlur = 10;
+    ctx.fillText(txt, x, y); ctx.restore();
+  }
+
+  smLabel('U(1)',    CX - 105, NY + 18, '#ffee44', sm1A);
+  smLabel('SU(2)',   CX,       NY + 18, '#ffaa33', sm2A);
+  smLabel('SU(3)',   CX + 105, NY + 18, '#33dd77', sm3A);
+
+  // Overall label
+  const totA = clamp((t-0.7)/0.4, 0, 1) * alpha;
+  ctx.save(); ctx.globalAlpha = totA;
+  ctx.font = 'italic 15px Georgia'; ctx.fillStyle = '#aaa';
+  ctx.textAlign = 'center';
+  ctx.fillText('Standard Model gauge group', CX, NY + 48);
+  ctx.fillText('12 generators  /  248 total  —  nested inside E₈', CX, NY + 68);
+  ctx.restore();
+
+  // Arrow pointing outward
+  const arrA = clamp((t-0.9)/0.3, 0, 1) * alpha;
+  if (arrA > 0) {
+    ctx.save(); ctx.globalAlpha = arrA * 0.6;
+    ctx.strokeStyle = '#555'; ctx.lineWidth = 1;
+    ctx.setLineDash([3,3]);
+    ctx.beginPath(); ctx.arc(CX, NY+18, 68, PI/4, PI/4 + PI*1.2);
+    ctx.stroke(); ctx.setLineDash([]);
+    ctx.font = 'italic 13px Georgia'; ctx.fillStyle = '#555';
+    ctx.textAlign = 'center';
+    ctx.fillText('E₈ (mostly dark)', CX + 105, NY - 80);
+    ctx.restore();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TEXT HELPERS
+// ═══════════════════════════════════════════════════════════════════
+function drawTitle(txt, alpha, y=50) {
+  ctx.save(); ctx.globalAlpha = alpha;
+  ctx.font = 'bold 25px Georgia'; ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = '#888'; ctx.shadowBlur = 10;
+  ctx.fillText(txt, W/2, y); ctx.restore();
+}
+function drawCaption(txt, alpha, y=H-52, size=18) {
+  ctx.save(); ctx.globalAlpha = alpha;
+  ctx.font = `italic ${size}px Georgia`; ctx.fillStyle = '#d4c5a9';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.shadowColor = 'rgba(210,175,110,0.4)'; ctx.shadowBlur = 12;
+  ctx.fillText(txt, W/2, y); ctx.restore();
+}
+function drawNote(txt, x, y, alpha, col='#888', size=14) {
+  ctx.save(); ctx.globalAlpha = alpha;
+  ctx.font = `italic ${size}px Georgia`; ctx.fillStyle = col;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(txt, x, y); ctx.restore();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MAIN RENDER LOOP
+// ═══════════════════════════════════════════════════════════════════
+let elapsed=0, paused=true, lastTS=null, animId=null;
+
+function render(ts) {
+  if (!paused) {
+    if (lastTS!==null) elapsed += (ts-lastTS)/1000;
+    lastTS = ts;
+  } else { lastTS = null; }
+  if (elapsed > totalDur) elapsed = totalDur;
+  const e = elapsed;
+
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+
+  // ── Ph1: E₈ INTRO ─────────────────────────────────────────────────
+  if (e > ps(1)) {
+    const introA = fade(e, ps(1), 1.5);
+    drawTitle('A3 — Symmetry Breaking Cascade', introA);
+    const diagA  = fade(e, ps(1)+0.6, 1.5);
+    drawBgSphere(0, diagA);
+    drawDynkin(0, 0, 0, diagA);
+    if (diagA > 0) {
+      drawGroupBlock(0, 0, 0, diagA);
+      drawCaption(CASCADE[0].caption, fade(e, ps(1)+2.5, 0.8) * diagA);
+    }
+  }
+
+  // ── Ph2: BREAK → Spin(2,3) ────────────────────────────────────────
+  if (e > ps(2)) {
+    const bT  = eio(fade(e, ps(2), PHASES[2].dur * 0.72));
+    const sf  = lerp(0, 1/5, bT);
+    drawBgSphere(sf, 1.0);
+    drawDynkin(0, 1, bT, 1.0);
+    drawGroupBlock(0, 1, bT, 1.0);
+    // "direction n" annotation fades in then out
+    const nA = fade(e, ps(2)+0.8, 0.8) * (1 - fade(e, ps(2)+3.5, 0.7));
+    if (nA > 0) {
+      const nx = nodePt[7].x + 60, ny2 = nodePt[7].y + 12;
+      drawNote('← n (fixed direction)', nx + 20, ny2, nA, '#88aaff', 13);
+      ctx.save(); ctx.globalAlpha = nA * 0.5;
+      ctx.strokeStyle = '#88aaff'; ctx.lineWidth = 1.2;
+      ctx.setLineDash([4,3]);
+      ctx.beginPath(); ctx.moveTo(nx-12, ny2); ctx.lineTo(nx, ny2); ctx.stroke();
+      ctx.setLineDash([]); ctx.restore();
+    }
+    drawCaption('"Fixing n breaks the full symmetry — the five-dimensional arena emerges."',
+      fade(e, ps(2)+3.0, 0.8));
+  }
+
+  // ── Ph3: Caption 1 ────────────────────────────────────────────────
+  if (e > ps(3)) {
+    drawBgSphere(1/5, 1.0);
+    drawDynkin(1, 1, 0, 1.0);
+    drawGroupBlock(1, 1, 0, 1.0);
+    drawCaption(CASCADE[1].caption, fade(e, ps(3), 0.8));
+  }
+
+  // ── Ph4: BREAK → G₂ ──────────────────────────────────────────────
+  if (e > ps(4)) {
+    const bT = eio(fade(e, ps(4), PHASES[4].dur * 0.72));
+    const sf = lerp(1/5, 2/5, bT);
+    drawBgSphere(sf, 1.0);
+    drawDynkin(1, 2, bT, 1.0);
+    drawGroupBlock(1, 2, bT, 1.0);
+    const fanoA = fade(e, ps(4)+2.8, 1.0);
+    if (fanoA > 0)
+      drawNote('Octonion imaginary units emerge', CX, NY+150, fanoA*0.75, '#ffaa33', 14);
+    drawCaption('"Two imaginary units survive. The Fano plane is the key."',
+      fade(e, ps(4)+3.2, 0.7));
+  }
+
+  // ── Ph5: Caption 2 ────────────────────────────────────────────────
+  if (e > ps(5)) {
+    drawBgSphere(2/5, 1.0);
+    drawDynkin(2, 2, 0, 1.0);
+    drawGroupBlock(2, 2, 0, 1.0);
+    drawCaption(CASCADE[2].caption, fade(e, ps(5), 0.8));
+  }
+
+  // ── Ph6: G₂ → SU(3) colour shift ─────────────────────────────────
+  if (e > ps(6)) {
+    const bT = eio(fade(e, ps(6), PHASES[6].dur * 0.72));
+    drawBgSphere(2/5, 1.0);   // no structural change, just colour
+    drawDynkin(2, 3, bT, 1.0);
+    drawGroupBlock(2, 3, bT, 1.0);
+    const colA = fade(e, ps(6)+2.2, 1.0);
+    if (colA > 0)
+      drawNote('r   g   b', CX, NY + 150, colA * 0.8, '#33dd77', 15);
+    drawCaption('"G₂ loses two generators — the residual structure is colour symmetry."',
+      fade(e, ps(6)+2.8, 0.7));
+  }
+
+  // ── Ph7: Caption 3 ────────────────────────────────────────────────
+  if (e > ps(7)) {
+    drawBgSphere(2/5, 1.0);
+    drawDynkin(3, 3, 0, 1.0);
+    drawGroupBlock(3, 3, 0, 1.0);
+    drawCaption(CASCADE[3].caption, fade(e, ps(7), 0.8));
+  }
+
+  // ── Ph8: MEXICAN HAT ──────────────────────────────────────────────
+  if (e > ps(8)) {
+    const mhT = fade(e, ps(8), PHASES[8].dur);
+    const mhA = fade(e, ps(8), 0.6);
+    // Fade out diagram beneath
+    const dynA = (1 - mhA);
+    if (dynA > 0) {
+      drawBgSphere(2/5, dynA);
+      drawDynkin(3, 3, 0, dynA);
+    }
+    // Black overlay
+    ctx.save(); ctx.globalAlpha = mhA * 0.82;
+    ctx.fillStyle = '#000'; ctx.fillRect(0,0,W,H); ctx.restore();
+
+    drawTitle('Electroweak Symmetry Breaking', mhA);
+    drawMexHat(mhT, mhA);
+    const mhCapA = fade(e, ps(8)+5.5, 1.0) * mhA;
+    drawCaption('"The equations are symmetric. The solution is not."', mhCapA);
+  }
+
+  // ── Ph9: → SU(2)×U(1) ────────────────────────────────────────────
+  if (e > ps(9)) {
+    const bT = eio(fade(e, ps(9), PHASES[9].dur * 0.72));
+    drawBgSphere(3/5, 1.0);
+    drawDynkin(3, 4, bT, 1.0);
+    drawGroupBlock(3, 4, bT, 1.0);
+  }
+
+  // ── Ph10: Caption 4 ───────────────────────────────────────────────
+  if (e > ps(10)) {
+    drawBgSphere(3/5, 1.0);
+    drawDynkin(4, 4, 0, 1.0);
+    drawGroupBlock(4, 4, 0, 1.0);
+    drawCaption(CASCADE[4].caption, fade(e, ps(10), 0.8));
+  }
+
+  // ── Ph11: → U(1) ──────────────────────────────────────────────────
+  if (e > ps(11)) {
+    const bT = eio(fade(e, ps(11), PHASES[11].dur * 0.72));
+    drawBgSphere(lerp(3/5, 4/5, bT), 1.0);
+    drawDynkin(4, 5, bT, 1.0);
+    drawGroupBlock(4, 5, bT, 1.0);
+    const emA = fade(e, ps(11)+2.5, 0.8);
+    if (emA > 0)
+      drawNote('Electromagnetism alone remains', CX, NY+150, emA*0.75, '#ffee44', 14);
+    drawCaption(CASCADE[5].caption, fade(e, ps(11)+2.8, 0.7));
+  }
+
+  // ── Ph12: FINAL NESTED VIEW ───────────────────────────────────────
+  if (e > ps(12)) {
+    const finT = fade(e, ps(12), 2.2);
+    drawSMFinal(finT, 1.0);
+    drawTitle('Standard Model nested inside E₈', fade(e, ps(12), 1.0));
+    drawCaption('"Each choice was made once. The 19 parameters are its record."',
+      fade(e, ps(12)+3.5, 1.5), H-55, 19);
+  }
+
+  // ── Ph13: CLOSING CAPTION ─────────────────────────────────────────
+  if (e > ps(13)) {
+    const cA = eio(fade(e, ps(13), 1.5));
+    drawSMFinal(1.0, 1.0);
+    drawTitle('Standard Model nested inside E₈', 1.0);
+    drawCaption('"Each choice was made once. The 19 parameters are its record."', cA, H-58, 20);
+    const sub = fade(e, ps(13)+1.8, 1.5) * cA;
+    drawCaption('E₈ → Spin(2,3) → G₂ → SU(3) → SU(2)×U(1) → U(1)', sub*0.6, H-28, 13);
+  }
+
+  if (!paused && elapsed < totalDur) {
+    animId = requestAnimationFrame(render);
+  } else if (elapsed >= totalDur) {
+    paused = true;
+    document.getElementById('btnPlay').textContent = '▶ Play';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════════
+document.getElementById('btnPlay').addEventListener('click', () => {
+  if (paused) {
+    if (elapsed >= totalDur) elapsed = 0;
+    paused = false;
+    document.getElementById('btnPlay').textContent = '⏸ Pause';
+    lastTS  = null;
+    animId  = requestAnimationFrame(render);
+  } else {
+    paused = true;
+    document.getElementById('btnPlay').textContent = '▶ Play';
+  }
+});
+document.getElementById('btnRestart').addEventListener('click', () => {
+  elapsed = 0; paused = false; lastTS = null;
+  document.getElementById('btnPlay').textContent = '⏸ Pause';
+  if (animId) cancelAnimationFrame(animId);
+  animId = requestAnimationFrame(render);
+});
+requestAnimationFrame(render);
+</script>
+</body>
+</html>

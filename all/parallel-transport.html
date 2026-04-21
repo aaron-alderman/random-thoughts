@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A5 — Parallel Transport & Holonomy</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; display: flex; flex-direction: column; align-items: center;
+         justify-content: center; min-height: 100vh; font-family: 'Georgia', serif; }
+  canvas { display: block; }
+  #controls { margin-top: 16px; display: flex; gap: 12px; }
+  button { background: #1a1a2e; color: #ccc; border: 1px solid #444;
+           padding: 7px 18px; cursor: pointer; border-radius: 4px; font-size: 14px; }
+  button:hover { background: #2a2a4e; color: #fff; }
+</style>
+</head>
+<body>
+<canvas id="c" width="900" height="600"></canvas>
+<div id="controls">
+  <button id="btnPlay">&#9654; Play</button>
+  <button id="btnRestart">&#8635; Restart</button>
+</div>
+<script>
+const canvas = document.getElementById('c');
+const ctx    = canvas.getContext('2d');
+const W = 900, H = 600;
+const CX = W / 2, CY = H / 2 - 10;
+
+// ═══════════════════════════════════════════════════════════════════
+// 3-D SPHERE SETUP
+// ═══════════════════════════════════════════════════════════════════
+const SR  = 155;          // sphere pixel radius
+const SCX = CX, SCY = CY + 15;
+
+// Camera: look from (sin45·cos30, sin30, cos45·cos30) ≈ NE-above
+const CAM_AZ = -Math.PI / 4.2;   // azimuth  (rotate around y)
+const CAM_EL =  Math.PI / 5.5;   // elevation (tilt around x)
+
+function project3D(x, y, z) {
+  // y-axis rotation (azimuth)
+  const x1 =  x * Math.cos(CAM_AZ) + z * Math.sin(CAM_AZ);
+  const z1 = -x * Math.sin(CAM_AZ) + z * Math.cos(CAM_AZ);
+  // x-axis rotation (elevation)
+  const y2 =  y * Math.cos(CAM_EL) - z1 * Math.sin(CAM_EL);
+  const dep = y * Math.sin(CAM_EL) + z1 * Math.cos(CAM_EL);
+  return { sx: SCX + x1 * SR, sy: SCY - y2 * SR, depth: dep };
+}
+
+function latLon(lat, lon) {
+  return project3D(
+    Math.cos(lat) * Math.sin(lon),
+    Math.sin(lat),
+    Math.cos(lat) * Math.cos(lon)
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PATH GEOMETRY  (three geodesic segments forming a spherical tri.)
+//
+//  Segment 1: North pole (lat=π/2, lon=0) → Equator (lat=0, lon=0)
+//  Segment 2: Equator (lat=0, lon=0) → Equator (lat=0, lon=π/2)
+//  Segment 3: Equator (lat=0, lon=π/2) → North pole
+//
+// Parallel-transported vector (analytically):
+//   Seg 1: V = (1,0,0)                     — constant, stays "east"
+//   Seg 2: V = (cos lon, 0, -sin lon)       — tracks equator tangent
+//   Seg 3: V = (0, 0, -1)                   — constant
+//
+// Net holonomy: V returns as (0,0,-1), rotated 90° from original (1,0,0)
+// = spherical excess of a spherical triangle with three 90° angles = π/2
+// ═══════════════════════════════════════════════════════════════════
+function pathAt(t) {
+  t = Math.max(0, Math.min(1, t));
+  if (t <= 1/3) {
+    const s   = t * 3;
+    const lat = Math.PI / 2 * (1 - s);
+    return { lat, lon: 0, vx: 1, vy: 0, vz: 0 };
+  } else if (t <= 2/3) {
+    const s   = (t - 1/3) * 3;
+    const lon = s * Math.PI / 2;
+    return { lat: 0, lon, vx: Math.cos(lon), vy: 0, vz: -Math.sin(lon) };
+  } else {
+    const s   = (t - 2/3) * 3;
+    const lat = s * Math.PI / 2;
+    return { lat, lon: Math.PI / 2, vx: 0, vy: 0, vz: -1 };
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PHASE TABLE
+// ═══════════════════════════════════════════════════════════════════
+const PHASES = [
+  { name:'BLACK',        dur: 0.8  },
+  { name:'FLAT_INTRO',   dur: 1.8  },
+  { name:'FLAT_TRANS',   dur: 6.0  },
+  { name:'FLAT_END',     dur: 2.5  },
+  { name:'FLAT_CAP',     dur: 2.0  },
+  { name:'SPHER_INTRO',  dur: 2.5  },
+  { name:'SPHER_PATH',   dur: 5.5  },
+  { name:'SPHER_TRANS',  dur: 9.0  },
+  { name:'SPHER_ANGLE',  dur: 3.0  },
+  { name:'SPHER_CAP',    dur: 2.5  },
+  { name:'G2_INTRO',     dur: 3.5  },
+  { name:'G2_FANO',      dur: 5.5  },
+  { name:'G2_CAP',       dur: 4.5  },
+];
+
+const totalDur  = PHASES.reduce((s, p) => s + p.dur, 0);
+const phaseStart = (() => {
+  const out = []; let acc = 0;
+  PHASES.forEach(p => { out.push(acc); acc += p.dur; });
+  return out;
+})();
+
+function getPhase(e) {
+  for (let i = PHASES.length - 1; i >= 0; i--) {
+    if (e >= phaseStart[i])
+      return { idx: i, t: Math.min(1, (e - phaseStart[i]) / PHASES[i].dur) };
+  }
+  return { idx: 0, t: 0 };
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════
+const PI = Math.PI;
+function clamp(v,a,b)  { return Math.max(a, Math.min(b, v)); }
+function lerp(a,b,t)   { return a + (b-a)*t; }
+function eio(t)        { return t < .5 ? 2*t*t : -1+(4-2*t)*t; }
+function fade(e, start, len) { return clamp((e - start) / len, 0, 1); }
+
+// ═══════════════════════════════════════════════════════════════════
+// DRAW — FLAT PLANE
+// ═══════════════════════════════════════════════════════════════════
+const GRID_OFF = 40;
+const SQ_W = 200, SQ_H = 170;
+const SQ_L = CX - SQ_W/2, SQ_T = CY - SQ_H/2;
+
+function drawFlatGrid(alpha) {
+  ctx.save();
+  ctx.globalAlpha = alpha * 0.22;
+  ctx.strokeStyle = '#3a4a5a';
+  ctx.lineWidth = 1;
+  for (let x = CX - 240; x <= CX + 240; x += GRID_OFF) {
+    ctx.beginPath(); ctx.moveTo(x, CY-210); ctx.lineTo(x, CY+210); ctx.stroke();
+  }
+  for (let y = CY - 210; y <= CY + 210; y += GRID_OFF) {
+    ctx.beginPath(); ctx.moveTo(CX-240, y); ctx.lineTo(CX+240, y); ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// Position on the square loop (t: 0→1, clockwise from top-left)
+function squarePos(t) {
+  t = ((t % 1) + 1) % 1;
+  const perim = 2*SQ_W + 2*SQ_H;
+  const d = t * perim;
+  if (d < SQ_W)          return [SQ_L + d,           SQ_T];
+  if (d < SQ_W + SQ_H)   return [SQ_L + SQ_W,        SQ_T + (d - SQ_W)];
+  if (d < 2*SQ_W + SQ_H) return [SQ_L + SQ_W - (d - SQ_W - SQ_H), SQ_T + SQ_H];
+  return [SQ_L, SQ_T + SQ_H - (d - 2*SQ_W - SQ_H)];
+}
+
+function drawArrow2D(x, y, dx, dy, color, alpha, len = 48) {
+  const L = Math.sqrt(dx*dx+dy*dy) || 1;
+  const ux = dx/L, uy = dy/L;
+  const ex = x + ux*len, ey = y + uy*len;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.strokeStyle = color;
+  ctx.fillStyle   = color;
+  ctx.lineWidth   = 3;
+  ctx.shadowColor = color; ctx.shadowBlur = 8;
+  ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(ex, ey); ctx.stroke();
+  const ha = 0.45, hl = 13;
+  const ang = Math.atan2(uy, ux);
+  ctx.beginPath();
+  ctx.moveTo(ex, ey);
+  ctx.lineTo(ex - hl*Math.cos(ang-ha), ey - hl*Math.sin(ang-ha));
+  ctx.lineTo(ex - hl*Math.cos(ang+ha), ey - hl*Math.sin(ang+ha));
+  ctx.closePath(); ctx.fill();
+  ctx.restore();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DRAW — SPHERE
+// ═══════════════════════════════════════════════════════════════════
+function drawSphere(alpha) {
+  // Fill
+  ctx.save();
+  ctx.globalAlpha = alpha * 0.18;
+  ctx.beginPath(); ctx.arc(SCX, SCY, SR, 0, PI*2);
+  ctx.fillStyle = '#060614'; ctx.fill();
+  ctx.restore();
+  // Outline
+  ctx.save();
+  ctx.globalAlpha = alpha * 0.55;
+  ctx.beginPath(); ctx.arc(SCX, SCY, SR, 0, PI*2);
+  ctx.strokeStyle = '#445566'; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.restore();
+
+  // Latitude lines
+  for (const lat of [-PI/3, -PI/6, 0, PI/6, PI/3]) {
+    const N = 80;
+    ctx.save(); ctx.beginPath(); ctx.globalAlpha = 0;
+    let first = true;
+    for (let i = 0; i <= N; i++) {
+      const lon = (i/N)*PI*2;
+      const p   = latLon(lat, lon);
+      const a   = alpha * 0.3 * clamp((p.depth + 0.3), 0, 1);
+      if (first) { ctx.globalAlpha = a; ctx.moveTo(p.sx, p.sy); first = false; }
+      else        { ctx.globalAlpha = a; ctx.lineTo(p.sx, p.sy); }
+    }
+    ctx.strokeStyle = '#2a3d52'; ctx.lineWidth = 1;
+    ctx.stroke(); ctx.restore();
+  }
+
+  // Longitude lines
+  for (let lon = 0; lon < PI*2; lon += PI/4) {
+    const N = 80;
+    ctx.save(); ctx.beginPath();
+    let first = true;
+    for (let i = 0; i <= N; i++) {
+      const lat = (i/N)*PI - PI/2;
+      const p   = latLon(lat, lon);
+      if (p.depth < -0.02) { first = true; continue; }
+      if (first) { ctx.moveTo(p.sx, p.sy); first = false; }
+      else        ctx.lineTo(p.sx, p.sy);
+    }
+    ctx.globalAlpha = alpha * 0.25;
+    ctx.strokeStyle = '#2a3d52'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.restore();
+  }
+}
+
+function drawPathTrace(pathT, alpha) {
+  if (pathT <= 0) return;
+  const N = 120;
+  const steps = Math.floor(pathT * N);
+
+  // Segment colours
+  const segCol = ['#e74c3c','#2ecc71','#3498db'];
+  for (let seg = 0; seg < 3; seg++) {
+    const segStart = seg / 3, segEnd = (seg+1) / 3;
+    if (pathT <= segStart) continue;
+    const segT = clamp((pathT - segStart) / (1/3), 0, 1);
+    const segN  = Math.floor(segT * (N/3));
+    ctx.save();
+    ctx.strokeStyle = segCol[seg];
+    ctx.lineWidth   = 3;
+    ctx.shadowColor = segCol[seg]; ctx.shadowBlur = 10;
+    ctx.globalAlpha = alpha;
+    ctx.beginPath();
+    let first = true;
+    for (let i = 0; i <= segN; i++) {
+      const tt = segStart + (i / (N/3)) * (1/3);
+      const {lat, lon} = pathAt(tt);
+      const p = latLon(lat, lon);
+      if (first) { ctx.moveTo(p.sx, p.sy); first = false; }
+      else        ctx.lineTo(p.sx, p.sy);
+    }
+    ctx.stroke(); ctx.restore();
+  }
+}
+
+function drawVec3D(lat, lon, vx, vy, vz, color, alpha) {
+  const scale = 0.38;
+  const pos = latLon(lat, lon);
+  const tx = Math.cos(lat)*Math.sin(lon) + scale*vx;
+  const ty = Math.sin(lat)               + scale*vy;
+  const tz = Math.cos(lat)*Math.cos(lon) + scale*vz;
+  const tip = project3D(tx, ty, tz);
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.strokeStyle = color; ctx.fillStyle = color;
+  ctx.lineWidth   = 3.5;
+  ctx.shadowColor = color; ctx.shadowBlur = 10;
+  ctx.beginPath(); ctx.moveTo(pos.sx, pos.sy); ctx.lineTo(tip.sx, tip.sy); ctx.stroke();
+  const dx = tip.sx-pos.sx, dy = tip.sy-pos.sy;
+  const L  = Math.sqrt(dx*dx+dy*dy) || 1;
+  const ha = 0.45, hl = 13, ang = Math.atan2(dy/L, dx/L);
+  ctx.beginPath();
+  ctx.moveTo(tip.sx, tip.sy);
+  ctx.lineTo(tip.sx - hl*Math.cos(ang-ha), tip.sy - hl*Math.sin(ang-ha));
+  ctx.lineTo(tip.sx - hl*Math.cos(ang+ha), tip.sy - hl*Math.sin(ang+ha));
+  ctx.closePath(); ctx.fill();
+  ctx.restore();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DRAW — G₂ FANO MINI  (reused from A1)
+// ═══════════════════════════════════════════════════════════════════
+const G2_R   = 95;
+const G2_CX  = CX, G2_CY = CY - 5;
+const g2Labels = ['e₁','e₂','e₃','e₄','e₅','e₆','e₇'];
+const g2Lines  = [[0,1,3],[1,2,4],[2,3,5],[3,4,6],[4,5,0],[5,6,1],[6,0,2]];
+const g2Cols   = ['#e74c3c','#e67e22','#f1c40f','#2ecc71','#1abc9c','#3498db','#9b59b6'];
+
+function g2Pt(i, scale=1) {
+  if (i === 6) return { x: G2_CX, y: G2_CY };
+  const ang = -PI/2 + i*(PI*2/6);
+  return { x: G2_CX + G2_R*scale*Math.cos(ang), y: G2_CY + G2_R*scale*Math.sin(ang) };
+}
+
+function drawFanoMini(alpha, scale=1) {
+  // Lines
+  for (let li=0; li<7; li++) {
+    const [a,b,c] = g2Lines[li];
+    const pa = g2Pt(a,scale), pb = g2Pt(b,scale), pc = g2Pt(c,scale);
+    const dir = { x: pc.x-pa.x, y: pc.y-pa.y };
+    const L   = Math.sqrt(dir.x*dir.x+dir.y*dir.y) || 1;
+    const ext = 20*scale;
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.6;
+    ctx.strokeStyle = g2Cols[li]; ctx.lineWidth = 1.5;
+    ctx.shadowColor = g2Cols[li]; ctx.shadowBlur = 5;
+    ctx.beginPath();
+    ctx.moveTo(pa.x - dir.x/L*ext, pa.y - dir.y/L*ext);
+    ctx.lineTo(pc.x + dir.x/L*ext, pc.y + dir.y/L*ext);
+    ctx.stroke(); ctx.restore();
+  }
+  // Inscribed circle
+  ctx.save();
+  ctx.globalAlpha = alpha * 0.45;
+  ctx.strokeStyle = '#a0f0c0'; ctx.lineWidth = 1.5;
+  ctx.setLineDash([5,4]);
+  ctx.beginPath(); ctx.arc(G2_CX, G2_CY, G2_R*scale*Math.sin(PI/3), 0, PI*2);
+  ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+  // Points
+  for (let i=0; i<7; i++) {
+    const p = g2Pt(i,scale);
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = g2Cols[i];
+    ctx.shadowColor = g2Cols[i]; ctx.shadowBlur = 8;
+    ctx.beginPath(); ctx.arc(p.x, p.y, 6*scale, 0, PI*2); ctx.fill();
+    ctx.restore();
+    // Label
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.9;
+    ctx.font = `italic ${Math.round(16*scale)}px Georgia`;
+    ctx.fillStyle = g2Cols[i]; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const dx = p.x-G2_CX, dy = p.y-G2_CY;
+    const lL = Math.sqrt(dx*dx+dy*dy) || 1;
+    const off = 22*scale;
+    ctx.fillText(g2Labels[i], p.x+dx/lL*off, p.y+dy/lL*off);
+    ctx.restore();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CAPTIONS / TITLES
+// ═══════════════════════════════════════════════════════════════════
+function drawTitle(text, alpha, y=52) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.font = 'bold 25px Georgia';
+  ctx.fillStyle = '#ffffff';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = '#888'; ctx.shadowBlur = 10;
+  ctx.fillText(text, W/2, y);
+  ctx.restore();
+}
+function drawCaption(text, alpha, y=H-52, size=19) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.font = `italic ${size}px Georgia`;
+  ctx.fillStyle = '#d4c5a9';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.shadowColor = 'rgba(200,170,110,0.4)'; ctx.shadowBlur = 12;
+  ctx.fillText(text, W/2, y);
+  ctx.restore();
+}
+function drawLabel(text, x, y, alpha, color='#aaa', size=15) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.font = `italic ${size}px Georgia`;
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(text, x, y);
+  ctx.restore();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MAIN RENDER
+// ═══════════════════════════════════════════════════════════════════
+let elapsed = 0, paused = true, lastTS = null, animId = null;
+
+function ps(i) { return phaseStart[i]; }  // short alias
+
+function render(ts) {
+  if (!paused) {
+    if (lastTS !== null) elapsed += (ts - lastTS) / 1000;
+    lastTS = ts;
+  } else { lastTS = null; }
+  if (elapsed > totalDur) elapsed = totalDur;
+
+  const e = elapsed;
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, W, H);
+
+  // ── 1. FLAT INTRO ────────────────────────────────────────────────
+  const flatAlpha = fade(e, ps(1), 1.0) * (1 - fade(e, ps(4), 1.0));
+  if (flatAlpha > 0) {
+    drawFlatGrid(flatAlpha);
+    drawTitle('Scene 1 — Flat Plane', flatAlpha);
+    // Square outline (dashed guide)
+    ctx.save();
+    ctx.globalAlpha = flatAlpha * 0.35;
+    ctx.strokeStyle = '#ffcc44'; ctx.lineWidth = 1.5;
+    ctx.setLineDash([6,4]);
+    ctx.strokeRect(SQ_L, SQ_T, SQ_W, SQ_H);
+    ctx.setLineDash([]);
+    ctx.restore();
+  }
+
+  // ── 2. FLAT TRANSPORT ────────────────────────────────────────────
+  if (e > ps(2) && flatAlpha > 0) {
+    const trans_t = fade(e, ps(2), PHASES[2].dur);
+    const dotPos  = squarePos(trans_t);
+    // Trace
+    const N = 100;
+    const nPts = Math.floor(trans_t * N);
+    ctx.save();
+    ctx.globalAlpha = flatAlpha * 0.75;
+    ctx.strokeStyle = '#ffcc44'; ctx.lineWidth = 2;
+    ctx.shadowColor = '#ffcc44'; ctx.shadowBlur = 6;
+    ctx.beginPath();
+    for (let i = 0; i <= nPts; i++) {
+      const [px, py] = squarePos(i/N);
+      if (i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+    }
+    ctx.stroke(); ctx.restore();
+    // Dot
+    ctx.save();
+    ctx.globalAlpha = flatAlpha;
+    ctx.fillStyle = '#55aaff'; ctx.shadowColor = '#55aaff'; ctx.shadowBlur = 12;
+    ctx.beginPath(); ctx.arc(dotPos[0], dotPos[1], 7, 0, PI*2); ctx.fill();
+    ctx.restore();
+    // Vector arrow — always pointing right (flat surface = no rotation)
+    drawArrow2D(dotPos[0], dotPos[1], 1, 0, '#55aaff', flatAlpha * 0.95);
+  }
+
+  // ── 3. FLAT END ──────────────────────────────────────────────────
+  if (e > ps(3) && flatAlpha > 0) {
+    // Vector returned, still pointing right — label "0° rotation"
+    const endAlpha = fade(e, ps(3), 1.2) * flatAlpha;
+    const [sx, sy] = squarePos(0);
+    drawArrow2D(sx, sy, 1, 0, '#55aaff', endAlpha);
+    // Confirm label
+    ctx.save();
+    ctx.globalAlpha = endAlpha;
+    ctx.font = 'bold 17px Georgia';
+    ctx.fillStyle = '#55ff88'; ctx.textAlign = 'center';
+    ctx.shadowColor = '#55ff88'; ctx.shadowBlur = 8;
+    ctx.fillText('0° rotation', sx, sy - 55);
+    ctx.restore();
+    drawCaption('Flat plane: zero curvature → vector returns unchanged', endAlpha);
+  }
+
+  // ── 5. SPHERE INTRO ──────────────────────────────────────────────
+  const sphereAlpha = fade(e, ps(5), 1.5) * (1 - fade(e, ps(10), 0.8));
+  if (sphereAlpha > 0) {
+    drawSphere(sphereAlpha);
+    const titleA = fade(e, ps(5), 1.0);
+    drawTitle('Scene 2 — Sphere', titleA * sphereAlpha);
+    // North pole dot
+    const np = latLon(PI/2, 0);
+    ctx.save();
+    ctx.globalAlpha = sphereAlpha * titleA;
+    ctx.fillStyle = '#ffffff'; ctx.shadowColor = '#fff'; ctx.shadowBlur = 14;
+    ctx.beginPath(); ctx.arc(np.sx, np.sy, 6, 0, PI*2); ctx.fill();
+    ctx.restore();
+    drawLabel('N', np.sx, np.sy - 20, sphereAlpha * titleA, '#ccc', 14);
+    // Initial vector at north pole (pointing "east" = +x direction)
+    const initVecA = fade(e, ps(5)+0.8, 0.6) * sphereAlpha;
+    if (initVecA > 0) {
+      drawVec3D(PI/2, 0, 1, 0, 0, '#55aaff', initVecA);
+    }
+  }
+
+  // ── 6. SPHERE PATH DRAWING ───────────────────────────────────────
+  if (e > ps(6) && sphereAlpha > 0) {
+    const pathT = fade(e, ps(6), PHASES[6].dur);
+    drawPathTrace(pathT, sphereAlpha * 0.9);
+    // Label segments as they appear
+    if (pathT > 0.1) drawLabel('①', SCX - 70, SCY - 100, fade(e,ps(6)+0.5,0.5)*sphereAlpha, '#e74c3c', 14);
+    if (pathT > 0.4) drawLabel('②', SCX + 5,  SCY + 85,  fade(e,ps(6)+2.2,0.5)*sphereAlpha, '#2ecc71', 14);
+    if (pathT > 0.7) drawLabel('③', SCX + 85, SCY - 60,  fade(e,ps(6)+4.0,0.5)*sphereAlpha, '#3498db', 14);
+  }
+
+  // ── 7. SPHERE TRANSPORT ──────────────────────────────────────────
+  if (e > ps(7) && sphereAlpha > 0) {
+    const transT = fade(e, ps(7), PHASES[7].dur);
+    // Keep drawing the full path
+    drawPathTrace(1.0, sphereAlpha * 0.6);
+    // Moving vector
+    const {lat, lon, vx, vy, vz} = pathAt(transT);
+    const pos = latLon(lat, lon);
+    // Dot on path
+    ctx.save();
+    ctx.globalAlpha = sphereAlpha;
+    ctx.fillStyle = '#ffcc44'; ctx.shadowColor = '#ffcc44'; ctx.shadowBlur = 12;
+    ctx.beginPath(); ctx.arc(pos.sx, pos.sy, 7, 0, PI*2); ctx.fill();
+    ctx.restore();
+    // Vector arrow
+    drawVec3D(lat, lon, vx, vy, vz, '#55aaff', sphereAlpha * 0.95);
+    // Ghost of initial vector at north pole (to compare later)
+    const ghostA = fade(e, ps(7)+6.0, 1.5) * sphereAlpha;
+    if (ghostA > 0) {
+      drawVec3D(PI/2, 0, 1, 0, 0, '#ffffff', ghostA * 0.4);
+    }
+  }
+
+  // ── 8. SPHERE ANGLE COMPARISON ───────────────────────────────────
+  if (e > ps(8) && sphereAlpha > 0) {
+    const angAlpha = fade(e, ps(8), 1.2) * sphereAlpha;
+    drawPathTrace(1.0, sphereAlpha * 0.5);
+    // Both vectors at north pole
+    drawVec3D(PI/2, 0, 1, 0, 0, '#ffffff', angAlpha * 0.5);   // ghost: original
+    drawVec3D(PI/2, 0, 0, 0, -1, '#ff6644', angAlpha * 0.95); // final: 90° rotated
+
+    // Arc between them in screen space (approximate)
+    const np  = latLon(PI/2, 0);
+    const t1  = project3D(Math.cos(PI/2)*Math.sin(0)+0.38, Math.sin(PI/2), Math.cos(PI/2)*Math.cos(0));
+    const t2  = project3D(Math.cos(PI/2)*Math.sin(0), Math.sin(PI/2)+0.38, Math.cos(PI/2)*Math.cos(0)-0.38);
+
+    // Draw arc label "90°" midway
+    const arcAngStart = Math.atan2(t1.sy-np.sy, t1.sx-np.sx);
+    const arcAngEnd   = Math.atan2(t2.sy-np.sy, t2.sx-np.sx);
+    const arcR = 35;
+    ctx.save();
+    ctx.globalAlpha = angAlpha;
+    ctx.strokeStyle = '#ffcc44'; ctx.lineWidth = 2;
+    ctx.shadowColor = '#ffcc44'; ctx.shadowBlur = 6;
+    ctx.beginPath();
+    ctx.arc(np.sx, np.sy, arcR, arcAngStart, arcAngEnd, false);
+    ctx.stroke(); ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = angAlpha;
+    ctx.font = 'bold 17px Georgia';
+    ctx.fillStyle = '#ffcc44'; ctx.textAlign = 'center';
+    ctx.fillText('90°', np.sx + 48, np.sy - 42);
+    ctx.restore();
+
+    // Labels
+    drawLabel('original V', np.sx - 90, np.sy - 60, angAlpha * 0.55, '#aaa', 13);
+    drawLabel('transported V', np.sx + 95, np.sy - 15, angAlpha * 0.8, '#ff6644', 13);
+  }
+
+  // ── 9. SPHERE CAPTION ────────────────────────────────────────────
+  if (e > ps(9) && sphereAlpha > 0) {
+    const capA = fade(e, ps(9), 1.0) * sphereAlpha;
+    drawCaption('Holonomy = enclosed curvature  —  spherical excess = 90°', capA);
+  }
+
+  // ── 10 / 11. G₂ INTRO ────────────────────────────────────────────
+  const g2Alpha = fade(e, ps(10), 1.5);
+  if (g2Alpha > 0) {
+    ctx.save();
+    ctx.globalAlpha = g2Alpha * 0.12;
+    ctx.fillStyle = '#0b0b1f';
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+
+    drawTitle('Scene 3 — G₂ Holonomy', g2Alpha);
+    drawFanoMini(fade(e, ps(11), 1.5) * g2Alpha);
+
+    // Annotation text
+    const annotA = fade(e, ps(11)+1.0, 1.0) * g2Alpha;
+    drawLabel('G₂ ⊂ SO(7)  —  14 generators', CX, CY - G2_R - 48, annotA, '#9b59b6', 17);
+    drawLabel('G₂ is the automorphism group of the octonions', CX, CY + G2_R + 50, annotA * 0.85, '#aaa', 15);
+    drawLabel('It preserves this structure:', CX, CY + G2_R + 30, annotA * 0.75, '#aaa', 13);
+
+    // Pulsing highlight on Fano
+    const pulse = fade(e, ps(11)+2.5, 1.0) * g2Alpha;
+    if (pulse > 0) {
+      const flash = (Math.sin((e - ps(11) - 2.5) * PI * 3) * 0.5 + 0.5) * pulse;
+      for (let i = 0; i < 7; i++) {
+        const p = g2Pt(i);
+        ctx.save();
+        ctx.globalAlpha = flash * 0.6;
+        ctx.fillStyle = '#ffffff'; ctx.shadowColor = '#ffffff'; ctx.shadowBlur = 14;
+        ctx.beginPath(); ctx.arc(p.x, p.y, 10, 0, PI*2); ctx.fill();
+        ctx.restore();
+      }
+    }
+  }
+
+  // ── 12. G₂ FINAL CAPTION ─────────────────────────────────────────
+  if (e > ps(12)) {
+    const capA = eio(fade(e, ps(12), 1.5)) * g2Alpha;
+    drawCaption('"G₂ holonomy is why octonions appear in the geometry of the space itself."', capA, H-55, 18);
+    const sub = fade(e, ps(12)+1.5, 1.5) * g2Alpha;
+    drawCaption('The returned vector is acted on by an element of G₂, not a generic SO(7) rotation.', sub*0.7, H-28, 13);
+  }
+
+  if (!paused && elapsed < totalDur) {
+    animId = requestAnimationFrame(render);
+  } else if (elapsed >= totalDur) {
+    paused = true;
+    document.getElementById('btnPlay').textContent = '▶ Play';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════════
+document.getElementById('btnPlay').addEventListener('click', () => {
+  if (paused) {
+    if (elapsed >= totalDur) elapsed = 0;
+    paused = false;
+    document.getElementById('btnPlay').textContent = '⏸ Pause';
+    lastTS  = null;
+    animId  = requestAnimationFrame(render);
+  } else {
+    paused = true;
+    document.getElementById('btnPlay').textContent = '▶ Play';
+  }
+});
+document.getElementById('btnRestart').addEventListener('click', () => {
+  elapsed = 0; paused = false; lastTS = null;
+  document.getElementById('btnPlay').textContent = '⏸ Pause';
+  if (animId) cancelAnimationFrame(animId);
+  animId = requestAnimationFrame(render);
+});
+
+// Initial frame
+requestAnimationFrame(render);
+</script>
+</body>
+</html>
