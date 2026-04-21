@@ -529,26 +529,23 @@ The other three claims sit outside the current proof reach of the framework. The
 
 ## For Further Reading
 
-- `1 - master framework.md` — taxonomy of all claims and their logical status
-- `2a - statics.md` — detailed static representation structure
-- `2b - dynamics.md` — reduced dynamics and scaling laws
-- `2c - epistemics.md` — observability, projection, hidden-sector meaning
-- `2e - interpretation.md` — mass, uncertainty, chirality as interpretive readings
-- `2g - open problems.md` — what the framework still owes
-- `0c - parent inquiry map.md` — ranked plausibility of current directions
+- `core/master-framework.md` - taxonomy of all claims and their logical status
+- `kernels/statics.md` - detailed static representation structure
+- `kernels/dynamics.md` - reduced dynamics and scaling laws
+- `kernels/epistemics.md` - observability, projection, hidden-sector meaning
+- `kernels/interpretation.md` - mass, uncertainty, chirality as interpretive readings
+- `kernels/open-problems.md` - what the framework still owes
+- `core/parent-inquiry-map.md` - ranked plausibility of current directions
+- `research/faddeev-efimov/` - conjectural Efimov/Faddeev bridge track
 
-## Appendix: Efimov Realization via Collective Eigenvalue Flow at SO(2,1) Thresholds
+## Appendix: Efimov Bridge Status
 
-The threshold linearization \(\dot{R} \approx \varepsilon R\) (near persistence/locking boundaries) generates an SO(2,1) conformal structure. The Casimir of this SO(2,1) subgroup yields an effective inverse-square potential in the radial variable. When the associated eigenvalue \(\lambda\) satisfies \(\lambda < -1/4\) (supercritical regime), discrete scaling emerges.
+The threshold linearization near persistence/locking boundaries suggests an SO(2,1)-type conformal structure. Efimov physics supplies a concrete three-body system in which an SO(2,1)-controlled inverse-square problem produces discrete scaling.
 
-The Efimov effect supplies the microscopic mechanism realizing this for three-body states:
+The safe claim is therefore structural:
 
-- Three simultaneous near-boundary transport states (the three-body analogue of transport-class combinations) decompose via Faddeev channels into a symmetric collective mode.
-- The collective eigenvalue of the 3×3 channel-coupling matrix (derived from Bethe–Peierls conditions at unitarity) is exactly \(\lambda_{\rm sym} = -s_0^2 - 1/4\) with \(s_0 \approx 1.00624\).
-- Langer reduction converts the hyperradial operator into the inverse-square form whose strength matches the SO(2,1) Casimir in the supercritical window, producing the geometric tower \(E_{n+1}/E_n = e^{-2\pi/s_0} \approx 1/515\).
+- the Spin(2,3) transport framework has a plausible threshold scaling sector;
+- the Efimov/Faddeev derivation is a useful quantitative comparison target;
+- the proposed Casimir/Faddeev identification remains an open conjecture until the Spin-derived operator, channel embedding, normalization, and `s_0` calculation are explicit.
 
-**Unifying language:** Define the deviation \(\Delta(\rho) \equiv \lambda_{\rm coll}(\rho) + 1/4\). Efimov universality appears when \(\Delta(\rho) \to -s_0^2\) (constant negative offset). This maps the abstract threshold tuning parameter \(\omega/\kappa_u\) directly onto the unitary limit \(a\to\infty\).
-
-This closes the speculative bridge flagged earlier in the main text. The eigenvalue-flow classification (see linked files in efimov/) turns the prediction into a concrete three-body realization. No external Efimov input is required beyond the channel algebra; the scaling follows from Spin(2,3) representation structure at the boundary.
-
-**Immediate implication:** Three-body states near simultaneous persistence/locking inherit discrete scale invariance from the surviving SO(2,1) Casimir. Finite T1/T2 mixing introduces range corrections that shift but do not destroy the tower (new universality class?).
+The live bridge work has been moved to `research/faddeev-efimov/`. It should not be read as established framework content unless the gates in `research/faddeev-efimov/proof-obligations.md` are completed or explicitly marked as partially complete with stated limits.
