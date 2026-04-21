@@ -321,7 +321,7 @@ $$
 Equivalently, using the spectral projector,
 
 $$
-B_i(\theta)=\operatorname{tr}\left(\Pi_{\partial}P_i(\theta)\right).
+B_i(\theta)=\mathrm{tr}\left(\Pi_{\partial}P_i(\theta)\right).
 $$
 
 Interpretation:
@@ -378,7 +378,7 @@ $$
 6. If a bulk-boundary split is present, compute
 
 $$
-B_i(\theta)=\operatorname{tr}\left(\Pi_{\partial}P_i(\theta)\right).
+B_i(\theta)=\mathrm{tr}\left(\Pi_{\partial}P_i(\theta)\right).
 $$
 
 7. Identify regions where the gap is small and the modes or boundary weights
