@@ -132,10 +132,10 @@ The second point is the deeper one. A small gap makes modal identity unstable.
 ## 5. Three Main Regimes
 
 | Regime | Condition | Meaning |
-|---|---|---|
-| Detuning-dominated | $|\Delta|\gg |b|$ | Modes stay close to the original basis directions |
-| Mixing-dominated | $|b|\gg |\Delta|$ | Modes are strongly hybridized |
-| Mixed/transition region | $|\Delta|\sim |b|$, with a small gap on the relevant scale | Neither effect dominates; modes can reorganize rapidly |
+| --- | --- | --- |
+| Detuning-dominated | $\lvert\Delta\rvert \gg \lvert b\rvert$ | Modes stay close to the original basis directions |
+| Mixing-dominated | $\lvert b\rvert \gg \lvert\Delta\rvert$ | Modes are strongly hybridized |
+| Mixed/transition region | $\lvert\Delta\rvert \sim \lvert b\rvert$, with a small gap on the relevant scale | Neither effect dominates; modes can reorganize rapidly |
 
 There is also an exact degeneracy when
 
@@ -173,7 +173,7 @@ $$
 
 This formula makes the transition visible.
 
-When $|\Delta|$ is large compared with $|b|$, the angle changes slowly and
+When $\lvert\Delta\rvert$ is large compared with $\lvert b\rvert$, the angle changes slowly and
 the mode stays near a basis direction. When the gap is small, the same
 parameter change can produce a much larger rotation of $\psi$.
 
@@ -354,7 +354,7 @@ small-gap sensitivity. Near a transition, boundary weight can change rapidly.
 ## 12. Types of Transition
 
 | Type | Description |
-|---|---|
+| --- | --- |
 | Spectral transition | Eigenvalues approach or reorder |
 | Geometric transition | Eigenvectors or projectors rotate rapidly |
 | Mixing transition | A mode changes from localized to hybridized |
@@ -378,7 +378,7 @@ $$
 g_i(\theta)
 =
 \min_{j\ne i}
-|\lambda_i(\theta)-\lambda_j(\theta)|.
+\lvert\lambda_i(\theta)-\lambda_j(\theta)\rvert.
 $$
 
 5. Measure eigenvector or projector sensitivity:
