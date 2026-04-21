@@ -30,9 +30,7 @@ A parameter value $\theta$ chooses a matrix $K(\theta)$.
 For each value of $\theta$, we solve the eigenvalue problem
 
 $$
-K(\theta)\psi_i(\theta)
-=
-\lambda_i(\theta)\psi_i(\theta).
+K(\theta)\psi_i(\theta)=\lambda_i(\theta)\psi_i(\theta).
 $$
 
 Here:
@@ -88,8 +86,7 @@ $$
 The eigenvalues are
 
 $$
-\lambda_\pm(\theta)
-=
+\lambda_\pm(\theta)=
 \frac{a_1+a_2}{2}
 \pm
 \sqrt{\left(\frac{\Delta}{2}\right)^2+b^2}.
@@ -110,10 +107,8 @@ larger system locally behaves like this two-mode model.
 The gap between the two eigenvalues is
 
 $$
-\Delta_\lambda(\theta)
-=
-\lambda_+(\theta)-\lambda_-(\theta)
-=
+\Delta_\lambda(\theta)=
+\lambda_+(\theta)-\lambda_-(\theta)=
 2\sqrt{\left(\frac{\Delta}{2}\right)^2+b^2}.
 $$
 
@@ -184,8 +179,7 @@ parameter change can produce a much larger rotation of $\psi$.
 A basic sensitivity measure is
 
 $$
-S(\theta)
-=
+S(\theta)=
 \left\|
 \frac{\partial\psi}{\partial\theta}
 \right\|.
@@ -194,8 +188,7 @@ $$
 In general perturbation theory, for an isolated eigenvalue,
 
 $$
-\frac{\partial \psi_i}{\partial \theta_\alpha}
-=
+\frac{\partial \psi_i}{\partial \theta_\alpha}=
 \sum_{j\ne i}
 \frac{
 \left\langle
@@ -237,9 +230,7 @@ direction.
 To remove this ambiguity, use the rank-one spectral projector
 
 $$
-P_i(\theta)
-=
-\psi_i(\theta)\psi_i(\theta)^\top.
+P_i(\theta)=\psi_i(\theta)\psi_i(\theta)^\top.
 $$
 
 The projector tracks the eigendirection rather than a signed vector.
@@ -269,18 +260,15 @@ or unstable in parameter space.
 A simple basis-dependent measure of concentration is
 
 $$
-\mathcal I(\theta)
-=
+\mathcal I(\theta)=
 \sum_{\ell=1}^n |\psi_\ell(\theta)|^4.
 $$
 
 In the two-mode case,
 
 $$
-\mathcal I
-=
-\cos^4\phi+\sin^4\phi
-=
+\mathcal I=
+\cos^4\phi+\sin^4\phi=
 \frac12+\frac12\cos^2(2\phi).
 $$
 
@@ -316,8 +304,7 @@ projector motion describes what changes geometrically.
 Suppose the state space splits into a bulk part and a boundary part:
 
 $$
-\mathcal H
-=
+\mathcal H=
 \mathcal H_{\mathrm{bulk}}
 \oplus
 \mathcal H_{\partial}.
@@ -328,17 +315,13 @@ Let $\Pi_{\partial}$ be the orthogonal projector onto the boundary subspace.
 For a mode $\psi_i$, define the boundary weight
 
 $$
-B_i(\theta)
-=
-\|\Pi_{\partial}\psi_i(\theta)\|^2.
+B_i(\theta)=\|\Pi_{\partial}\psi_i(\theta)\|^2.
 $$
 
 Equivalently, using the spectral projector,
 
 $$
-B_i(\theta)
-=
-\operatorname{tr}\left(\Pi_{\partial}P_i(\theta)\right).
+B_i(\theta)=\operatorname{tr}\left(\Pi_{\partial}P_i(\theta)\right).
 $$
 
 Interpretation:
@@ -375,8 +358,7 @@ To analyze a concrete model:
 4. Track the relevant spectral gap:
 
 $$
-g_i(\theta)
-=
+g_i(\theta)=
 \min_{j\ne i}
 \lvert\lambda_i(\theta)-\lambda_j(\theta)\rvert.
 $$
@@ -396,9 +378,7 @@ $$
 6. If a bulk-boundary split is present, compute
 
 $$
-B_i(\theta)
-=
-\operatorname{tr}\left(\Pi_{\partial}P_i(\theta)\right).
+B_i(\theta)=\operatorname{tr}\left(\Pi_{\partial}P_i(\theta)\right).
 $$
 
 7. Identify regions where the gap is small and the modes or boundary weights
