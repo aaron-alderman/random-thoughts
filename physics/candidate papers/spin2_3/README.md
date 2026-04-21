@@ -4,9 +4,9 @@ This repository is the working corpus for the Spin(2,3) research programme. The 
 
 ## How To Read This Repo
 
-- Start with `core/master-framework.md` for the project spine and claim taxonomy.
+- Start with `core/README.md`, then `core/master-framework.md` for the project spine and claim taxonomy.
 - Use `core/spin23-compendium.md` as the current broad map.
-- Use `kernels/` for domain-specific working documents.
+- Use `kernels/README.md` for the domain-specific working documents.
 - Use `CLAIM_LEDGER.md` to check whether a statement is established, conditional, conjectural, speculative, or retired.
 - Use `ROADMAP.md` for the current order of work.
 
@@ -16,6 +16,7 @@ This repository is the working corpus for the Spin(2,3) research programme. The 
 | --- | --- |
 | `core/` | Core Spin(2,3) framework and parent-reduction scaffolding |
 | `kernels/` | Statics, dynamics, epistemics, consistency, interpretation, phenomenology, topology, and open problems |
+| `research/` | Research-track index and non-core tool/bridge work |
 | `research/spectral-transition/` | General spectral-gap and projector-geometry toolkit |
 | `research/faddeev-efimov/` | Conjectural Faddeev/Casimir/Efimov bridge track |
 | `papers/` | Draft paper artifacts and supporting scripts |
@@ -24,3 +25,12 @@ This repository is the working corpus for the Spin(2,3) research programme. The 
 ## Governance Rule
 
 Research tracks may suggest new core claims, but they must pass through `CLAIM_LEDGER.md` before they are treated as part of the framework.
+
+## Stability Checks
+
+Before treating the corpus as stable after a reorg:
+
+- scan for old flat-corpus filenames and absolute local paths;
+- scan for retired bridge-overclaim phrases;
+- scan `core/` for Efimov references and confirm they mark the bridge as conjectural/open;
+- check backticked `.md` references resolve either relative to their file or from the repo root.

@@ -499,7 +499,7 @@ J^{01}_{\mathrm{eff}}
 \end{pmatrix},
 $$
 
-up to the project sign convention already used in `2a - statics.md`.
+up to the project sign convention already used in `kernels/statics.md`.
 
 This gives the reduced identification
 
@@ -2173,26 +2173,26 @@ This order matters because the project should not try to justify `T1` before it 
 
 ## Interfaces to current files
 
-### From [0c - parent inquiry map.md]
+### From `core/parent-inquiry-map.md`
 
 - use `u^\perp \cong \mathbf{C}^3` as the parent anchor
 - treat the local quaternionic slice as the best current carrier of hidden complex-plane data
 
-### From [1 - master framework.md]
+### From `core/master-framework.md`
 
 - keep the ambient-to-observable reduction as the named bridge object
 - preserve the distinction between ambient, effective, and observable levels
 
-### From [2a - statics.md]
+### From `kernels/statics.md`
 
 - treat the current folding picture as a working proposal, not a theorem
 - use the `T1/T2` split and `J^{01}` grading as reduced outputs, not unexplained inputs
 
-### To [2b - dynamics.md]
+### To `kernels/dynamics.md`
 
 - once `R1-R3` are sharper, the bulk origin of the two-branch variables can be attacked in a less ad hoc way
 
-### To [2c - epistemics.md]
+### To `kernels/epistemics.md`
 
 - `R4` is where the observational rule should be tied back to reduction rather than floating independently
 

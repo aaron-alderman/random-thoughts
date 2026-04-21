@@ -51,5 +51,5 @@ Allowed statuses:
 
 | Claim | Status | Notes |
 | --- | --- | --- |
-| The Faddeev/Casimir bridge is already a theorem | retired | Replaced by the conjectural bridge track and proof-obligation gate. |
+| The Faddeev/Casimir bridge has theorem-level status | retired | Replaced by the conjectural bridge track and proof-obligation gate. |
 | The Efimov bridge is closed at matrix level | retired | Requires explicit Spin-derived operator and normalization match. |

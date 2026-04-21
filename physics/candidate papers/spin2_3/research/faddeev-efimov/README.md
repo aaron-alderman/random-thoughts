@@ -16,4 +16,4 @@ The bridge is a quantitative test target, not established framework content. The
 
 > Spin(2,3) threshold dynamics suggests an SO(2,1) scaling sector; Efimov physics supplies a concrete three-body SO(2,1)-controlled system that may realize this structure.
 
-The unsafe version, now retired, is that the bridge is already a theorem.
+The unsafe theorem-level version is retired.

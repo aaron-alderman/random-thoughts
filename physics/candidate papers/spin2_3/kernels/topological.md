@@ -11,7 +11,7 @@ It is not a paper draft. It is the place where the connection between the Spin(2
 - what the mass transition looks like from a topological perspective
 - what the connection to the tenfold way does and does not establish
 
-This file synthesizes structure from statics (the J^{01} grading and Clifford algebra) and dynamics (the mass transition) and holds them together in topological language. Neither 2a nor 2b is the right home for this synthesis — statics does not speak about dynamical transitions, and dynamics does not develop Clifford algebra representation theory.
+This file synthesizes structure from statics (the J^{01} grading and Clifford algebra) and dynamics (the mass transition) and holds them together in topological language. Neither `kernels/statics.md` nor `kernels/dynamics.md` is the right home for this synthesis: statics does not speak about dynamical transitions, and dynamics does not develop Clifford algebra representation theory.
 
 ---
 
@@ -28,16 +28,16 @@ This file covers:
 
 This file does not cover:
 
-- the derivation of the T1/T2 sector split (that belongs to statics, 2a)
-- the dynamics of mass generation (that belongs to dynamics, 2b)
+- the derivation of the T1/T2 sector split (that belongs to `kernels/statics.md`)
+- the dynamics of mass generation (that belongs to `kernels/dynamics.md`)
 - quantitative predictions for specific material systems
-- anomaly-cancellation constraints (those belong to consistency, 2d)
+- anomaly-cancellation constraints (those belong to `kernels/consistency.md`)
 
 ---
 
 ## Domain inputs
 
-### From statics (2a)
+### From `kernels/statics.md`
 
 1. The four-component spinor representation of Spin(2,3) with metric η = diag(−1,−1,+1,+1,+1).
 2. The explicit gamma matrices:
@@ -52,7 +52,7 @@ $$
 $$
 3. The T1/T2 decomposition via J^{01} = −½ diag(+1,+1,−1,−1).
 
-### From dynamics (2b)
+### From `kernels/dynamics.md`
 
 4. The mass parameter `m` as the T1/T2 mixing strength.
 5. The principle that pure T1 propagation is massless and T1/T2 mixing produces massive structure.
@@ -240,8 +240,8 @@ The relationship to Σ: the J^{01} grading can be understood as the generator of
 | massive limit is class D (T₀²=−1, C²=+1, Σ broken) | derived consequence | 4 | DIII → D when mass breaks chiral symmetry |
 | W₃ = 1 implies exactly one topologically protected massless T1 mode at the m=0 transition surface | derived from DIII d=3 bulk-boundary correspondence | 3–4 | the T1/T2 transition is the natural "boundary"; mode is protected against any perturbation preserving T₀ and C |
 | the sign of W₃ correlates with the sign of κ_u: W₃ = +1 selects the constructive (κ_u > 0) transport branch | concrete candidate, calculation pending | 4 | u ↦ −u flips both κ_u and W₃; if confirmed, the orientation axiom follows from the DIII sign rather than from a readout convention |
-| the DIII bulk topological term produces a T₀ anomaly inflow that cancels the boundary T₀ anomaly of the massless T1 sector | structural bridge candidate | 4 | standard DIII anomaly inflow mechanism; coefficient matching with 2d gauge anomaly conditions has not been done |
-| the DIII anomaly inflow condition and the matter-content anomaly cancellation (2d) are the same constraint | bridge conjecture | 4–5 | requires explicit matching of T₀ anomaly coefficient from the DIII bulk with the gauge anomaly coefficient from the T1-sector representation; specific calculation identified |
+| the DIII bulk topological term produces a T₀ anomaly inflow that cancels the boundary T₀ anomaly of the massless T1 sector | structural bridge candidate | 4 | standard DIII anomaly inflow mechanism; coefficient matching with `kernels/consistency.md` gauge anomaly conditions has not been done |
+| the DIII anomaly inflow condition and the matter-content anomaly cancellation are the same constraint | bridge conjecture | 4–5 | requires explicit matching of T₀ anomaly coefficient from the DIII bulk with the gauge anomaly coefficient from the T1-sector representation; specific calculation identified |
 | quantized topological response coefficient W₃ probes the DIII invariant | observable candidate | 4 | the most concrete measurable: a W₃-quantized response to external fields coupled to the T1-sector U(1) charge |
 
 ---
@@ -334,9 +334,9 @@ where `\Theta` is the topological term built from gauge field `A` and metric `g`
 
 **The boundary anomaly.** The massless T1-sector boundary theory (at m = 0) carries a T₀ anomaly of precisely the right magnitude to cancel the bulk shift. This is anomaly inflow: the bulk topological term "flows into" the boundary to make the total theory T₀-invariant.
 
-**The matter-content bridge.** The consistency domain (2d) requires the T1-sector matter content to be anomaly free from the gauge-theory side. The relevant anomaly conditions constrain which additional right-handed states are needed. The bridge conjecture is:
+**The matter-content bridge.** The consistency domain requires the T1-sector matter content to be anomaly free from the gauge-theory side. The relevant anomaly conditions constrain which additional right-handed states are needed. The bridge conjecture is:
 
-> The DIII anomaly inflow condition (from 2h) and the matter-content anomaly cancellation (from 2d) are the same constraint expressed in different languages:
+> The DIII anomaly inflow condition and the matter-content anomaly cancellation are the same constraint expressed in different languages:
 > - Topological language: the T1-sector boundary T₀ anomaly must be cancelled by the bulk DIII term
 > - Gauge-theory language: the T1-sector gauge anomaly must be cancelled by additional matter content
 
@@ -345,7 +345,7 @@ If this holds, then the spectrum forced by anomaly cancellation (from the partic
 **What must be checked.** The bridge requires one explicit matching:
 
 - Compute the T₀ anomaly coefficient of the massless T1-sector boundary theory (a number fixed by the DIII bulk data and the T1-sector representation)
-- Compute the gauge anomaly coefficient of the T1-sector matter content (from the charge assignment in 2a/2d)
+- Compute the gauge anomaly coefficient of the T1-sector matter content (from `kernels/statics.md` and `kernels/consistency.md`)
 - Check that they agree, up to the contribution of the inflow term
 
 If they agree, the two analyses are the same constraint. If not, the two analyses impose independent conditions, and the bridge fails in its strongest form.
@@ -358,27 +358,27 @@ If they agree, the two analyses are the same constraint. If not, the two analyse
 
 ## Interfaces to other domains
 
-### From statics (2a)
+### From `kernels/statics.md`
 
 - the J^{01} sector split and the Σ grading
 - the explicit gamma matrix representation and their reality properties
 - the T1/T2 decomposition as the starting point for the class identification
 
-### From dynamics (2b)
+### From `kernels/dynamics.md`
 
 - the mass parameter m as the chiral-symmetry-breaking coupling
 - the principle that m = 0 is the massless protected limit
 
-### To consistency (2d)
+### To `kernels/consistency.md`
 
 - the extended symmetry structure (DIII + second independent T₀₁²=−1) is an open algebraic consistency question (type C1) — what constraints does two-T structure place on the Hamiltonian space, and is the 16-fold way the correct ambient classification?
-- the connection between topological invariants and anomaly inflow (if it exists) belongs jointly to this domain and 2d
+- the connection between topological invariants and anomaly inflow (if it exists) belongs jointly to this domain and `kernels/consistency.md`
 
-### To interpretation (2e)
+### To `kernels/interpretation.md`
 
 - mass as the order parameter of a chiral symmetry-breaking topological transition is an interpretive reading that should be reported there as a strengthening of the "mass as sector mixing" interpretation
 
-### To open problems (2g)
+### To `kernels/open-problems.md`
 
 - T1, T2, T3, T4 above should be added to the open-problem ledger
 

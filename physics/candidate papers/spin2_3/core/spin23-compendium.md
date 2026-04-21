@@ -8,13 +8,13 @@
 
 This document is an entry point for the Spin(2,3) research program.
 
-It does not replace the detailed kernel files (`1 - master framework`, `2a` through `2g`). It is meant to answer three questions before a reader enters those files:
+It does not replace the detailed framework and kernel files in `core/` and `kernels/`. It is meant to answer three questions before a reader enters those files:
 
 1. What is Spin(2,3) and where does it come from?
 2. Which domains of physics does this framework genuinely speak to?
 3. Which domains does it not yet address — and why is naming those boundaries useful?
 
-The adjacent background document (`symmetry/0 - overview.md`) covers the full arc of physics from atomic structure to holography, organized around the thread that symmetry breaking creates quantization, boundaries have enhanced symmetry, and coherence is the fundamental quantity. This compendium sits alongside that atlas and asks a different question: where, looking back across that same territory, does the Spin(2,3) lens produce genuine insight rather than force-fitting?
+The adjacent background atlas covers the full arc of physics from atomic structure to holography, organized around the thread that symmetry breaking creates quantization, boundaries have enhanced symmetry, and coherence is the fundamental quantity. This compendium sits alongside that atlas and asks a different question: where, looking back across that same territory, does the Spin(2,3) lens produce genuine insight rather than force-fitting?
 
 ---
 
@@ -132,7 +132,7 @@ This gives a KK-like mechanism for particle classification that is representatio
 
 Under phase locking, the transport-coherence invariant $\mathcal{I}(s+T) = e^{u\Theta}\mathcal{I}(s)$ gives integer spin for $\Theta = 2\pi$ and half-integer spin for $\Theta = \pi$. Spin is the winding number of the conjugate branch pair around the transport axis.
 
-The metaplectic representations of $\mathrm{Sp}(4,\mathbb{R})$ are natural homes for the two-branch amplitude structure — they are built from pairs. This suggests the framework may be most naturally expressed as a metaplectic quantization of null transport, with the octonionic bulk providing the non-associative deformation of the symplectic structure (see `3- overflow.md`).
+The metaplectic representations of $\mathrm{Sp}(4,\mathbb{R})$ are natural homes for the two-branch amplitude structure — they are built from pairs. This suggests the framework may be most naturally expressed as a metaplectic quantization of null transport, with the octonionic bulk providing the non-associative deformation of the symplectic structure (see `archive/overflow.md`).
 
 | Claim | Status | Maturity |
 |---|---|---|
@@ -189,7 +189,7 @@ The octonionic remainder after fixing the time direction:
 $$
 u^\perp \cong \mathbf{C}^3
 $$
-is a six-dimensional space that carries color structure, hidden wandering geometry, and the candidate for generation structure. This is the current strongest convergence point in the parent inquiry (see `0c - parent inquiry map.md`).
+is a six-dimensional space that carries color structure, hidden wandering geometry, and the candidate for generation structure. This is the current strongest convergence point in the parent inquiry (see `core/parent-inquiry-map.md`).
 
 | Claim | Status | Maturity |
 |---|---|---|
@@ -258,7 +258,7 @@ The open step is making this access ladder dynamically forced rather than merely
 
 ### Forced Classification of Transport States
 
-The two-branch amplitude framework, operating at the level of conjugate bracket completions of octonionic products, derives a forced partition of the phase space $(\rho, \Phi)$ into four disjoint transport classes (Constructive, Inverted, Frustrated, Dephased) purely from the geometry of two boundaries: the locking boundary and the persistence boundary. The classification is not assumed — it is forced by the dynamics once the signed transport coupling $\kappa_u$ and the loss rate $\gamma$ are given. Particle-like states must satisfy both the locking condition $|\omega| \leq |\kappa_u|\cosh(2\rho)$ and the persistence condition $\kappa_u\cosh(2\rho)\cos\Phi > \gamma$. See `2b - dynamics.md` for the full derivation.
+The two-branch amplitude framework, operating at the level of conjugate bracket completions of octonionic products, derives a forced partition of the phase space $(\rho, \Phi)$ into four disjoint transport classes (Constructive, Inverted, Frustrated, Dephased) purely from the geometry of two boundaries: the locking boundary and the persistence boundary. The classification is not assumed — it is forced by the dynamics once the signed transport coupling $\kappa_u$ and the loss rate $\gamma$ are given. Particle-like states must satisfy both the locking condition $|\omega| \leq |\kappa_u|\cosh(2\rho)$ and the persistence condition $\kappa_u\cosh(2\rho)\cos\Phi > \gamma$. See `kernels/dynamics.md` for the full derivation.
 
 | Claim | Status | Maturity |
 |---|---|---|
@@ -372,7 +372,7 @@ The Spin(2,3) mass generation mechanism — `T1/T2` mixing — is structurally i
 
 #### Natural discrete symmetries and the full class structure
 
-The explicit gamma matrices (from `2a - statics.md`) have definite reality properties:
+The explicit gamma matrices (from `kernels/statics.md`) have definite reality properties:
 $$
 (\gamma^\mu)^* = \begin{cases}
 +\gamma^\mu & \mu = 0, 2, 4 \quad (\text{real gammas}) \\
@@ -436,7 +436,7 @@ A qualitative feature with no Spin(1,3) analogue: Spin(2,3) has **two** time-lik
 
 The cleanest conclusion at present: the T1/T2 splitting in Spin(2,3) gives the chiral grading `Σ = 2J^{01}`. At the refined anti-unitary level, the massless sector is DIII and the massive sector is D. The older AIII/A reading is still the correct chiral-only shadow, but it is no longer the sharpest statement.
 
-The full domain analysis — including the `T_0`, `T_{01}`, and `C` computation, the resolved `S^2 = -1` issue, the DIII winding computation, the Weyl semimetal correspondence, and the remaining open obligations — lives in `2h - topological.md`.
+The full domain analysis — including the `T_0`, `T_{01}`, and `C` computation, the resolved `S^2 = -1` issue, the DIII winding computation, the Weyl semimetal correspondence, and the remaining open obligations — lives in `kernels/topological.md`.
 
 ---
 
@@ -462,7 +462,7 @@ The full domain analysis — including the `T_0`, `T_{01}`, and `C` computation,
 
 ## §4 — Where the Framework Currently Has Little or Nothing to Say
 
-Naming the boundaries of a framework is as important as naming its content. The following domains from the broad physics atlas (`0 - background.md`) are mostly not addressed by the Spin(2,3) program at present, except where a narrow structural bridge has been noted. No broad claim is being forced onto them.
+Naming the boundaries of a framework is as important as naming its content. The following domains from the broad physics atlas are mostly not addressed by the Spin(2,3) program at present, except where a narrow structural bridge has been noted. No broad claim is being forced onto them.
 
 | Domain | Status |
 |---|---|
@@ -471,7 +471,7 @@ Naming the boundaries of a framework is as important as naming its content. The 
 | Nuclear structure beyond isospin embedding | not addressed |
 | Chemical bonding and molecular physics | not addressed |
 | Condensed matter: phonons, band structure, superconductivity | not addressed |
-| Topological insulators and Weyl semimetals | structural connection established (class AIII); see `2h - topological.md` |
+| Topological insulators and Weyl semimetals | structural connection established (class AIII); see `kernels/topological.md` |
 | Photochemistry, biology, chemistry bridge | not addressed |
 | Renormalization group and fixed points | not addressed in the current framework |
 | Goldstone bosons in specific models | not addressed |

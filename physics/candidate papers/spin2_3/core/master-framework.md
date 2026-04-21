@@ -26,7 +26,7 @@ Start from `Spin(2,3)`, the octonions, and `J3(O)`; select the octonionic direct
 
 Parent exploratory note:
 
-- the current strongest parent branch now sits one level above this reduced spine and treats a selected imaginary octonionic direction `u` as the effective time anchor, with `u^\perp \cong \mathbf{C}^3` as the main hidden geometric remainder and a local quaternionic `H` slice as the carrier of the relevant hidden complex plane; the earlier `Spin(3,3)` lift is now read as a transitional calculation that revealed this fold rather than as a live parent branch; see [0c - parent inquiry map.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/0c%20-%20parent%20inquiry%20map.md)
+- the current strongest parent branch now sits one level above this reduced spine and treats a selected imaginary octonionic direction `u` as the effective time anchor, with `u^\perp \cong \mathbf{C}^3` as the main hidden geometric remainder and a local quaternionic `H` slice as the carrier of the relevant hidden complex plane; the earlier `Spin(3,3)` lift is now read as a transitional calculation that revealed this fold rather than as a live parent branch; see `core/parent-inquiry-map.md`
 
 ---
 
@@ -61,7 +61,7 @@ This matters especially in cases like:
 
 ## NS Programme cross-reference
 
-A parallel programme in NS regularity via J3(O) has been independently developed and its structural overlaps with this framework are recorded in `ns_to_spin23_integration.md`. The transfer summary:
+A parallel programme in NS regularity via J3(O) has been independently developed. Its structural overlaps with this framework are treated as external context rather than live Spin(2,3) corpus material. The transfer summary:
 
 - The NS programme has constructed an explicit full-rank embedding of local fluid variables into J3(H) and lifted it to J3(O) via 12 bilocal vorticity correlations, closing the dimensional count 15+12=27 exactly (maturity 3–4). This bears on the J3(O) vs J3(C⊗O) choice.
 - G2 transitivity on S⁶ is proved, and the BKM blow-up rescaling group selects the vorticity direction ξ̂ as its unique fixed point (maturity 3). This provides a structural template for how the preferred octonionic direction might be forced rather than chosen.
@@ -405,10 +405,10 @@ This is the layer of what the framework still owes.
 
 Different papers should stop at different layers:
 
-- `1 - PLA.md`: mostly Dynamics plus Epistemics
-- `2 - JMP.md`: Dynamics plus Consistency
-- `3 - EPJC.md`: Statics plus Consistency
-- `4 - PRD.md`: only after Phenomenology is stronger
+- Paper 1, PLA-style target: mostly Dynamics plus Epistemics
+- Paper 2, JMP-style target: Dynamics plus Consistency
+- Paper 3, EPJC-style target: Statics plus Consistency
+- Paper 4, PRD-style target: only after Phenomenology is stronger
 
 ---
 
