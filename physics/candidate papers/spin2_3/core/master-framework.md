@@ -16,7 +16,7 @@ The goal is to keep separate:
 
 This is the project-facing map.
 
-For the reusable generic version, see [00 - meta framework.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/00%20-%20meta%20framework.md).
+The reusable generic version lives outside this stabilized corpus as the earlier meta-framework note.
 
 ---
 

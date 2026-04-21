@@ -21,6 +21,7 @@ This repository is the working corpus for the Spin(2,3) research programme. The 
 | `research/faddeev-efimov/` | Conjectural Faddeev/Casimir/Efimov bridge track |
 | `papers/` | Draft paper artifacts and supporting scripts |
 | `archive/` | Snapshots, overflow, and non-live synthesis material |
+| `checks/` | Corpus maintenance checks |
 
 ## Governance Rule
 
@@ -28,9 +29,10 @@ Research tracks may suggest new core claims, but they must pass through `CLAIM_L
 
 ## Stability Checks
 
-Before treating the corpus as stable after a reorg:
+Before treating the corpus as stable after a reorg, run:
 
-- scan for old flat-corpus filenames and absolute local paths;
-- scan for retired bridge-overclaim phrases;
-- scan `core/` for Efimov references and confirm they mark the bridge as conjectural/open;
-- check backticked `.md` references resolve either relative to their file or from the repo root.
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\checks\check-corpus.ps1
+```
+
+The check scans for stale flat-corpus references, retired bridge-overclaim phrases, broken backticked markdown references, and core Efimov references that are not marked as conjectural/open.

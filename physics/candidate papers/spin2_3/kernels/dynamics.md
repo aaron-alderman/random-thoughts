@@ -62,7 +62,7 @@ The dynamical layer adds the question:
 
 - what happens if evolution takes place in the full space, but observables are extracted only after projection?
 
-The current dynamics kernel should now be read against the working reduction kernel in [0d - ambient reduction scaffold.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\candidate papers\spin2_3\0d - ambient reduction scaffold.md). In that reduced reading:
+The current dynamics kernel should now be read against the working reduction kernel in `core/ambient-reduction-scaffold.md`. In that reduced reading:
 
 - `T1/T2` is the effective image of a hidden phase-charge split on a local complex line
 - the quaternionic slice is local reduction geometry, not a new dynamical interaction sector by default
