@@ -4,10 +4,10 @@ Research tracks explore questions that are not yet part of the core framework.
 
 ## Tracks
 
-| Track | Status | Role |
+| Track | Claim level | Role |
 | --- | --- | --- |
-| `spectral-transition/` | general tool | Parametrized operators, spectral gaps, projector geometry, boundary observables |
-| `faddeev-efimov/` | conjectural bridge | Quantitative test of the Spin(2,3) threshold SO(2,1) idea against Faddeev/Efimov physics |
+| `spectral-transition/` | Level 3 general tool | Parametrized operators, spectral gaps, projector geometry, boundary observables |
+| `faddeev-efimov/` | Level 5 bridge | Quantitative test of the Spin(2,3) threshold SO(2,1) idea against Faddeev/Efimov physics |
 
 ## Claim Level
 

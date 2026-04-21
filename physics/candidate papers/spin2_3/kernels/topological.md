@@ -216,13 +216,13 @@ Spin(2,3) has **two** timelike directions (μ = 0,1) → three distinct time-rev
 
 The relationship to Σ: the J^{01} grading can be understood as the generator of the unitary part of the rotation between the two timelike directions. Σ appears naturally from the asymmetry between T_0 and T_1 — it encodes the difference in how the two partial time reversals act — which is why Σ is present even when neither T_0 nor T_1 is a separate symmetry.
 
-[*Speculative — maturity 5*: the Spin(2,3) representation naturally carries two independent T²=−1 time-reversals (T₀ and T₀₁). Having two independent anti-unitary time-reversal symmetries lies outside the standard tenfold-way assumption of at most one T. The 16-fold way (Freed-Hopkins, or related periodic-table extensions) may be the correct ambient classification. Whether any material system realizes this extended structure — and whether the two T²=−1 operators can be simultaneously preserved by a lattice regularization — is not known.]
+[*Level 5: plausible but future work*: the Spin(2,3) representation naturally carries two independent T²=−1 time-reversals (T₀ and T₀₁). Having two independent anti-unitary time-reversal symmetries lies outside the standard tenfold-way assumption of at most one T. The 16-fold way (Freed-Hopkins, or related periodic-table extensions) may be the correct ambient classification. Whether any material system realizes this extended structure — and whether the two T²=−1 operators can be simultaneously preserved by a lattice regularization — is not known.]
 
 ---
 
 ## Topological claim ledger
 
-| Claim | Status | Maturity | Comment |
+| Claim | Role | Level | Comment |
 |---|---|---|---|
 | Cl(2,3) ≅ M₄(ℂ) | mathematical fact | 3 | via Cl(p+1,q+1) ≅ Cl(p,q) ⊗ M₂(ℝ) |
 | Spin(2,3) representations live in the complex sector (class A or AIII) | direct consequence | 3 | rules out all 8 real classes |
@@ -394,7 +394,7 @@ The topological spine of the project is the following chain:
 4. The m = 0 → m ≠ 0 transition is a topological phase transition (DIII → D) in which the chiral symmetry Σ is broken and a gap opens.
 5. Mass generation in the Spin(2,3) framework and topological gap opening are the same mathematical event.
 
-Steps 1–4 are at maturity 3–4. Step 5, as a full structural identification, is at maturity 4.
+Steps 1–4 are at Level 3–4. Step 5, as a full structural identification, is at Level 4.
 
 The two timelike directions are responsible for both the chiral structure (via T₀) and the second independent T²=−1 symmetry (T₀₁). The S²=−1 issue is resolved: it arose from composing C with T₀₁ (full time reversal, both timelike directions) rather than T₀ (partial, direction 0 only). Both square to −1, but only C·T₀ = Σ.
 

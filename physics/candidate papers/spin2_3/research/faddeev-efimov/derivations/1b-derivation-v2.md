@@ -114,7 +114,7 @@ $$\lambda_\text{sym} = \varepsilon_0 + 2W_0$$
 
 **What is convention-independent and fully derived:**
 
-| Quantity | Status |
+| Quantity | Result |
 |---|---|
 | $K_\text{self} = 0$ at unitarity | ✓ Independently derived from BP condition |
 | The operator $K_\text{cross}$ (STM kernel) | ✓ Independently derived from kinematics |

@@ -161,7 +161,7 @@ If the goal is to build the framework in the most efficient order, the current p
 6. complete the epistemic story around projection
 7. only then push toward mature phenomenology
 
-This priority order matches the current maturity of the project.
+This priority order matches the current level of the project.
 
 ---
 
@@ -202,7 +202,7 @@ The NS/J3(O) regularity programme has identified several structural parallels wi
 
 | Bridge task | Domain | Severity | Comment |
 |---|---|---|---|
-| find a rescaling group in the Spin(2,3) setting for which the preferred octonionic direction is the unique fixed point, analogous to BKM scale-invariance of s* | statics | high | would promote the octonionic alignment claim from maturity 4 to derived |
+| find a rescaling group in the Spin(2,3) setting for which the preferred octonionic direction is the unique fixed point, analogous to BKM scale-invariance of s* | statics | high | would promote the octonionic alignment claim from Level 4 to derived |
 | count the independent gauge-invariant nonlocal observables of the theory and compare to 12 | statics / consistency | medium | decides J3(O) vs J3(C⊗O) from the observable-algebra side |
 | establish that T1-pure propagation is dynamically unstable in the Spin(2,3) setting, or that γ > 0 is forced by the dynamics | dynamics | high | Spin(2,3) analogue of NS Gap A |
 | derive from Spin(2,3) representation theory that the relevant scaling exponents are forced to differ by 1/2 | dynamics / consistency | medium | would independently verify the NS exponent gap |

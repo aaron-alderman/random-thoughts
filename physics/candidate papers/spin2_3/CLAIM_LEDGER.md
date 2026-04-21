@@ -1,6 +1,6 @@
 # Claim Ledger
 
-This file indexes the maturity level of major claims in the Spin(2,3) programme.
+This file indexes the claim level of major claims in the Spin(2,3) programme.
 
 ## Scale
 

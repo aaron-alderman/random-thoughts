@@ -182,7 +182,7 @@ $$\frac{E_{n+1}}{E_n} = e^{-2\pi/s_0} \approx \frac{1}{515}, \qquad \frac{\rho_{
 
 ## Completion Checklist
 
-| Task | Status |
+| Task | Result |
 |---|---|
 | Explicit derivation of cross-channel coupling kernel $K(\alpha,\alpha')$ | ✓ Completed |
 | Construction of the 3×3 matrix $\mathcal{H}_\Omega$ | ✓ Completed |

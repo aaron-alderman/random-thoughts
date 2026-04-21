@@ -7,7 +7,7 @@ This repository contains the working documents for the Spin(2,3) research progra
 - Start with `core/README.md`, then `core/master-framework.md` for the project spine and claim taxonomy.
 - Use `core/spin23-compendium.md` as the current broad map.
 - Use `kernels/README.md` for the domain-specific working documents.
-- Use `CLAIM_LEDGER.md` to check a statement's Level 1-6 maturity.
+- Use `CLAIM_LEDGER.md` to check a statement's Level 1-6 claim level.
 - Use `ROADMAP.md` for the current order of work.
 
 ## Directory Map

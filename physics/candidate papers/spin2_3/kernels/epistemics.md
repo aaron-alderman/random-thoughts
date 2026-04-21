@@ -291,7 +291,7 @@ The second statement is much stronger and is not established by the current fram
 
 ## Epistemic claim ledger
 
-| Claim | Status | Maturity | Comment |
+| Claim | Role | Level | Comment |
 |---|---|---|---|
 | the effective observable channel is determined by zero-mass interaction | central framework proposal | 4 | new epistemic center |
 | observable quantities are evaluated after projection onto `T1` | effective postulate downstream of channel selection | 4 | still central, but not necessarily primitive |

@@ -210,7 +210,7 @@ It should be treated carefully, because it is easy for it to sound like a comple
 
 ## Interpretation claim ledger
 
-| Claim | Status | Maturity | Comment |
+| Claim | Role | Level | Comment |
 |---|---|---|---|
 | `m` can be read as the parameter governing effective departure from ballistic visible transport | interpretation grounded in dynamics | 5 | strong but reasonable |
 | physical mass may be encoded by sector mixing after further identification | interpretation | 5 | central idea, not yet theorem |

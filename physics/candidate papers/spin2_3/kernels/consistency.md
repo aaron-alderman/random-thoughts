@@ -271,7 +271,7 @@ This distinction is essential for honest paper-writing.
 
 ## Consistency claim ledger
 
-| Claim | Status | Maturity | Comment |
+| Claim | Role | Level | Comment |
 |---|---|---|---|
 | the reduced Markovian generator is trace preserving in the Lindblad regime | derived under assumptions | 4 | conditional but strong |
 | the reduced Markovian generator is completely positive in the Lindblad regime | derived under assumptions | 4 | same regime caveat |
@@ -285,13 +285,13 @@ This distinction is essential for honest paper-writing.
 
 ## NS Programme structural corroboration
 
-This section records corroboration of key consistency claims from the NS/J3(O) regularity programme. All bridge identifications are structural proposals (maturity 5). The underlying NS results are at maturity 3–4.
+This section records corroboration of key consistency claims from the NS/J3(O) regularity programme. All bridge identifications are structural proposals (Level 5). The underlying NS results are at Level 3–4.
 
 ---
 
 ### Jordan algebra positivity and reflection positivity
 
-**What the NS programme established (maturity 4):**
+**What the NS programme established (Level 4):**
 
 The NS programme establishes a filtering mechanism via the cubic norm of J3(O):
 
@@ -301,15 +301,15 @@ The NS programme establishes a filtering mechanism via the cubic norm of J3(O):
 - Scaling contradiction: N_lifted ~ (T*−t)^{−7/2} from below vs N_lifted ≤ C(T*−t)^{−3} from the Type I bound; these are incompatible near T* if N_lifted ≥ 0 is dynamically preserved (exponent gap 1/2)
 - C_eff = 0.022 ≪ 1/3 (N=32³, needs N=64³ confirmation): the NS flow is 15× inside the stable Raychaudhuri regime
 
-**What this addresses here (maturity 4):**
+**What this addresses here (Level 4):**
 
 The reduced Markovian generator is claimed to be trace preserving and completely positive in the Lindblad regime. This positivity claim is conditional on the Markovian reduction being justified. The framework also needs to establish that the reduced projected dynamics preserves positivity in the appropriate regime.
 
-**Proposed bridge identification (maturity 5):**
+**Proposed bridge identification (Level 5):**
 
 The Jordan algebra positivity condition N_lifted ≥ 0 is mathematically equivalent to reflection positivity of the vorticity two-point function in the AdS₄/CFT₃ dual theory. Both are positivity conditions on the same algebraic object (the bilinear form defined by the two-point function); both are required for unitarity. Under this identification, NS regularity becomes equivalent to unitarity of the dual CFT₃, which is protected by representation theory of Spin(2,3).
 
-The C_eff mapping: C_eff = 0.022 corresponds to an effective m²L² ≈ −0.15 in AdS₄ units (BF bound is −2.25 for d=3). The vorticity operator has conformal dimension Δ ≈ 2.95 in the dual CFT₃ — a nearly marginal operator. These are scaling arguments (maturity 4–5), not derived equivalences.
+The C_eff mapping: C_eff = 0.022 corresponds to an effective m²L² ≈ −0.15 in AdS₄ units (BF bound is −2.25 for d=3). The vorticity operator has conformal dimension Δ ≈ 2.95 in the dual CFT₃ — a nearly marginal operator. These are scaling arguments (Level 4–5), not derived equivalences.
 
 **What this file still needs:**
 
@@ -319,7 +319,7 @@ A derivation within the Spin(2,3) setting that the reduced projected dynamics au
 
 ### J3(O) vs J3(C⊗O): dimensional constraint from the consistency side
 
-**Proposed bridge identification (maturity 4):**
+**Proposed bridge identification (Level 4):**
 
 The NS dimensional count 15 + 12 = 27 bears on the consistency question of which exceptional Jordan object is physically relevant. If the correct count of independent gauge-invariant nonlocal observables in the theory is 12, then J3(O) is the natural level. If the count exceeds 12, then J3(C⊗O) or a larger object may be needed.
 

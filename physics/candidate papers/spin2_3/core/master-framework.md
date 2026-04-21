@@ -63,12 +63,12 @@ This matters especially in cases like:
 
 A parallel programme in NS regularity via J3(O) has been independently developed. Its structural overlaps with this framework are treated as external context rather than live Spin(2,3) corpus material. The transfer summary:
 
-- The NS programme has constructed an explicit full-rank embedding of local fluid variables into J3(H) and lifted it to J3(O) via 12 bilocal vorticity correlations, closing the dimensional count 15+12=27 exactly (maturity 3–4). This bears on the J3(O) vs J3(C⊗O) choice.
-- G2 transitivity on S⁶ is proved, and the BKM blow-up rescaling group selects the vorticity direction ξ̂ as its unique fixed point (maturity 3). This provides a structural template for how the preferred octonionic direction might be forced rather than chosen.
-- The strain-only blow-up attractor (1D ray in Q-R space with J̃ = 0) is structurally consistent with pure T1 propagation; transverse terms that prevent collapse onto the ray are structurally consistent with T2 mixing preventing T1 collapse (maturity 4 for the NS result; maturity 5 for the bridge identification).
-- An exponent gap of 1/2 in the NS scaling contradiction is proposed to reflect the rigidity of the fermionic sector in Spin(2,3) representation theory (maturity 5 for bridge identification).
+- The NS programme has constructed an explicit full-rank embedding of local fluid variables into J3(H) and lifted it to J3(O) via 12 bilocal vorticity correlations, closing the dimensional count 15+12=27 exactly (Level 3–4). This bears on the J3(O) vs J3(C⊗O) choice.
+- G2 transitivity on S⁶ is proved, and the BKM blow-up rescaling group selects the vorticity direction ξ̂ as its unique fixed point (Level 3). This provides a structural template for how the preferred octonionic direction might be forced rather than chosen.
+- The strain-only blow-up attractor (1D ray in Q-R space with J̃ = 0) is structurally consistent with pure T1 propagation; transverse terms that prevent collapse onto the ray are structurally consistent with T2 mixing preventing T1 collapse (Level 4 for the NS result; Level 5 for the bridge identification).
+- An exponent gap of 1/2 in the NS scaling contradiction is proposed to reflect the rigidity of the fermionic sector in Spin(2,3) representation theory (Level 5 for bridge identification).
 
-All bridge identifications between the two programmes are maturity 5 proposals. None substitute for independent derivation within the Spin(2,3) framework. The NS programme is most useful as a source of structural templates that reduce the search space for missing bridge arguments.
+All bridge identifications between the two programmes are Level 5 proposals. None substitute for independent derivation within the Spin(2,3) framework. The NS programme is most useful as a source of structural templates that reduce the search space for missing bridge arguments.
 
 ---
 

@@ -546,7 +546,7 @@ Deliverable:
 
 #### R4. Two legitimate routes
 
-At the present maturity of the project, `R4` should be split cleanly into two different routes.
+At the present level of the project, `R4` should be split cleanly into two different routes.
 
 ### Route A. Dynamical selection
 
@@ -573,7 +573,7 @@ The weaker but still disciplined route is to state openly:
 
 In this route, the claim is not that `T1` has already been forced. The claim is that once the zero-mass interaction channel is chosen, projection onto `T1` is the correct effective observational rule.
 
-This route is weaker, but still coherent and honest. It matches the current maturity of the epistemics file better than pretending the full dynamical selection has already been earned.
+This route is weaker, but still coherent and honest. It matches the current level of the epistemics file better than pretending the full dynamical selection has already been earned.
 
 #### Present best status
 

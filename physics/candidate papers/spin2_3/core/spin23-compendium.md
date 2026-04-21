@@ -54,7 +54,7 @@ Each sector is an `SU(2)` doublet. The two sectors carry opposite `U(1)` charge.
 
 ### What the sectors mean
 
-The central epistemic proposal of the framework (maturity 4) is:
+The central epistemic proposal of the framework (Level 4) is:
 
 > the observable channel is determined by the selected axis of zero-mass traversal, not by a separate axiom of visibility
 
@@ -86,13 +86,13 @@ In the Spin(2,3) framework, the `T1/T2` split maps directly onto this picture:
 
 The statement that "the observer sees only the T1 projection" becomes the statement that "physics is organized by the boundary theory, not the bulk." The hidden sector is real — it has dynamics — but it is not directly read out by the observable algebra.
 
-| Claim | Status | Maturity |
+| Claim | Role | Level |
 |---|---|---|
 | `SO(2,3)` is the isometry group of `AdS₄` | mathematical fact | 1 |
 | the `T1/T2` split has a direct geometric reading as boundary/bulk | structural identification | 3–4 |
 | the observer's T1 access corresponds to boundary-theory observables | physical interpretation | 5 |
 
-The structural identification (maturity 3–4) is clean. The physical interpretation — that this is the right reason our physics is T1-organized — carries more interpretive weight (maturity 5).
+The structural identification (Level 3–4) is clean. The physical interpretation — that this is the right reason our physics is T1-organized — carries more interpretive weight (Level 5).
 
 ---
 
@@ -110,7 +110,7 @@ This is a re-reading of what spin is, not a new prediction. It says that the hal
 
 The same geometry gives gravity at classical scales. Coupling to the `n = e₅` direction is what it means for matter to gravitate. Spin is the quantum-scale signature of the same structure.
 
-| Claim | Status | Maturity |
+| Claim | Role | Level |
 |---|---|---|
 | spin-½ as geometric rotation through `n` | re-reading, not new prediction | 3–4 |
 | `4π` closure as fact about the normal vector | geometric statement | 3–4 |
@@ -134,7 +134,7 @@ Under phase locking, the transport-coherence invariant $\mathcal{I}(s+T) = e^{u\
 
 The metaplectic representations of $\mathrm{Sp}(4,\mathbb{R})$ are natural homes for the two-branch amplitude structure — they are built from pairs. This suggests the framework may be most naturally expressed as a metaplectic quantization of null transport, with the octonionic bulk providing the non-associative deformation of the symplectic structure (see `archive/overflow.md`).
 
-| Claim | Status | Maturity |
+| Claim | Role | Level |
 |---|---|---|
 | $\mathcal{I} = A\bar{B}$ is the Sp(4,ℝ) symplectic pairing of branch amplitudes | structural identification | 3–4 |
 | particle species as irreps of Spin(2,3) | KK-style proposal | 4–5 |
@@ -147,7 +147,7 @@ The metaplectic representations of $\mathrm{Sp}(4,\mathbb{R})$ are natural homes
 
 The octonion algebra `O` has automorphism group `G₂`. `G₂` acts on the imaginary octonions, a seven-dimensional space. Choosing a preferred imaginary direction `e₇` (equivalently `u`, the zero-mass traversal direction) fixes a stabilizer inside `G₂`. That stabilizer is `SU(3)`.
 
-This is standard mathematics (maturity 3). The physical claim is that this `SU(3)` is color.
+This is standard mathematics (Level 3). The physical claim is that this `SU(3)` is color.
 
 Under the `G₂ → SU(3)` reduction, the imaginary octonions split as:
 $$
@@ -161,9 +161,9 @@ The `G₂` Dynkin diagram has a distinctive structure: long roots and short root
 - short roots correspond to the `3 ⊕ 3̄` structure (`T2`, gravity, off-axis mixing)
 - the `√3` root-length ratio is a geometric proxy for the coupling ratio between the EM and gravity sectors at the `G₂` breaking scale
 
-The connection between the octonionic direction and the zero-mass traversal channel is the pivot that makes this more than a coincidental matching. The framework requires that the internal selection (choose `e₇`) and the kinematic selection (identify the massless channel as `T1`) refer to the same direction (maturity 4).
+The connection between the octonionic direction and the zero-mass traversal channel is the pivot that makes this more than a coincidental matching. The framework requires that the internal selection (choose `e₇`) and the kinematic selection (identify the massless channel as `T1`) refer to the same direction (Level 4).
 
-| Claim | Status | Maturity |
+| Claim | Role | Level |
 |---|---|---|
 | choosing `e₇` inside `G₂` gives stabilizer `SU(3)` | mathematical fact | 3 |
 | this `SU(3)` is physical color | physical identification | 4–5 |
@@ -191,7 +191,7 @@ u^\perp \cong \mathbf{C}^3
 $$
 is a six-dimensional space that carries color structure, hidden wandering geometry, and the candidate for generation structure. This is the current strongest convergence point in the parent inquiry (see `core/parent-inquiry-map.md`).
 
-| Claim | Status | Maturity |
+| Claim | Role | Level |
 |---|---|---|
 | program is built on the octonionic layer of the division algebra tower | framework choice | 2 |
 | `J₃(O ⊗ ℂ)` is the full ambient object (not `J₃(O)`) | framework correction | 4 |
@@ -220,13 +220,13 @@ $$
 D \sim \frac{m^2}{\gamma}
 $$
 
-where `m` is the mixing strength and `γ` is the sector-transition damping rate. This is derived under weak-coupling and Markovian assumptions (maturity 4 for the reduced model).
+where `m` is the mixing strength and `γ` is the sector-transition damping rate. This is derived under weak-coupling and Markovian assumptions (Level 4 for the reduced model).
 
 The diffusion law `D ~ m²/γ` is the visible transport signature of hidden-sector coupling. Massless particles have `m = 0` and do not diffuse.
 
-The connection to standard mass — a field-theoretic identification, a clean dispersion relation — is still one layer above the current proof burden (maturity 5 for the full identification).
+The connection to standard mass — a field-theoretic identification, a clean dispersion relation — is still one layer above the current proof burden (Level 5 for the full identification).
 
-| Claim | Status | Maturity |
+| Claim | Role | Level |
 |---|---|---|
 | `m` governs departure from pure `T1` transport | derived in reduced model | 4 |
 | `D ~ m²/γ` scaling law | derived under weak-coupling and Markov | 4 |
@@ -240,7 +240,7 @@ The epistemic reading of uncertainty in this framework is:
 
 > observable uncertainty arises because the observer tracks `T1` but not `T2`; what appears as measurement broadening is unresolved hidden-sector excursion
 
-This is a safer claim than saying "quantum uncertainty is nothing but hidden-sector epistemics." The safe version says that projected, coarse-grained observables inherit effective broadening because the observer does not resolve the full dynamics (maturity 4–5). The broader claim — that all quantum measurement theory reduces to this — is not established by the current framework (maturity 6, not claimed).
+This is a safer claim than saying "quantum uncertainty is nothing but hidden-sector epistemics." The safe version says that projected, coarse-grained observables inherit effective broadening because the observer does not resolve the full dynamics (Level 4–5). The broader claim — that all quantum measurement theory reduces to this — is not established by the current framework (Level 6, not claimed).
 
 ---
 
@@ -248,11 +248,11 @@ This is a safer claim than saying "quantum uncertainty is nothing but hidden-sec
 
 `J₃(O)` has three off-diagonal octonionic slots. This gives a natural three-place static arena for matter content. The three slots are structurally distinguished and can be connected by triality automorphisms.
 
-The safe claim is that `J₃(O)` is a strong candidate organizer for three families (maturity 3–4). The stronger claims — that exactly three generations are forced, that a fourth generation is genuinely excluded — require a proof burden that the current framework has not yet met (maturity 5–6 for the exclusion).
+The safe claim is that `J₃(O)` is a strong candidate organizer for three families (Level 3–4). The stronger claims — that exactly three generations are forced, that a fourth generation is genuinely excluded — require a proof burden that the current framework has not yet met (Level 5–6 for the exclusion).
 
 The current strongest generation hypothesis sits one level above `J₃(O)`: the `2/4/6` access ladder inside the six-dimensional remainder `u⊥ ≅ ℂ³`. At higher energy, more of the hidden octonionic space becomes dynamically accessible, and each additional `2`-dimensional access level corresponds to a heavier generation. Three access levels cap naturally because `ℂ³` is six-dimensional.
 
-The open step is making this access ladder dynamically forced rather than merely kinematically available (maturity 5 for the hypothesis; maturity 6 for a full proof).
+The open step is making this access ladder dynamically forced rather than merely kinematically available (Level 5 for the hypothesis; Level 6 for a full proof).
 
 ---
 
@@ -260,7 +260,7 @@ The open step is making this access ladder dynamically forced rather than merely
 
 The two-branch amplitude framework, operating at the level of conjugate bracket completions of octonionic products, derives a forced partition of the phase space $(\rho, \Phi)$ into four disjoint transport classes (Constructive, Inverted, Frustrated, Dephased) purely from the geometry of two boundaries: the locking boundary and the persistence boundary. The classification is not assumed — it is forced by the dynamics once the signed transport coupling $\kappa_u$ and the loss rate $\gamma$ are given. Particle-like states must satisfy both the locking condition $|\omega| \leq |\kappa_u|\cosh(2\rho)$ and the persistence condition $\kappa_u\cosh(2\rho)\cos\Phi > \gamma$. See `kernels/dynamics.md` for the full derivation.
 
-| Claim | Status | Maturity |
+| Claim | Role | Level |
 |---|---|---|
 | forced partition into four transport classes from geometry of two boundaries | derived within two-branch model | 4 |
 | particle-like state criterion: both locking and persistence conditions | derived consequence | 4 |
@@ -270,7 +270,7 @@ The two-branch amplitude framework, operating at the level of conjugate bracket 
 
 ### Chirality
 
-The framework offers a route to chirality through sector asymmetry: if left- and right-handed modes couple to `T2` differently, chirality is a derived consequence of the geometry rather than an independent input. This is conceptually attractive but is not yet a proved result — the asymmetry must be shown to be forced by the `Spin(2,3)` structure (maturity 5).
+The framework offers a route to chirality through sector asymmetry: if left- and right-handed modes couple to `T2` differently, chirality is a derived consequence of the geometry rather than an independent input. This is conceptually attractive but is not yet a proved result — the asymmetry must be shown to be forced by the `Spin(2,3)` structure (Level 5).
 
 ---
 
@@ -310,7 +310,7 @@ $$
 
 `M₄(ℂ)` is a complex algebra (not a real one). This is significant: the 10 tenfold-way classes split into 2 complex classes (A and AIII) and 8 real classes (AI, BDI, D, DIII, AII, CII, C, CI). Only the complex Clifford algebras `Cl(n) ≅ M_{2^{n/2}}(ℂ)` host the complex classes.
 
-The consequence: **Spin(2,3) spinor representations live in the complex sector of the tenfold-way classification.** When looking for a symmetry class, the search space is already narrowed to A and AIII. (maturity 3 — mathematical fact)
+The consequence: **Spin(2,3) spinor representations live in the complex sector of the tenfold-way classification.** When looking for a symmetry class, the search space is already narrowed to A and AIII. (Level 3 — mathematical fact)
 
 ---
 
@@ -341,8 +341,8 @@ where `H_diag` preserves T1 and T2 separately, and `H_mix` couples them.
 This is precisely the condition for a **chiral symmetry**: `{Σ, H_mix} = 0`.
 
 Therefore:
-- In the **massless limit** (`m = 0`, `H_mix = 0`): `Σ` is an exact symmetry of `H`. The theory is in **class AIII** — the chiral unitary class. (maturity 3–4)
-- In the **massive case** (`m ≠ 0`, `H_mix ≠ 0`): `Σ` is broken. The theory is in **class A** — no symmetry. (maturity 3–4)
+- In the **massless limit** (`m = 0`, `H_mix = 0`): `Σ` is an exact symmetry of `H`. The theory is in **class AIII** — the chiral unitary class. (Level 3–4)
+- In the **massive case** (`m ≠ 0`, `H_mix ≠ 0`): `Σ` is broken. The theory is in **class A** — no symmetry. (Level 3–4)
 
 The statement "mass breaks chiral symmetry" is not a new claim. It is the standard physics of class AIII. What is new here is identifying `Σ = 2J^{01}` as that chiral operator — i.e., it is a generator of `Spin(2,3)` itself, not an additional structure imported from outside.
 
@@ -364,7 +364,7 @@ In `d = 3`, class AIII has topological invariant `ℤ`. The prototypical physica
 In the Spin(2,3) framework:
 - T1 sector states at `m = 0` are protected from acquiring mass by exactly this mechanism: `Σ` symmetry forbids a gap
 - Turning on `m` (T1/T2 coupling) **breaks** `Σ` and opens a gap — the mass is the topological gap parameter
-- The transition `m = 0 → m ≠ 0` is the same type of event as moving from a topologically non-trivial phase (class AIII) to a trivial one (class A) through a gap-closing transition (maturity 4)
+- The transition `m = 0 → m ≠ 0` is the same type of event as moving from a topologically non-trivial phase (class AIII) to a trivial one (class A) through a gap-closing transition (Level 4)
 
 The Spin(2,3) mass generation mechanism — `T1/T2` mixing — is structurally identical to the mechanism that destroys topological protection in class AIII: it is the symmetry-breaking coupling that opens the gap. Mass is not put in by hand; it is the order parameter of a chiral symmetry-breaking transition.
 
@@ -402,7 +402,7 @@ So: `T² = +1`, `C² = +1`.
 
 In the Altland-Zirnbauer table, `T² = +1` and `C² = +1` with chiral symmetry `S` present corresponds to **class BDI** (the real class with ℤ topological invariant in `d = 1`). This is the class of the SSH chain and its higher-dimensional analogues.
 
-However, the chiral operator `S = M_C M_T^*` computed from these `T` and `C` satisfies `S² = -1` rather than the expected `+1`. This discrepancy signals that the natural `T` and `C` operations in the Spin(2,3) representation do not map directly to the standard condensed-matter conventions without a phase redefinition. The resolution is likely a sign choice in the definition of `C` or `T`, or the presence of the second timelike direction modifying the canonical identification. This is an open point — the symmetry class identification is narrowed to {A, AIII, BDI} but not yet pinned precisely. (maturity 4 for the constraint, maturity 5 for the exact class assignment)
+However, the chiral operator `S = M_C M_T^*` computed from these `T` and `C` satisfies `S² = -1` rather than the expected `+1`. This discrepancy signals that the natural `T` and `C` operations in the Spin(2,3) representation do not map directly to the standard condensed-matter conventions without a phase redefinition. The resolution is likely a sign choice in the definition of `C` or `T`, or the presence of the second timelike direction modifying the canonical identification. This is an open point — the symmetry class identification is narrowed to {A, AIII, BDI} but not yet pinned precisely. (Level 4 for the constraint, Level 5 for the exact class assignment)
 
 ---
 
@@ -415,13 +415,13 @@ A qualitative feature with no Spin(1,3) analogue: Spin(2,3) has **two** time-lik
 
 `T_0` and `T_1` individually are not generally symmetries of an arbitrary Spin(2,3) Hamiltonian — they do not generate a symmetry of the full theory unless the theory has additional structure. However, the **J^{01} grading** `Σ` is the commutator of these two partial operations (up to phase), which is why `Σ` appears even when neither partial time reversal is separately a symmetry.
 
-[*Speculative — maturity 5*: if a physical system is described by a Spin(2,3)-symmetric Hamiltonian in which `T_0` and `T_1` are separately preserved (for example, by a lattice regularization that distinguishes the two time directions), then the system simultaneously carries two independent time-reversal symmetries with `T_0² = ε₀` and `T_1² = ε₁`. Having two commuting time-reversal symmetries is outside the standard 10-fold classification, which assumes at most one `T`. Such a system might realize a class that requires a **16-fold way** or extended classification table. Whether physical lattice systems with approximate Spin(2,3) symmetry exist that would exhibit this is not known.]
+[*Level 5: plausible but future work*: if a physical system is described by a Spin(2,3)-symmetric Hamiltonian in which `T_0` and `T_1` are separately preserved (for example, by a lattice regularization that distinguishes the two time directions), then the system simultaneously carries two independent time-reversal symmetries with `T_0² = ε₀` and `T_1² = ε₁`. Having two commuting time-reversal symmetries is outside the standard 10-fold classification, which assumes at most one `T`. Such a system might realize a class that requires a **16-fold way** or extended classification table. Whether physical lattice systems with approximate Spin(2,3) symmetry exist that would exhibit this is not known.]
 
 ---
 
 #### Summary: what the tenfold-way analysis gives
 
-| Result | Status | Maturity |
+| Result | Role | Level |
 |---|---|---|
 | `Cl(2,3) ≅ M₄(ℂ)` — complex Clifford algebra | mathematical fact | 3 |
 | Spin(2,3) representations live in the complex tenfold-way classes (A or AIII) before anti-unitary refinement | direct consequence | 3 |
@@ -442,21 +442,21 @@ The full domain analysis — including the `T_0`, `T_{01}`, and `C` computation,
 
 ### Hydrogen Threshold Symmetry and the Efimov Bridge
 
-[*Speculative — maturity 5*: the two-boundary transport picture has the same compact/noncompact/threshold symmetry pattern as the hydrogen problem. In standard hydrogen, bound states carry hidden `SO(4)`, scattering states carry `SO(3,1)`, and the ionization threshold is the contraction point `ISO(3)` between them. In the present framework, the constructive locked/persistent sector is the natural analogue of the compact bound domain, the dephased side is the natural analogue of the noncompact free domain, and the persistence boundary `\kappa_u\cosh(2\rho)\cos\Phi = \gamma` is the marginal surface separating them. The safe claim is a structural correspondence of symmetry pattern, not a derivation of the hydrogen spectrum or of the exact Laplace-Runge-Lenz algebra inside the transport model.]
+[*Level 5: plausible but future work*: the two-boundary transport picture has the same compact/noncompact/threshold symmetry pattern as the hydrogen problem. In standard hydrogen, bound states carry hidden `SO(4)`, scattering states carry `SO(3,1)`, and the ionization threshold is the contraction point `ISO(3)` between them. In the present framework, the constructive locked/persistent sector is the natural analogue of the compact bound domain, the dephased side is the natural analogue of the noncompact free domain, and the persistence boundary `\kappa_u\cosh(2\rho)\cos\Phi = \gamma` is the marginal surface separating them. The safe claim is a structural correspondence of symmetry pattern, not a derivation of the hydrogen spectrum or of the exact Laplace-Runge-Lenz algebra inside the transport model.]
 
-[*Speculative — maturity 5-6*: on the free/dephased side, the subgroup chain `SO(3,1) \supset SO(2,1)` suggests a route to Efimov-type conformal dynamics for three-body states near the locking/persistence boundary. Near threshold, the reduced law `\dot{R} = R(-\gamma + \kappa_u\cosh(2\rho)\cos\Phi)` linearizes to `\dot{R} \approx \epsilon R`, which is scale-covariant in the radial variable and therefore a plausible entry point for conformal quantum mechanics. The stronger claim would be that three simultaneous near-boundary transport states realize an Efimov tower, with the geometric ratio fixed by an `SO(2,1)` Casimir and therefore by a threshold combination such as `\omega/\kappa_u`. That quantitative step has not been derived.]
+[*Level 5-6: plausible direction with a significant proof issue*: on the free/dephased side, the subgroup chain `SO(3,1) \supset SO(2,1)` suggests a route to Efimov-type conformal dynamics for three-body states near the locking/persistence boundary. Near threshold, the reduced law `\dot{R} = R(-\gamma + \kappa_u\cosh(2\rho)\cos\Phi)` linearizes to `\dot{R} \approx \epsilon R`, which is scale-covariant in the radial variable and therefore a plausible entry point for conformal quantum mechanics. The stronger claim would be that three simultaneous near-boundary transport states realize an Efimov tower, with the geometric ratio fixed by an `SO(2,1)` Casimir and therefore by a threshold combination such as `\omega/\kappa_u`. That quantitative step has not been derived.]
 
 ---
 
 ### Dark Matter
 
-[*Speculative — maturity 5*: T2-sector matter — matter that couples primarily to `T2` rather than `T1` — would not project onto the T1 observable algebra. It would have gravitational coupling (gravity lives in the T2/fifth-direction sector) but no electromagnetic or strong-force coupling. This is exactly the phenomenological signature of dark matter. The identification is structurally motivated by the framework; it does not yet amount to a model, a mass spectrum, or a prediction.]
+[*Level 5: plausible but future work*: T2-sector matter — matter that couples primarily to `T2` rather than `T1` — would not project onto the T1 observable algebra. It would have gravitational coupling (gravity lives in the T2/fifth-direction sector) but no electromagnetic or strong-force coupling. This is exactly the phenomenological signature of dark matter. The identification is structurally motivated by the framework; it does not yet amount to a model, a mass spectrum, or a prediction.]
 
 ---
 
 ### Three-Generation Forcing
 
-[*Speculative — maturity 5*: if the `2/4/6` access ladder inside `u⊥ ≅ ℂ³` can be made dynamical — if higher energy physically opens additional dimensions of the hidden remainder rather than merely making them available — then the generation count of three would follow from the dimensionality of the octonionic complement. The open step is a forcing argument: why exactly 2, then 4, then 6, and not some other sequence? The kinematic picture is suggestive; the dynamics has not been derived.]
+[*Level 5: plausible but future work*: if the `2/4/6` access ladder inside `u⊥ ≅ ℂ³` can be made dynamical — if higher energy physically opens additional dimensions of the hidden remainder rather than merely making them available — then the generation count of three would follow from the dimensionality of the octonionic complement. The open step is a forcing argument: why exactly 2, then 4, then 6, and not some other sequence? The kinematic picture is suggestive; the dynamics has not been derived.]
 
 ---
 
@@ -464,7 +464,7 @@ The full domain analysis — including the `T_0`, `T_{01}`, and `C` computation,
 
 Naming the boundaries of a framework is as important as naming its content. The following domains from the broad physics atlas are mostly not addressed by the Spin(2,3) program at present, except where a narrow structural bridge has been noted. No broad claim is being forced onto them.
 
-| Domain | Status |
+| Domain | Coverage |
 |---|---|
 | Atomic energy levels (He, H, Rydberg) | quantitative spectra not addressed; hydrogen hidden-symmetry pattern now has a speculative threshold-symmetry bridge |
 | Electric dipole selection rules | not addressed |
@@ -499,7 +499,7 @@ The other three claims sit outside the current proof reach of the framework. The
 
 ## §6 — Summary Claim Ledger
 
-| Claim | Domain | Status | Maturity |
+| Claim | Domain | Role | Level |
 |---|---|---|---|
 | `SO(2,3)` is the isometry group of `AdS₄` | holography | mathematical fact | 1 |
 | `T1/T2` split as boundary/bulk duality | holography | structural identification | 3–4 |

@@ -22,7 +22,7 @@ This file covers:
 - scaling relations currently visible in the reduced model
 - possible observable consequences of hidden-sector mixing
 - the difference between qualitative implication and quantitative prediction
-- what would count as real phenomenological maturity
+- what would count as real phenomenological Level
 
 This file does not cover:
 
@@ -90,7 +90,7 @@ These are all phenomenological directions, but they are not all equally mature.
 
 ---
 
-## Current maturity of phenomenological claims
+## Current Level of phenomenological claims
 
 ### Safe at present
 
@@ -130,7 +130,7 @@ Until then, the project has phenomenological hints, not yet a mature phenomenolo
 
 ## Phenomenology claim ledger
 
-| Claim | Status | Maturity | Comment |
+| Claim | Role | Level | Comment |
 |---|---|---|---|
 | the reduced model gives `D ~ m^2 / gamma` | derived within model | 4 | strongest current phenomenological relation |
 | stronger mixing increases effective broadening | direct consequence of scaling | 4 | safe but model-level |
