@@ -12,32 +12,32 @@ This index groups the effect-level files by family so the folder is usable as a 
 
 ## Thermoelectric
 
-- [01-seebeck-effect.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\01-seebeck-effect.md)
-- [02-nernst-effect.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\02-nernst-effect.md)
-- [03-peltier-effect.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\03-peltier-effect.md)
-- [04-phonon-drag.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\04-phonon-drag.md)
+- [01-seebeck-effect.md](01-seebeck-effect.md)
+- [02-nernst-effect.md](02-nernst-effect.md)
+- [03-peltier-effect.md](03-peltier-effect.md)
+- [04-phonon-drag.md](04-phonon-drag.md)
 
 ## Piezoelectric And Related
 
-- [05-piezoelectricity.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\05-piezoelectricity.md)
-- [06-flexoelectricity.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\06-flexoelectricity.md)
-- [07-triboelectricity.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\07-triboelectricity.md)
+- [05-piezoelectricity.md](05-piezoelectricity.md)
+- [06-flexoelectricity.md](06-flexoelectricity.md)
+- [07-triboelectricity.md](07-triboelectricity.md)
 
 ## Caloric
 
-- [08-elastocaloric.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\08-elastocaloric.md)
-- [09-twistocaloric.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\09-twistocaloric.md)
-- [10-barocaloric.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\10-barocaloric.md)
-- [11-magnetocaloric.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\11-magnetocaloric.md)
+- [08-elastocaloric.md](08-elastocaloric.md)
+- [09-twistocaloric.md](09-twistocaloric.md)
+- [10-barocaloric.md](10-barocaloric.md)
+- [11-magnetocaloric.md](11-magnetocaloric.md)
 
 ## Coherent And Spin-Coupled
 
-- [12-superconductivity.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\12-superconductivity.md)
-- [13-spin-seebeck-effect.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\13-spin-seebeck-effect.md)
-- [14-magnon-phonon-coupling.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\14-magnon-phonon-coupling.md)
+- [12-superconductivity.md](12-superconductivity.md)
+- [13-spin-seebeck-effect.md](13-spin-seebeck-effect.md)
+- [14-magnon-phonon-coupling.md](14-magnon-phonon-coupling.md)
 
 ## Connections to the Larger Landscape
 
-- [02-conversion-mechanisms.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\02-conversion-mechanisms.md) remains the family-level overview for this folder.
+- [02-conversion-mechanisms.md](../02-conversion-mechanisms.md) remains the family-level overview for this folder.
 - Part I supplies the shared conceptual logic behind every file here, especially symmetry breaking, geometry, resonance, and coupling.
 - Part VI and Part VII matter most downstream: they explain why some of these effects carry more strategic leverage and how they map onto platform-building projects.
