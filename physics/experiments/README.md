@@ -15,7 +15,7 @@ Node-based local web app for Windows that:
 - [public/response-experiment-ui-common.js](public/response-experiment-ui-common.js) is the shared waveform/chart helper layer used by the tracked-response and adaptive-response experiments.
 - [public/adaptive-response-model.js](public/adaptive-response-model.js) holds the adaptive-response experiment's scheduler, measurement math, and running statistics, [public/adaptive-response-ui.js](public/adaptive-response-ui.js) owns the DOM and chart rendering, and [public/adaptive-response.js](public/adaptive-response.js) is now a thinner audio/controller layer.
 - [public/styles.css](public/styles.css) provides the UI and canvas styling.
-- [public/README.md](public/README.md) maps the browser-side experiment pages and shared helpers.
+- The `public/` folder holds the browser-side experiment pages and shared helpers; its own `index.html` is the live app entrypoint.
 
 ## Requirements
 
