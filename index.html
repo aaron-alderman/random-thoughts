@@ -1,0 +1,11 @@
+---
+layout: default
+title: Random Thoughts
+permalink: /
+---
+
+{% capture home_markdown %}
+{% include_relative README.md %}
+{% endcapture %}
+
+{{ home_markdown | markdownify }}
