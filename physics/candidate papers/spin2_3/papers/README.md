@@ -6,11 +6,11 @@ This directory holds draft paper artifacts and supporting scripts. Papers should
 
 | Directory | Contents |
 | --- | --- |
-| `paper1-octonionic-two-branch-transport/` | Octonionic two-branch transport draft, source, PDF/docx, and phase portrait assets |
-| `paper2-diii-winding-number/` | DIII winding-number draft, source, PDF/docx, and numeric check |
+| [paper1-octonionic-two-branch-transport/](paper1-octonionic-two-branch-transport/README.md) | Octonionic two-branch transport draft, source, PDF/docx, and phase portrait assets |
+| [paper2-diii-winding-number/](paper2-diii-winding-number/README.md) | DIII winding-number draft, source, PDF/docx, and numeric check |
 
 ## Claim Level
 
-Before polishing a paper, check `../CLAIM_LEDGER.md` and `../ROADMAP.md` for the current level of any strong claim it uses.
+Before polishing a paper, check [../CLAIM_LEDGER.md](../CLAIM_LEDGER.md) and [../ROADMAP.md](../ROADMAP.md) for the current level of any strong claim it uses.
 
-Paper drafts may contain theorem statements about their own reduced models. Those theorem statements are paper-local unless mirrored in `../CLAIM_LEDGER.md`.
+Paper drafts may contain theorem statements about their own reduced models. Those theorem statements are paper-local unless mirrored in [../CLAIM_LEDGER.md](../CLAIM_LEDGER.md).

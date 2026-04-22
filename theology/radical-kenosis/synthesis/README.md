@@ -4,7 +4,7 @@ This folder holds synthesis material that translates radical kenosis into larger
 
 ## Contents
 
-- `constitution.md` develops a constitution for decentralized meaning grounded in the incarnate Logos.
+- [constitution.md](constitution.md) develops a constitution for decentralized meaning grounded in the incarnate Logos.
 
 ## Role
 

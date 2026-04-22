@@ -4,9 +4,9 @@ This folder contains focused essays deriving key theological and human concepts 
 
 ## Contents
 
-- `finitude.md`, `tragedy.md`, and `meaning.md` frame the human condition.
-- `trust.md`, `love.md`, `forgiveness.md`, `sacrifice.md`, and `authority.md` develop the core relational dynamics.
-- `TODO.md` tracks unfinished essay work.
+- [finitude.md](finitude.md), [tragedy.md](tragedy.md), and [meaning.md](meaning.md) frame the human condition.
+- [trust.md](trust.md), [love.md](love.md), [forgiveness.md](forgiveness.md), [sacrifice.md](sacrifice.md), and [authority.md](authority.md) develop the core relational dynamics.
+- [TODO.md](TODO.md) tracks unfinished essay work.
 
 ## Use
 

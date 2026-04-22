@@ -4,8 +4,8 @@ This track contains general mathematical tools for mode transition in parametriz
 
 ## Contents
 
-- `framework.md`: full spectral framework.
-- `framework-simplified.md`: shorter explanatory version.
+- [framework.md](framework.md): full spectral framework.
+- [framework-simplified.md](framework-simplified.md): shorter explanatory version.
 
 ## Interface Rule
 

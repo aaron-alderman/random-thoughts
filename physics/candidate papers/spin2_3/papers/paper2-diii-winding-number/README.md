@@ -11,4 +11,4 @@ Artifact: draft paper.
 
 The paper develops the DIII/winding-number track and its candidate mass-transition interpretation. It should be read with the topological and consistency kernels open, especially where anomaly inflow or matter-content matching is discussed.
 
-Before using this paper as framework evidence, compare its claims against `../../CLAIM_LEDGER.md`, `../../kernels/topological.md`, and `../../kernels/consistency.md`.
+Before using this paper as framework evidence, compare its claims against [../../CLAIM_LEDGER.md](../../CLAIM_LEDGER.md), [../../kernels/topological.md](../../kernels/topological.md), and [../../kernels/consistency.md](../../kernels/consistency.md).

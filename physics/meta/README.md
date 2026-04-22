@@ -4,7 +4,7 @@ This folder contains meta-level physics framing: how the physics branches should
 
 ## Contents
 
-- `0 - meta.md` is the current meta-framework.
+- [0 - meta.md](0%20-%20meta.md) is the current meta-framework.
 
 ## Role
 
