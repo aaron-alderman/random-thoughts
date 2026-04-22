@@ -1,0 +1,46 @@
+title: Random Thoughts
+description: A connected body of philosophical, theological, and scientific writing organized around a unified relational framework.
+url: "https://aaron-alderman.github.io"
+baseurl: "/random-thoughts"
+
+markdown: kramdown
+
+kramdown:
+  input: GFM
+
+plugins:
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-relative-links
+  - jekyll-titles-from-headings
+
+relative_links:
+  enabled: true
+  collections: true
+
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: default
+  - scope:
+      path: "*.html"
+      type: "pages"
+    values:
+      layout: null
+  - scope:
+      path: "all/*.html"
+      type: "pages"
+    values:
+      layout: null
+  - scope:
+      path: "physics/experiments/public/*.html"
+      type: "pages"
+    values:
+      layout: null
+
+exclude:
+  - .claude/
+  - .git/
+  - .github/
