@@ -4,7 +4,7 @@ This folder applies the generation-cascade framework to software design. It trea
 
 ## Start Here
 
-- `0 - summary.md` gives the full argument: how the RCHO sequence can be read as a programming model, why existing paradigms each capture only part of the structure, and what a cascade-based software system would make explicit.
+- [0 - summary.md](0%20-%20summary.md) gives the full argument: how the RCHO sequence can be read as a programming model, why existing paradigms each capture only part of the structure, and what a cascade-based software system would make explicit.
 
 ## Role In The Repository
 

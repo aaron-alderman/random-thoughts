@@ -4,12 +4,12 @@ This folder contains short bridge notes used by the E8 branch. Each note links o
 
 ## Contents
 
-- `e8-e6.md`
-- `g2-so24.md`
-- `j3-g2.md`
-- `e6-j3.md`
-- `so24-spin23.md`
+- [e8-e6.md](e8-e6.md)
+- [g2-so24.md](g2-so24.md)
+- [j3-g2.md](j3-g2.md)
+- [e6-j3.md](e6-j3.md)
+- [so24-spin23.md](so24-spin23.md)
 
 ## Use
 
-Read these as local transition notes. They are most useful alongside `../0 - master.md` and `../why-e8.md`.
+Read these as local transition notes. They are most useful alongside [../0 - master.md](../0%20-%20master.md) and [../why-e8.md](../why-e8.md).

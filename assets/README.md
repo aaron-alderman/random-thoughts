@@ -4,9 +4,9 @@ This folder contains shared site assets used by the repository's generated pages
 
 ## Contents
 
-- `site.css` provides shared site styling.
-- `scroll.css` and `scroll.js` support `../the_scroll.html`.
-- `muqarnas.css`, `muqarnas.js`, and `muqarnas.jpg` support `../muqarnas.html`.
+- [site.css](site.css) provides shared site styling.
+- [scroll.css](scroll.css) and [scroll.js](scroll.js) support [the_scroll.html](../the_scroll.html).
+- [muqarnas.css](muqarnas.css), [muqarnas.js](muqarnas.js), and [muqarnas.jpg](muqarnas.jpg) support [muqarnas.html](../muqarnas.html).
 
 ## Notes
 
