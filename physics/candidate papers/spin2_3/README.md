@@ -20,6 +20,7 @@ This repository contains the working documents for the Spin(2,3) research progra
 | `research/spectral-transition/` | General spectral-gap and projector-geometry toolkit |
 | `research/faddeev-efimov/` | Conjectural Faddeev/Casimir/Efimov bridge track |
 | `papers/` | Draft paper artifacts and supporting scripts |
+| `checks/` | Corpus validation scripts |
 | `archive/` | Snapshots, overflow, and non-live synthesis material |
 
 ## Claim Level

@@ -25,7 +25,23 @@
     - [Superconductivity](geometric-crystals/experiments/superconductivity.md)
 
 - Programming
+  - [Overview](programming/README.md)
   - [0 - Summary](programming/0%20-%20summary.md)
+
+- Physics
+  - [Overview](physics/README.md)
+  - [Symmetry](physics/symmetry/README.md)
+  - [Phonons](physics/phonons/README.md)
+  - [Candidate Papers](physics/candidate%20papers/README.md)
+  - [Experiments](physics/experiments/README.md)
+  - [Speculation](physics/speculation/README.md)
+
+- Engineering
+  - [Overview](engineering/README.md)
+
+- Cross-Project Synthesis
+  - [Overview](all/README.md)
+  - [First Cuts](all/cuts/README.md)
 
 - Ontology
   - [Overview](ontology/README.md)
@@ -103,4 +119,3 @@
     - [FAQ](theology/radical-kenosis/faq.md)
     - Synthesis
       - [Constitution](theology/radical-kenosis/synthesis/constitution.md)
-

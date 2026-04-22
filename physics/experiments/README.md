@@ -15,6 +15,7 @@ Node-based local web app for Windows that:
 - `public/response-experiment-ui-common.js` is the shared waveform/chart helper layer used by the tracked-response and adaptive-response experiments.
 - `public/adaptive-response-model.js` holds the adaptive-response experiment's scheduler, measurement math, and running statistics, `public/adaptive-response-ui.js` owns the DOM and chart rendering, and `public/adaptive-response.js` is now a thinner audio/controller layer.
 - `public/styles.css` provides the UI and canvas styling.
+- `public/README.md` maps the browser-side experiment pages and shared helpers.
 
 ## Requirements
 
@@ -92,14 +93,14 @@ http://127.0.0.1:3000/adaptive-response.html
 - Display-only column background subtraction learns a low-percentile baseline for each response-frequency column across the committed heatmap rows, then subtracts that baseline from every displayed row without changing the stored/exported data. It activates once at least two committed rows exist.
 - Automatic loop-back re-samples the same sweep frequencies and averages them into the existing heatmap rows; only `Reset Heatmap` or `Restart Sweep + Clear` wipes the stored rows.
 - The older Python prototype is still in the folder, but the Node/web version is now the recommended path.
-- `transient-phase.html` is a separate experiment page for fixed-carrier phase-jump transient testing, with the heatmap y-axis representing phase jump in degrees.
+- `public/transient-phase.html` is a separate experiment page for fixed-carrier phase-jump transient testing, with the heatmap y-axis representing phase jump in degrees.
 - In the phase-jump page, the jump is now a one-shot event per dwell interval after the configured delay, not a repeated phase-kick train.
 - The click transient pages share the same FFT heatmap pipeline, but replace phase jumps with a simpler one-shot click train so the carrier can stay continuous.
-- `transient-click-width.html` sweeps click width, `transient-click-amplitude.html` sweeps click amplitude, `transient-click-count.html` sweeps click count, and `transient-click-spacing.html` sweeps click spacing.
+- `public/transient-click-width.html` sweeps click width, `public/transient-click-amplitude.html` sweeps click amplitude, `public/transient-click-count.html` sweeps click count, and `public/transient-click-spacing.html` sweeps click spacing.
 - In the click pages, the x-axis remains response frequency and the heatmap y-axis is whichever click parameter that page is sweeping.
-- `tracked-response.html` sweeps the drive frequency and records the returned peak nearest that same frequency, charting both matched amplitude and full width at half maximum across the sweep.
-- `tracked-response.html` also plots the signed peak offset, so you can see how far the matched return drifts away from the driven frequency across the sweep.
+- `public/tracked-response.html` sweeps the drive frequency and records the returned peak nearest that same frequency, charting both matched amplitude and full width at half maximum across the sweep.
+- `public/tracked-response.html` also plots the signed peak offset, so you can see how far the matched return drifts away from the driven frequency across the sweep.
 - The tracked-response peak match is constrained to stay within `±5 Hz` of the driven frequency.
 - The tracked-response page includes an optional per-step settle window so the first part of each new frequency step can be ignored before measurements begin.
-- `adaptive-response.html` is a separate response-mapping experiment built around an open-ended adaptive scheduler: `explore` inserts new midpoint frequencies in the intervals with the largest amplitude and uncertainty changes, then `refine` re-samples existing points to tighten the estimate where the response is strongest or noisiest.
+- `public/adaptive-response.html` is a separate response-mapping experiment built around an open-ended adaptive scheduler: `explore` inserts new midpoint frequencies in the intervals with the largest amplitude and uncertainty changes, then `refine` re-samples existing points to tighten the estimate where the response is strongest or noisiest.
 - The adaptive response charts show running means with one-sigma uncertainty bands for amplitude, FWHM width, and peak offset, and the CSV export writes mean and standard deviation for each sampled frequency.

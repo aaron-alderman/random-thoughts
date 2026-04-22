@@ -7,8 +7,8 @@ This track houses the conjectural bridge between Spin(2,3) threshold dynamics, S
 - `spin23-efimov-bridge.md`: bridge overview.
 - `casimir-faddeev-conjecture.md`: target-theorem conjecture.
 - `proof-obligations.md`: gates required before the bridge can feed the core.
-- `derivations/`: imported Efimov derivation notes.
-- `experiments/`: imported Python checks and visualizations.
+- `derivations/README.md`: imported Efimov derivation notes.
+- `experiments/README.md`: imported Python checks and visualizations.
 
 ## Claim Level
 

@@ -64,6 +64,12 @@ And if the hypothesis is right, even partially, it would redirect fundamental ph
 
 ---
 
+## Folder Map
+
+- [experiments/README.md](experiments/README.md) maps the proposed experimental extensions and application frontiers.
+
+---
+
 ## One Paragraph
 
 Matter curves space. We've known this for a century. What we haven't seriously tested is whether the *organization* of matter — its internal geometric structure, its quantum coherence, its symmetry — contributes to that curvature beyond what simple energy density predicts. This research program builds the most geometrically organized matter achievable, using a class of materials called quasicrystals whose unusual properties already suggest something non-standard is happening, and asks whether precision instruments can detect a geometric signature around them that depends on their structure rather than their mass. The mathematical framework connecting this to the deepest symmetries of physics is suggestive but not proven. The effect may not exist. But the experiment is feasible, the materials are interesting regardless, and the question — whether geometry in matter talks back to the geometry of space — is one physics hasn't properly asked.

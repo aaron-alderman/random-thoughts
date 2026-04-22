@@ -257,3 +257,12 @@ It clarifies structure.
 The choice remains personal.
 
 But it is not trivial.
+
+---
+
+## Folder Map
+
+- [bible/README.md](bible/README.md) maps the biblical arc from creation through Jesus, the Cross, and resurrection.
+- [essays/README.md](essays/README.md) maps focused structural essays on finitude, tragedy, meaning, trust, love, forgiveness, sacrifice, and authority.
+- [other/README.md](other/README.md) maps theological extension notes on Trinity, covenant, election, Pentecost, church, joy, eschatology, and related doctrinal questions.
+- [synthesis/README.md](synthesis/README.md) maps the synthesis material translating radical kenosis into larger shared-life forms.

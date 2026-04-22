@@ -11,4 +11,4 @@ This directory contains the spine of the Spin(2,3) programme.
 
 ## Claim Level
 
-Core files should distinguish Level 1-3 inputs, Level 4 claims being actively earned, Level 5 future-work claims, and Level 6 weaknesses. Research-track material belongs in `research/` until it has passed through `CLAIM_LEDGER.md`.
+Core files should distinguish Level 1-3 inputs, Level 4 claims being actively earned, Level 5 future-work claims, and Level 6 weaknesses. Research-track material belongs in `../research/` until it has passed through `../CLAIM_LEDGER.md`.

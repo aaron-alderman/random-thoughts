@@ -30,7 +30,19 @@ How systems drift — through metric optimization, proxy capture, and variance s
 What LLMs structurally are, what they do to thinking, and why keeping humans as the epistemic principal is a political commitment, not merely a design preference. The coding-axis distortion, missing cognitive inputs, and the emissary model as the correct design relationship between humans and AI. See [ai/README.md](ai/README.md).
 
 **[programming/](programming/)** — *The Generation Cascade as Programming Paradigm*
-An application of the RCHO framework to software architecture. Derives four structural layers of correct software (identity, properties, relations, effects) from the division algebra sequence, then reads the history of programming paradigms as a series of remainder discoveries — each paradigm finding some layers and failing predictably at the ones it left undeclared. Makes specific falsifiable predictions about what a cascade-based system would achieve: race conditions surfacing as typed failures, parallelism derivable from declared structure, the LLM/human boundary sitting precisely at the relations-to-effects transition. See [programming/0 - summary.md](programming/0%20-%20summary.md).
+An application of the RCHO framework to software architecture. Derives four structural layers of correct software (identity, properties, relations, effects) from the division algebra sequence, then reads the history of programming paradigms as a series of remainder discoveries — each paradigm finding some layers and failing predictably at the ones it left undeclared. Makes specific falsifiable predictions about what a cascade-based system would achieve: race conditions surfacing as typed failures, parallelism derivable from declared structure, the LLM/human boundary sitting precisely at the relations-to-effects transition. See [programming/README.md](programming/README.md).
+
+**[physics/](physics/)** — *Symmetry, Phonons, and Candidate Frameworks*
+The physics-facing research branch: broad symmetry surveys, phonon landscapes, speculative notes, candidate paper programs, and the local audio/response experiment lab. See [physics/README.md](physics/README.md).
+
+**[engineering/](engineering/)** — *Applied Systems Under Uncertainty*
+Practical applications of the framework to industrial, scientific, and distributed engineering problems, including modeling methods and fertilizer production analyses. See [engineering/README.md](engineering/README.md).
+
+**[all/](all/)** — *Cross-Project Synthesis*
+Integrative narrative, visual, geometric, and delivery-oriented material for presenting the whole framework as one connected structure. See [all/README.md](all/README.md).
+
+**[assets/](assets/)** — *Shared Site Assets*
+Reusable CSS, JavaScript, and media assets for the repository's generated pages and hosted HTML artifacts. See [assets/README.md](assets/README.md).
 
 ---
 
