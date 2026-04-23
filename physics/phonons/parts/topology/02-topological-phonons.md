@@ -118,7 +118,7 @@ This is why the topological-circuit project matters so much downstream, and why 
 
 ## Connections to the Larger Landscape
 
-- [01-topology-foundations.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\01-topology-foundations.md) supplies the invariant, Berry-curvature, and robustness logic behind these phases.
-- [05-photon-analogy.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\05-photon-analogy.md) provides the broad comparison set: topological insulators, Chern phases, Weyl points, higher-order topology, Floquet topology, and non-Hermitian topology all have acoustic counterparts.
-- [06-topological-phononic-circuits.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\06-topological-phononic-circuits.md) takes this physics into an explicit device architecture.
-- [07-topology-frontier-and-opportunities.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\07-topology-frontier-and-opportunities.md) expands on why the field is still unusually open and strategically attractive.
+- [01-topology-foundations.md](01-topology-foundations.md) supplies the invariant, Berry-curvature, and robustness logic behind these phases.
+- [05-photon-analogy.md](../05-photon-analogy.md) provides the broad comparison set: topological insulators, Chern phases, Weyl points, higher-order topology, Floquet topology, and non-Hermitian topology all have acoustic counterparts.
+- [06-topological-phononic-circuits.md](06-topological-phononic-circuits.md) takes this physics into an explicit device architecture.
+- [07-topology-frontier-and-opportunities.md](07-topology-frontier-and-opportunities.md) expands on why the field is still unusually open and strategically attractive.

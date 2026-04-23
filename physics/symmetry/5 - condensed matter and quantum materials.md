@@ -210,4 +210,4 @@ Halide perovskites matter for a different reason. Their soft lattices, dynamic d
 The manuscript also proposes a design rule for future superconducting targets: count how many levels of the cascade favor the same pairing representation and ask whether `T_c` tracks that alignment across known materials. Even if the proposal remains heuristic, it is one of the clearest places where the atlas tries to turn a unifying idea into a testable materials program.
 ## Connections to Other Regions
 
-Condensed matter draws heavily on [1 - foundations and language.md](1 - foundations and language.md) and shares many deep motifs with [8 - cross-domain patterns.md](8 - cross-domain patterns.md). Some of its frontier questions connect directly to [9 - frontiers and anomalies.md](9 - frontiers and anomalies.md).
+Condensed matter draws heavily on [1 - foundations and language.md](1%20-%20foundations%20and%20language.md) and shares many deep motifs with [8 - cross-domain patterns.md](8%20-%20cross-domain%20patterns.md). Some of its frontier questions connect directly to [9 - frontiers and anomalies.md](9%20-%20frontiers%20and%20anomalies.md).

@@ -98,4 +98,4 @@ Halo nuclei matter here because they keep the discussion from remaining purely f
 This is one of the most important boundary lessons in the chapter. Nuclear physics is not normally where one expects clean universality, yet near threshold some nuclei behave more like universal few-body systems than like compact strongly bound objects. That is why halo nuclei are so valuable to the atlas: they reveal that the same threshold logic can bridge cold atoms, few-body theory, and real nuclei without ceasing to be recognizably the same pattern.
 ## Connections to Other Regions
 
-This region links back to [2 - atomic and optical physics.md](2 - atomic and optical physics.md) through spectroscopy and isotope shifts, and forward to [8 - cross-domain patterns.md](8 - cross-domain patterns.md) through threshold symmetry, scaling, and universality.
+This region links back to [2 - atomic and optical physics.md](2%20-%20atomic%20and%20optical%20physics.md) through spectroscopy and isotope shifts, and forward to [8 - cross-domain patterns.md](8%20-%20cross-domain%20patterns.md) through threshold symmetry, scaling, and universality.

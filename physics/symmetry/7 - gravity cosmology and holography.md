@@ -172,4 +172,4 @@ A compact comparison is useful here:
 | singularities | classical GR predicts them generically | experimentally grounded quantum-gravity resolution |
 ## Connections to Other Regions
 
-This region meets [6 - particle physics and quantum fields.md](6 - particle physics and quantum fields.md) at the dark sector and early-universe physics, and it meets [8 - cross-domain patterns.md](8 - cross-domain patterns.md) through thresholds, dualities, symmetry, and information.
+This region meets [6 - particle physics and quantum fields.md](6%20-%20particle%20physics%20and%20quantum%20fields.md) at the dark sector and early-universe physics, and it meets [8 - cross-domain patterns.md](8%20-%20cross-domain%20patterns.md) through thresholds, dualities, symmetry, and information.

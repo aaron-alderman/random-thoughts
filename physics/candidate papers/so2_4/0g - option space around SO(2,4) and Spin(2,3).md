@@ -82,7 +82,7 @@ $$
 Spin(2,3).
 $$
 
-This is the branch already formalized in [0f - formal reduction SO(2,4) to Spin(2,3).md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/0f%20-%20formal%20reduction%20SO(2,4)%20to%20Spin(2,3).md).
+This is the branch already formalized in [0f - formal reduction SO(2,4) to Spin(2,3).md](0f%20-%20formal%20reduction%20SO%282%2C4%29%20to%20Spin%282%2C3%29.md).
 
 ### Option A2: choose a unit timelike vector
 

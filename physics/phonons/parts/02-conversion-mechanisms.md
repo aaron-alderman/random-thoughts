@@ -12,7 +12,7 @@ This document focuses on the main effect families in the landscape: thermoelectr
 
 ## Detailed Effect Documents
 
-The effect-level breakdown now lives in [conversion-mechanisms](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms). Use this overview for the family-level map, then move into the individual effect files when you want narrower scope with the same standalone framing.
+The effect-level breakdown now lives in [conversion-mechanisms](conversion-mechanisms/README.md). Use this overview for the family-level map, then move into the individual effect files when you want narrower scope with the same standalone framing.
 
 ## Thermoelectric Effects
 

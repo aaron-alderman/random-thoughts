@@ -95,6 +95,6 @@ The most disciplined reading is:
 
 This path aligns with the current default in:
 
-- [0b - ambient-to-observable reduction.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/j3_oc/0b%20-%20ambient-to-observable%20reduction.md)
+- [0b - ambient-to-observable reduction.md](../0b%20-%20ambient-to-observable%20reduction.md)
 
 but this note exists so that the path can be judged separately rather than hidden inside the default sequence.

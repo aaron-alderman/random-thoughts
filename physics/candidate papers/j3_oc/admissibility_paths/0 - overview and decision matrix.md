@@ -17,10 +17,10 @@ This is a comparison pack, but it now also records the current working investiga
 
 Related notes:
 
-- [0b - ambient-to-observable reduction.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/j3_oc/0b%20-%20ambient-to-observable%20reduction.md)
-- [0c - falsification and decision criteria.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/j3_oc/0c%20-%20falsification%20and%20decision%20criteria.md)
-- [2a - statics.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/j3_oc/2a%20-%20statics.md)
-- [2d - consistency.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/j3_oc/2d%20-%20consistency.md)
+- [0b - ambient-to-observable reduction.md](../0b%20-%20ambient-to-observable%20reduction.md)
+- [0c - falsification and decision criteria.md](../0c%20-%20falsification%20and%20decision%20criteria.md)
+- [2a - statics.md](../2a%20-%20statics.md)
+- [2d - consistency.md](../2d%20-%20consistency.md)
 
 ---
 
@@ -181,10 +181,10 @@ That is helpful because it keeps the refinement track from sounding stronger tha
 
 ## File map
 
-- [1a - Hermitian-first path.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/j3_oc/admissibility_paths/1a%20-%20Hermitian-first%20path.md)
-- [1b - Hermitian plus rank-orbit path.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/j3_oc/admissibility_paths/1b%20-%20Hermitian%20plus%20rank-orbit%20path.md)
-- [1c - Stabilizer-sensitive path.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/j3_oc/admissibility_paths/1c%20-%20Stabilizer-sensitive%20path.md)
-- [1d - Observable-viability path.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/j3_oc/admissibility_paths/1d%20-%20Observable-viability%20path.md)
+- [1a - Hermitian-first path.md](1a%20-%20Hermitian-first%20path.md)
+- [1b - Hermitian plus rank-orbit path.md](1b%20-%20Hermitian%20plus%20rank-orbit%20path.md)
+- [1c - Stabilizer-sensitive path.md](1c%20-%20Stabilizer-sensitive%20path.md)
+- [1d - Observable-viability path.md](1d%20-%20Observable-viability%20path.md)
 
 ---
 

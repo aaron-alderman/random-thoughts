@@ -148,7 +148,7 @@ That is a very different research program from ordinary fatigue mitigation, and 
 
 ## Connections to the Larger Landscape
 
-- [03-shape-memory-topological-frustration.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\03-shape-memory-topological-frustration.md) remains the main document for the wider SMA story that this file narrows to its topological and defect-centered core.
-- [01-topology-foundations.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\01-topology-foundations.md) supplies the general logic of global protection, defect states, and robustness.
-- [06-topological-phononic-circuits.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\06-topological-phononic-circuits.md) benefits from the same shift in perspective: interfaces and defects become functional elements rather than only sources of loss.
-- [07-kernel-projects.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\07-kernel-projects.md) contains the broader project logic for turning frustrated and topological architectures into experimental programs.
+- [03-shape-memory-topological-frustration.md](../03-shape-memory-topological-frustration.md) remains the main document for the wider SMA story that this file narrows to its topological and defect-centered core.
+- [01-topology-foundations.md](01-topology-foundations.md) supplies the general logic of global protection, defect states, and robustness.
+- [06-topological-phononic-circuits.md](06-topological-phononic-circuits.md) benefits from the same shift in perspective: interfaces and defects become functional elements rather than only sources of loss.
+- [07-kernel-projects.md](../07-kernel-projects.md) contains the broader project logic for turning frustrated and topological architectures into experimental programs.

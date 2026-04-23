@@ -16,7 +16,7 @@ A structural guide through the framework's components and their interconnections
 
 ## Subfolder
 
-**[detail/](detail/)** — Nine documents developing the individual threads in depth: the core thesis statement, the full framework, the Holy Spirit, sexuality, the right hemisphere, attention, pyramidal geometry, Revelation as field topology, and the Trinity and mathematics. See [detail/README.md](detail/README.md).
+**[detail/](detail/README.md)** — Nine documents developing the individual threads in depth: the core thesis statement, the full framework, the Holy Spirit, sexuality, the right hemisphere, attention, pyramidal geometry, Revelation as field topology, and the Trinity and mathematics. See [detail/README.md](detail/README.md).
 
 ---
 

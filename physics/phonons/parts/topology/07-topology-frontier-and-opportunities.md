@@ -122,7 +122,7 @@ The current literature sharpens that conclusion. The frontier is no longer defin
 
 ## Connections to the Larger Landscape
 
-- [04-research-landscape.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\04-research-landscape.md) provides the broad frontier framing that this document specializes.
-- [05-photon-analogy.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\05-photon-analogy.md) supplies the clearest gap list and analogy-based motivation.
-- [02-topological-phonons.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\02-topological-phonons.md) covers the most direct phononic embodiment of the opportunity map.
-- [06-topological-phononic-circuits.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\06-topological-phononic-circuits.md) is the strongest near-term device expression of this whole topology program.
+- [04-research-landscape.md](../04-research-landscape.md) provides the broad frontier framing that this document specializes.
+- [05-photon-analogy.md](../05-photon-analogy.md) supplies the clearest gap list and analogy-based motivation.
+- [02-topological-phonons.md](02-topological-phonons.md) covers the most direct phononic embodiment of the opportunity map.
+- [06-topological-phononic-circuits.md](06-topological-phononic-circuits.md) is the strongest near-term device expression of this whole topology program.

@@ -12,7 +12,7 @@ This document focuses on the ideas that organize the rest of the phonon landscap
 
 ## Detailed Topology Documents
 
-The topology-focused breakdown now lives in [topology](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology). Use this document for the conceptual overview, then move into the topology library when you want that research area treated as its own independent thread.
+The topology-focused breakdown now lives in [topology](topology/README.md). Use this document for the conceptual overview, then move into the topology library when you want that research area treated as its own independent thread.
 
 ## Energy, Geometry, and Structure
 

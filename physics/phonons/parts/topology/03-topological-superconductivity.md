@@ -109,7 +109,7 @@ That makes it a conceptual anchor for the rest of the topology folder, even when
 
 ## Connections to the Larger Landscape
 
-- [12-superconductivity.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\conversion-mechanisms\12-superconductivity.md) is the closest neighboring document and covers the broader superconductivity mechanism, Tc landscape, Josephson physics, and industrial context.
-- [01-topology-foundations.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\01-topology-foundations.md) supplies the invariant, defect-state, and robustness logic that makes the superconducting case legible.
-- [05-floquet-and-non-hermitian-topology.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\05-floquet-and-non-hermitian-topology.md) shows how topological phases can be altered or induced dynamically, which is conceptually adjacent to the superconducting device problem.
-- [07-kernel-projects.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\07-kernel-projects.md) contains the phonon-electron coupling optimizer, the clearest project-level bridge from the phononics toolkit into superconducting ambitions.
+- [12-superconductivity.md](../conversion-mechanisms/12-superconductivity.md) is the closest neighboring document and covers the broader superconductivity mechanism, Tc landscape, Josephson physics, and industrial context.
+- [01-topology-foundations.md](01-topology-foundations.md) supplies the invariant, defect-state, and robustness logic that makes the superconducting case legible.
+- [05-floquet-and-non-hermitian-topology.md](05-floquet-and-non-hermitian-topology.md) shows how topological phases can be altered or induced dynamically, which is conceptually adjacent to the superconducting device problem.
+- [07-kernel-projects.md](../07-kernel-projects.md) contains the phonon-electron coupling optimizer, the clearest project-level bridge from the phononics toolkit into superconducting ambitions.

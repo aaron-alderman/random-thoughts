@@ -258,4 +258,4 @@ The basic Sakharov checklist is:
 The important current claim is that the Standard Model does not seem to realize these strongly enough to explain the observed asymmetry.
 ## Connections to Other Regions
 
-This region shares mathematical infrastructure with [1 - foundations and language.md](1 - foundations and language.md), meets cosmology in [7 - gravity cosmology and holography.md](7 - gravity cosmology and holography.md), and spills into [9 - frontiers and anomalies.md](9 - frontiers and anomalies.md) whenever the Standard Model reaches its limits.
+This region shares mathematical infrastructure with [1 - foundations and language.md](1%20-%20foundations%20and%20language.md), meets cosmology in [7 - gravity cosmology and holography.md](7%20-%20gravity%20cosmology%20and%20holography.md), and spills into [9 - frontiers and anomalies.md](9%20-%20frontiers%20and%20anomalies.md) whenever the Standard Model reaches its limits.

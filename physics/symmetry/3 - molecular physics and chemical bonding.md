@@ -138,4 +138,4 @@ The manuscript's stance is clear: chemistry is not "less exact physics," but a n
 That is why this note ends at the bridge rather than trying to absorb chemistry completely. Molecular physics prepares the handoff; it does not erase the need for the next map.
 ## Connections to Other Regions
 
-This region grows directly out of [2 - atomic and optical physics.md](2 - atomic and optical physics.md) and leads into [11 - boundary territories.md](11 - boundary territories.md). It also shares heavy use of symmetry language from [1 - foundations and language.md](1 - foundations and language.md).
+This region grows directly out of [2 - atomic and optical physics.md](2%20-%20atomic%20and%20optical%20physics.md) and leads into [11 - boundary territories.md](11%20-%20boundary%20territories.md). It also shares heavy use of symmetry language from [1 - foundations and language.md](1%20-%20foundations%20and%20language.md).

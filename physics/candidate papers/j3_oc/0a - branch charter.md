@@ -19,7 +19,7 @@ This is a branch-control note, not a paper draft.
 
 This branch is governed by the reusable meta framework in:
 
-- [0 - meta.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/meta/0%20-%20meta.md)
+- [0 - meta.md](../../meta/0%20-%20meta.md)
 
 So every significant claim in this folder should be tracked by:
 
@@ -104,7 +104,7 @@ In practical terms:
 
 Relevant comparison branch:
 
-- [1 - master framework.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/spin2_3/1%20-%20master%20framework.md)
+- [1 - master framework.md](1%20-%20master%20framework.md)
 
 ---
 

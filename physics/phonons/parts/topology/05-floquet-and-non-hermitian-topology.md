@@ -116,7 +116,7 @@ This is why they sit naturally beside the topological-phononic-circuit program r
 
 ## Connections to the Larger Landscape
 
-- [05-photon-analogy.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\05-photon-analogy.md) provides the clearest acoustic analogies, especially for Floquet topology, non-Hermitian topology, and exceptional-point sensing.
-- [04-research-landscape.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\04-research-landscape.md) frames both directions as frontier areas where theory space is still expanding faster than device realization.
-- [06-topological-phononic-circuits.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\06-topological-phononic-circuits.md) is the natural downstream device expression of switchable and open-system topological control.
-- [07-topology-frontier-and-opportunities.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\07-topology-frontier-and-opportunities.md) places these subareas in the broader opportunity map for the folder.
+- [05-photon-analogy.md](../05-photon-analogy.md) provides the clearest acoustic analogies, especially for Floquet topology, non-Hermitian topology, and exceptional-point sensing.
+- [04-research-landscape.md](../04-research-landscape.md) frames both directions as frontier areas where theory space is still expanding faster than device realization.
+- [06-topological-phononic-circuits.md](06-topological-phononic-circuits.md) is the natural downstream device expression of switchable and open-system topological control.
+- [07-topology-frontier-and-opportunities.md](07-topology-frontier-and-opportunities.md) places these subareas in the broader opportunity map for the folder.

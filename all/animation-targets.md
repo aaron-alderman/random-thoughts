@@ -20,7 +20,7 @@ Begin with a black canvas. Seven labeled points appear one by one: e₁ through 
 
 **Duration estimate:** 45–60 seconds.
 
-**Source material:** [all/5 - narrative.md](5 - narrative.md), [all/cuts/04 - technical.md](cuts/04 - technical.md)
+**Source material:** [all/5 - narrative.md](5%20-%20narrative.md), [all/cuts/04 - technical.md](cuts/04%20-%20technical.md)
 
 ---
 
@@ -35,7 +35,7 @@ Show three octonion units a, b, c as colored dots. Split screen: left side compu
 
 **Duration estimate:** 50–70 seconds.
 
-**Source material:** [all/5 - narrative.md](5 - narrative.md), [all/cuts/04 - technical.md](cuts/04 - technical.md)
+**Source material:** [all/5 - narrative.md](5%20-%20narrative.md), [all/cuts/04 - technical.md](cuts/04%20-%20technical.md)
 
 ---
 
@@ -50,7 +50,7 @@ Start with a glowing sphere labeled E₈ (or SO(2,4) for the conformal version).
 
 **Duration estimate:** 90–120 seconds.
 
-**Source material:** [all/5 - narrative.md](5 - narrative.md), [all/5D.md](5D.md)
+**Source material:** [all/5 - narrative.md](5%20-%20narrative.md), [all/5D.md](5D.md)
 
 ---
 
@@ -82,7 +82,7 @@ Scene 3: G₂ holonomy (schematic). Abstract 7-dimensional manifold. The holonom
 
 **Duration estimate:** 75–90 seconds.
 
-**Source material:** [all/5 - narrative.md](5 - narrative.md)
+**Source material:** [all/5 - narrative.md](5%20-%20narrative.md)
 
 ---
 
@@ -101,7 +101,7 @@ Final: all three faces overlay. The diagram rotates slowly. Caption: "One crysta
 
 **Duration estimate:** 90–120 seconds.
 
-**Source material:** [all/5 - narrative.md](5 - narrative.md), [all/cuts/04 - technical.md](cuts/04 - technical.md)
+**Source material:** [all/5 - narrative.md](5%20-%20narrative.md), [all/cuts/04 - technical.md](cuts/04%20-%20technical.md)
 
 ---
 
@@ -119,7 +119,7 @@ Scene 4: phason mode. One point in the 6D lattice slides perpendicular to physic
 
 **Duration estimate:** 90–120 seconds.
 
-**Source material:** [all/5 - narrative.md](5 - narrative.md), [all/cuts/04 - technical.md](cuts/04 - technical.md)
+**Source material:** [all/5 - narrative.md](5%20-%20narrative.md), [all/cuts/04 - technical.md](cuts/04%20-%20technical.md)
 
 ---
 
@@ -138,7 +138,7 @@ Side annotation: Wilson loop as a rectangle in spacetime. Area = T × R. The loo
 
 **Duration estimate:** 70–90 seconds.
 
-**Source material:** [all/5 - narrative.md](5 - narrative.md), [all/cuts/04 - technical.md](cuts/04 - technical.md)
+**Source material:** [all/5 - narrative.md](5%20-%20narrative.md), [all/cuts/04 - technical.md](cuts/04%20-%20technical.md)
 
 ---
 
@@ -162,7 +162,7 @@ Inset: the Standard Model accounts for 12 generators (gauge bosons). E₈ has 24
 
 **Duration estimate:** 60–80 seconds.
 
-**Source material:** [all/cuts/04 - technical.md](cuts/04 - technical.md), [all/5 - narrative.md](5 - narrative.md)
+**Source material:** [all/cuts/04 - technical.md](cuts/04%20-%20technical.md), [all/5 - narrative.md](5%20-%20narrative.md)
 
 ---
 
@@ -258,7 +258,7 @@ Phase 3: zoom out. Show the pattern repeating at three nested scales: individual
 
 **Duration estimate:** 75–90 seconds.
 
-**Source material:** [all/dual-sheet.md](dual-sheet.md), [all/cuts/01 - kernel.md](cuts/01 - kernel.md)
+**Source material:** [all/dual-sheet.md](dual-sheet.md), [all/cuts/01 - kernel.md](cuts/01%20-%20kernel.md)
 
 ---
 
@@ -324,7 +324,7 @@ Caption: "Three generations, three off-diagonal entries, three phases. CP violat
 
 **Duration estimate:** 70–85 seconds.
 
-**Source material:** [all/5 - narrative.md](5 - narrative.md)
+**Source material:** [all/5 - narrative.md](5%20-%20narrative.md)
 
 ---
 
@@ -347,7 +347,7 @@ Split screen: repeat with disordered alloy (same composition, amorphous). Gravim
 
 **Duration estimate:** 80–100 seconds.
 
-**Source material:** [all/5 - narrative.md](5 - narrative.md), [all/cuts/04 - technical.md](cuts/04 - technical.md)
+**Source material:** [all/5 - narrative.md](5%20-%20narrative.md), [all/cuts/04 - technical.md](cuts/04%20-%20technical.md)
 
 ---
 
@@ -378,7 +378,7 @@ Voiceover rhythm: slow, deliberate — each step a beat.
 
 **Duration estimate:** 60–75 seconds.
 
-**Source material:** [all/5 - narrative.md](5 - narrative.md)
+**Source material:** [all/5 - narrative.md](5%20-%20narrative.md)
 
 ---
 
@@ -403,7 +403,7 @@ Phase 5: the new circle already has points outside it. The pattern begins again.
 
 **Duration estimate:** 80–100 seconds.
 
-**Source material:** [all/cuts/01 - kernel.md](cuts/01 - kernel.md), [all/convergence.md](convergence.md)
+**Source material:** [all/cuts/01 - kernel.md](cuts/01%20-%20kernel.md), [all/convergence.md](convergence.md)
 
 ---
 
@@ -424,7 +424,7 @@ Scene 3 — examples: label the three-body structure as (1) the associator in oc
 
 **Duration estimate:** 55–70 seconds.
 
-**Source material:** [all/5 - narrative.md](5 - narrative.md)
+**Source material:** [all/5 - narrative.md](5%20-%20narrative.md)
 
 ---
 
@@ -445,7 +445,7 @@ Third layer: show failure modes. X that cycles: X → Y → X → Y (limit cycle
 
 **Duration estimate:** 60–75 seconds.
 
-**Source material:** [all/5 - narrative.md](5 - narrative.md)
+**Source material:** [all/5 - narrative.md](5%20-%20narrative.md)
 
 ---
 

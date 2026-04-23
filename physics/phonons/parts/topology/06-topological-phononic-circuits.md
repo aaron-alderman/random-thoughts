@@ -121,7 +121,7 @@ That is why it appears as the flagship device expression of topology in the larg
 
 ## Connections to the Larger Landscape
 
-- [02-topological-phonons.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\02-topological-phonons.md) covers the protected-transport physics that the circuit depends on.
-- [04-topological-frustration-and-defects.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\04-topological-frustration-and-defects.md) supplies the defect-centered perspective that makes localized resonant elements and enforced states conceptually richer.
-- [05-floquet-and-non-hermitian-topology.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\05-floquet-and-non-hermitian-topology.md) expands the control logic into driven and open systems, both relevant to switchable circuits.
-- [07-kernel-projects.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\07-kernel-projects.md) remains the main project-level document for this device architecture.
+- [02-topological-phonons.md](02-topological-phonons.md) covers the protected-transport physics that the circuit depends on.
+- [04-topological-frustration-and-defects.md](04-topological-frustration-and-defects.md) supplies the defect-centered perspective that makes localized resonant elements and enforced states conceptually richer.
+- [05-floquet-and-non-hermitian-topology.md](05-floquet-and-non-hermitian-topology.md) expands the control logic into driven and open systems, both relevant to switchable circuits.
+- [07-kernel-projects.md](../07-kernel-projects.md) remains the main project-level document for this device architecture.

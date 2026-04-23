@@ -99,7 +99,7 @@ That is why topology appears across the conceptual framework, the photon analogy
 
 ## Connections to the Larger Landscape
 
-- [02-topological-phonons.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\02-topological-phonons.md) applies these foundations directly to phononic band transport and protected waveguiding.
-- [04-topological-frustration-and-defects.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\04-topological-frustration-and-defects.md) shows how topology can govern forced defects and mechanically protected states, not just band transport.
-- [05-floquet-and-non-hermitian-topology.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\05-floquet-and-non-hermitian-topology.md) extends the basic picture into driven and open systems where timing, gain, and loss become design variables.
-- [06-topological-phononic-circuits.md](C:\Users\aaron\Desktop\liberalism\god-thoughts\kenosis\random-thoughts\physics\phonons\parts\topology\06-topological-phononic-circuits.md) turns the topological idea into an explicit device program.
+- [02-topological-phonons.md](02-topological-phonons.md) applies these foundations directly to phononic band transport and protected waveguiding.
+- [04-topological-frustration-and-defects.md](04-topological-frustration-and-defects.md) shows how topology can govern forced defects and mechanically protected states, not just band transport.
+- [05-floquet-and-non-hermitian-topology.md](05-floquet-and-non-hermitian-topology.md) extends the basic picture into driven and open systems where timing, gain, and loss become design variables.
+- [06-topological-phononic-circuits.md](06-topological-phononic-circuits.md) turns the topological idea into an explicit device program.

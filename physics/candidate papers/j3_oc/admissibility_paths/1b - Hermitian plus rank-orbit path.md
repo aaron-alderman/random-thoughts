@@ -533,6 +533,6 @@ So the present branch should:
 
 This path matches the current default ordering in:
 
-- [0b - ambient-to-observable reduction.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/j3_oc/0b%20-%20ambient-to-observable%20reduction.md)
+- [0b - ambient-to-observable reduction.md](../0b%20-%20ambient-to-observable%20reduction.md)
 
 and is the strongest candidate to become the branch's actual central admissibility rule if later work supports it.

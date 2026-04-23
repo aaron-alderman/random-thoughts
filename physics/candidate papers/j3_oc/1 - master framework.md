@@ -9,7 +9,7 @@ It is the project-facing map for the branch built around the complexified except
 - `J3(C \otimes O)`
 - `H3(O_C)`
 
-For the reusable generic framework, see [0 - meta.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/meta/0%20-%20meta.md).
+For the reusable generic framework, see [0 - meta.md](../../meta/0%20-%20meta.md).
 
 ---
 
@@ -19,7 +19,7 @@ Start from `J3(C \otimes O)` as the primary ambient exceptional Jordan arena; id
 
 Comparison branch:
 
-- [1 - master framework.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/spin2_3/1%20-%20master%20framework.md)
+- [1 - master framework.md](1%20-%20master%20framework.md)
 
 ---
 
@@ -95,7 +95,7 @@ This burden includes at least:
 
 This is formalized in:
 
-- [0b - ambient-to-observable reduction.md](C:/Users/aaron/Desktop/liberalism/god-thoughts/kenosis/random-thoughts/physics/candidate%20papers/j3_oc/0b%20-%20ambient-to-observable%20reduction.md)
+- [0b - ambient-to-observable reduction.md](0b%20-%20ambient-to-observable%20reduction.md)
 
 ---
 
