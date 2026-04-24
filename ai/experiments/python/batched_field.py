@@ -10,10 +10,14 @@ same input/output node positions, so the batch dimension is purely a
 population-level parallelism — every individual sees the same task.
 
 Fitness returned by run_episode():
-    fitness = peak_corr * clamp(night_rms / (day_rms + 1e-4), max=2)
+    fitness = peak_corr
+              * clamp(night_rms / (day_rms + 1e-4), max=2)
+              * frequency_faithfulness
 
   peak_corr : best Pearson r between last-HIST day output and first-HIST night output
   night_rms / day_rms : signal-retention ratio — rewards keeping amplitude alive at night
+  frequency_faithfulness : min(night_period / day_period, day_period / night_period)
+                           in [0, 1] when both periods are measurable, else 0
 """
 
 import math
@@ -29,6 +33,39 @@ NB4 = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 def _wrap(d):
     """Wrap angle difference tensor to (-π, π]."""
     return (d + math.pi) % TWO_PI - math.pi
+
+
+def estimate_period_np(trace, min_amplitude=0.05):
+    """Estimate period from positive-going zero crossings of a centered trace."""
+    if len(trace) < 8:
+        return math.nan
+
+    centered = trace.astype(np.float32, copy=False) - float(np.mean(trace))
+    if np.max(np.abs(centered)) < min_amplitude:
+        return math.nan
+
+    crossings = []
+    for i in range(1, len(centered)):
+        prev = float(centered[i - 1])
+        cur = float(centered[i])
+        if prev <= 0.0 < cur and cur != prev:
+            frac = -prev / (cur - prev)
+            crossings.append((i - 1) + frac)
+
+    if len(crossings) < 2:
+        return math.nan
+
+    diffs = np.diff(crossings)
+    diffs = diffs[np.isfinite(diffs) & (diffs >= 2.0)]
+    if len(diffs) == 0:
+        return math.nan
+
+    return float(np.median(diffs))
+
+
+def batch_estimate_periods(arr: np.ndarray) -> np.ndarray:
+    """Per-row period estimate for a (B, T) trace matrix."""
+    return np.array([estimate_period_np(row) for row in arr], dtype=np.float32)
 
 # ── parameter catalogue ───────────────────────────────────────────────────────
 
@@ -141,6 +178,7 @@ class BatchedField:
         self.params = params if params is not None else default_params(B, self.device)
         self.input_node  = (N // 2, N // 4)
         self.output_node = (N // 2, N // 4 + 4)
+        self.last_episode_metrics = None
         self.reset()
 
     # ── init ─────────────────────────────────────────────────────────────────
@@ -316,8 +354,10 @@ class BatchedField:
             memNode = Sedge.max(dim=3).values
             memAvg  = torch.maximum(memNode, memW / an)
             rg      = p["phaseInertia"] * p["retain"] * memAvg
-            adv     = rg * self.Omega
-            sig     = torch.abs(adv) > 1e-6
+            # Preserve learned angular velocity; memory strength gates replay
+            # participation instead of scaling the frequency itself.
+            adv     = p["phaseInertia"] * self.Omega
+            sig     = rg > 1e-6
             ca = torch.cos(adv); sa = torch.sin(adv)
             tr = nr; ti = ni
             nr = torch.where(sig, ca * tr - sa * ti, tr)
@@ -466,14 +506,16 @@ class BatchedField:
         total = F["warmup"] + F["dayLen"] + F["nightLen"]
 
         for _ in range(total):
+            was_day = self.is_day()
+            was_warmup = self.is_warmup()
             self.step()
             ov = self.Xr[:, or_, oc]   # (B,)
 
-            if self.cycle_mode == "day":
+            if was_day and not was_warmup:
                 day_buf[:, day_ptr % HIST] = ov
                 day_ptr += 1
 
-            elif self.cycle_mode == "night" and night_ptr < HIST:
+            elif not was_day and not was_warmup and night_ptr < HIST:
                 night_buf[:, night_ptr] = ov
                 night_ptr += 1
 
@@ -486,10 +528,31 @@ class BatchedField:
 
         night_filled = night_buf[:, :max(night_ptr, 1)]
 
-        corr     = batch_cross_corr(day_ordered, night_filled).clamp(min=0.0)
-        day_rms  = day_ordered.pow(2).mean(dim=1).sqrt()
+        corr      = batch_cross_corr(day_ordered, night_filled).clamp(min=0.0)
+        day_rms   = day_ordered.pow(2).mean(dim=1).sqrt()
         night_rms = night_filled.pow(2).mean(dim=1).sqrt()
         retention = (night_rms / (day_rms + 1e-4)).clamp(max=2.0)
-        fitness   = corr * retention
+
+        day_np = day_ordered.cpu().numpy()
+        night_np = night_filled.cpu().numpy()
+        day_period = batch_estimate_periods(day_np)
+        night_period = batch_estimate_periods(night_np)
+        ratio = np.full(B, np.nan, dtype=np.float32)
+        faithfulness = np.full(B, np.nan, dtype=np.float32)
+        valid = np.isfinite(day_period) & np.isfinite(night_period) & (day_period > 0)
+        ratio[valid] = night_period[valid] / day_period[valid]
+        faithfulness[valid] = np.minimum(ratio[valid], 1.0 / np.maximum(ratio[valid], 1e-6))
+        faithfulness_reward = np.nan_to_num(faithfulness, nan=0.0, posinf=0.0, neginf=0.0)
+        fitness = corr * retention * torch.tensor(faithfulness_reward, dtype=torch.float32, device=d)
+        self.last_episode_metrics = {
+            "corr": corr.cpu().numpy(),
+            "retention": retention.cpu().numpy(),
+            "day_period": day_period,
+            "night_period": night_period,
+            "period_ratio": ratio,
+            "frequency_faithfulness": faithfulness,
+            "frequency_reward": faithfulness_reward,
+            "fitness": fitness.cpu().numpy(),
+        }
 
         return fitness

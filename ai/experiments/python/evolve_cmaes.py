@@ -32,6 +32,7 @@ import json
 import os
 import pickle
 import time
+from pathlib import Path
 import numpy as np
 import torch
 
@@ -47,9 +48,10 @@ from batched_field import (
 
 P = len(PARAM_NAMES)
 
-STATE_FILE   = "cmaes_state.pkl"
-HISTORY_FILE = "cmaes_history.json"
-GENOME_FILE  = "best_genome_cmaes.json"
+BASE_DIR = Path(__file__).resolve().parent
+STATE_FILE   = BASE_DIR / "cmaes_state.pkl"
+HISTORY_FILE = BASE_DIR / "cmaes_history.json"
+GENOME_FILE  = BASE_DIR / "best_genome_cmaes.json"
 
 
 # ── parameter space ↔ unit cube ───────────────────────────────────────────────
@@ -85,6 +87,13 @@ def save_genome(path, params_row, fitness, generation):
         }, f, indent=2)
 
 
+def ensure_genome_file(path: Path):
+    if path.exists():
+        return
+    params_row = np.array([PARAM_DEFAULTS[name] for name in PARAM_NAMES], dtype=np.float32)
+    save_genome(path, params_row, fitness=-1.0, generation=-1)
+
+
 def load_genome(path):
     with open(path) as f:
         return json.load(f)
@@ -93,7 +102,7 @@ def load_genome(path):
 # ── history (appended across runs) ───────────────────────────────────────────
 
 def load_history():
-    if os.path.exists(HISTORY_FILE):
+    if HISTORY_FILE.exists():
         with open(HISTORY_FILE) as f:
             return json.load(f)
     return []
@@ -124,13 +133,34 @@ def _bar(v, width=20):
     return "#" * filled + "-" * (width - filled)
 
 
-def print_iteration(gen, fitness, arr, elapsed, sigma):
+def print_iteration(gen, fitness, arr, elapsed, sigma, metrics=None):
     best_idx = int(np.argmax(fitness))
     best_f   = fitness[best_idx]
     mean_f   = float(fitness.mean())
     best_p   = arr[best_idx]
     print(f"\n=== Iteration {gen}  ({elapsed:.1f}s)  sigma={sigma:.4f} ===")
     print(f"  fitness  best={best_f:.4f}  mean={mean_f:.4f}  [{_bar(min(best_f,1.0))}]")
+    if metrics:
+        corr = metrics.get("corr")
+        retention = metrics.get("retention")
+        faith = metrics.get("frequency_faithfulness")
+        day_p = metrics.get("day_period")
+        night_p = metrics.get("night_period")
+        ratio = metrics.get("period_ratio")
+
+        def _fmt(arr_):
+            if arr_ is None:
+                return "--"
+            val = arr_[best_idx]
+            return f"{val:.3f}" if np.isfinite(val) else "--"
+
+        print("  best metrics:")
+        print(f"           corr = {_fmt(corr)}"
+              f"  retention = {_fmt(retention)}"
+              f"  faithful = {_fmt(faith)}")
+        print(f"         dayT = {_fmt(day_p)}"
+              f"  nightT = {_fmt(night_p)}"
+              f"  ratio = {_fmt(ratio)}")
     print("  best params:")
     for i, name in enumerate(PARAM_NAMES):
         lo, hi = PARAM_BOUNDS[name]
@@ -320,11 +350,12 @@ def pick_device(requested):
 def main():
     args   = parse_args()
     device = pick_device(args.device)
+    ensure_genome_file(GENOME_FILE)
 
     history = load_history()
 
     # ── load or create CMA-ES state ──────────────────────────────────────────
-    if not args.fresh and os.path.exists(STATE_FILE):
+    if not args.fresh and STATE_FILE.exists():
         saved = load_state()
         es    = saved["es"]
         meta  = saved["meta"]
@@ -332,7 +363,7 @@ def main():
         print(f"Resuming from {STATE_FILE}  "
               f"(iteration {meta['gen']}, best fitness {meta['best_fitness']:.4f})")
     else:
-        if not args.fresh and not os.path.exists(STATE_FILE):
+        if not args.fresh and not STATE_FILE.exists():
             print("No saved state found — starting fresh.")
         else:
             print("--fresh: discarding saved state.")
@@ -377,6 +408,7 @@ def main():
             field.params = array_to_params(arr, device)
             fitness_acc += field.run_episode().cpu().numpy()
         fitness = fitness_acc / args.episodes
+        metrics = field.last_episode_metrics
 
         es.tell(X, (-fitness).tolist())
 
@@ -384,7 +416,7 @@ def main():
         meta["gen"] += 1
         gen = meta["gen"]
 
-        print_iteration(gen, fitness, arr, elapsed, es.sigma)
+        print_iteration(gen, fitness, arr, elapsed, es.sigma, metrics=metrics)
 
         best_idx = int(np.argmax(fitness))
         best_f   = float(fitness[best_idx])

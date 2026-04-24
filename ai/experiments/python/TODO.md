@@ -7,16 +7,22 @@
 - [ ] Run `python check_gpu.py` — confirm RTX 3060 is visible to PyTorch
 - [ ] Run `python run.py --device cuda` — verify simulation runs on GPU and matches v7 JS behaviour visually
 - [ ] Confirm dwell measurement works — watch corr panel through at least one full day/night cycle
+- [ ] Characterise the new experiment: frequency-faithful replay — capture what the output trace actually does at night
+- [ ] Compare day vs night replay period at the output node — not just correlation / dwell
+- [ ] Check whether the plotted slow high-amplitude night wave is just `Xr` projection of a healthy complex oscillator or a real replay distortion
+- [ ] Test the replay update: does `adv = replayGain * Omega` incorrectly slow frequency when memory is weak?
+- [ ] If needed, change replay so memory scales persistence / amplitude without scaling the learned angular velocity itself
 
 ## Short term — v8: Evolutionary search
 
-Goal: stop tuning parameters by hand.
+Goal: stop tuning parameters by hand, but only after replay is qualitatively honest.
 
 - [x] `batched_field.py` — `BatchedField` runs B instances as `(B, N, N)` tensors in a single GPU pass
 - [x] Fitness function — `peak_corr * clamp(night_rms / day_rms, max=2)` (correlation × signal retention)
 - [x] `evolve.py` — GA over `{W, alpha, beta, selfEx, epsilon, retain, phaseInertia}`, population 16, uniform crossover + Gaussian mutation with annealing
 - [x] Genome saved to `best_genome.json` after each generation
 - [x] `--load_genome best_genome.json` flag in `run.py` to visualise the best individual
+- [ ] Add a frequency-faithfulness metric so the search does not reward slowed replay that still correlates
 - [ ] Run the search: `python evolve.py --device cuda --gens 40` — confirm fitness increases generation over generation
 - [ ] Fix the triadic remainder computation — the current formula telescopes to ~0 (same as JS). The correct version wraps each individual edge phase difference before summing. Low risk to try; revert if behaviour changes.
 
@@ -50,3 +56,4 @@ Goal: stop tuning parameters by hand.
 
 - `triRem` is effectively zero (inherited from JS — the phase sum telescopes algebraically). `R` is still meaningful because it is dominated by the `1 - coh` term. Fixing this is in the v8 backlog above.
 - `matplotlib` interactive mode slows significantly for N > 64. Switch to the websocket renderer before scaling up.
+- Night replay may currently look like a slow high-amplitude wave in the `Output Xr` panel. This may be either a harmless projection effect (`Xr` of a complex oscillator) or a real bug where replay strength scales angular advance and slows the learned frequency.

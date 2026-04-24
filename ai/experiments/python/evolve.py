@@ -16,6 +16,7 @@ import argparse
 import json
 import math
 import time
+from pathlib import Path
 import numpy as np
 import torch
 
@@ -23,6 +24,9 @@ from batched_field import (
     BatchedField, PARAM_NAMES, PARAM_BOUNDS, PARAM_DEFAULTS,
     random_params, default_params, params_to_array, array_to_params
 )
+
+BASE_DIR = Path(__file__).resolve().parent
+GENOME_FILE = BASE_DIR / "best_genome.json"
 
 
 # ── GA operators ──────────────────────────────────────────────────────────────
@@ -94,6 +98,24 @@ def load_genome(path: str) -> dict:
         return json.load(f)
 
 
+def ensure_genome_file(path: Path):
+    if path.exists():
+        return
+    params_row = np.array([PARAM_DEFAULTS[name] for name in PARAM_NAMES], dtype=np.float32)
+    save_genome(path, params_row, fitness=-1.0, generation=-1)
+
+
+def resolve_path(path: str | None) -> Path | None:
+    if path is None:
+        return None
+    p = Path(path)
+    if p.is_absolute():
+        return p
+    if p.exists():
+        return p.resolve()
+    return BASE_DIR / p
+
+
 # ── display ───────────────────────────────────────────────────────────────────
 
 def _bar(v, width=20):
@@ -102,7 +124,7 @@ def _bar(v, width=20):
 
 
 def print_generation(gen: int, gens: int, fitness: np.ndarray,
-                     arr: np.ndarray, elapsed: float):
+                     arr: np.ndarray, elapsed: float, metrics: dict | None = None):
     best_idx = int(np.argmax(fitness))
     best_f   = fitness[best_idx]
     mean_f   = fitness.mean()
@@ -111,6 +133,27 @@ def print_generation(gen: int, gens: int, fitness: np.ndarray,
     print(f"\n=== Generation {gen+1}/{gens}  ({elapsed:.1f}s) ===")
     print(f"  fitness  best={best_f:.4f}  mean={mean_f:.4f}  "
           f"[{_bar(min(best_f, 1.0))}]")
+    if metrics:
+        corr = metrics.get("corr")
+        retention = metrics.get("retention")
+        faith = metrics.get("frequency_faithfulness")
+        day_p = metrics.get("day_period")
+        night_p = metrics.get("night_period")
+        ratio = metrics.get("period_ratio")
+
+        def _fmt(arr_):
+            if arr_ is None:
+                return "--"
+            val = arr_[best_idx]
+            return f"{val:.3f}" if np.isfinite(val) else "--"
+
+        print("  best metrics:")
+        print(f"           corr = {_fmt(corr)}"
+              f"  retention = {_fmt(retention)}"
+              f"  faithful = {_fmt(faith)}")
+        print(f"         dayT = {_fmt(day_p)}"
+              f"  nightT = {_fmt(night_p)}"
+              f"  ratio = {_fmt(ratio)}")
     print("  best genome:")
     for i, name in enumerate(PARAM_NAMES):
         lo, hi = PARAM_BOUNDS[name]
@@ -155,6 +198,7 @@ def main():
     N      = args.N
     gens   = args.gens
     eps    = args.episodes
+    ensure_genome_file(GENOME_FILE)
 
     print(f"Field Dynamics — Evolutionary Search")
     print(f"  population={B}  grid={N}x{N}  generations={gens}  "
@@ -172,8 +216,9 @@ def main():
             arr[0, i] = PARAM_DEFAULTS[name]
 
     if args.resume:
-        genome = load_genome(args.resume)
-        print(f"Resuming from {args.resume}  (gen {genome['generation']}, "
+        resume_path = resolve_path(args.resume)
+        genome = load_genome(resume_path)
+        print(f"Resuming from {resume_path}  (gen {genome['generation']}, "
               f"fitness {genome['fitness']:.4f})")
         for i, name in enumerate(PARAM_NAMES):
             arr[0, i] = genome["params"][name]   # seed slot 0 with best known
@@ -198,18 +243,19 @@ def main():
             f_t = field.run_episode()
             fitness_acc += f_t.cpu().numpy()
         fitness = fitness_acc / eps
+        metrics = field.last_episode_metrics
 
         elapsed = time.perf_counter() - t0
 
-        print_generation(gen, gens, fitness, arr, elapsed)
+        print_generation(gen, gens, fitness, arr, elapsed, metrics=metrics)
 
         best_idx = int(np.argmax(fitness))
         if fitness[best_idx] > best_fitness_ever:
             best_fitness_ever = fitness[best_idx]
             best_arr_ever     = arr[best_idx].copy()
             best_gen_ever     = gen
-            save_genome("best_genome.json", best_arr_ever, best_fitness_ever, gen)
-            print(f"  ** New best saved → best_genome.json")
+            save_genome(GENOME_FILE, best_arr_ever, best_fitness_ever, gen)
+            print(f"  ** New best saved → {GENOME_FILE}")
 
         # Slow annealing: reduce mutation strength as search converges
         mut_strength = max(0.2, 1.0 - (gen / gens) * 0.7)
@@ -223,9 +269,9 @@ def main():
     print("Best parameters:")
     for i, name in enumerate(PARAM_NAMES):
         print(f"  {name:>15s} = {best_arr_ever[i]:.6f}")
-    print(f"\nSaved to best_genome.json")
+    print(f"\nSaved to {GENOME_FILE}")
     print(f"\nTo visualise the best individual:")
-    print(f"  python run.py --device {device} --load_genome best_genome.json")
+    print(f"  python run.py --device {device} --load_genome {GENOME_FILE}")
 
 
 if __name__ == "__main__":

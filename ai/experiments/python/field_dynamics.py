@@ -24,6 +24,35 @@ def _wrap(d):
     return (d + math.pi) % TWO_PI - math.pi
 
 
+def _estimate_period(trace, min_amplitude=0.05):
+    """Estimate period from positive-going zero crossings of a centered trace."""
+    if len(trace) < 8:
+        return math.nan
+
+    arr = np.asarray(trace, dtype=np.float32)
+    centered = arr - arr.mean()
+    if np.max(np.abs(centered)) < min_amplitude:
+        return math.nan
+
+    crossings = []
+    for i in range(1, len(centered)):
+        prev = float(centered[i - 1])
+        cur = float(centered[i])
+        if prev <= 0.0 < cur and cur != prev:
+            frac = -prev / (cur - prev)
+            crossings.append((i - 1) + frac)
+
+    if len(crossings) < 2:
+        return math.nan
+
+    diffs = np.diff(crossings)
+    diffs = diffs[np.isfinite(diffs) & (diffs >= 2.0)]
+    if len(diffs) == 0:
+        return math.nan
+
+    return float(np.median(diffs))
+
+
 class FieldDynamics:
     def __init__(self, N=32, device="cpu", **param_overrides):
         self.N = N
@@ -118,12 +147,22 @@ class FieldDynamics:
         self.HIST_LEN             = 200
         self.input_history        = []
         self.output_history       = []
+        self.output_imag_history  = []
+        self.output_mag_history   = []
         self.output_day_history   = []
+        self.output_day_imag_history = []
+        self.output_day_mag_history  = []
         self.output_night_history = []
+        self.output_night_imag_history = []
+        self.output_night_mag_history  = []
         self.dwell_steps = 0
         self.best_dwell  = 0
         self.peak_corr   = 0.0
         self.corr_value  = 0.0
+        self.day_period_est = math.nan
+        self.night_period_est = math.nan
+        self.replay_period_ratio = math.nan
+        self.frequency_faithfulness = math.nan
 
     # ── cycle ────────────────────────────────────────────────────────────────
 
@@ -147,6 +186,7 @@ class FieldDynamics:
                 self.cycle_mode = "day"
                 self.cycle_step_in_phase = 0
                 self.warmup_done = True
+                self._on_day_start()
             return
 
         if self.cycle_mode == "day" and self.cycle_step_in_phase >= self.P["dayLen"]:
@@ -157,10 +197,23 @@ class FieldDynamics:
             self.cycle_mode = "day"
             self.cycle_step_in_phase = 0
             self.cycle_count += 1
+            self._on_day_start()
+
+    def _on_day_start(self):
+        self.output_day_history.clear()
+        self.output_day_imag_history.clear()
+        self.output_day_mag_history.clear()
+        self.output_night_history.clear()
+        self.output_night_imag_history.clear()
+        self.output_night_mag_history.clear()
+        self.dwell_steps = 0
+        self.peak_corr   = 0.0
+        self.corr_value  = 0.0
 
     def _on_night_start(self):
-        self.output_day_history.clear()
         self.output_night_history.clear()
+        self.output_night_imag_history.clear()
+        self.output_night_mag_history.clear()
         self.dwell_steps = 0
         self.peak_corr   = 0.0
         self.corr_value  = 0.0
@@ -309,9 +362,11 @@ class FieldDynamics:
             replayMem = memAvg
             rg        = P["phaseInertia"] * P["retain"] * memAvg
             replayGain = rg
-            adv        = rg * self.Omega
+            # Preserve the learned angular velocity itself; memory strength should
+            # gate whether replay is applied, not slow the replayed frequency.
+            adv        = P["phaseInertia"] * self.Omega
             replayAdv  = adv
-            significant = torch.abs(adv) > 1e-6
+            significant = rg > 1e-6
             ca = torch.cos(adv); sa = torch.sin(adv)
             # Save originals before rotation (JS uses const tr=nr, ti=ni)
             tr = nr; ti = ni
@@ -463,6 +518,9 @@ class FieldDynamics:
     # ── main tick ─────────────────────────────────────────────────────────────
 
     def update(self):
+        was_day = self.is_day()
+        was_warmup = self.is_warmup()
+
         self._compute_drive()
         self._update_x()
         self._update_phase_memory()
@@ -474,20 +532,26 @@ class FieldDynamics:
         if self.step % 100 == 0:
             self._update_homeostasis()
 
-        self.advance_cycle()
-
         # Record histories
         r, c = self.output_node
         ov   = self.Xr[r, c].item()
+        oi   = self.Xi[r, c].item()
+        om   = float(math.hypot(ov, oi))
         _append(self.output_history, ov, self.HIST_LEN)
+        _append(self.output_imag_history, oi, self.HIST_LEN)
+        _append(self.output_mag_history, om, self.HIST_LEN)
 
-        if self.is_day() and not self.is_warmup():
+        if was_day and not was_warmup:
             _append(self.output_day_history, ov, self.HIST_LEN)
-        elif not self.is_day() and not self.is_warmup():
+            _append(self.output_day_imag_history, oi, self.HIST_LEN)
+            _append(self.output_day_mag_history, om, self.HIST_LEN)
+        elif not was_day and not was_warmup:
             _append(self.output_night_history, ov, self.HIST_LEN)
+            _append(self.output_night_imag_history, oi, self.HIST_LEN)
+            _append(self.output_night_mag_history, om, self.HIST_LEN)
 
         # Memory scoring at night
-        if not self.is_day() and not self.is_warmup():
+        if not was_day and not was_warmup:
             self.corr_value = self._cross_corr(self.output_day_history, self.output_night_history)
             self.peak_corr  = max(self.peak_corr, self.corr_value)
             if self.corr_value > self.P["corrThr"]:
@@ -496,12 +560,26 @@ class FieldDynamics:
             else:
                 self.dwell_steps = 0
 
+        self.day_period_est = _estimate_period(self.output_day_history)
+        self.night_period_est = _estimate_period(self.output_night_history)
+        if np.isfinite(self.day_period_est) and np.isfinite(self.night_period_est):
+            ratio = self.night_period_est / max(self.day_period_est, 1e-6)
+            self.replay_period_ratio = ratio
+            self.frequency_faithfulness = min(ratio, 1.0 / max(ratio, 1e-6))
+        else:
+            self.replay_period_ratio = math.nan
+            self.frequency_faithfulness = math.nan
+
+        self.advance_cycle()
         self.step += 1
 
     # ── state snapshot ────────────────────────────────────────────────────────
 
     def get_state(self):
         to_np = lambda t: t.cpu().numpy()
+        or_, oc = self.output_node
+        output_omega = float(self.Omega[or_, oc].item())
+        output_adv = float(self.ReplayAdv[or_, oc].item())
         return {
             "Xr":        to_np(self.Xr),
             "Xi":        to_np(self.Xi),
@@ -518,9 +596,15 @@ class FieldDynamics:
             "corr_value":   self.corr_value,
             "peak_corr":    self.peak_corr,
             "best_dwell":   self.best_dwell,
+            "day_period_est": self.day_period_est,
+            "night_period_est": self.night_period_est,
+            "replay_period_ratio": self.replay_period_ratio,
+            "frequency_faithfulness": self.frequency_faithfulness,
             "drive_env":    self.drive_env,
             "input_node":   self.input_node,
             "output_node":  self.output_node,
+            "output_omega": output_omega,
+            "output_replay_adv": output_adv,
         }
 
     # ── persistence ───────────────────────────────────────────────────────────

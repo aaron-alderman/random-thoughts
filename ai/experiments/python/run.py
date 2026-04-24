@@ -22,16 +22,46 @@ import json
 import sys
 import time
 import math
+from pathlib import Path
 import numpy as np
 import matplotlib
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 from matplotlib.gridspec import GridSpec
 import torch
 
 from field_dynamics import FieldDynamics
 
 TWO_PI = 2 * math.pi
+plt = None
+BASE_DIR = Path(__file__).resolve().parent
+
+
+def format_period(period):
+    if period is None or not np.isfinite(period):
+        return "--"
+    return f"{period:.1f}"
+
+
+def format_ratio(ratio):
+    if ratio is None or not np.isfinite(ratio):
+        return "--"
+    return f"{ratio:.2f}x"
+
+
+def format_score(score):
+    if score is None or not np.isfinite(score):
+        return "--"
+    return f"{score:.2f}"
+
+
+def resolve_path(path: str | None) -> Path | None:
+    if path is None:
+        return None
+    p = Path(path)
+    if p.is_absolute():
+        return p
+    if p.exists():
+        return p.resolve()
+    return BASE_DIR / p
 
 
 # ── argument parsing ─────────────────────────────────────────────────────────
@@ -121,7 +151,25 @@ def build_figure():
 
 # ── main ─────────────────────────────────────────────────────────────────────
 
+def configure_matplotlib():
+    global plt
+    if plt is not None:
+        return plt
+
+    for backend in ("TkAgg", "Qt5Agg", "WXAgg", "Agg"):
+        try:
+            matplotlib.use(backend, force=True)
+            import matplotlib.pyplot as pyplot
+            plt = pyplot
+            return plt
+        except Exception:
+            continue
+
+    raise RuntimeError("No usable matplotlib backend found.")
+
+
 def main():
+    global plt
     args   = parse_args()
     device = pick_device(args.device)
     N      = args.N
@@ -129,10 +177,11 @@ def main():
 
     genome_overrides = {}
     if args.load_genome:
-        with open(args.load_genome) as f:
+        genome_path = resolve_path(args.load_genome)
+        with open(genome_path) as f:
             genome = json.load(f)
         genome_overrides = genome["params"]
-        print(f"Loaded genome from {args.load_genome}  "
+        print(f"Loaded genome from {genome_path}  "
               f"(gen {genome['generation']}, fitness {genome['fitness']:.4f})")
         for k, v in genome_overrides.items():
             print(f"  {k:>15s} = {v:.6f}")
@@ -140,13 +189,8 @@ def main():
     sim = FieldDynamics(N=N, device=device, **genome_overrides)
 
     # ── matplotlib interactive mode ──────────────────────────────────────────
-    # Try backends in order until one works
-    for _backend in ("TkAgg", "Qt5Agg", "WXAgg", "Agg"):
-        try:
-            matplotlib.use(_backend)
-            break
-        except Exception:
-            continue
+    # Configure a usable backend before importing pyplot.
+    plt = configure_matplotlib()
     plt.ion()
     fig, ax = build_figure()
     fig.canvas.manager.set_window_title("Field Dynamics v7 — Python/PyTorch")
@@ -270,10 +314,17 @@ def main():
         mode_str = st["cycle_mode"].upper()
         fps = 1.0 / max(0.001, time.perf_counter() - frame_t)
         frame_t = time.perf_counter()
+        day_period = format_period(st["day_period_est"])
+        night_period = format_period(st["night_period_est"])
+        replay_ratio = format_ratio(st["replay_period_ratio"])
+        faithfulness = format_score(st["frequency_faithfulness"])
         title_text.set_text(
             f"Step {st['step']}  |  {mode_str}  cycle {st['cycle_count']}"
             f"  |  corr {st['corr_value']:.3f}  peak {st['peak_corr']:.3f}"
-            f"  |  dwell {st['best_dwell']}  |  {fps:.0f} fps"
+            f"  |  dwell {st['best_dwell']}"
+            f"  |  dayT {day_period}  nightT {night_period}"
+            f"  |  ratio {replay_ratio}  faithful {faithfulness}"
+            f"  |  {fps:.0f} fps"
             f"  |  device: {device}  N={N}"
         )
 

@@ -170,7 +170,7 @@ X never crosses scale boundaries. This prevents naive bubbling. The coarse scale
 
 ## The Task
 
-### Current Task: Dwell
+### Baseline Task: Dwell
 
 ```
 DAY:    DRIVE active at input node
@@ -190,6 +190,25 @@ DWELL:   Consecutive steps where correlation > threshold
 ```
 
 Success means the output node maintains its day pattern into the night. That is memory. The field held something that was never directly driven.
+
+### Current Task: Frequency-Faithful Replay
+
+The dwell experiment established the right next question:
+
+```
+DAY:    Output node develops a rotating / oscillatory pattern driven only indirectly
+
+NIGHT:  Replay begins after DRIVE is removed
+
+MEASURE:
+        1. Does the output retain the same qualitative pattern?
+        2. Does replay preserve the learned angular velocity / period?
+        3. Or does replay collapse into a slower, larger-amplitude surrogate wave?
+```
+
+This is a distinct experiment, not just a re-run of dwell. A replay that correlates with the day trace but changes its frequency is not yet faithful memory. It may indicate that memory strength is incorrectly scaling phase advance itself instead of only scaling persistence / amplitude.
+
+Success here means: the output node keeps a recognizable version of its day pattern into the night **without an unexplained frequency slowdown**.
 
 ### Drive Signal
 
@@ -291,6 +310,13 @@ Both fixes are simple and constitute v6.
 - Measure dwell time across multiple cycles
 - Confirm: dwell time increases cycle over cycle
 - First genuine result: S field learning the path
+
+### v7b — Frequency-Faithful Replay (Immediate)
+- Characterise the observed night waveform at the output node
+- Compare day and night replay period, not just correlation
+- Test whether replay slows because `memAvg` scales angular advance directly
+- If so, separate frequency preservation from persistence / amplitude weighting
+- Gate: no evolutionary search until replay is qualitatively honest
 
 ### v8 — Evolutionary Search (Short Term)
 - Population of 8-16 field instances
@@ -404,5 +430,5 @@ The field knows more about what it needs than we do.
 ---
 
 *End of handoff document.*
-*Version: post v5, pre v6*
-*Next action: fix propagation (complex drive + remove normalization)*
+*Version: post propagation fix, entering frequency-faithful replay experiment*
+*Next action: determine whether night replay preserves frequency or produces a slowed surrogate wave*
