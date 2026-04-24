@@ -367,7 +367,7 @@ This section records the main static claims in kernel form.
 | a fourth generation is excluded in the relevant physical sense | significant proof burden | 6 | not yet safe to state strongly in paper form |
 | `Cl(2,3) ≅ M₄(ℂ)` — the Clifford algebra is complex | mathematical fact | 3 | constrains tenfold-way class to A or AIII; full analysis in `kernels/topological.md` |
 | `Σ = 2J^{01}` is the chiral grading operator (S) of class AIII | structural identification | 3–4 | no additional structure needed; see `kernels/topological.md` for the mass-transition consequence |
-| conjugate branch amplitudes $(A,B)$ package as $X = (\Re A, \Im_u A, \Re B, \Im_u B)^T \in \mathbb{R}^4$ with $\mathcal{I} = A\bar{B}$ the symplectic pairing $\Omega(X, \cdot)$ | structural identification | 3–4 | $\mathrm{Sp}(4,\mathbb{R}) \cong \mathrm{Spin}(2,3)$ means conjugate-branch pairing and symplectic structure are the same object |
+| conjugate branch amplitudes $(A,B)$ package as $X = (\Re A, \Im_u A, \Re B, \Im_u B)^T \in \mathbb{R}^4$ and the coherence scalar $\mathcal{I}=AB$ supplies the locked phase; $\mathcal M_{\mathrm{ex}}=-\mathrm{Im}_u(AB)$ is the exchange-odd symplectic pairing | structural identification | 3–4 | $\mathrm{Sp}(4,\mathbb{R}) \cong \mathrm{Spin}(2,3)$ is the natural symmetry of the branch-space quadratic structure |
 | the associator $[a,b,c]$ packages as a 5-vector $\mu^I$ in the vector representation of Spin(2,3) with $Q(\mu) = \eta_{IJ}\mu^I\mu^J = \lvert[a,b,c]\rvert^2$ | structural identification | 4 | the signed coupling $\kappa_u$ is the projection of $\mu^I$ onto the transport axis; Sp(4,ℝ)-compatible construction |
 
 ---

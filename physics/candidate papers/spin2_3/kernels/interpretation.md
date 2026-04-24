@@ -112,7 +112,7 @@ The stronger version is still well beyond the present proof burden. So the inter
 
 ## Spin as holonomy of transport coherence
 
-The transport-coherence invariant $\mathcal{I} = A\bar{B} = R^2 e^{u\Phi}$ carries a phase $\Phi$ that evolves under the locked two-branch dynamics. Over a traversal period $T$, the holonomy is:
+The transport-coherence scalar $\mathcal{I} = AB = R^2 e^{u\Phi}$ carries a phase $\Phi$ that evolves under the locked two-branch dynamics. Over a traversal period $T$, the holonomy is:
 
 $$\mathcal{I}(s+T) = e^{u\Theta}\mathcal{I}(s)$$
 

@@ -124,7 +124,7 @@ The same geometry gives gravity at classical scales. Coupling to the `n = e₅` 
 
 ### 1b-ii. KK-Style Spin Quantization via Spin(2,3) Representations
 
-The isomorphism $\mathrm{Spin}(2,3) \cong \mathrm{Sp}(4,\mathbb{R})$ means the transport slice carries a symplectic structure. The two conjugate branch amplitudes $(A, B) \in \mathbb{C}_u$ of an octonionic process package as a real 4-vector $X \in \mathbb{R}^4$, and the transport-coherence invariant $\mathcal{I} = A\bar{B}$ is precisely the symplectic pairing $\Omega(X, \cdot)$.
+The isomorphism $\mathrm{Spin}(2,3) \cong \mathrm{Sp}(4,\mathbb{R})$ means the transport slice carries a symplectic structure. The two conjugate branch amplitudes $(A, B) \in \mathbb{C}_u$ of an octonionic process package as a real 4-vector $X \in \mathbb{R}^4$, and a natural coherence scalar is $\mathcal{I}=AB$ (whose exchange-odd component $\mathcal M_{\mathrm{ex}}=-\mathrm{Im}_u(AB)$ is the symplectic pairing underlying the exchange generator).
 
 This gives a KK-like mechanism for particle classification that is representation-theoretic rather than geometric:
 
@@ -134,13 +134,13 @@ This gives a KK-like mechanism for particle classification that is representatio
 - Allowed states = irreducible representations of $\mathrm{Spin}(2,3) \cong \mathrm{Sp}(4,\mathbb{R})$
 - Observable particles = projections of these irreps onto the transport (T1) slice
 
-Under phase locking, the transport-coherence invariant $\mathcal{I}(s+T) = e^{u\Theta}\mathcal{I}(s)$ gives integer spin for $\Theta = 2\pi$ and half-integer spin for $\Theta = \pi$. Spin is the winding number of the conjugate branch pair around the transport axis.
+Under phase locking, the coherence scalar $\mathcal{I}(s+T) = e^{u\Theta}\mathcal{I}(s)$ gives integer spin for $\Theta = 2\pi$ and half-integer spin for $\Theta = \pi$. Spin is the winding number of the conjugate branch pair around the transport axis.
 
 The metaplectic representations of $\mathrm{Sp}(4,\mathbb{R})$ are natural homes for the two-branch amplitude structure — they are built from pairs. This suggests the framework may be most naturally expressed as a metaplectic quantization of null transport, with the octonionic bulk providing the non-associative deformation of the symplectic structure (see `archive/overflow.md`).
 
 | Claim | Role | Level |
 |---|---|---|
-| $\mathcal{I} = A\bar{B}$ is the Sp(4,ℝ) symplectic pairing of branch amplitudes | structural identification | 3–4 |
+| $\mathcal{I}=AB$ carries the locked phase and $\mathcal M_{\mathrm{ex}}=-\mathrm{Im}_u(AB)$ is the exchange-odd symplectic pairing | structural identification | 3–4 |
 | particle species as irreps of Spin(2,3) | KK-style proposal | 4–5 |
 | spin as winding number of conjugate branch pair | structural reading | 5 |
 | metaplectic representations as natural host for two-branch structure | direction | 5 |
@@ -525,7 +525,7 @@ The other three claims sit outside the current proof reach of the framework. The
 | topological matter from Spin(2,3) Clifford structure | speculation | speculative | 5 |
 | dark matter as T2-sector matter | speculation | speculative | 5 |
 | three-generation forcing via `2/4/6` ladder | speculation | speculative | 5 |
-| $\mathcal{I} = A\bar{B}$ as Sp(4,ℝ) symplectic pairing; forced classification into four transport classes | structural identification | 3–4 |
+| $\mathcal{I}=AB$ and $\mathcal M_{\mathrm{ex}}=-\mathrm{Im}_u(AB)$ as the branch quadratic structure; forced classification into four transport classes | structural identification | 3–4 |
 | particle species as Spin(2,3) irreps; spin as branch winding number | KK-style representation proposal | 4–5 |
 | $G_2 \cap \mathrm{Spin}(2,3)$ calculation: symmetry group seeing both octonionic structure and transport projection | open calculation | 5–6 |
 

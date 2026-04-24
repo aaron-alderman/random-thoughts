@@ -225,6 +225,8 @@ That is still not a theorem, but it is a much narrower target than the older dem
 
 The residual `\mathbf Z_2` ambiguity now also has a cleaner location. It should not be thought of as a large hidden ambiguity in the algebra. The reduction fixes the structure almost completely, and the last global reversal is best read as the choice of which orientation counts as the physical forward/readout orientation. In that sense, the remaining sign is not primarily a static representation issue; it sits at the interface of epistemics and dynamics.
 
+**Concept hygiene.** The programme contains several distinct `\mathbf Z_2` operations (axis reversal `u\mapsto -u`, reduced naming swap `J^{01}\mapsto -J^{01}`, branch exchange/conjugation, and reduced-variable sign flips). When epistemics refers to the "last sign" or "global reversal" it means the physical forward/readout orientation choice, not an arbitrary reduced relabeling. See `kernels/discrete-symmetries.md`.
+
 So the strongest clean formulation currently available is:
 
 - the parent reduction fixes the two oriented candidate readout sectors
@@ -250,6 +252,8 @@ This also shrinks the remaining epistemic burden. Route B no longer has to justi
 - the unique direct readout channel is the constructive/persistent locked branch, hence the one with `\kappa_u > 0` in the phase-normalized gauge
 
 If that rule is accepted, the `T1` identification is conditionally fixed by the reduction kernel already in hand. If it can be derived from the bulk, then the remaining gap between Route B and Route A largely disappears.
+
+In other words, the same statement can be used in two roles: as an operational rule that fixes the readout orientation now, and as a derivation target that the bulk/ambient selector story may later justify.
 
 That does not yet derive the observable arrow from pure kinematics. But it does show exactly where the last sign choice lives: at the interface between reduction, observability, forward effective evolution, and possibly a larger ambient scale-flow geometry.
 

@@ -1,0 +1,21 @@
+# Field Dynamics v7 — Python dependencies
+#
+# ── Step 1: install PyTorch ──────────────────────────────────────────────────
+#
+# Check your GPU first:  python -c "import torch; print(torch.cuda.is_available())"
+#
+# NVIDIA GPU (most common) — pick the line that matches your CUDA version:
+#   CUDA 12.4 (newest):
+#     pip install torch --index-url https://download.pytorch.org/whl/cu124
+#   CUDA 11.8:
+#     pip install torch --index-url https://download.pytorch.org/whl/cu118
+#   Not sure? Run:  nvidia-smi   (top-right shows CUDA version)
+#
+# No GPU / CPU only:
+#     pip install torch --index-url https://download.pytorch.org/whl/cpu
+#
+# ── Step 2: install everything else ─────────────────────────────────────────
+#     pip install -r requirements.txt
+#
+numpy>=1.24
+matplotlib>=3.7

@@ -510,13 +510,13 @@ Non-associativity means that for generic bulk elements $a, b, c \in \mathbb{O}$,
 
 $$A = P_u((ab)c), \qquad B = P_u(a(bc)) \in \mathbb{C}_u$$
 
-Rather than forcing $A = B$ — which would impose associativity by hand — the framework retains both. The **transport-coherence invariant** is:
+Rather than forcing $A = B$ — which would impose associativity by hand — the framework retains both. The **transport-coherence scalar** is:
 
-$$\mathcal{I} = A\bar{B}$$
+$$\mathcal{I} = AB$$
 
-$|\mathcal{I}|$ encodes whether both branches survive; $\arg(\mathcal{I})$ encodes the interference structure; its evolution determines stability. This replaces the single amplitude as the fundamental object.
+$|\mathcal{I}|$ encodes whether both branches survive; $\arg(\mathcal{I})$ encodes the interference structure (the locked phase $\Phi=\theta_1+\theta_2$ used below); its evolution determines stability. This replaces the single amplitude as the fundamental object.
 
-**Spin(2,3) structural grounding.** Packaging the paired amplitudes as a real 4-vector $X = (\Re A, \Im_u A, \Re B, \Im_u B)^T \in \mathbb{R}^4$, the invariant $\mathcal{I} = A\bar{B}$ is precisely the symplectic pairing $\Omega(X, \cdot)$ for the canonical symplectic form on $\mathbb{R}^4$. Since $\mathrm{Sp}(4,\mathbb{R}) \cong \mathrm{Spin}(2,3)$, this identifies $\mathcal{I}$ as the natural Spin(2,3)-invariant object. Conjugate-branch pairing and symplectic structure are the same geometric datum.
+**Spin(2,3) structural grounding.** Packaging the paired amplitudes as a real 4-vector $X = (\Re A, \Im_u A, \Re B, \Im_u B)^T \in \mathbb{R}^4$, the canonical symplectic form on $\mathbb{R}^4$ is preserved by $\mathrm{Sp}(4,\mathbb{R}) \cong \mathrm{Spin}(2,3)$. The exchange-odd quadratic $\mathcal M_{\mathrm{ex}}(A,B)=-\mathrm{Im}_u(AB)$ that appears in the reduced equations is (up to a constant) exactly the symplectic pairing of $X$ with its exchanged/conjugated image. This is the concrete sense in which the two-branch dynamics are naturally Spin(2,3)/Sp(4,$\mathbb{R}$)-compatible.
 
 ### The signed transport coupling
 
@@ -598,6 +598,8 @@ So the residual global reversal has a concrete dynamical effect:
 - `u \mapsto -u` flips `\kappa_u`
 - hence it exchanges the constructive and inverted orientations of the locked branch
 
+**Concept hygiene.** Several distinct `\mathbf Z_2` operations appear in the programme (axis reversal `u\mapsto -u`, reduced-sector naming swap `J^{01}\mapsto -J^{01}`, branch exchange/conjugation, and reduced-variable sign flips). In this subsection, "residual global reversal" refers to the upstream axis-orientation choice that flips the odd bulk scalar `\kappa_u`, not merely a reduced basis relabeling. See `kernels/discrete-symmetries.md`.
+
 This yields the strongest current bulk-level orientation selector:
 
 > choose the global orientation for which the direct readout branch is phase-normalized to `\Phi_*=0` and lies in the constructive/persistent sector, equivalently `\kappa_u > 0`.
@@ -609,9 +611,9 @@ What remains open is still nontrivial:
 - why the observable readout branch should be required to be constructive rather than inverted
 - whether that requirement can be derived from the bulk rather than imposed as the final operational rule
 
-### Physical content of the orientation axiom
+### Physical content of the orientation rule
 
-The constructive/inverted distinction has a concrete geometric reading that converts the orientation axiom from a pure sign convention into a statement about the branch amplitudes.
+The constructive/inverted distinction has a concrete geometric reading that converts the orientation rule from a pure sign convention into a statement about the branch amplitudes.
 
 At the symmetric (`\rho = 0`) locked fixed point, the persistence condition gives
 
@@ -619,7 +621,7 @@ $$
 \kappa_u \cos\Phi_* = \gamma > 0.
 $$
 
-The real part of the transport-coherence invariant at the fixed point is
+The real part of the transport-coherence scalar at the fixed point is
 
 $$
 \mathrm{Re}_u(AB)\big|_{*} = R^2 \cos\Phi_*.
@@ -635,13 +637,13 @@ $$
 
 **Inverted class (`\kappa_u < 0`).** The fixed-point phase satisfies `\cos\Phi_* < 0`, so `\mathrm{Re}_u(AB) < 0`. The two bracket completions interfere destructively: their product has negative real part on the `u`-line.
 
-So the orientation axiom can be stated without reference to a gauge convention:
+So the orientation rule can be stated without reference to a gauge convention:
 
-> **Orientation axiom.** The observable direct readout selects the branch class for which the two octonionic bracket completions are in constructive interference at the transport fixed point, i.e., `\mathrm{Re}_u(AB)|_* > 0`. This selects the constructive class and forces `\kappa_u > 0`.
+> **Orientation rule (operational axiom).** The observable direct readout selects the branch class for which the two octonionic bracket completions are in constructive interference at the transport fixed point, i.e., `\mathrm{Re}_u(AB)|_* > 0`. This selects the constructive class and forces `\kappa_u > 0`.
 
 This is a physically motivated statement: constructive interference means the two bracketings reinforce each other, sustaining the transport amplitude. Destructive interference means they partially cancel, which is the physically disfavoured outcome for a stable readout channel.
 
-**Why this is still an axiom, not a derivation.** The statement above identifies what `\kappa_u > 0` means geometrically, but it does not derive from the octonionic bulk which states have `\mathrm{Re}_u(AB) > 0` at their transport fixed points. It also does not rule out the possibility that the actual selector lives one level higher, as an ambient scale-flow or readout vector whose reduced image fixes the sign. Either route would require tracking the selecting data through the reduction to the branch fixed point, which is a further derivation task. At present, `\kappa_u > 0` is the cleanly named final orientation axiom, with its geometric content now explicit.
+**Why this is still an operational axiom, not a derivation.** The statement above identifies what `\kappa_u > 0` means geometrically, but it does not derive from the octonionic bulk which states have `\mathrm{Re}_u(AB) > 0` at their transport fixed points. It also does not rule out the possibility that the actual selector lives one level higher, as an ambient scale-flow or readout vector whose reduced image fixes the sign. Either route would require tracking the selecting data through the reduction to the branch fixed point, which is a further derivation task. At present, `\kappa_u > 0` is used operationally to fix the forward/readout orientation, and it remains a clean derivation target. (Bracketing of kinematic vs dynamical `u` and the corresponding "no-go" statements live in `kernels/u-selector-bracketing.md`.)
 
 ### Conditional `N2` closure
 
@@ -654,11 +656,11 @@ In place without further assumption:
 3. a fixed sign dictionary sending the parent `(-)` charge sector to `T1`, up to the single global orientation reversal
 4. the coupling term `\kappa_u \mathcal M_{\mathrm{ex}}` is symmetry-forced: `\kappa_u` is `K`-invariant and exchange-odd, so by the uniqueness argument it can only descend as the coefficient of `\mathcal M_{\mathrm{ex}}`
 
-The remaining live issue is one named final axiom:
+The remaining live issue is one named final operational axiom (orientation rule):
 
-> **Orientation axiom.** The unique direct observable readout branch is the constructive locked branch — the one for which `\mathrm{Re}_u(AB)|_* > 0` at the transport fixed point, equivalently `\kappa_u > 0`.
+> **Orientation rule (operational axiom).** The unique direct observable readout branch is the constructive locked branch — the one for which `\mathrm{Re}_u(AB)|_* > 0` at the transport fixed point, equivalently `\kappa_u > 0`.
 
-Under that axiom:
+Under that operational axiom:
 
 - the residual global `\mathbf Z_2` is fixed by the sign of `\kappa_u`
 - the direct-support parent sector is the `(-)` charge sector
@@ -672,7 +674,7 @@ QH_0 = 0,
 H_0Q = 0.
 $$
 
-**Honest current state.** `N2` is conditionally closed. The projector bookkeeping, basis-level intertwiner, charge-generator intertwining, and coupling slot are all in place. The one remaining open task is to derive the orientation axiom (`\kappa_u > 0`) from the octonionic bulk geometry or from a larger ambient scale-flow selector, or else to accept it as the named final axiom and move the programme forward. The project can proceed under the axiom now; the selector derivation is a sharpening task, not a blocker.
+**Honest current state.** `N2` is conditionally closed. The projector bookkeeping, basis-level intertwiner, charge-generator intertwining, and coupling slot are all in place. The one remaining open task is to derive the orientation rule (`\kappa_u > 0`) from the octonionic bulk geometry or from a larger ambient scale-flow selector, or else to accept it as the named final operational axiom and move the programme forward. The project can proceed under the operational rule now; the selector derivation is a sharpening task, not a blocker.
 
 ### Two-branch evolution equations
 
@@ -856,7 +858,7 @@ This is a real gain for `N3`. It means the bulk derivation no longer has to gues
 
 - the `u`-adapted symplectic structure on branch space
 - the rotation term `\frac{\omega}{2}(|A|^2+|B|^2)`
-- the odd coupling Hamiltonian `-\kappa_u\,\mathrm{Im}_u(AB)`
+- the odd coupling Hamiltonian `-\kappa_u\,\mathrm{Im}_u(AB)` (the uniqueness of this exchange-odd cross-coupling slot is formalized in `kernels/kappa_u-moment-map-lemma.md`)
 - the positive Rayleigh term `\frac{\gamma}{2}(|A|^2+|B|^2)`
 
 So the transport system has now moved beyond "strong ansatz" in one specific sense: its minimal effective generator is explicit. The remaining problem is to derive that generator from the octonionic parent rather than merely write it down at the branch level.
@@ -1362,7 +1364,7 @@ This section records the main dynamical claims in kernel form.
 | Higgs-mediated mass generation may be what opens the `T1/T2` channel | interpretation / future work | 5 | promising but not established |
 | hidden-sector projection explains quantum uncertainty in general | interpretation / future work | 5 | suggestive but not established |
 | the hidden-sector correlator is derived from first principles | missing | 6 | major dynamical gap |
-| the transport-coherence invariant $\mathcal{I} = A\bar{B}$ is the Sp(4,ℝ)-invariant symplectic pairing of branch amplitudes | structural identification | 3–4 | $\mathcal{I}$ replaces single amplitude as fundamental object; connects to Spin(2,3) ≅ Sp(4,ℝ) |
+| the transport-coherence scalar $\mathcal{I} = AB$ carries the locked phase $\Phi=\theta_1+\theta_2$ and its exchange-odd component is the symplectic pairing underlying $\mathcal M_{\mathrm{ex}}$ | structural identification | 3–4 | $\mathcal{I}$ replaces single amplitude as fundamental object; connects to Spin(2,3) ≅ Sp(4,ℝ) |
 | the signed coupling $\kappa_u = \kappa_0\langle u, [a,b,c]\rangle/\Lambda^3$ is the Spin(2,3)-compatible projection of the associator | structural identification | 4 | sign determines constructive / frustrated / inverted class |
 | $\kappa_u$ is $K$-invariant (compact-equivariant) and exchange-odd, forcing it to descend as the unique coefficient of $\mathcal M_{\mathrm{ex}}$ | symmetry descent established | 3 | $K \subset \mathrm{Stab}_{G_2}(u)$ gives equivariance; $\mathfrak K_u: u \mapsto -u$ gives odd sign; uniqueness argument then forces the coupling slot — variational origin and orientation sign remain open |
 | two-branch evolution equations are the minimal Spin(2,3)-compatible ansatz | coupling term symmetry-forced; full variational derivation open | 4 | the $\kappa_u \mathcal M_{\mathrm{ex}}$ coupling is now forced by symmetry descent; the remaining open task is deriving $\omega$ and $\gamma$ from a parent action |

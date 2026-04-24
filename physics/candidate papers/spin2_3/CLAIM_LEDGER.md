@@ -32,7 +32,7 @@ This file indexes the claim level of major claims in the Spin(2,3) programme.
 | --- | --- | --- | --- |
 | Choosing an octonionic direction `e7` reduces `G2` to `SU(3)` | 3 | Established | Standard octonionic stabilizer fact. |
 | This `SU(3)` is physical color | 5 | Plausible but future work | Strong physical identification, not just group theory. |
-| The preferred octonionic direction aligns with the zero-mass traversal direction | 5 | Plausible but future work | Central framework proposal; forcing mechanism still open. |
+| The preferred octonionic direction aligns with the zero-mass traversal direction | 5 | Plausible but future work | [K/D] Central framework proposal; forcing mechanism still open (alignment may be taken as pointwise-in-`u`, but any derivation of why this `u` is selected is a [D] upgrade). |
 | `u^\perp ~= C^3` is the parent source of color, hidden planes, and generation structure | 5 | Plausible but future work | Current strongest parent-geometry convergence point. |
 | The hidden complement is carried locally by a quaternionic `H` slice as complex-plane data | 4 | Being established in this paper | Useful local reduction model; not yet canonical globally. |
 | `J3(O)` naturally supplies three structural slots | 3 | Established | Safe structural organizer claim. |
@@ -49,9 +49,9 @@ This file indexes the claim level of major claims in the Spin(2,3) programme.
 | Claim | Level | Name | Notes |
 | --- | --- | --- | --- |
 | The ambient-to-observable reduction can be modeled by the current toy intertwiner | 4 | Being established in this paper | Useful local scaffold; still owes canonical parent derivation. |
-| The observable projector may be induced by an ambient scale/readout flow above the reduced `Spin(2,3)` slice | 5 | Plausible but future work | New sharper selector target; would make `T1` a reduced label rather than an intrinsic preference. |
-| Zero-mass direct traversal is supported on the sector named `T1` | 4 | Being established in this paper | Depends on reduction/intertwiner and orientation assumptions; `T1` is the label for the sector selected by the forward readout/scale-flow orientation. |
-| Observables are evaluated after projection onto the sector named `T1` | 4 | Being established in this paper | Effective rule downstream of channel selection; invariant content should be the induced observable projector, not the bare label. |
+| The observable projector may be induced by an ambient scale/readout flow above the reduced `Spin(2,3)` slice | 5 | Plausible but future work | [K/D] New sharper selector target; would make `T1` a reduced label rather than an intrinsic preference (becomes [D] only if the programme claims to derive this flow/selector dynamically). |
+| Zero-mass direct traversal is supported on the sector named `T1` | 4 | Being established in this paper | [K/D] Depends on reduction/intertwiner and orientation assumptions; `T1` is the label for the sector selected by the forward readout/scale-flow orientation (pointwise support/readout rule is [K/D]; forcing it from bulk is [D]). |
+| Observables are evaluated after projection onto the sector named `T1` | 4 | Being established in this paper | [K/D] Effective rule downstream of channel selection; invariant content should be the induced observable projector, not the bare label. |
 | `T2` is dynamically present but not directly observable through the zero-mass channel | 4 | Being established in this paper | Follows inside the current interaction/readout picture. |
 | Sector mixing can be modeled by an off-diagonal block term | 4 | Being established in this paper | Minimal model choice, not unique. |
 | The leading reduced correction is second order in `m` | 4 | Being established in this paper | Derived under weak coupling. |
@@ -74,19 +74,20 @@ This file indexes the claim level of major claims in the Spin(2,3) programme.
 | `kappa_u` is compact-equivariant and exchange-odd, forcing its coupling slot | 4 | Being established in this paper | Symmetry-descent result; variational origin remains open. |
 | `omega` is the `U(1)` moment-map value on branch space | 4 | Being established in this paper | Reduced Hamiltonian/moment-map identification. |
 | `gamma > 0` is forced by full hidden-sector coupling under `Gamma > 0` and injective `K` | 4 | Being established in this paper | Sign result; magnitude still needs hidden correlator derivation. |
-| `kappa_u > 0` is the named orientation axiom with geometric content | 4 | Being established in this paper | Final operational sign axiom unless derived from the bulk. |
+| `kappa_u > 0` is the orientation rule (operational axiom) with geometric content | 4 | Being established in this paper | [K/D] Final operational sign rule unless derived from the bulk (deriving the sign is a [D] upgrade; using it as a named readout orientation rule is [K/D]). |
+| The orientation rule `kappa_u > 0` follows from an EM/readout interference functional aligned with `u` (e.g. sampling `|A+bar(B)|^2`) | 5 | Plausible but future work | [D1] Candidate derivation route: if the readout channel is the conjugate-sum `Psi_rd = A + bar(B)` then its intensity contains `2 Re_u(AB)` and constructive readout implies `Re_u(AB)|_* > 0`, hence `kappa_u > 0` via the fixed-point identity. See `kernels/orientation-d1-bulk-stability.md`. |
 | The two-branch evolution equations are the minimal Spin(2,3)-compatible ansatz | 4 | Being established in this paper | Coupling term is symmetry-constrained; full parent action remains open. |
 | Exact reduction to `(R, rho, Phi)` and effective coupling `kappa_eff = kappa_u cosh(2rho)` | 4 | Being established in this paper | Exact once the two-branch equations are adopted. |
 | Four transport classes are forced by locking and persistence boundaries | 4 | Being established in this paper | Paper-local theorem imported as framework-level claim. |
 | Particle-like states satisfy locking plus persistence conditions | 4 | Being established in this paper | Derived consequence of the two-branch classification. |
-| The two-branch equations are derived from a first-principles octonionic variational principle | 5 | Plausible but future work | Partially constrained, but full parent action is open. |
+| The two-branch equations are derived from a first-principles octonionic variational principle | 5 | Plausible but future work | [D] Partially constrained, but full parent action is open (this is a dynamical-upgrade claim, not pointwise-in-`u`). |
 | The two-branch amplitude picture has been derived into the Lindblad-Markov density-matrix picture | 5 | Plausible but future work | Coarse-graining bridge remains open. |
 
 ## Epistemic Claims
 
 | Claim | Level | Name | Notes |
 | --- | --- | --- | --- |
-| The effective observable channel is determined by zero-mass interaction | 5 | Plausible but future work | Central epistemic proposal; still needs deeper derivation. |
+| The effective observable channel is determined by zero-mass interaction | 5 | Plausible but future work | [K/D] Central epistemic proposal; can be adopted as a pointwise-in-`u` readout rule, but upgrading to "dynamically forced" is [D]. |
 | Projection and coarse-graining are distinct operations | 1 | Trivial | Conceptual hygiene statement used across the kernels. |
 | The effective observable description loses full microscopic information | 4 | Being established in this paper | Safe at the reduced-description level. |
 | Uncertainty-like broadening can arise from unresolved hidden-sector excursions | 5 | Plausible but future work | Grounded in reduced dynamics but stronger than a theorem. |
@@ -123,8 +124,8 @@ This file indexes the claim level of major claims in the Spin(2,3) programme.
 | --- | --- | --- | --- |
 | Parametrized symmetric operators exhibit gap-amplified projector sensitivity | 3 | Established | General spectral mathematics in `research/spectral-transition/`. |
 | Boundary-restricted projectors inherit inverse-gap sensitivity | 4 | Being established in this paper | Depends on the chosen bulk-boundary splitting. |
-| Efimov scaling may be governed by a threshold SO(2,1) Casimir in the Spin(2,3) dephased sector | 5 | Plausible but future work | Lives in `research/faddeev-efimov/`; not core until proof obligations are met. |
-| The Faddeev 3x3 channel matrix is the restricted Spin-derived SO(2,1) Casimir | 5 | Plausible but future work | Target theorem only after normalization and explicit `s_0` calculation. |
+| Efimov scaling may be governed by a threshold SO(2,1) Casimir in the Spin(2,3) dephased sector | 5 | Plausible but future work | [K/D] Lives in `research/faddeev-efimov/`; not core until proof obligations are met (does not require `u` to run, but a strong "selector flow = RG flow" identification would be [D]). |
+| The Faddeev 3x3 channel matrix is the restricted Spin-derived SO(2,1) Casimir | 5 | Plausible but future work | [K/D] Target theorem only after normalization and explicit `s_0` calculation. |
 | The Faddeev/Casimir bridge has theorem-level status | 6 | Significant issue | The framework does not support this yet. |
 | The Efimov bridge is closed at matrix level | 6 | Significant issue | Requires explicit Spin-derived operator and normalization match. |
 
@@ -149,3 +150,7 @@ This file indexes the claim level of major claims in the Spin(2,3) programme.
 When a document introduces a strong claim, list it here before treating it as framework content. Use the lowest defensible level first, then lower the number only after the needed derivation, calculation, citation, or proof obligation is recorded.
 
 Paper-local theorems may remain in paper drafts when their assumptions are stated inside the paper. They become framework-level claims only after they appear in this ledger.
+
+### Bracketed assumptions
+
+The status of the preferred octonionic selector direction `u` is intentionally bracketed (kinematic vs dynamical). See `kernels/u-selector-bracketing.md` for the fork map and "impossibility tests" that would rule one bracket out in a given realization.
