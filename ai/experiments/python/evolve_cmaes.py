@@ -132,15 +132,21 @@ def validate_unit_seed(row, physical_row: np.ndarray | None = None, source: str 
 
 # ── genome I/O ────────────────────────────────────────────────────────────────
 
-def save_genome(path, params_row, fitness, generation, experiment, symmetry_break):
+def save_genome(path, params_row, fitness, generation, experiment, symmetry_break,
+                eval_episode_seeds: list[int] | None = None, eval_slot: int | None = None):
+    genome = {
+        "generation": generation,
+        "fitness":    float(fitness),
+        "experiment": experiment,
+        "symmetry_break": symmetry_break,
+        "params":     {n: float(params_row[i]) for i, n in enumerate(PARAM_NAMES)},
+    }
+    if eval_episode_seeds is not None:
+        genome["eval_episode_seeds"] = [int(s) for s in eval_episode_seeds]
+    if eval_slot is not None:
+        genome["eval_slot"] = int(eval_slot)
     with open(path, "w") as f:
-        json.dump({
-            "generation": generation,
-            "fitness":    float(fitness),
-            "experiment": experiment,
-            "symmetry_break": symmetry_break,
-            "params":     {n: float(params_row[i]) for i, n in enumerate(PARAM_NAMES)},
-        }, f, indent=2)
+        json.dump(genome, f, indent=2)
 
 
 def ensure_genome_file(path: Path, experiment: str, symmetry_break: str | None):
@@ -396,6 +402,8 @@ def parse_args():
     p.add_argument("--experiment", choices=SUPPORTED_EXPERIMENTS, default="symmetry_v1")
     p.add_argument("--symmetry-break", choices=SUPPORTED_SYMMETRY_BREAKS, default="spatial")
     p.add_argument("--episodes", type=int,  default=1)
+    p.add_argument("--seed", type=int, default=None,
+                   help="Random seed for reproducible search and saved-genome replay")
     p.add_argument("--fresh",   action="store_true",
                    help="Discard saved state and start over")
     p.add_argument("--seed_default", action="store_true",
@@ -424,6 +432,9 @@ def pick_device(requested):
 
 def main():
     args   = parse_args()
+    if args.seed is not None:
+        np.random.seed(args.seed)
+        torch.manual_seed(args.seed)
     device = pick_device(args.device)
     state_file = default_cmaes_state_path(BASE_DIR, args.experiment, args.symmetry_break)
     history_file = default_cmaes_history_path(BASE_DIR, args.experiment, args.symmetry_break)
@@ -536,9 +547,13 @@ def main():
         arr = batch_from_unit(X)
 
         fitness_acc = np.zeros(B, dtype=np.float32)
+        episode_seeds = []
+        slot_ids = np.arange(B, dtype=np.int64)
         for _ in range(args.episodes):
+            episode_seed = int(np.random.randint(0, 2**31 - 1))
+            episode_seeds.append(episode_seed)
             field.params = array_to_params(arr, device)
-            fitness_acc += field.run_episode().cpu().numpy()
+            fitness_acc += field.run_episode(base_seed=episode_seed, slot_ids=slot_ids).cpu().numpy()
         fitness = fitness_acc / args.episodes
         metrics = field.last_episode_metrics
 
@@ -571,6 +586,8 @@ def main():
                     gen,
                     experiment=args.experiment,
                     symmetry_break=args.symmetry_break,
+                    eval_episode_seeds=episode_seeds,
+                    eval_slot=best_idx,
                 )
                 print(f"  ** New best → {genome_file}")
 

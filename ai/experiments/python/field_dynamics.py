@@ -12,6 +12,7 @@ import math
 import torch
 import numpy as np
 from experiment_paths import validate_experiment
+from initial_state import build_initial_fields
 
 TWO_PI = 2.0 * math.pi
 
@@ -58,6 +59,8 @@ class FieldDynamics:
     def __init__(self, N=32, device="cpu", **param_overrides):
         experiment = param_overrides.pop("experiment", "symmetry_v1")
         symmetry_break = param_overrides.pop("symmetry_break", "spatial")
+        self.reset_seed = param_overrides.pop("reset_seed", None)
+        self.reset_slot = int(param_overrides.pop("reset_slot", 0))
         self.experiment, self.symmetry_break = validate_experiment(experiment, symmetry_break)
         self.N = N
         self.device = torch.device(device)
@@ -110,12 +113,19 @@ class FieldDynamics:
         P = self.P
 
         baseline = 0.035
-        angles = torch.rand(N, N, device=d) * TWO_PI
-        noise  = (torch.rand(N, N, device=d) - 0.5) * 0.01
+        if self.reset_seed is None:
+            angles = torch.rand(N, N, device=d) * TWO_PI
+            noise = (torch.rand(N, N, device=d) - 0.5) * 0.01
+            structural = 0.1 + torch.rand(N, N, device=d) * 0.05
+        else:
+            angles_np, noise_np, structural_np = build_initial_fields(N, self.reset_seed, self.reset_slot)
+            angles = torch.tensor(angles_np, dtype=torch.float32, device=d)
+            noise = torch.tensor(noise_np, dtype=torch.float32, device=d)
+            structural = torch.tensor(structural_np, dtype=torch.float32, device=d)
 
         self.Xr = baseline * torch.cos(angles) + noise
         self.Xi = baseline * torch.sin(angles) + noise
-        self.S  = 0.1 + torch.rand(N, N, device=d) * 0.05
+        self.S = structural
 
         if self.symmetry_break == "spatial":
             # Match the search-time initialization so live runs and searched
@@ -167,6 +177,9 @@ class FieldDynamics:
         self.output_night_history = []
         self.output_night_imag_history = []
         self.output_night_mag_history  = []
+        self.output_night_history_first = []
+        self.output_night_imag_history_first = []
+        self.output_night_mag_history_first = []
         self.dwell_steps = 0
         self.best_dwell  = 0
         self.peak_corr   = 0.0
@@ -175,12 +188,25 @@ class FieldDynamics:
         self.night_period_est = math.nan
         self.replay_period_ratio = math.nan
         self.frequency_faithfulness = math.nan
+        self.optimizer_corr = 0.0
+        self.optimizer_retention = 0.0
+        self.optimizer_day_period = math.nan
+        self.optimizer_night_period = math.nan
+        self.optimizer_period_ratio = math.nan
+        self.optimizer_frequency_faithfulness = math.nan
+        self.optimizer_fitness = 0.0
         self.left_basin_history = []
         self.right_basin_history = []
         self.left_day_history = []
         self.right_day_history = []
         self.left_night_history = []
         self.right_night_history = []
+        self.left_night_history_first = []
+        self.right_night_history_first = []
+        self.optimizer_choice_strength = math.nan
+        self.optimizer_choice_consistency = math.nan
+        self.optimizer_overnight_persistence = math.nan
+        self.optimizer_switch_penalty = math.nan
         self.choice_strength = math.nan
         self.choice_consistency = math.nan
         self.overnight_persistence = math.nan
@@ -247,15 +273,31 @@ class FieldDynamics:
         self.output_night_history.clear()
         self.output_night_imag_history.clear()
         self.output_night_mag_history.clear()
+        self.output_night_history_first.clear()
+        self.output_night_imag_history_first.clear()
+        self.output_night_mag_history_first.clear()
         self.left_basin_history.clear()
         self.right_basin_history.clear()
         self.left_day_history.clear()
         self.right_day_history.clear()
         self.left_night_history.clear()
         self.right_night_history.clear()
+        self.left_night_history_first.clear()
+        self.right_night_history_first.clear()
         self.dwell_steps = 0
         self.peak_corr   = 0.0
         self.corr_value  = 0.0
+        self.optimizer_corr = 0.0
+        self.optimizer_retention = 0.0
+        self.optimizer_day_period = math.nan
+        self.optimizer_night_period = math.nan
+        self.optimizer_period_ratio = math.nan
+        self.optimizer_frequency_faithfulness = math.nan
+        self.optimizer_fitness = 0.0
+        self.optimizer_choice_strength = math.nan
+        self.optimizer_choice_consistency = math.nan
+        self.optimizer_overnight_persistence = math.nan
+        self.optimizer_switch_penalty = math.nan
         self.choice_strength = math.nan
         self.choice_consistency = math.nan
         self.overnight_persistence = math.nan
@@ -268,11 +310,24 @@ class FieldDynamics:
         self.output_night_history.clear()
         self.output_night_imag_history.clear()
         self.output_night_mag_history.clear()
+        self.output_night_history_first.clear()
+        self.output_night_imag_history_first.clear()
+        self.output_night_mag_history_first.clear()
         self.left_night_history.clear()
         self.right_night_history.clear()
+        self.left_night_history_first.clear()
+        self.right_night_history_first.clear()
         self.dwell_steps = 0
         self.peak_corr   = 0.0
         self.corr_value  = 0.0
+        self.optimizer_corr = 0.0
+        self.optimizer_retention = 0.0
+        self.optimizer_night_period = math.nan
+        self.optimizer_period_ratio = math.nan
+        self.optimizer_frequency_faithfulness = math.nan
+        self.optimizer_fitness = 0.0
+        self.optimizer_overnight_persistence = math.nan
+        self.optimizer_switch_penalty = math.nan
 
     # ── drive ─────────────────────────────────────────────────────────────────
 
@@ -637,6 +692,97 @@ class FieldDynamics:
 
     # ── main tick ─────────────────────────────────────────────────────────────
 
+    def _update_optimizer_metrics(self):
+        day_hist = self.output_day_history
+        night_hist = self.output_night_history_first
+
+        if len(day_hist) >= 4 and len(night_hist) >= 1:
+            day_arr = np.asarray(day_hist, dtype=np.float32)
+            night_arr = np.asarray(night_hist, dtype=np.float32)
+            n = min(len(day_arr), len(night_arr), self.HIST_LEN)
+            if n >= 4:
+                a = day_arr[:n]
+                b = night_arr[:n]
+                da = a - float(np.mean(a))
+                db = b - float(np.mean(b))
+                denom = float(np.sqrt(np.sum(da ** 2) * np.sum(db ** 2)))
+                self.optimizer_corr = 0.0 if denom <= 1e-10 else max(0.0, float(np.sum(da * db) / denom))
+            else:
+                self.optimizer_corr = 0.0
+            day_rms = float(np.sqrt(np.mean(day_arr ** 2)))
+            night_rms = float(np.sqrt(np.mean(night_arr ** 2)))
+            self.optimizer_retention = min(2.0, night_rms / (day_rms + 1e-4))
+        else:
+            self.optimizer_corr = 0.0
+            self.optimizer_retention = 0.0
+
+        self.optimizer_day_period = _estimate_period(day_hist)
+        self.optimizer_night_period = _estimate_period(night_hist)
+        if np.isfinite(self.optimizer_day_period) and np.isfinite(self.optimizer_night_period):
+            ratio = self.optimizer_night_period / max(self.optimizer_day_period, 1e-6)
+            self.optimizer_period_ratio = ratio
+            self.optimizer_frequency_faithfulness = min(ratio, 1.0 / max(ratio, 1e-6))
+        else:
+            self.optimizer_period_ratio = math.nan
+            self.optimizer_frequency_faithfulness = math.nan
+
+        faithfulness_reward = 0.0 if not np.isfinite(self.optimizer_frequency_faithfulness) else self.optimizer_frequency_faithfulness
+
+        if self.experiment == "symmetry_v1":
+            if len(self.left_day_history) < 4 or len(self.right_day_history) < 4:
+                self.optimizer_choice_strength = math.nan
+                self.optimizer_choice_consistency = math.nan
+                self.optimizer_overnight_persistence = 0.0
+                self.optimizer_switch_penalty = math.nan
+                self.optimizer_fitness = 0.0
+                return
+
+            day_left = np.asarray(self.left_day_history, dtype=np.float32)
+            day_right = np.asarray(self.right_day_history, dtype=np.float32)
+            day_dom = (day_left - day_right) / np.maximum(day_left + day_right, 1e-6)
+            mean_dom = float(np.mean(day_dom))
+            chosen_sign = 1.0 if mean_dom >= 0.0 else -1.0
+            self.optimizer_choice_strength = abs(mean_dom)
+            self.optimizer_choice_consistency = float(np.mean(np.sign(day_dom + 1e-6) == chosen_sign))
+
+            if self.left_night_history_first and self.right_night_history_first:
+                night_left = np.asarray(self.left_night_history_first, dtype=np.float32)
+                night_right = np.asarray(self.right_night_history_first, dtype=np.float32)
+                night_dom = (night_left - night_right) / np.maximum(night_left + night_right, 1e-6)
+                self.optimizer_overnight_persistence = float(
+                    np.mean(np.sign(night_dom + 1e-6) == chosen_sign)
+                )
+                combined = np.concatenate([day_dom, night_dom])
+            else:
+                self.optimizer_overnight_persistence = 0.0
+                combined = day_dom
+
+            signs = np.sign(combined)
+            signs = signs[np.abs(combined) > 0.02]
+            if len(signs) < 2:
+                self.optimizer_switch_penalty = 0.0
+            else:
+                flips = np.count_nonzero(signs[1:] != signs[:-1])
+                self.optimizer_switch_penalty = flips / max(1, len(signs) - 1)
+
+            self.optimizer_fitness = (
+                self.optimizer_choice_strength
+                * self.optimizer_choice_consistency
+                * self.optimizer_overnight_persistence
+                * max(0.0, 1.0 - self.optimizer_switch_penalty)
+            )
+            return
+
+        self.optimizer_choice_strength = math.nan
+        self.optimizer_choice_consistency = math.nan
+        self.optimizer_overnight_persistence = math.nan
+        self.optimizer_switch_penalty = math.nan
+        self.optimizer_fitness = (
+            self.optimizer_corr
+            * self.optimizer_retention
+            * faithfulness_reward
+        )
+
     def update(self):
         was_day = self.is_day()
         was_warmup = self.is_warmup()
@@ -681,9 +827,16 @@ class FieldDynamics:
             _append(self.output_night_history, ov, self.HIST_LEN)
             _append(self.output_night_imag_history, oi, self.HIST_LEN)
             _append(self.output_night_mag_history, om, self.HIST_LEN)
+            if len(self.output_night_history_first) < self.HIST_LEN:
+                self.output_night_history_first.append(ov)
+                self.output_night_imag_history_first.append(oi)
+                self.output_night_mag_history_first.append(om)
             if self.experiment == "symmetry_v1":
                 _append(self.left_night_history, left_mag, self.HIST_LEN)
                 _append(self.right_night_history, right_mag, self.HIST_LEN)
+                if len(self.left_night_history_first) < self.HIST_LEN:
+                    self.left_night_history_first.append(left_mag)
+                    self.right_night_history_first.append(right_mag)
 
         # Memory scoring at night
         if not was_day and not was_warmup:
@@ -707,6 +860,8 @@ class FieldDynamics:
 
         if self.experiment == "symmetry_v1":
             self._update_symmetry_metrics()
+
+        self._update_optimizer_metrics()
 
         self.advance_cycle()
         self.step += 1
@@ -738,6 +893,13 @@ class FieldDynamics:
             "night_period_est": self.night_period_est,
             "replay_period_ratio": self.replay_period_ratio,
             "frequency_faithfulness": self.frequency_faithfulness,
+            "optimizer_corr": self.optimizer_corr,
+            "optimizer_retention": self.optimizer_retention,
+            "optimizer_day_period": self.optimizer_day_period,
+            "optimizer_night_period": self.optimizer_night_period,
+            "optimizer_period_ratio": self.optimizer_period_ratio,
+            "optimizer_frequency_faithfulness": self.optimizer_frequency_faithfulness,
+            "optimizer_fitness": self.optimizer_fitness,
             "drive_env":    self.drive_env,
             "gate_value":   self.gate_value,
             "signal_phase": self.signal_phase,
@@ -753,6 +915,10 @@ class FieldDynamics:
             "choice_consistency": self.choice_consistency,
             "overnight_persistence": self.overnight_persistence,
             "switch_penalty": self.switch_penalty,
+            "optimizer_choice_strength": self.optimizer_choice_strength,
+            "optimizer_choice_consistency": self.optimizer_choice_consistency,
+            "optimizer_overnight_persistence": self.optimizer_overnight_persistence,
+            "optimizer_switch_penalty": self.optimizer_switch_penalty,
             "symmetry_fitness": self.symmetry_fitness,
             "chosen_basin": self.chosen_basin,
             "current_dominance": self.current_dominance,

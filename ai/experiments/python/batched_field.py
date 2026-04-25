@@ -24,6 +24,7 @@ import math
 import torch
 import numpy as np
 from experiment_paths import validate_experiment
+from initial_state import build_initial_fields
 
 TWO_PI = 2.0 * math.pi
 
@@ -203,17 +204,33 @@ class BatchedField:
     def _z(self):
         return torch.zeros(self.B, self.N, self.N, device=self.device)
 
-    def reset(self):
+    def reset(self, base_seed: int | None = None, slot_ids: np.ndarray | None = None):
         B, N, d = self.B, self.N, self.device
         F = FIXED
         p = self.params
 
         baseline = 0.035
-        angles = torch.rand(B, N, N, device=d) * TWO_PI
-        noise  = (torch.rand(B, N, N, device=d) - 0.5) * 0.01
+        if base_seed is None:
+            angles = torch.rand(B, N, N, device=d) * TWO_PI
+            noise = (torch.rand(B, N, N, device=d) - 0.5) * 0.01
+            structural = 0.1 + torch.rand(B, N, N, device=d) * 0.05
+        else:
+            if slot_ids is None:
+                slot_ids = np.arange(B, dtype=np.int64)
+            angle_rows = []
+            noise_rows = []
+            structural_rows = []
+            for slot in slot_ids:
+                angle_np, noise_np, structural_np = build_initial_fields(N, base_seed, int(slot))
+                angle_rows.append(angle_np)
+                noise_rows.append(noise_np)
+                structural_rows.append(structural_np)
+            angles = torch.tensor(np.stack(angle_rows, axis=0), dtype=torch.float32, device=d)
+            noise = torch.tensor(np.stack(noise_rows, axis=0), dtype=torch.float32, device=d)
+            structural = torch.tensor(np.stack(structural_rows, axis=0), dtype=torch.float32, device=d)
         self.Xr = baseline * torch.cos(angles) + noise
         self.Xi = baseline * torch.sin(angles) + noise
-        self.S   = 0.1 + torch.rand(B, N, N, device=d) * 0.05
+        self.S = structural
 
         if self.symmetry_break == "spatial":
             # Tip the initial structural field toward the left half so the
@@ -523,13 +540,13 @@ class BatchedField:
     # ── episode runner ────────────────────────────────────────────────────────
 
     @torch.no_grad()
-    def run_episode(self) -> torch.Tensor:
+    def run_episode(self, base_seed: int | None = None, slot_ids: np.ndarray | None = None) -> torch.Tensor:
         """
         Reset → warmup → day → night.
         Returns fitness: (B,) tensor on self.device.
         """
         F = FIXED
-        self.reset()
+        self.reset(base_seed=base_seed, slot_ids=slot_ids)
         B = self.B; d = self.device
 
         # Buffers for replay and symmetry diagnostics.

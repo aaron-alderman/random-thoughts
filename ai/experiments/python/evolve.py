@@ -103,7 +103,8 @@ def evolve_population(arr: np.ndarray, fitness: np.ndarray,
 # ── genome I/O ────────────────────────────────────────────────────────────────
 
 def save_genome(path: str | Path, params_row: np.ndarray, fitness: float, generation: int,
-                experiment: str, symmetry_break: str | None):
+                experiment: str, symmetry_break: str | None,
+                eval_episode_seeds: list[int] | None = None, eval_slot: int | None = None):
     genome = {
         "generation": generation,
         "fitness":    float(fitness),
@@ -111,6 +112,10 @@ def save_genome(path: str | Path, params_row: np.ndarray, fitness: float, genera
         "symmetry_break": symmetry_break,
         "params":     {name: float(params_row[i]) for i, name in enumerate(PARAM_NAMES)},
     }
+    if eval_episode_seeds is not None:
+        genome["eval_episode_seeds"] = [int(s) for s in eval_episode_seeds]
+    if eval_slot is not None:
+        genome["eval_slot"] = int(eval_slot)
     with open(path, "w") as f:
         json.dump(genome, f, indent=2)
 
@@ -212,6 +217,8 @@ def parse_args():
                    help="Path to best_genome.json to seed the initial population")
     p.add_argument("--episodes", type=int, default=1,
                    help="Episodes per generation for fitness averaging (default 1)")
+    p.add_argument("--seed", type=int, default=None,
+                   help="Random seed for reproducible search and saved-genome replay")
     p.add_argument("--seed_default", action="store_true",
                    help="Include one copy of the v7 default params in the initial population")
     p.add_argument("--reset", action="store_true",
@@ -234,6 +241,9 @@ def pick_device(requested: str) -> str:
 
 def main():
     args   = parse_args()
+    if args.seed is not None:
+        np.random.seed(args.seed)
+        torch.manual_seed(args.seed)
     device = pick_device(args.device)
     B      = args.B
     N      = args.N
@@ -320,10 +330,14 @@ def main():
 
         # Evaluate fitness — average over multiple episodes if requested
         fitness_acc = np.zeros(B, dtype=np.float32)
+        episode_seeds = []
+        slot_ids = np.arange(B, dtype=np.int64)
         for ep in range(eps):
+            episode_seed = int(np.random.randint(0, 2**31 - 1))
+            episode_seeds.append(episode_seed)
             physical_arr = search_matrix_to_physical(PARAM_NAMES, arr)
             field.params = array_to_params(physical_arr, device)
-            f_t = field.run_episode()
+            f_t = field.run_episode(base_seed=episode_seed, slot_ids=slot_ids)
             fitness_acc += f_t.cpu().numpy()
         fitness = fitness_acc / eps
         metrics = field.last_episode_metrics
@@ -345,6 +359,8 @@ def main():
                     gen,
                     experiment=args.experiment,
                     symmetry_break=args.symmetry_break,
+                    eval_episode_seeds=episode_seeds,
+                    eval_slot=best_idx,
                 )
                 print(f"  ** New best saved → {genome_file}")
 

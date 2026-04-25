@@ -235,17 +235,34 @@ def main():
     plt = configure_matplotlib()
 
     genome_overrides = {}
+    replay_episode_seeds = None
+    replay_seed = None
+    replay_slot = 0
     if args.load_genome:
         genome_path = resolve_path(args.load_genome)
         with open(genome_path) as f:
             genome = json.load(f)
         genome_overrides = genome["params"]
+        replay_episode_seeds = genome.get("eval_episode_seeds")
+        replay_slot = int(genome.get("eval_slot", 0))
+        if replay_episode_seeds:
+            replay_seed = int(replay_episode_seeds[0])
+            genome_overrides["reset_seed"] = replay_seed
+            genome_overrides["reset_slot"] = replay_slot
         args.experiment = genome.get("experiment", args.experiment)
         args.symmetry_break = genome.get("symmetry_break", args.symmetry_break) or args.symmetry_break
         print(f"Loaded genome from {genome_path}  "
               f"(gen {genome['generation']}, fitness {genome['fitness']:.4f}, "
               f"{args.experiment}:{args.symmetry_break if args.experiment != 'replay' else 'baseline'})")
+        if replay_seed is not None:
+            print(f"  replay seed = {replay_seed}  slot = {replay_slot}")
+            if len(replay_episode_seeds) > 1:
+                print(f"  note: saved fitness is averaged over {len(replay_episode_seeds)} episodes; live replay uses the first saved episode.")
+        else:
+            print("  note: genome has no saved replay seed, so exact fitness replay is unavailable for this file.")
         for k, v in genome_overrides.items():
+            if k in ("reset_seed", "reset_slot"):
+                continue
             print(f"  {k:>15s} = {v:.6f}")
 
     sim = FieldDynamics(
@@ -470,6 +487,7 @@ def main():
                 f"  ratio {format_ratio(st['replay_period_ratio'])}"
                 f"  faithful {format_score(st['frequency_faithfulness'])}"
                 f"  |  fit {format_score(st['symmetry_fitness'])}"
+                f"  optFit {format_score(st['optimizer_fitness'])}"
                 f"  |  {fps:.0f} fps  device: {device}  N={args.N}"
             )
         else:
@@ -482,6 +500,7 @@ def main():
                 f"  |  omega {st['output_omega']:.4f}"
                 f"  replayAdv {st['output_replay_adv']:.4f}"
                 f"  |  corr {st['corr_value']:.3f}  dwell {st['best_dwell']}"
+                f"  optFit {format_score(st['optimizer_fitness'])}"
                 f"  |  {fps:.0f} fps  device: {device}  N={args.N}"
             )
 
