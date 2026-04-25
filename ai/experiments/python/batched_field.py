@@ -74,13 +74,13 @@ def batch_estimate_periods(arr: np.ndarray) -> np.ndarray:
 PARAM_NAMES = ["W", "alpha", "beta", "selfEx", "epsilon", "retain", "phaseInertia"]
 
 PARAM_BOUNDS = {
-    "W":            (0.00005, 0.18),
-    "alpha":        (0.82,   0.999),
-    "beta":         (0.0005,  0.80),
-    "selfEx":       (0.001,  0.20),
-    "epsilon":      (0.001, 0.50),
+    "W":            (0.000005, 0.18),
+    "alpha":        (0.5,   0.9999),
+    "beta":         (0.00005,  0.80),
+    "selfEx":       (0.0001,  0.50),
+    "epsilon":      (0.0001, 0.50),
     "retain":       (0.20,  0.95),
-    "phaseInertia": (0.30,  5.00),
+    "phaseInertia": (0.30,  8.00),
 }
 
 PARAM_DEFAULTS = {
@@ -108,12 +108,14 @@ FIXED = {
     "drivePer":     80,
     "driveRamp":    32,
     "driveClamp":   0.50,
+    "cueAmp":       0.30,
     # Disabled for now: keep the hook but make it a no-op until we decide
     # whether programmed asymmetry is actually part of the canonical task.
     "spatialBias":  1.00,
     "dayLen":       400,
     "nightLen":     400,
     "warmup":       300,
+    "taskCycles":   2,
 }
 
 HIST = 200   # trace length used for fitness correlation
@@ -201,9 +203,9 @@ class BatchedField:
         self.left_input_node = (mid - offset, input_col)
         self.right_input_node = (mid + offset, input_col)
         self.left_receiver_node = (mid - offset, recv_col)
-        self.right_receiver_node = (mid + offset, min(N - 2, recv_col + 1))
-        self.probe_a_node = self.left_receiver_node
-        self.probe_b_node = self.right_receiver_node
+        self.right_receiver_node = (mid + offset, recv_col)
+        self.probe_a_node = self.left_input_node
+        self.probe_b_node = self.right_input_node
 
     # ── init ─────────────────────────────────────────────────────────────────
 
@@ -295,6 +297,12 @@ class BatchedField:
     def _drive_phase(self):
         return TWO_PI * (self.step_count % FIXED["drivePer"]) / FIXED["drivePer"]
 
+    def _cue_label_for_cycle(self, cycle_idx: int) -> str:
+        return "A" if (cycle_idx % 2) == 0 else "B"
+
+    def _cue_sign_for_cycle(self, cycle_idx: int) -> float:
+        return 1.0 if self._cue_label_for_cycle(cycle_idx) == "A" else -1.0
+
     def _signal_phase(self):
         return TWO_PI * (self.step_count % FIXED["drivePer"]) / FIXED["drivePer"]
 
@@ -320,6 +328,12 @@ class BatchedField:
         r, c  = self.input_node
         self.DRIVE_R[:, r, c] = amp * math.cos(phase)
         self.DRIVE_I[:, r, c] = amp * math.sin(phase)
+        if self.is_day():
+            cue_amp = FIXED["cueAmp"] * self.drive_env
+            cue_node = self.probe_a_node if self._cue_label_for_cycle(self.cycle_count) == "A" else self.probe_b_node
+            qr, qc = cue_node
+            self.DRIVE_R[:, qr, qc] += cue_amp * math.cos(phase)
+            self.DRIVE_I[:, qr, qc] += cue_amp * math.sin(phase)
 
     # ── X update ──────────────────────────────────────────────────────────────
 
@@ -545,7 +559,8 @@ class BatchedField:
     # ── episode runner ────────────────────────────────────────────────────────
 
     @torch.no_grad()
-    def run_episode(self, base_seed: int | None = None, slot_ids: np.ndarray | None = None) -> torch.Tensor:
+    def run_episode(self, base_seed: int | None = None, slot_ids: np.ndarray | None = None,
+                    task_cycles: int | None = None) -> torch.Tensor:
         """
         Reset → warmup → day → night.
         Returns fitness: (B,) tensor on self.device.
@@ -553,65 +568,144 @@ class BatchedField:
         F = FIXED
         self.reset(base_seed=base_seed, slot_ids=slot_ids)
         B = self.B; d = self.device
+        task_cycles = int(F.get("taskCycles", 1) if task_cycles is None else task_cycles)
 
         # Buffers for replay and symmetry diagnostics.
-        day_buf   = torch.zeros(B, HIST, device=d)
-        night_buf = torch.zeros(B, HIST, device=d)
-        day_ptr   = 0
-        night_ptr = 0
         or_, oc   = self.output_node
         lr, lc = self.left_receiver_node
         rr, rc = self.right_receiver_node
-        left_day = torch.zeros(B, HIST, device=d)
-        right_day = torch.zeros(B, HIST, device=d)
-        left_night = torch.zeros(B, HIST, device=d)
-        right_night = torch.zeros(B, HIST, device=d)
-        left_day_ptr = 0
-        left_night_ptr = 0
+        day_buf = [torch.zeros(B, HIST, device=d) for _ in range(task_cycles)]
+        night_buf = [torch.zeros(B, HIST, device=d) for _ in range(task_cycles)]
+        left_day = [torch.zeros(B, HIST, device=d) for _ in range(task_cycles)]
+        right_day = [torch.zeros(B, HIST, device=d) for _ in range(task_cycles)]
+        left_night = [torch.zeros(B, HIST, device=d) for _ in range(task_cycles)]
+        right_night = [torch.zeros(B, HIST, device=d) for _ in range(task_cycles)]
+        day_ptr = [0 for _ in range(task_cycles)]
+        night_ptr = [0 for _ in range(task_cycles)]
 
-        total = F["warmup"] + F["dayLen"] + F["nightLen"]
+        total = F["warmup"] + task_cycles * (F["dayLen"] + F["nightLen"])
 
         for _ in range(total):
             was_day = self.is_day()
             was_warmup = self.is_warmup()
+            cycle_idx = min(self.cycle_count, task_cycles - 1)
             self.step()
             ov = self.Xr[:, or_, oc]   # (B,)
             left_mag = torch.sqrt(self.Xr[:, lr, lc] ** 2 + self.Xi[:, lr, lc] ** 2)
             right_mag = torch.sqrt(self.Xr[:, rr, rc] ** 2 + self.Xi[:, rr, rc] ** 2)
 
             if was_day and not was_warmup:
-                day_buf[:, day_ptr % HIST] = ov
-                day_ptr += 1
-                left_day[:, left_day_ptr % HIST] = left_mag
-                right_day[:, left_day_ptr % HIST] = right_mag
-                left_day_ptr += 1
+                day_buf[cycle_idx][:, day_ptr[cycle_idx] % HIST] = ov
+                left_day[cycle_idx][:, day_ptr[cycle_idx] % HIST] = left_mag
+                right_day[cycle_idx][:, day_ptr[cycle_idx] % HIST] = right_mag
+                day_ptr[cycle_idx] += 1
 
-            elif not was_day and not was_warmup and night_ptr < HIST:
-                night_buf[:, night_ptr] = ov
-                left_night[:, left_night_ptr] = left_mag
-                right_night[:, left_night_ptr] = right_mag
-                night_ptr += 1
-                left_night_ptr += 1
+            elif not was_day and not was_warmup and night_ptr[cycle_idx] < HIST:
+                night_buf[cycle_idx][:, night_ptr[cycle_idx]] = ov
+                left_night[cycle_idx][:, night_ptr[cycle_idx]] = left_mag
+                right_night[cycle_idx][:, night_ptr[cycle_idx]] = right_mag
+                night_ptr[cycle_idx] += 1
 
-        # Re-order day_buf so newest entry is at index HIST-1
-        if day_ptr >= HIST:
-            start = day_ptr % HIST
-            day_ordered = torch.cat([day_buf[:, start:], day_buf[:, :start]], dim=1)
-        else:
-            day_ordered = day_buf[:, :day_ptr] if day_ptr > 0 else day_buf
+        if self.experiment == "symmetry_v1":
+            cycle_scores = []
+            cycle_choice_strength = []
+            cycle_choice_consistency = []
+            cycle_overnight_persistence = []
+            cycle_switch_penalty = []
 
-        night_filled = night_buf[:, :max(night_ptr, 1)]
+            for cycle_idx in range(task_cycles):
+                if day_ptr[cycle_idx] >= HIST:
+                    start = day_ptr[cycle_idx] % HIST
+                    left_day_ordered = torch.cat([left_day[cycle_idx][:, start:], left_day[cycle_idx][:, :start]], dim=1)
+                    right_day_ordered = torch.cat([right_day[cycle_idx][:, start:], right_day[cycle_idx][:, :start]], dim=1)
+                else:
+                    left_day_ordered = left_day[cycle_idx][:, :day_ptr[cycle_idx]] if day_ptr[cycle_idx] > 0 else left_day[cycle_idx]
+                    right_day_ordered = right_day[cycle_idx][:, :day_ptr[cycle_idx]] if day_ptr[cycle_idx] > 0 else right_day[cycle_idx]
 
-        if left_day_ptr >= HIST:
-            start = left_day_ptr % HIST
-            left_day_ordered = torch.cat([left_day[:, start:], left_day[:, :start]], dim=1)
-            right_day_ordered = torch.cat([right_day[:, start:], right_day[:, :start]], dim=1)
-        else:
-            left_day_ordered = left_day[:, :left_day_ptr] if left_day_ptr > 0 else left_day
-            right_day_ordered = right_day[:, :left_day_ptr] if left_day_ptr > 0 else right_day
+                left_night_filled = left_night[cycle_idx][:, :max(night_ptr[cycle_idx], 1)]
+                right_night_filled = right_night[cycle_idx][:, :max(night_ptr[cycle_idx], 1)]
 
-        left_night_filled = left_night[:, :max(left_night_ptr, 1)]
-        right_night_filled = right_night[:, :max(left_night_ptr, 1)]
+                cue_sign = self._cue_sign_for_cycle(cycle_idx)
+                day_dom = (left_day_ordered - right_day_ordered) / (left_day_ordered + right_day_ordered + 1e-6)
+                mean_dom = day_dom.mean(dim=1)
+                choice_strength = (cue_sign * mean_dom).clamp(min=0.0)
+                cue_tensor = torch.full_like(day_dom, cue_sign)
+                choice_consistency = (torch.sign(day_dom + 1e-6) == cue_tensor).float().mean(dim=1)
+
+                if night_ptr[cycle_idx] > 0:
+                    night_dom = (left_night_filled - right_night_filled) / (left_night_filled + right_night_filled + 1e-6)
+                    night_cue = torch.full_like(night_dom, cue_sign)
+                    overnight_persistence = (
+                        (torch.sign(night_dom + 1e-6) == night_cue).float().mean(dim=1)
+                    )
+                    combined = torch.cat([day_dom, night_dom], dim=1)
+                else:
+                    overnight_persistence = torch.zeros(B, device=d)
+                    combined = day_dom
+
+                sign_mask = combined.abs() > 0.02
+                signed = torch.sign(combined)
+                switch_penalty = torch.zeros(B, device=d)
+                for i in range(B):
+                    seq = signed[i][sign_mask[i]]
+                    if seq.numel() >= 2:
+                        switch_penalty[i] = (seq[1:] != seq[:-1]).float().mean()
+
+                cycle_score = (
+                    choice_strength
+                    * choice_consistency
+                    * overnight_persistence
+                    * (1.0 - switch_penalty).clamp(min=0.0)
+                )
+                cycle_scores.append(cycle_score)
+                cycle_choice_strength.append(choice_strength)
+                cycle_choice_consistency.append(choice_consistency)
+                cycle_overnight_persistence.append(overnight_persistence)
+                cycle_switch_penalty.append(switch_penalty)
+
+            fitness = torch.stack(cycle_scores, dim=0).mean(dim=0)
+
+            a_scores = [s for i, s in enumerate(cycle_scores) if self._cue_label_for_cycle(i) == "A"]
+            b_scores = [s for i, s in enumerate(cycle_scores) if self._cue_label_for_cycle(i) == "B"]
+            if a_scores and b_scores:
+                a_mean = torch.stack(a_scores, dim=0).mean(dim=0)
+                b_mean = torch.stack(b_scores, dim=0).mean(dim=0)
+                denom = (a_mean + b_mean).clamp(min=1e-6)
+                parity = (2.0 * torch.minimum(a_mean, b_mean) / denom).clamp(min=0.0, max=1.0)
+                fitness = fitness * parity
+            else:
+                a_mean = b_mean = parity = torch.ones(B, device=d)
+
+            self.last_episode_metrics = {
+                "choice_strength": cycle_choice_strength[-1].cpu().numpy(),
+                "choice_consistency": cycle_choice_consistency[-1].cpu().numpy(),
+                "overnight_persistence": cycle_overnight_persistence[-1].cpu().numpy(),
+                "switch_penalty": cycle_switch_penalty[-1].cpu().numpy(),
+                "cue_label": self._cue_label_for_cycle(task_cycles - 1),
+                "cue_sequence": " -> ".join(self._cue_label_for_cycle(i) for i in range(task_cycles)),
+                "cycle_scores": torch.stack(cycle_scores, dim=0).cpu().numpy(),
+                "cue_parity": parity.cpu().numpy(),
+                "a_mean": a_mean.cpu().numpy(),
+                "b_mean": b_mean.cpu().numpy(),
+                "fitness": fitness.cpu().numpy(),
+            }
+            return fitness
+
+        day_ordered = None
+        night_filled = None
+        for cycle_idx in range(task_cycles):
+            if day_ptr[cycle_idx] > 0:
+                if day_ptr[cycle_idx] >= HIST:
+                    start = day_ptr[cycle_idx] % HIST
+                    day_ordered = torch.cat([day_buf[cycle_idx][:, start:], day_buf[cycle_idx][:, :start]], dim=1)
+                else:
+                    day_ordered = day_buf[cycle_idx][:, :day_ptr[cycle_idx]]
+                night_filled = night_buf[cycle_idx][:, :max(night_ptr[cycle_idx], 1)]
+                break
+
+        if day_ordered is None:
+            day_ordered = day_buf[0]
+            night_filled = night_buf[0][:, :1]
 
         corr      = batch_cross_corr(day_ordered, night_filled).clamp(min=0.0)
         day_rms   = day_ordered.pow(2).mean(dim=1).sqrt()
@@ -629,60 +723,16 @@ class BatchedField:
         faithfulness[valid] = np.minimum(ratio[valid], 1.0 / np.maximum(ratio[valid], 1e-6))
         faithfulness_reward = np.nan_to_num(faithfulness, nan=0.0, posinf=0.0, neginf=0.0)
 
-        if self.experiment == "symmetry_v1":
-            day_dom = (left_day_ordered - right_day_ordered) / (left_day_ordered + right_day_ordered + 1e-6)
-            mean_dom = day_dom.mean(dim=1)
-            chosen_sign = torch.where(mean_dom >= 0.0, torch.ones_like(mean_dom), -torch.ones_like(mean_dom))
-            choice_strength = mean_dom.abs()
-            choice_consistency = (torch.sign(day_dom + 1e-6) == chosen_sign.unsqueeze(1)).float().mean(dim=1)
-
-            if left_night_ptr > 0:
-                night_dom = (left_night_filled - right_night_filled) / (left_night_filled + right_night_filled + 1e-6)
-                overnight_persistence = (
-                    (torch.sign(night_dom + 1e-6) == chosen_sign.unsqueeze(1)).float().mean(dim=1)
-                )
-                combined = torch.cat([day_dom, night_dom], dim=1)
-            else:
-                overnight_persistence = torch.zeros(B, device=d)
-                combined = day_dom
-
-            sign_mask = combined.abs() > 0.02
-            signed = torch.sign(combined)
-            switch_penalty = torch.zeros(B, device=d)
-            for i in range(B):
-                seq = signed[i][sign_mask[i]]
-                if seq.numel() >= 2:
-                    switch_penalty[i] = (seq[1:] != seq[:-1]).float().mean()
-
-            fitness = choice_strength * choice_consistency * overnight_persistence * (1.0 - switch_penalty).clamp(min=0.0)
-            chosen_probe = np.where(chosen_sign.cpu().numpy() > 0, "A", "B")
-            self.last_episode_metrics = {
-                "corr": corr.cpu().numpy(),
-                "retention": retention.cpu().numpy(),
-                "day_period": day_period,
-                "night_period": night_period,
-                "period_ratio": ratio,
-                "frequency_faithfulness": faithfulness,
-                "frequency_reward": faithfulness_reward,
-                "choice_strength": choice_strength.cpu().numpy(),
-                "choice_consistency": choice_consistency.cpu().numpy(),
-                "overnight_persistence": overnight_persistence.cpu().numpy(),
-                "switch_penalty": switch_penalty.cpu().numpy(),
-                "chosen_basin": chosen_probe,
-                "chosen_probe": chosen_probe,
-                "fitness": fitness.cpu().numpy(),
-            }
-        else:
-            fitness = corr * retention * torch.tensor(faithfulness_reward, dtype=torch.float32, device=d)
-            self.last_episode_metrics = {
-                "corr": corr.cpu().numpy(),
-                "retention": retention.cpu().numpy(),
-                "day_period": day_period,
-                "night_period": night_period,
-                "period_ratio": ratio,
-                "frequency_faithfulness": faithfulness,
-                "frequency_reward": faithfulness_reward,
-                "fitness": fitness.cpu().numpy(),
-            }
+        fitness = corr * retention * torch.tensor(faithfulness_reward, dtype=torch.float32, device=d)
+        self.last_episode_metrics = {
+            "corr": corr.cpu().numpy(),
+            "retention": retention.cpu().numpy(),
+            "day_period": day_period,
+            "night_period": night_period,
+            "period_ratio": ratio,
+            "frequency_faithfulness": faithfulness,
+            "frequency_reward": faithfulness_reward,
+            "fitness": fitness.cpu().numpy(),
+        }
 
         return fitness

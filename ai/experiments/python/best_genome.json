@@ -1,19 +1,19 @@
 {
-  "generation": 15,
-  "fitness": 0.23216964304447174,
+  "generation": 22,
+  "fitness": 0.12271428853273392,
   "experiment": "symmetry_v1",
   "symmetry_break": "spatial",
   "params": {
-    "W": 0.0008747021123923576,
-    "alpha": 0.82,
-    "beta": 0.8,
-    "selfEx": 0.11711732005880483,
-    "epsilon": 0.0010605680267869839,
-    "retain": 0.8469538075140173,
-    "phaseInertia": 5.0
+    "W": 0.0001936431905558608,
+    "alpha": 0.999,
+    "beta": 0.014554931581329106,
+    "selfEx": 0.05964705618693908,
+    "epsilon": 0.001,
+    "retain": 0.47053243402679434,
+    "phaseInertia": 5.381235524315855
   },
   "eval_episode_seeds": [
-    54542165
+    1460803065
   ],
-  "eval_slot": 9
+  "eval_slot": 8
 }

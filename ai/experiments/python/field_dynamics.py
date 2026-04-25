@@ -85,6 +85,7 @@ class FieldDynamics:
             "driveAmp":     1.00,
             "drivePer":     80,
             "driveRamp":    32,
+            "cueAmp":       0.30,
             "gatePer":      800,
             "signalPer":    80,
             "signalAmp":    1.00,
@@ -95,6 +96,7 @@ class FieldDynamics:
             "nightLen":     400,
             "corrThr":      0.5,
             "warmup":       300,
+            "taskCycles":   2,
         }
         self.P.update(param_overrides)
         self.reset()
@@ -196,6 +198,8 @@ class FieldDynamics:
         self.optimizer_period_ratio = math.nan
         self.optimizer_frequency_faithfulness = math.nan
         self.optimizer_fitness = 0.0
+        self.cycle_optimizer_fitness = 0.0
+        self.completed_cycle_scores = []
         self.left_basin_history = []
         self.right_basin_history = []
         self.left_day_history = []
@@ -215,6 +219,7 @@ class FieldDynamics:
         self.symmetry_fitness = math.nan
         self.chosen_basin = "none"
         self.chosen_probe = "none"
+        self.cue_label = "none"
         self.current_dominance = 0.0
         self.current_balance = 0.0
         self.gate_value = 0.0
@@ -234,9 +239,23 @@ class FieldDynamics:
         self.left_input_node = (mid - offset, input_col)
         self.right_input_node = (mid + offset, input_col)
         self.left_receiver_node = (mid - offset, recv_col)
-        self.right_receiver_node = (mid + offset, min(N - 2, recv_col + 1))
-        self.probe_a_node = self.left_receiver_node
-        self.probe_b_node = self.right_receiver_node
+        self.right_receiver_node = (mid + offset, recv_col)
+        self.probe_a_node = self.left_input_node
+        self.probe_b_node = self.right_input_node
+
+    def _cue_label_for_cycle(self, cycle_idx: int) -> str:
+        return "A" if (cycle_idx % 2) == 0 else "B"
+
+    def _cue_sign_for_cycle(self, cycle_idx: int) -> float:
+        return 1.0 if self._cue_label_for_cycle(cycle_idx) == "A" else -1.0
+
+    def _current_cue_label(self) -> str:
+        if self.is_warmup():
+            return "none"
+        return self._cue_label_for_cycle(self.cycle_count)
+
+    def _current_cue_sign(self) -> float:
+        return self._cue_sign_for_cycle(self.cycle_count)
 
     # ── cycle ────────────────────────────────────────────────────────────────
 
@@ -268,6 +287,7 @@ class FieldDynamics:
             self.cycle_step_in_phase = 0
             self._on_night_start()
         elif self.cycle_mode == "night" and self.cycle_step_in_phase >= self.P["nightLen"]:
+            self._finalize_episode_cycle()
             self.cycle_mode = "day"
             self.cycle_step_in_phase = 0
             self.cycle_count += 1
@@ -301,6 +321,7 @@ class FieldDynamics:
         self.optimizer_period_ratio = math.nan
         self.optimizer_frequency_faithfulness = math.nan
         self.optimizer_fitness = 0.0
+        self.cycle_optimizer_fitness = 0.0
         self.optimizer_choice_strength = math.nan
         self.optimizer_choice_consistency = math.nan
         self.optimizer_overnight_persistence = math.nan
@@ -312,6 +333,7 @@ class FieldDynamics:
         self.symmetry_fitness = math.nan
         self.chosen_basin = "none"
         self.chosen_probe = "none"
+        self.cue_label = self._current_cue_label()
         self.current_dominance = 0.0
         self.current_balance = 0.0
 
@@ -335,8 +357,20 @@ class FieldDynamics:
         self.optimizer_period_ratio = math.nan
         self.optimizer_frequency_faithfulness = math.nan
         self.optimizer_fitness = 0.0
+        self.cycle_optimizer_fitness = 0.0
         self.optimizer_overnight_persistence = math.nan
         self.optimizer_switch_penalty = math.nan
+        self.cue_label = self._current_cue_label()
+
+    def _finalize_episode_cycle(self):
+        task_cycles = int(self.P.get("taskCycles", 1))
+        if self.experiment != "symmetry_v1":
+            return
+        if len(self.completed_cycle_scores) >= task_cycles:
+            return
+        if len(self.left_day_history) < 4 or len(self.right_day_history) < 4:
+            return
+        self.completed_cycle_scores.append(float(self.cycle_optimizer_fitness))
 
     # ── drive ─────────────────────────────────────────────────────────────────
 
@@ -376,8 +410,15 @@ class FieldDynamics:
         r, c  = self.input_node
         self.DRIVE_R[r, c] = amp * math.cos(phase)
         self.DRIVE_I[r, c] = amp * math.sin(phase)
+        if self.is_day() and not self.is_warmup():
+            cue_amp = self.P.get("cueAmp", 0.0) * self.drive_env
+            cue_node = self.probe_a_node if self._current_cue_label() == "A" else self.probe_b_node
+            qr, qc = cue_node
+            self.DRIVE_R[qr, qc] += cue_amp * math.cos(phase)
+            self.DRIVE_I[qr, qc] += cue_amp * math.sin(phase)
         self.gate_value = self.drive_env
         self.signal_phase = phase
+        self.cue_label = self._current_cue_label()
 
     # ── X update (every step) ─────────────────────────────────────────────────
 
@@ -669,17 +710,17 @@ class FieldDynamics:
         day_right = np.asarray(self.right_day_history, dtype=np.float32)
         day_dom = (day_left - day_right) / np.maximum(day_left + day_right, 1e-6)
         mean_dom = float(np.mean(day_dom))
-        chosen_sign = 1.0 if mean_dom >= 0.0 else -1.0
-        self.chosen_probe = "A" if chosen_sign > 0 else "B"
+        cue_sign = self._current_cue_sign()
+        self.chosen_probe = self._current_cue_label()
         self.chosen_basin = self.chosen_probe
-        self.choice_strength = abs(mean_dom)
-        self.choice_consistency = float(np.mean(np.sign(day_dom + 1e-6) == chosen_sign))
+        self.choice_strength = max(0.0, cue_sign * mean_dom)
+        self.choice_consistency = float(np.mean(np.sign(day_dom + 1e-6) == cue_sign))
 
         if self.left_night_history and self.right_night_history:
             night_left = np.asarray(self.left_night_history, dtype=np.float32)
             night_right = np.asarray(self.right_night_history, dtype=np.float32)
             night_dom = (night_left - night_right) / np.maximum(night_left + night_right, 1e-6)
-            self.overnight_persistence = float(np.mean(np.sign(night_dom + 1e-6) == chosen_sign))
+            self.overnight_persistence = float(np.mean(np.sign(night_dom + 1e-6) == cue_sign))
             combined = np.concatenate([day_dom, night_dom])
         else:
             self.overnight_persistence = math.nan
@@ -745,6 +786,7 @@ class FieldDynamics:
                 self.optimizer_choice_consistency = math.nan
                 self.optimizer_overnight_persistence = 0.0
                 self.optimizer_switch_penalty = math.nan
+                self.cycle_optimizer_fitness = 0.0
                 self.optimizer_fitness = 0.0
                 return
 
@@ -752,16 +794,16 @@ class FieldDynamics:
             day_right = np.asarray(self.right_day_history, dtype=np.float32)
             day_dom = (day_left - day_right) / np.maximum(day_left + day_right, 1e-6)
             mean_dom = float(np.mean(day_dom))
-            chosen_sign = 1.0 if mean_dom >= 0.0 else -1.0
-            self.optimizer_choice_strength = abs(mean_dom)
-            self.optimizer_choice_consistency = float(np.mean(np.sign(day_dom + 1e-6) == chosen_sign))
+            cue_sign = self._current_cue_sign()
+            self.optimizer_choice_strength = max(0.0, cue_sign * mean_dom)
+            self.optimizer_choice_consistency = float(np.mean(np.sign(day_dom + 1e-6) == cue_sign))
 
             if self.left_night_history_first and self.right_night_history_first:
                 night_left = np.asarray(self.left_night_history_first, dtype=np.float32)
                 night_right = np.asarray(self.right_night_history_first, dtype=np.float32)
                 night_dom = (night_left - night_right) / np.maximum(night_left + night_right, 1e-6)
                 self.optimizer_overnight_persistence = float(
-                    np.mean(np.sign(night_dom + 1e-6) == chosen_sign)
+                    np.mean(np.sign(night_dom + 1e-6) == cue_sign)
                 )
                 combined = np.concatenate([day_dom, night_dom])
             else:
@@ -776,18 +818,28 @@ class FieldDynamics:
                 flips = np.count_nonzero(signs[1:] != signs[:-1])
                 self.optimizer_switch_penalty = flips / max(1, len(signs) - 1)
 
-            self.optimizer_fitness = (
+            self.cycle_optimizer_fitness = (
                 self.optimizer_choice_strength
                 * self.optimizer_choice_consistency
                 * self.optimizer_overnight_persistence
                 * max(0.0, 1.0 - self.optimizer_switch_penalty)
             )
+            task_cycles = int(self.P.get("taskCycles", 1))
+            active_scores = list(self.completed_cycle_scores[:task_cycles])
+            if len(active_scores) < task_cycles:
+                active_scores.append(self.cycle_optimizer_fitness)
+            self.optimizer_fitness = float(np.mean(active_scores)) if active_scores else 0.0
             return
 
         self.optimizer_choice_strength = math.nan
         self.optimizer_choice_consistency = math.nan
         self.optimizer_overnight_persistence = math.nan
         self.optimizer_switch_penalty = math.nan
+        self.cycle_optimizer_fitness = (
+            self.optimizer_corr
+            * self.optimizer_retention
+            * faithfulness_reward
+        )
         self.optimizer_fitness = (
             self.optimizer_corr
             * self.optimizer_retention
@@ -912,9 +964,11 @@ class FieldDynamics:
             "optimizer_period_ratio": self.optimizer_period_ratio,
             "optimizer_frequency_faithfulness": self.optimizer_frequency_faithfulness,
             "optimizer_fitness": self.optimizer_fitness,
+            "cycle_optimizer_fitness": self.cycle_optimizer_fitness,
             "drive_env":    self.drive_env,
             "gate_value":   self.gate_value,
             "signal_phase": self.signal_phase,
+            "cue_label":    self.cue_label,
             "experiment":   self.experiment,
             "symmetry_break": self.symmetry_break,
             "input_node":   self.input_node,

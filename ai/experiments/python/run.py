@@ -31,6 +31,7 @@ import matplotlib
 import numpy as np
 import torch
 from matplotlib.gridspec import GridSpec
+from matplotlib.patches import Rectangle
 
 from experiment_paths import SUPPORTED_EXPERIMENTS, SUPPORTED_SYMMETRY_BREAKS
 from field_dynamics import FieldDynamics
@@ -318,6 +319,14 @@ def main():
     im_field = ax["field"].imshow(blank, origin="lower", interpolation="nearest", aspect="equal")
     ax["field"].set_title("Phase Field  (spatial context)")
 
+    def _node_box(r, c, color, lw=1.5):
+        ax["field"].add_patch(Rectangle(
+            (c - 0.5, r - 0.5), 1.0, 1.0,
+            linewidth=lw, edgecolor=color, facecolor="none", zorder=5
+        ))
+    _node_box(*sim.input_node,  "#ff8c3d")   # main drive — orange
+    _node_box(*sim.output_node, "#cccccc")   # main output — grey
+
     im_C = ax["C"].imshow(scalar_blank, origin="lower", interpolation="nearest",
                           cmap="plasma", vmin=0, vmax=1, aspect="equal")
     im_S = ax["S"].imshow(scalar_blank, origin="lower", interpolation="nearest",
@@ -396,9 +405,7 @@ def main():
 
         rgb = phase_to_rgb(phase, mag, st["S"], drive_phase=dph, is_day=sim.is_day())
         ir, ic = sim.input_node
-        or_, oc = sim.output_node
         rgb[ir, ic] = [1.0, 0.55, 0.24] if sim.is_day() else [0.6, 0.33, 0.14]
-        rgb[or_, oc] = [0.24, 0.9, 0.9]
         if st["experiment"] == "symmetry_v1":
             ar, ac = st.get("probe_a_node", st["left_receiver_node"])
             br, bc = st.get("probe_b_node", st["right_receiver_node"])
@@ -477,17 +484,19 @@ def main():
             title_text.set_text(
                 f"Step {st['step']}  |  {st['cycle_mode'].upper()}  cycle {st['cycle_count']}"
                 f"  |  {st['experiment']}:{st['symmetry_break']}"
+                f"  |  cue {st.get('cue_label', '--')}"
                 f"  |  choice {format_score(st['choice_strength'])}"
                 f"  consistent {format_score(st['choice_consistency'])}"
                 f"  persist {format_score(st['overnight_persistence'])}"
                 f"  switch {format_score(st['switch_penalty'])}"
-                f"  |  probe {st.get('chosen_probe', st['chosen_basin'])}"
+                f"  |  target {st.get('chosen_probe', st['chosen_basin'])}"
                 f"  bal {st.get('current_balance', st['current_dominance']):.3f}"
                 f"  |  dayT {format_period(st['day_period_est'])}"
                 f"  nightT {format_period(st['night_period_est'])}"
                 f"  ratio {format_ratio(st['replay_period_ratio'])}"
                 f"  faithful {format_score(st['frequency_faithfulness'])}"
                 f"  |  fit {format_score(st['symmetry_fitness'])}"
+                f"  cycleFit {format_score(st['cycle_optimizer_fitness'])}"
                 f"  optFit {format_score(st['optimizer_fitness'])}"
                 f"  |  {fps:.0f} fps  device: {device}  N={args.N}"
             )
