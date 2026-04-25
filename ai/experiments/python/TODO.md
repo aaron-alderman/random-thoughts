@@ -61,4 +61,4 @@ Goal: stop tuning parameters by hand, now with experiment-scoped objectives and 
 - `triRem` is effectively zero (inherited from JS - the phase sum telescopes algebraically). `R` is still meaningful because it is dominated by the `1 - coh` term. Fixing this is in the v8 backlog above.
 - `matplotlib` interactive mode slows significantly for N > 64. Switch to the websocket renderer before scaling up.
 - Replay is now treated as a validated baseline, but zero-lag correlation can still under-score good phase-shifted replay.
-- `symmetry_v1` uses a small fixed spatial bias by construction. That is intentional for the first experiment family and should not be mistaken for an evolved asymmetry.
+- `symmetry_v1` previously used a small fixed spatial bias by construction. That scaffold is currently disabled while the task definition is being simplified.

@@ -108,7 +108,9 @@ FIXED = {
     "drivePer":     80,
     "driveRamp":    32,
     "driveClamp":   0.50,
-    "spatialBias":  1.06,
+    # Disabled for now: keep the hook but make it a no-op until we decide
+    # whether programmed asymmetry is actually part of the canonical task.
+    "spatialBias":  1.00,
     "dayLen":       400,
     "nightLen":     400,
     "warmup":       300,
@@ -194,10 +196,14 @@ class BatchedField:
         offset = max(2, N // 8)
         self.input_node = (mid, input_col)
         self.output_node = (mid, recv_col)
+        # These are just two fixed probe locations offset around the driven
+        # column. Their historical "left/right" names are geometric only.
         self.left_input_node = (mid - offset, input_col)
         self.right_input_node = (mid + offset, input_col)
         self.left_receiver_node = (mid - offset, recv_col)
         self.right_receiver_node = (mid + offset, min(N - 2, recv_col + 1))
+        self.probe_a_node = self.left_receiver_node
+        self.probe_b_node = self.right_receiver_node
 
     # ── init ─────────────────────────────────────────────────────────────────
 
@@ -233,8 +239,7 @@ class BatchedField:
         self.S = structural
 
         if self.symmetry_break == "spatial":
-            # Tip the initial structural field toward the left half so the
-            # transient has a consistent bias to amplify into one attractor.
+            # No-op while the programmed spatial asymmetry is disabled.
             self.S[:, :, :N//2] *= F["spatialBias"]
 
         self.R  = self._z()
@@ -650,7 +655,7 @@ class BatchedField:
                     switch_penalty[i] = (seq[1:] != seq[:-1]).float().mean()
 
             fitness = choice_strength * choice_consistency * overnight_persistence * (1.0 - switch_penalty).clamp(min=0.0)
-            chosen_basin = np.where(chosen_sign.cpu().numpy() > 0, "left", "right")
+            chosen_probe = np.where(chosen_sign.cpu().numpy() > 0, "A", "B")
             self.last_episode_metrics = {
                 "corr": corr.cpu().numpy(),
                 "retention": retention.cpu().numpy(),
@@ -663,7 +668,8 @@ class BatchedField:
                 "choice_consistency": choice_consistency.cpu().numpy(),
                 "overnight_persistence": overnight_persistence.cpu().numpy(),
                 "switch_penalty": switch_penalty.cpu().numpy(),
-                "chosen_basin": chosen_basin,
+                "chosen_basin": chosen_probe,
+                "chosen_probe": chosen_probe,
                 "fitness": fitness.cpu().numpy(),
             }
         else:

@@ -181,9 +181,9 @@ def print_generation(gen: int, gens: int, fitness: np.ndarray,
                   f"  consistent = {_fmt(metrics.get('choice_consistency'))}")
             print(f"        persist = {_fmt(metrics.get('overnight_persistence'))}"
                   f"  switch = {_fmt(metrics.get('switch_penalty'))}")
-            chosen = metrics.get("chosen_basin")
-            basin = chosen[best_idx] if chosen is not None else "--"
-            print(f"          basin = {basin}"
+            chosen = metrics.get("chosen_probe", metrics.get("chosen_basin"))
+            probe = chosen[best_idx] if chosen is not None else "--"
+            print(f"          probe = {probe}"
                   f"  dayT = {_fmt(metrics.get('day_period'))}"
                   f"  nightT = {_fmt(metrics.get('night_period'))}")
             print(f"          ratio = {_fmt(metrics.get('period_ratio'))}"

@@ -400,10 +400,10 @@ def main():
         rgb[ir, ic] = [1.0, 0.55, 0.24] if sim.is_day() else [0.6, 0.33, 0.14]
         rgb[or_, oc] = [0.24, 0.9, 0.9]
         if st["experiment"] == "symmetry_v1":
-            lr, lc = st["left_receiver_node"]
-            rr, rc = st["right_receiver_node"]
-            rgb[lr, lc] = [0.35, 1.0, 0.55]
-            rgb[rr, rc] = [0.55, 0.65, 1.0]
+            ar, ac = st.get("probe_a_node", st["left_receiver_node"])
+            br, bc = st.get("probe_b_node", st["right_receiver_node"])
+            rgb[ar, ac] = [0.35, 1.0, 0.55]
+            rgb[br, bc] = [0.55, 0.65, 1.0]
         if not sim.is_day() and not sim.is_warmup():
             alpha = min(sim.cycle_step_in_phase / 50, 1) * 0.22
             rgb = np.clip(rgb * (1 - alpha) + np.array([0.05, 0.13, 0.36]) * alpha, 0, 1)
@@ -457,12 +457,12 @@ def main():
         corr_history.append(st["corr_value"])
         if len(corr_history) > hist:
             del corr_history[0]
-        dominance_history.append(st["current_dominance"])
+        dominance_history.append(st.get("current_balance", st["current_dominance"]))
         if len(dominance_history) > hist:
             del dominance_history[0]
 
         if st["experiment"] == "symmetry_v1":
-            ax["corr"].set_title("Dominance / Corr")
+            ax["corr"].set_title("Probe Balance / Corr")
             ax["corr"].set_ylim(-1.1, 1.1)
             line_corr.set_data(np.arange(len(dominance_history)), dominance_history)
             ax["corr"].axhline(0, color="#333", lw=0.5)
@@ -481,7 +481,8 @@ def main():
                 f"  consistent {format_score(st['choice_consistency'])}"
                 f"  persist {format_score(st['overnight_persistence'])}"
                 f"  switch {format_score(st['switch_penalty'])}"
-                f"  |  basin {st['chosen_basin']}  dom {st['current_dominance']:.3f}"
+                f"  |  probe {st.get('chosen_probe', st['chosen_basin'])}"
+                f"  bal {st.get('current_balance', st['current_dominance']):.3f}"
                 f"  |  dayT {format_period(st['day_period_est'])}"
                 f"  nightT {format_period(st['night_period_est'])}"
                 f"  ratio {format_ratio(st['replay_period_ratio'])}"

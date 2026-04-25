@@ -88,7 +88,9 @@ class FieldDynamics:
             "gatePer":      800,
             "signalPer":    80,
             "signalAmp":    1.00,
-            "spatialBias":  1.06,
+            # Disabled for now: keep the hook but make it a no-op until we
+            # decide whether programmed asymmetry belongs in the task.
+            "spatialBias":  1.00,
             "dayLen":       400,
             "nightLen":     400,
             "corrThr":      0.5,
@@ -128,8 +130,7 @@ class FieldDynamics:
         self.S = structural
 
         if self.symmetry_break == "spatial":
-            # Match the search-time initialization so live runs and searched
-            # genomes share the same built-in symmetry bias.
+            # No-op while the programmed spatial asymmetry is disabled.
             self.S[:, :N//2] *= P["spatialBias"]
 
         self.R  = self._z()
@@ -213,7 +214,9 @@ class FieldDynamics:
         self.switch_penalty = math.nan
         self.symmetry_fitness = math.nan
         self.chosen_basin = "none"
+        self.chosen_probe = "none"
         self.current_dominance = 0.0
+        self.current_balance = 0.0
         self.gate_value = 0.0
         self.signal_phase = 0.0
 
@@ -226,10 +229,14 @@ class FieldDynamics:
 
         self.input_node = (mid, input_col)
         self.output_node = (mid, recv_col)
+        # These are just two fixed probe locations offset around the driven
+        # column. Their historical "left/right" names are geometric only.
         self.left_input_node = (mid - offset, input_col)
         self.right_input_node = (mid + offset, input_col)
         self.left_receiver_node = (mid - offset, recv_col)
         self.right_receiver_node = (mid + offset, min(N - 2, recv_col + 1))
+        self.probe_a_node = self.left_receiver_node
+        self.probe_b_node = self.right_receiver_node
 
     # ── cycle ────────────────────────────────────────────────────────────────
 
@@ -304,7 +311,9 @@ class FieldDynamics:
         self.switch_penalty = math.nan
         self.symmetry_fitness = math.nan
         self.chosen_basin = "none"
+        self.chosen_probe = "none"
         self.current_dominance = 0.0
+        self.current_balance = 0.0
 
     def _on_night_start(self):
         self.output_night_history.clear()
@@ -653,6 +662,7 @@ class FieldDynamics:
             self.switch_penalty = math.nan
             self.symmetry_fitness = math.nan
             self.chosen_basin = "none"
+            self.chosen_probe = "none"
             return
 
         day_left = np.asarray(self.left_day_history, dtype=np.float32)
@@ -660,7 +670,8 @@ class FieldDynamics:
         day_dom = (day_left - day_right) / np.maximum(day_left + day_right, 1e-6)
         mean_dom = float(np.mean(day_dom))
         chosen_sign = 1.0 if mean_dom >= 0.0 else -1.0
-        self.chosen_basin = "left" if chosen_sign > 0 else "right"
+        self.chosen_probe = "A" if chosen_sign > 0 else "B"
+        self.chosen_basin = self.chosen_probe
         self.choice_strength = abs(mean_dom)
         self.choice_consistency = float(np.mean(np.sign(day_dom + 1e-6) == chosen_sign))
 
@@ -814,7 +825,8 @@ class FieldDynamics:
             right_mag = float(math.hypot(self.Xr[rr, rc].item(), self.Xi[rr, rc].item()))
             _append(self.left_basin_history, left_mag, self.HIST_LEN)
             _append(self.right_basin_history, right_mag, self.HIST_LEN)
-            self.current_dominance = (left_mag - right_mag) / max(left_mag + right_mag, 1e-6)
+            self.current_balance = (left_mag - right_mag) / max(left_mag + right_mag, 1e-6)
+            self.current_dominance = self.current_balance
 
         if was_day and not was_warmup:
             _append(self.output_day_history, ov, self.HIST_LEN)
@@ -911,6 +923,8 @@ class FieldDynamics:
             "right_input_node": self.right_input_node,
             "left_receiver_node": self.left_receiver_node,
             "right_receiver_node": self.right_receiver_node,
+            "probe_a_node": self.probe_a_node,
+            "probe_b_node": self.probe_b_node,
             "choice_strength": self.choice_strength,
             "choice_consistency": self.choice_consistency,
             "overnight_persistence": self.overnight_persistence,
@@ -921,7 +935,9 @@ class FieldDynamics:
             "optimizer_switch_penalty": self.optimizer_switch_penalty,
             "symmetry_fitness": self.symmetry_fitness,
             "chosen_basin": self.chosen_basin,
+            "chosen_probe": self.chosen_probe,
             "current_dominance": self.current_dominance,
+            "current_balance": self.current_balance,
             "output_omega": output_omega,
             "output_replay_adv": output_adv,
         }
