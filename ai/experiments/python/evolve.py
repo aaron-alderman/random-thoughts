@@ -120,6 +120,13 @@ def load_genome(path: str) -> dict:
         return json.load(f)
 
 
+def genome_matches_run(genome: dict, experiment: str, symmetry_break: str | None) -> bool:
+    genome_experiment = genome.get("experiment", "replay")
+    genome_break = genome.get("symmetry_break", None if genome_experiment == "replay" else "spatial")
+    target_break = None if experiment == "replay" else symmetry_break
+    return genome_experiment == experiment and genome_break == target_break
+
+
 def ensure_genome_file(path: Path, experiment: str, symmetry_break: str | None):
     if path.exists():
         return
@@ -262,13 +269,26 @@ def main():
         for i, name in enumerate(PARAM_NAMES):
             physical_init[0, i] = PARAM_DEFAULTS[name]
 
+    seed_genome = None
     if args.resume:
         resume_path = resolve_path(args.resume)
-        genome = load_genome(resume_path)
-        print(f"Resuming from {resume_path}  (gen {genome['generation']}, "
-              f"fitness {genome['fitness']:.4f})")
+        seed_genome = load_genome(resume_path)
+        print(f"Resuming from {resume_path}  (gen {seed_genome['generation']}, "
+              f"fitness {seed_genome['fitness']:.4f})")
         for i, name in enumerate(PARAM_NAMES):
-            physical_init[0, i] = genome["params"][name]   # seed slot 0 with best known
+            physical_init[0, i] = seed_genome["params"][name]   # seed slot 0 with best known
+    elif save_genome_enabled and genome_file.exists():
+        genome = load_genome(genome_file)
+        if genome_matches_run(genome, args.experiment, args.symmetry_break):
+            seed_genome = genome
+            print(f"Seeding slot 0 from {genome_file}  (gen {genome['generation']}, "
+                  f"fitness {genome['fitness']:.4f})")
+            for i, name in enumerate(PARAM_NAMES):
+                physical_init[0, i] = genome["params"][name]
+        else:
+            print(f"Ignoring {genome_file} because it targets "
+                  f"{genome.get('experiment')}:{genome.get('symmetry_break')} "
+                  f"instead of {args.experiment}:{args.symmetry_break}.")
 
     arr = physical_matrix_to_search(PARAM_NAMES, physical_init)
 
@@ -284,9 +304,14 @@ def main():
         symmetry_break=args.symmetry_break,
     )
 
-    best_fitness_ever = -1.0
-    best_arr_ever     = physical_arr[0].copy()
-    best_gen_ever     = 0
+    if seed_genome is not None:
+        best_fitness_ever = float(seed_genome.get("fitness", -1.0))
+        best_arr_ever = np.array([seed_genome["params"][name] for name in PARAM_NAMES], dtype=np.float32)
+        best_gen_ever = int(seed_genome.get("generation", -1))
+    else:
+        best_fitness_ever = -1.0
+        best_arr_ever     = physical_arr[0].copy()
+        best_gen_ever     = 0
 
     mut_strength = 1.0   # annealed slowly
 

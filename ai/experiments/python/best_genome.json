@@ -1,0 +1,15 @@
+{
+  "generation": 56,
+  "fitness": 0.4463326036930084,
+  "experiment": "symmetry_v1",
+  "symmetry_break": "spatial",
+  "params": {
+    "W": 0.0006472361882711282,
+    "alpha": 0.9927653951740971,
+    "beta": 0.0012303465253115538,
+    "selfEx": 0.10475382687173536,
+    "epsilon": 0.3745021673670357,
+    "retain": 0.44598254745931587,
+    "phaseInertia": 0.5488884141334618
+  }
+}

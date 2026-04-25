@@ -85,6 +85,7 @@ class FieldDynamics:
             "gatePer":      800,
             "signalPer":    80,
             "signalAmp":    1.00,
+            "spatialBias":  1.06,
             "dayLen":       400,
             "nightLen":     400,
             "corrThr":      0.5,
@@ -115,6 +116,11 @@ class FieldDynamics:
         self.Xr = baseline * torch.cos(angles) + noise
         self.Xi = baseline * torch.sin(angles) + noise
         self.S  = 0.1 + torch.rand(N, N, device=d) * 0.05
+
+        if self.symmetry_break == "spatial":
+            # Match the search-time initialization so live runs and searched
+            # genomes share the same built-in symmetry bias.
+            self.S[:, :N//2] *= P["spatialBias"]
 
         self.R  = self._z()
         self.C  = self._z()

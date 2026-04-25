@@ -26,24 +26,25 @@ def transform_bounds(param_names, param_bounds) -> dict:
     out = {}
     for name in param_names:
         lo, hi = param_bounds[name]
-        out[name] = (
-            physical_to_search_value(name, lo),
-            physical_to_search_value(name, hi),
-        )
+        search_lo = physical_to_search_value(name, lo)
+        search_hi = physical_to_search_value(name, hi)
+        # Some transforms (for example alpha -> log10(1 - alpha)) reverse the
+        # ordering, so clamp/mapping code needs bounds in search-space order.
+        out[name] = tuple(sorted((search_lo, search_hi)))
     return out
 
 
 def physical_row_to_search(param_names, row: np.ndarray) -> np.ndarray:
     return np.array(
         [physical_to_search_value(name, float(row[i])) for i, name in enumerate(param_names)],
-        dtype=np.float32,
+        dtype=np.float64,
     )
 
 
 def search_row_to_physical(param_names, row: np.ndarray) -> np.ndarray:
     return np.array(
         [search_to_physical_value(name, float(row[i])) for i, name in enumerate(param_names)],
-        dtype=np.float32,
+        dtype=np.float64,
     )
 
 

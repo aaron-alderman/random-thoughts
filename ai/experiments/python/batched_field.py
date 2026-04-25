@@ -74,12 +74,12 @@ PARAM_NAMES = ["W", "alpha", "beta", "selfEx", "epsilon", "retain", "phaseInerti
 
 PARAM_BOUNDS = {
     "W":            (0.00005, 0.18),
-    "alpha":        (0.82,   0.995),
+    "alpha":        (0.82,   0.999),
     "beta":         (0.0005,  0.80),
-    "selfEx":       (0.01,  0.20),
-    "epsilon":      (0.001, 0.10),
+    "selfEx":       (0.001,  0.20),
+    "epsilon":      (0.001, 0.50),
     "retain":       (0.20,  0.95),
-    "phaseInertia": (0.30,  3.50),
+    "phaseInertia": (0.30,  5.00),
 }
 
 PARAM_DEFAULTS = {

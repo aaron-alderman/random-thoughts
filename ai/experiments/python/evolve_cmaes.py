@@ -87,7 +87,7 @@ def to_unit(row: np.ndarray) -> np.ndarray:
 
 
 def from_unit(row) -> np.ndarray:
-    out = np.empty(P, dtype=np.float32)
+    out = np.empty(P, dtype=np.float64)
     for i, name in enumerate(PARAM_NAMES):
         lo, hi = SEARCH_BOUNDS[name]
         search_val = float(np.clip(row[i] * (hi - lo) + lo, lo, hi))
@@ -96,7 +96,38 @@ def from_unit(row) -> np.ndarray:
 
 
 def batch_from_unit(X) -> np.ndarray:
-    return np.array([from_unit(x) for x in X], dtype=np.float32)
+    return np.array([from_unit(x) for x in X], dtype=np.float64)
+
+
+def find_unit_bound_violations(row, physical_row: np.ndarray | None = None) -> list[str]:
+    row = np.asarray(row, dtype=np.float64)
+    physical_row = None if physical_row is None else np.asarray(physical_row, dtype=np.float64)
+    issues = []
+    for i, name in enumerate(PARAM_NAMES):
+        unit_val = float(row[i])
+        if np.isfinite(unit_val) and 0.0 <= unit_val <= 1.0:
+            continue
+        search_lo, search_hi = SEARCH_BOUNDS[name]
+        physical_lo, physical_hi = PARAM_BOUNDS[name]
+        parts = [
+            f"{name}: unit={unit_val:.12g}",
+            "expected in [0, 1]",
+            f"search_bounds=[{search_lo:.12g}, {search_hi:.12g}]",
+            f"physical_bounds=[{physical_lo:.12g}, {physical_hi:.12g}]",
+        ]
+        if physical_row is not None:
+            physical_val = float(physical_row[i])
+            search_val = physical_to_search_value(name, physical_val)
+            parts.insert(1, f"physical={physical_val:.12g}")
+            parts.insert(2, f"search={search_val:.12g}")
+        issues.append("  " + "  ".join(parts))
+    return issues
+
+
+def validate_unit_seed(row, physical_row: np.ndarray | None = None, source: str = "initial mean"):
+    issues = find_unit_bound_violations(row, physical_row=physical_row)
+    if issues:
+        raise SystemExit(f"{source} is out of CMA-ES bounds:\n" + "\n".join(issues))
 
 
 # ── genome I/O ────────────────────────────────────────────────────────────────
@@ -123,6 +154,13 @@ def ensure_genome_file(path: Path, experiment: str, symmetry_break: str | None):
 def load_genome(path):
     with open(path) as f:
         return json.load(f)
+
+
+def genome_matches_run(genome: dict, experiment: str, symmetry_break: str | None) -> bool:
+    genome_experiment = genome.get("experiment", "replay")
+    genome_break = genome.get("symmetry_break", None if genome_experiment == "replay" else "spatial")
+    target_break = None if experiment == "replay" else symmetry_break
+    return genome_experiment == experiment and genome_break == target_break
 
 
 # ── history (appended across runs) ───────────────────────────────────────────
@@ -415,27 +453,54 @@ def main():
               f"(iteration {meta['gen']}, best fitness {meta['best_fitness']:.4f})")
     else:
         if not args.fresh and not state_file.exists():
-            print("No saved state found — starting fresh.")
+            print("No saved CMA-ES state found — starting a new CMA-ES run.")
         else:
             print("--fresh: discarding saved state.")
 
         B = args.B; N = args.N
+        seeded_from_genome = False
+        genome = None
+        x0_physical = None
+
+        if save_genome_enabled and genome_file.exists():
+            genome = load_genome(genome_file)
+            if genome_matches_run(genome, args.experiment, args.symmetry_break):
+                if args.seed_default:
+                    print("Existing best_genome.json found, but --seed_default overrides it for the initial mean.")
+                else:
+                    x0_physical = np.array([genome["params"][n] for n in PARAM_NAMES], dtype=np.float64)
+                    x0 = to_unit(x0_physical)
+                    seeded_from_genome = True
+                    print(f"Starting mean from {genome_file}  "
+                          f"(gen {genome['generation']}, fitness {genome['fitness']:.4f})")
+            else:
+                print(f"Ignoring {genome_file} because it targets "
+                      f"{genome.get('experiment')}:{genome.get('symmetry_break')} "
+                      f"instead of {args.experiment}:{args.symmetry_break}.")
 
         if args.seed_default:
-            x0 = to_unit(np.array([PARAM_DEFAULTS[n] for n in PARAM_NAMES],
-                                   dtype=np.float64))
+            x0_physical = np.array([PARAM_DEFAULTS[n] for n in PARAM_NAMES], dtype=np.float64)
+            x0 = to_unit(x0_physical)
             print("Starting mean at v7 default parameters.")
-        else:
+        elif not seeded_from_genome:
             x0 = [0.5] * P
+            x0_physical = None
+
+        validate_unit_seed(x0, physical_row=x0_physical, source="Initial CMA-ES mean")
 
         es = cma.CMAEvolutionStrategy(
             x0, args.sigma0,
             {"popsize": B, "bounds": [[0.0]*P, [1.0]*P], "verbose": -9},
         )
+        initial_best_fitness = -1.0
+        initial_best_params = [PARAM_DEFAULTS[n] for n in PARAM_NAMES]
+        if genome is not None and genome_matches_run(genome, args.experiment, args.symmetry_break):
+            initial_best_fitness = float(genome.get("fitness", -1.0))
+            initial_best_params = [float(genome["params"][n]) for n in PARAM_NAMES]
         meta = {
             "B": B, "N": N, "gen": 0,
-            "best_fitness": -1.0,
-            "best_params":  [PARAM_DEFAULTS[n] for n in PARAM_NAMES],
+            "best_fitness": initial_best_fitness,
+            "best_params":  initial_best_params,
             "experiment": args.experiment,
             "symmetry_break": None if args.experiment == "replay" else args.symmetry_break,
         }
