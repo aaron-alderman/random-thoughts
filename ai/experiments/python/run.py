@@ -1,6 +1,12 @@
 """
 run.py — interactive runner for Field Dynamics v7
 
+Default:
+  launches the chart-first phase dashboard (`run-phase.py`)
+
+Legacy:
+  pass --classic to use the older spatial/debug dashboard in this file
+
 Controls
   Space       pause / resume
   r           reset
@@ -11,10 +17,10 @@ Controls
   s           save state to field_state.npz
 
 Usage:
-  python run.py                              # CPU
-  python run.py --device cuda               # NVIDIA GPU
-  python run.py --N 64                      # larger grid
-  python run.py --load_genome best_genome.json  # visualise evolved params
+  python run.py                              # chart-first default view
+  python run.py --device cuda               # chart-first on NVIDIA GPU
+  python run.py --load_genome best_genome.json  # chart-first with saved genome
+  python run.py --classic                   # legacy dashboard
 """
 
 import argparse
@@ -29,6 +35,7 @@ from matplotlib.gridspec import GridSpec
 import torch
 
 from field_dynamics import FieldDynamics
+from experiment_paths import SUPPORTED_EXPERIMENTS, SUPPORTED_SYMMETRY_BREAKS
 
 TWO_PI = 2 * math.pi
 plt = None
@@ -73,8 +80,12 @@ def parse_args():
     p.add_argument("--N", type=int, default=32, help="Grid size (default: 32)")
     p.add_argument("--steps_per_frame", type=int, default=4,
                    help="Simulation steps between display updates (default: 4)")
+    p.add_argument("--experiment", choices=SUPPORTED_EXPERIMENTS, default="symmetry_v1",
+                   help="Experiment family to run (default: symmetry_v1)")
+    p.add_argument("--symmetry-break", choices=SUPPORTED_SYMMETRY_BREAKS, default="spatial",
+                   help="Programmed symmetry break for symmetry_v1 (default: spatial)")
     p.add_argument("--load_genome", default=None,
-                   help="Path to best_genome.json produced by evolve.py")
+                   help="Path to an experiment-scoped best_genome*.json produced by search")
     return p.parse_args()
 
 
@@ -149,6 +160,29 @@ def build_figure():
     return fig, axes
 
 
+def build_help_overlay(fig):
+    help_text = (
+        "Hotkeys\n"
+        "space  pause / resume\n"
+        "r      reset\n"
+        "d      force day\n"
+        "n      force night\n"
+        "a      automatic cycle\n"
+        "s      save field_state.npz\n"
+        "h      toggle this help\n"
+        "q/esc  quit"
+    )
+    text = fig.text(
+        0.013, 0.987, help_text,
+        ha="left", va="top",
+        color="#ddd", fontsize=9, family="monospace",
+        bbox=dict(boxstyle="round,pad=0.45", facecolor="#111722", edgecolor="#444", alpha=0.94),
+        zorder=20,
+    )
+    text.set_visible(False)
+    return text
+
+
 # ── main ─────────────────────────────────────────────────────────────────────
 
 def configure_matplotlib():
@@ -181,22 +215,33 @@ def main():
         with open(genome_path) as f:
             genome = json.load(f)
         genome_overrides = genome["params"]
+        args.experiment = genome.get("experiment", args.experiment)
+        args.symmetry_break = genome.get("symmetry_break", args.symmetry_break) or args.symmetry_break
         print(f"Loaded genome from {genome_path}  "
-              f"(gen {genome['generation']}, fitness {genome['fitness']:.4f})")
+              f"(gen {genome['generation']}, fitness {genome['fitness']:.4f}, "
+              f"{args.experiment}:{args.symmetry_break if args.experiment != 'replay' else 'baseline'})")
         for k, v in genome_overrides.items():
             print(f"  {k:>15s} = {v:.6f}")
 
-    sim = FieldDynamics(N=N, device=device, **genome_overrides)
+    sim = FieldDynamics(
+        N=N,
+        device=device,
+        experiment=args.experiment,
+        symmetry_break=args.symmetry_break,
+        **genome_overrides,
+    )
 
     # ── matplotlib interactive mode ──────────────────────────────────────────
     # Configure a usable backend before importing pyplot.
     plt = configure_matplotlib()
     plt.ion()
     fig, ax = build_figure()
+    help_overlay = build_help_overlay(fig)
     fig.canvas.manager.set_window_title("Field Dynamics v7 — Python/PyTorch")
 
     paused    = False
     quit_flag = [False]
+    show_help = [False]
 
     def on_key(event):
         nonlocal paused
@@ -217,6 +262,10 @@ def main():
             sim.cycle_step_in_phase = 0
         elif event.key == "s":
             sim.save("field_state.npz")
+        elif event.key in ("h", "H"):
+            show_help[0] = not show_help[0]
+            help_overlay.set_visible(show_help[0])
+            fig.canvas.draw_idle()
 
     fig.canvas.mpl_connect("key_press_event", on_key)
 
@@ -277,6 +326,15 @@ def main():
             rgb[ir, ic] = [1.0, 0.55, 0.24]
         else:
             rgb[ir, ic] = [0.6, 0.33, 0.14]
+        if st["experiment"] == "symmetry_v1":
+            li_r, li_c = st["left_input_node"]
+            ri_r, ri_c = st["right_input_node"]
+            lr, lc = st["left_receiver_node"]
+            rr, rc = st["right_receiver_node"]
+            rgb[li_r, li_c] = [1.0, 0.75, 0.25]
+            rgb[ri_r, ri_c] = [0.98, 0.45, 0.45]
+            rgb[lr, lc] = [0.35, 1.0, 0.55]
+            rgb[rr, rc] = [0.55, 0.65, 1.0]
         # Mark output node (cyan tint)
         or_, oc = sim.output_node
         rgb[or_, oc] = [0.24, 0.9, 0.9]
@@ -318,15 +376,31 @@ def main():
         night_period = format_period(st["night_period_est"])
         replay_ratio = format_ratio(st["replay_period_ratio"])
         faithfulness = format_score(st["frequency_faithfulness"])
-        title_text.set_text(
-            f"Step {st['step']}  |  {mode_str}  cycle {st['cycle_count']}"
-            f"  |  corr {st['corr_value']:.3f}  peak {st['peak_corr']:.3f}"
-            f"  |  dwell {st['best_dwell']}"
-            f"  |  dayT {day_period}  nightT {night_period}"
-            f"  |  ratio {replay_ratio}  faithful {faithfulness}"
-            f"  |  {fps:.0f} fps"
-            f"  |  device: {device}  N={N}"
-        )
+        if st["experiment"] == "symmetry_v1":
+            title_text.set_text(
+                f"Step {st['step']}  |  {mode_str}  cycle {st['cycle_count']}"
+                f"  |  {st['experiment']}:{st['symmetry_break']}"
+                f"  |  choice {format_score(st['choice_strength'])}"
+                f"  consistent {format_score(st['choice_consistency'])}"
+                f"  persist {format_score(st['overnight_persistence'])}"
+                f"  switch {format_score(st['switch_penalty'])}"
+                f"  |  basin {st['chosen_basin']}  dom {st['current_dominance']:.3f}"
+                f"  |  dayT {day_period}  nightT {night_period}"
+                f"  |  ratio {replay_ratio}  faithful {faithfulness}"
+                f"  |  fit {format_score(st['symmetry_fitness'])}"
+                f"  |  {fps:.0f} fps"
+                f"  |  device: {device}  N={N}"
+            )
+        else:
+            title_text.set_text(
+                f"Step {st['step']}  |  {mode_str}  cycle {st['cycle_count']}"
+                f"  |  corr {st['corr_value']:.3f}  peak {st['peak_corr']:.3f}"
+                f"  |  dwell {st['best_dwell']}"
+                f"  |  dayT {day_period}  nightT {night_period}"
+                f"  |  ratio {replay_ratio}  faithful {faithfulness}"
+                f"  |  {fps:.0f} fps"
+                f"  |  device: {device}  N={N}"
+            )
 
         try:
             fig.canvas.draw_idle()
@@ -343,4 +417,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if "--classic" in sys.argv:
+        sys.argv.remove("--classic")
+        main()
+    else:
+        import runpy
+        runpy.run_path(str(BASE_DIR / "run-phase.py"), run_name="__main__")

@@ -23,6 +23,7 @@ Fitness returned by run_episode():
 import math
 import torch
 import numpy as np
+from experiment_paths import validate_experiment
 
 TWO_PI = 2.0 * math.pi
 
@@ -72,11 +73,11 @@ def batch_estimate_periods(arr: np.ndarray) -> np.ndarray:
 PARAM_NAMES = ["W", "alpha", "beta", "selfEx", "epsilon", "retain", "phaseInertia"]
 
 PARAM_BOUNDS = {
-    "W":            (0.010, 0.18),
-    "alpha":        (0.82,  0.97),
-    "beta":         (0.10,  0.80),
+    "W":            (0.00005, 0.18),
+    "alpha":        (0.82,   0.995),
+    "beta":         (0.0005,  0.80),
     "selfEx":       (0.01,  0.20),
-    "epsilon":      (0.005, 0.10),
+    "epsilon":      (0.001, 0.10),
     "retain":       (0.20,  0.95),
     "phaseInertia": (0.30,  3.50),
 }
@@ -105,6 +106,8 @@ FIXED = {
     "driveAmp":     1.00,
     "drivePer":     80,
     "driveRamp":    32,
+    "driveClamp":   0.50,
+    "spatialBias":  1.06,
     "dayLen":       400,
     "nightLen":     400,
     "warmup":       300,
@@ -171,15 +174,29 @@ class BatchedField:
             Use random_params() or default_params() to construct.
     """
 
-    def __init__(self, B: int, N: int = 32, device: str = "cuda", params: dict = None):
+    def __init__(self, B: int, N: int = 32, device: str = "cuda", params: dict = None,
+                 experiment: str = "symmetry_v1", symmetry_break: str = "spatial"):
+        self.experiment, self.symmetry_break = validate_experiment(experiment, symmetry_break)
         self.B = B
         self.N = N
         self.device = torch.device(device)
         self.params = params if params is not None else default_params(B, self.device)
-        self.input_node  = (N // 2, N // 4)
-        self.output_node = (N // 2, N // 4 + 4)
+        self._configure_nodes()
         self.last_episode_metrics = None
         self.reset()
+
+    def _configure_nodes(self):
+        N = self.N
+        mid = N // 2
+        input_col = N // 4
+        recv_col = input_col + 6
+        offset = max(2, N // 8)
+        self.input_node = (mid, input_col)
+        self.output_node = (mid, recv_col)
+        self.left_input_node = (mid - offset, input_col)
+        self.right_input_node = (mid + offset, input_col)
+        self.left_receiver_node = (mid - offset, recv_col)
+        self.right_receiver_node = (mid + offset, min(N - 2, recv_col + 1))
 
     # ── init ─────────────────────────────────────────────────────────────────
 
@@ -197,6 +214,11 @@ class BatchedField:
         self.Xr = baseline * torch.cos(angles) + noise
         self.Xi = baseline * torch.sin(angles) + noise
         self.S   = 0.1 + torch.rand(B, N, N, device=d) * 0.05
+
+        if self.symmetry_break == "spatial":
+            # Tip the initial structural field toward the left half so the
+            # transient has a consistent bias to amplify into one attractor.
+            self.S[:, :, :N//2] *= F["spatialBias"]
 
         self.R  = self._z()
         self.C  = self.R.clone()
@@ -250,6 +272,18 @@ class BatchedField:
 
     def _drive_phase(self):
         return TWO_PI * (self.step_count % FIXED["drivePer"]) / FIXED["drivePer"]
+
+    def _signal_phase(self):
+        return TWO_PI * (self.step_count % FIXED["drivePer"]) / FIXED["drivePer"]
+
+    def _gate_value(self):
+        if self.is_warmup():
+            return 0.0
+        total = max(1, FIXED["dayLen"] + FIXED["nightLen"])
+        phase_step = self.cycle_step_in_phase
+        if self.cycle_mode in ("night", "forcenight"):
+            phase_step += FIXED["dayLen"]
+        return max(0.0, math.sin(TWO_PI * phase_step / total))
 
     def _compute_drive(self):
         self.DRIVE_R.zero_()
@@ -364,9 +398,10 @@ class BatchedField:
             ni = torch.where(sig, sa * tr + ca * ti, ti)
 
         if self.is_day():
+            clamp = F["driveClamp"]
             r, c = self.input_node
-            nr[:, r, c] = 0.15 * nr[:, r, c] + 0.85 * self.DRIVE_R[:, r, c]
-            ni[:, r, c] = 0.15 * ni[:, r, c] + 0.85 * self.DRIVE_I[:, r, c]
+            nr[:, r, c] = (1.0 - clamp) * nr[:, r, c] + clamp * self.DRIVE_R[:, r, c]
+            ni[:, r, c] = (1.0 - clamp) * ni[:, r, c] + clamp * self.DRIVE_I[:, r, c]
 
         m2 = nr**2 + ni**2
         sc = torch.where(m2 > 4.0, 2.0 / torch.sqrt(m2.clamp(min=1e-10)),
@@ -384,6 +419,7 @@ class BatchedField:
         amp = torch.sqrt(Xr**2 + Xi**2)
         mem = self.Sedge.max(dim=3).values
         dph = self._drive_phase()
+        drive_period = FIXED["drivePer"]
         drive_lock = torch.where(
             amp > 1e-6,
             (Xr * math.cos(dph) + Xi * math.sin(dph)) / amp.clamp(min=1e-6),
@@ -392,7 +428,7 @@ class BatchedField:
         learn = max(0.0, F["omegaLearn"])
         if self.is_day() and not self.is_warmup():
             gate         = torch.clamp(amp / 0.12, max=1.0) * torch.maximum(torch.abs(drive_lock), mem)
-            drive_omega  = TWO_PI / max(1, F["drivePer"])
+            drive_omega  = TWO_PI / max(1, drive_period)
             target_omega = 0.55 * d + 0.45 * drive_omega
             self.Omega   = (1.0 - learn * gate) * self.Omega + (learn * gate) * target_omega
         elif not self.is_warmup():
@@ -496,12 +532,20 @@ class BatchedField:
         self.reset()
         B = self.B; d = self.device
 
-        # Buffers for correlation: last HIST steps of day, first HIST of night
+        # Buffers for replay and symmetry diagnostics.
         day_buf   = torch.zeros(B, HIST, device=d)
         night_buf = torch.zeros(B, HIST, device=d)
-        day_ptr   = 0    # circular write pointer into day_buf
-        night_ptr = 0    # linear write pointer into night_buf
+        day_ptr   = 0
+        night_ptr = 0
         or_, oc   = self.output_node
+        lr, lc = self.left_receiver_node
+        rr, rc = self.right_receiver_node
+        left_day = torch.zeros(B, HIST, device=d)
+        right_day = torch.zeros(B, HIST, device=d)
+        left_night = torch.zeros(B, HIST, device=d)
+        right_night = torch.zeros(B, HIST, device=d)
+        left_day_ptr = 0
+        left_night_ptr = 0
 
         total = F["warmup"] + F["dayLen"] + F["nightLen"]
 
@@ -510,14 +554,22 @@ class BatchedField:
             was_warmup = self.is_warmup()
             self.step()
             ov = self.Xr[:, or_, oc]   # (B,)
+            left_mag = torch.sqrt(self.Xr[:, lr, lc] ** 2 + self.Xi[:, lr, lc] ** 2)
+            right_mag = torch.sqrt(self.Xr[:, rr, rc] ** 2 + self.Xi[:, rr, rc] ** 2)
 
             if was_day and not was_warmup:
                 day_buf[:, day_ptr % HIST] = ov
                 day_ptr += 1
+                left_day[:, left_day_ptr % HIST] = left_mag
+                right_day[:, left_day_ptr % HIST] = right_mag
+                left_day_ptr += 1
 
             elif not was_day and not was_warmup and night_ptr < HIST:
                 night_buf[:, night_ptr] = ov
+                left_night[:, left_night_ptr] = left_mag
+                right_night[:, left_night_ptr] = right_mag
                 night_ptr += 1
+                left_night_ptr += 1
 
         # Re-order day_buf so newest entry is at index HIST-1
         if day_ptr >= HIST:
@@ -527,6 +579,17 @@ class BatchedField:
             day_ordered = day_buf[:, :day_ptr] if day_ptr > 0 else day_buf
 
         night_filled = night_buf[:, :max(night_ptr, 1)]
+
+        if left_day_ptr >= HIST:
+            start = left_day_ptr % HIST
+            left_day_ordered = torch.cat([left_day[:, start:], left_day[:, :start]], dim=1)
+            right_day_ordered = torch.cat([right_day[:, start:], right_day[:, :start]], dim=1)
+        else:
+            left_day_ordered = left_day[:, :left_day_ptr] if left_day_ptr > 0 else left_day
+            right_day_ordered = right_day[:, :left_day_ptr] if left_day_ptr > 0 else right_day
+
+        left_night_filled = left_night[:, :max(left_night_ptr, 1)]
+        right_night_filled = right_night[:, :max(left_night_ptr, 1)]
 
         corr      = batch_cross_corr(day_ordered, night_filled).clamp(min=0.0)
         day_rms   = day_ordered.pow(2).mean(dim=1).sqrt()
@@ -543,16 +606,60 @@ class BatchedField:
         ratio[valid] = night_period[valid] / day_period[valid]
         faithfulness[valid] = np.minimum(ratio[valid], 1.0 / np.maximum(ratio[valid], 1e-6))
         faithfulness_reward = np.nan_to_num(faithfulness, nan=0.0, posinf=0.0, neginf=0.0)
-        fitness = corr * retention * torch.tensor(faithfulness_reward, dtype=torch.float32, device=d)
-        self.last_episode_metrics = {
-            "corr": corr.cpu().numpy(),
-            "retention": retention.cpu().numpy(),
-            "day_period": day_period,
-            "night_period": night_period,
-            "period_ratio": ratio,
-            "frequency_faithfulness": faithfulness,
-            "frequency_reward": faithfulness_reward,
-            "fitness": fitness.cpu().numpy(),
-        }
+
+        if self.experiment == "symmetry_v1":
+            day_dom = (left_day_ordered - right_day_ordered) / (left_day_ordered + right_day_ordered + 1e-6)
+            mean_dom = day_dom.mean(dim=1)
+            chosen_sign = torch.where(mean_dom >= 0.0, torch.ones_like(mean_dom), -torch.ones_like(mean_dom))
+            choice_strength = mean_dom.abs()
+            choice_consistency = (torch.sign(day_dom + 1e-6) == chosen_sign.unsqueeze(1)).float().mean(dim=1)
+
+            if left_night_ptr > 0:
+                night_dom = (left_night_filled - right_night_filled) / (left_night_filled + right_night_filled + 1e-6)
+                overnight_persistence = (
+                    (torch.sign(night_dom + 1e-6) == chosen_sign.unsqueeze(1)).float().mean(dim=1)
+                )
+                combined = torch.cat([day_dom, night_dom], dim=1)
+            else:
+                overnight_persistence = torch.zeros(B, device=d)
+                combined = day_dom
+
+            sign_mask = combined.abs() > 0.02
+            signed = torch.sign(combined)
+            switch_penalty = torch.zeros(B, device=d)
+            for i in range(B):
+                seq = signed[i][sign_mask[i]]
+                if seq.numel() >= 2:
+                    switch_penalty[i] = (seq[1:] != seq[:-1]).float().mean()
+
+            fitness = choice_strength * choice_consistency * overnight_persistence * (1.0 - switch_penalty).clamp(min=0.0)
+            chosen_basin = np.where(chosen_sign.cpu().numpy() > 0, "left", "right")
+            self.last_episode_metrics = {
+                "corr": corr.cpu().numpy(),
+                "retention": retention.cpu().numpy(),
+                "day_period": day_period,
+                "night_period": night_period,
+                "period_ratio": ratio,
+                "frequency_faithfulness": faithfulness,
+                "frequency_reward": faithfulness_reward,
+                "choice_strength": choice_strength.cpu().numpy(),
+                "choice_consistency": choice_consistency.cpu().numpy(),
+                "overnight_persistence": overnight_persistence.cpu().numpy(),
+                "switch_penalty": switch_penalty.cpu().numpy(),
+                "chosen_basin": chosen_basin,
+                "fitness": fitness.cpu().numpy(),
+            }
+        else:
+            fitness = corr * retention * torch.tensor(faithfulness_reward, dtype=torch.float32, device=d)
+            self.last_episode_metrics = {
+                "corr": corr.cpu().numpy(),
+                "retention": retention.cpu().numpy(),
+                "day_period": day_period,
+                "night_period": night_period,
+                "period_ratio": ratio,
+                "frequency_faithfulness": faithfulness,
+                "frequency_reward": faithfulness_reward,
+                "fitness": fitness.cpu().numpy(),
+            }
 
         return fitness

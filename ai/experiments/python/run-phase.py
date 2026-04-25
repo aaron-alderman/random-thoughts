@@ -29,6 +29,7 @@ import numpy as np
 from matplotlib.gridspec import GridSpec
 
 from field_dynamics import FieldDynamics
+from experiment_paths import SUPPORTED_EXPERIMENTS, SUPPORTED_SYMMETRY_BREAKS
 from run import (
     configure_matplotlib,
     format_period,
@@ -48,9 +49,13 @@ def parse_args():
     p.add_argument("--N", type=int, default=32, help="Grid size (default: 32)")
     p.add_argument("--steps_per_frame", type=int, default=4,
                    help="Simulation steps between display updates (default: 4)")
+    p.add_argument("--experiment", choices=SUPPORTED_EXPERIMENTS, default="symmetry_v1",
+                   help="Experiment family to run (default: symmetry_v1)")
+    p.add_argument("--symmetry-break", choices=SUPPORTED_SYMMETRY_BREAKS, default="spatial",
+                   help="Programmed symmetry break for symmetry_v1 (default: spatial)")
     p.add_argument("--load_genome", default=None,
-                   help="Path to best_genome.json produced by evolve.py")
-    p.add_argument("--autocorr_lag", type=int, default=96,
+                   help="Path to an experiment-scoped best_genome*.json produced by search")
+    p.add_argument("--autocorr_lag", type=int, default=256,
                    help="Maximum lag shown in the autocorrelation panel")
     return p.parse_args()
 
@@ -67,17 +72,23 @@ def resolve_path(path: str | None) -> Path | None:
 
 
 def build_figure(plt):
-    fig = plt.figure(figsize=(15, 8.5), facecolor="#0d0d14")
-    gs = GridSpec(2, 4, figure=fig, hspace=0.42, wspace=0.32,
+    fig = plt.figure(figsize=(18, 9), facecolor="#0d0d14")
+    gs = GridSpec(3, 6, figure=fig, hspace=0.42, wspace=0.32,
                   left=0.05, right=0.98, top=0.92, bottom=0.08)
 
     axes = {}
-    axes["field"] = fig.add_subplot(gs[0, :2])
-    axes["proj"] = fig.add_subplot(gs[1, :2])
-    axes["portrait"] = fig.add_subplot(gs[0, 2])
-    axes["autocorr"] = fig.add_subplot(gs[0, 3])
-    axes["phase"] = fig.add_subplot(gs[1, 2])
-    axes["corr"] = fig.add_subplot(gs[1, 3])
+    axes["field"] = fig.add_subplot(gs[:2, :2])
+    axes["C"] = fig.add_subplot(gs[0, 2])
+    axes["S"] = fig.add_subplot(gs[0, 3])
+    axes["portrait"] = fig.add_subplot(gs[0, 4])
+    axes["autocorr"] = fig.add_subplot(gs[0, 5])
+    axes["R"] = fig.add_subplot(gs[1, 2])
+    axes["edge"] = fig.add_subplot(gs[1, 3])
+    axes["omega"] = fig.add_subplot(gs[1, 4])
+    axes["magmap"] = fig.add_subplot(gs[1, 5])
+    axes["proj"] = fig.add_subplot(gs[2, :2])
+    axes["phase"] = fig.add_subplot(gs[2, 2:4])
+    axes["corr"] = fig.add_subplot(gs[2, 4:6])
 
     for ax in axes.values():
         ax.set_facecolor("#0d0d14")
@@ -124,6 +135,29 @@ def set_vline(line, x):
         line.set_xdata([x, x])
 
 
+def build_help_overlay(fig):
+    help_text = (
+        "Hotkeys\n"
+        "space  pause / resume\n"
+        "r      reset\n"
+        "d      force day\n"
+        "n      force night\n"
+        "a      automatic cycle\n"
+        "s      save field_state.npz\n"
+        "h      toggle this help\n"
+        "q/esc  quit"
+    )
+    text = fig.text(
+        0.013, 0.987, help_text,
+        ha="left", va="top",
+        color="#ddd", fontsize=9, family="monospace",
+        bbox=dict(boxstyle="round,pad=0.45", facecolor="#111722", edgecolor="#444", alpha=0.94),
+        zorder=20,
+    )
+    text.set_visible(False)
+    return text
+
+
 def main():
     args = parse_args()
     device = pick_device(args.device)
@@ -135,18 +169,30 @@ def main():
         with open(genome_path) as f:
             genome = json.load(f)
         genome_overrides = genome["params"]
+        args.experiment = genome.get("experiment", args.experiment)
+        args.symmetry_break = genome.get("symmetry_break", args.symmetry_break) or args.symmetry_break
         print(f"Loaded genome from {genome_path}  "
-              f"(gen {genome['generation']}, fitness {genome['fitness']:.4f})")
+              f"(gen {genome['generation']}, fitness {genome['fitness']:.4f}, "
+              f"{args.experiment}:{args.symmetry_break if args.experiment != 'replay' else 'baseline'})")
 
-    sim = FieldDynamics(N=args.N, device=device, **genome_overrides)
+    sim = FieldDynamics(
+        N=args.N,
+        device=device,
+        experiment=args.experiment,
+        symmetry_break=args.symmetry_break,
+        **genome_overrides,
+    )
 
     plt.ion()
     fig, ax = build_figure(plt)
     fig.canvas.manager.set_window_title("Field Dynamics v7 - run-phase")
+    help_overlay = build_help_overlay(fig)
 
     paused = False
     quit_flag = [False]
+    show_help = [False]
     corr_history = []
+    dominance_history = []
 
     def on_key(event):
         nonlocal paused
@@ -168,6 +214,10 @@ def main():
             sim.cycle_step_in_phase = 0
         elif event.key == "s":
             sim.save("field_state.npz")
+        elif event.key in ("h", "H"):
+            show_help[0] = not show_help[0]
+            help_overlay.set_visible(show_help[0])
+            fig.canvas.draw_idle()
 
     fig.canvas.mpl_connect("key_press_event", on_key)
 
@@ -175,10 +225,31 @@ def main():
     im_field = ax["field"].imshow(blank, origin="lower", interpolation="nearest", aspect="equal")
     ax["field"].set_title("Phase Field  (spatial context)")
 
+    scalar_blank = blank[:, :, 0]
+    im_C = ax["C"].imshow(scalar_blank, origin="lower", interpolation="nearest",
+                          cmap="plasma", vmin=0, vmax=1, aspect="equal")
+    im_S = ax["S"].imshow(scalar_blank, origin="lower", interpolation="nearest",
+                          cmap="viridis", vmin=0, vmax=1, aspect="equal")
+    im_R = ax["R"].imshow(scalar_blank, origin="lower", interpolation="nearest",
+                          cmap="hot", vmin=0, vmax=1, aspect="equal")
+    im_edge = ax["edge"].imshow(scalar_blank, origin="lower", interpolation="nearest",
+                                cmap="magma", vmin=0, vmax=1, aspect="equal")
+    im_omega = ax["omega"].imshow(scalar_blank, origin="lower", interpolation="nearest",
+                                  cmap="coolwarm", vmin=-0.2, vmax=0.2, aspect="equal")
+    im_magmap = ax["magmap"].imshow(scalar_blank, origin="lower", interpolation="nearest",
+                                    cmap="cividis", vmin=0, vmax=2.0, aspect="equal")
+    ax["C"].set_title("Coherence C")
+    ax["S"].set_title("Structural S")
+    ax["R"].set_title("Remainder R")
+    ax["edge"].set_title("Edge Memory")
+    ax["omega"].set_title("Omega")
+    ax["magmap"].set_title("Magnitude")
+
     line_xr, = ax["proj"].plot([], [], color="#4fc3f7", lw=0.9, label="Xr")
+    line_xi, = ax["proj"].plot([], [], color="#f48fb1", lw=0.9, alpha=0.9, label="Xi")
     line_mag, = ax["proj"].plot([], [], color="#ffd54f", lw=0.9, alpha=0.85, label="|X|")
     ax["proj"].set_ylim(-2.2, 2.2)
-    ax["proj"].set_title("Projection Vs Magnitude")
+    ax["proj"].set_title("Projection Components Vs Magnitude")
     ax["proj"].axhline(0, color="#333", lw=0.5)
     ax["proj"].legend(fontsize=7, facecolor="#0d0d14", edgecolor="#333",
                       labelcolor="#aaa", loc="upper right")
@@ -236,13 +307,29 @@ def main():
         or_, oc = sim.output_node
         rgb[ir, ic] = [1.0, 0.55, 0.24] if sim.is_day() else [0.6, 0.33, 0.14]
         rgb[or_, oc] = [0.24, 0.9, 0.9]
+        if st["experiment"] == "symmetry_v1":
+            li_r, li_c = st["left_input_node"]
+            ri_r, ri_c = st["right_input_node"]
+            lr, lc = st["left_receiver_node"]
+            rr, rc = st["right_receiver_node"]
+            rgb[li_r, li_c] = [1.0, 0.75, 0.25]
+            rgb[ri_r, ri_c] = [0.98, 0.45, 0.45]
+            rgb[lr, lc] = [0.35, 1.0, 0.55]
+            rgb[rr, rc] = [0.55, 0.65, 1.0]
         if not sim.is_day() and not sim.is_warmup():
             alpha = min(sim.cycle_step_in_phase / 50, 1) * 0.22
             rgb = np.clip(rgb * (1 - alpha) + np.array([0.05, 0.13, 0.36]) * alpha, 0, 1)
         im_field.set_data(rgb)
+        im_C.set_data(st["C"])
+        im_S.set_data(st["S"])
+        im_R.set_data(st["R"])
+        im_edge.set_data(st["Sedge_max"])
+        im_omega.set_data(np.clip(st["Omega"], -0.2, 0.2))
+        im_magmap.set_data(np.clip(st["magnitude"], 0.0, 2.0))
 
         xs = list(range(len(sim.output_history)))
         line_xr.set_data(xs, sim.output_history)
+        line_xi.set_data(xs, sim.output_imag_history)
         line_mag.set_data(xs, sim.output_mag_history)
         ax["proj"].set_xlim(0, max(hist, len(sim.output_history)))
 
@@ -278,21 +365,48 @@ def main():
         if len(corr_history) > hist:
             del corr_history[0]
         line_corr.set_data(np.arange(len(corr_history)), corr_history)
-        ax["corr"].set_xlim(0, max(hist, len(corr_history)))
+        dominance_history.append(st["current_dominance"])
+        if len(dominance_history) > hist:
+            del dominance_history[0]
+        if st["experiment"] == "symmetry_v1":
+            ax["corr"].set_title("Dominance / Corr")
+            ax["corr"].set_ylim(-1.1, 1.1)
+            line_corr.set_data(np.arange(len(dominance_history)), dominance_history)
+            ax["corr"].axhline(0, color="#333", lw=0.5)
+        else:
+            ax["corr"].set_title("Day/Night Corr")
+        ax["corr"].set_xlim(0, max(hist, len(corr_history), len(dominance_history)))
 
         fps = 1.0 / max(0.001, time.perf_counter() - frame_t)
         frame_t = time.perf_counter()
-        title_text.set_text(
-            f"Step {st['step']}  |  {st['cycle_mode'].upper()}  cycle {st['cycle_count']}"
-            f"  |  dayT {format_period(st['day_period_est'])}"
-            f"  nightT {format_period(st['night_period_est'])}"
-            f"  |  ratio {format_ratio(st['replay_period_ratio'])}"
-            f"  faithful {format_score(st['frequency_faithfulness'])}"
-            f"  |  omega {st['output_omega']:.4f}"
-            f"  replayAdv {st['output_replay_adv']:.4f}"
-            f"  |  corr {st['corr_value']:.3f}  dwell {st['best_dwell']}"
-            f"  |  {fps:.0f} fps  device: {device}  N={args.N}"
-        )
+        if st["experiment"] == "symmetry_v1":
+            title_text.set_text(
+                f"Step {st['step']}  |  {st['cycle_mode'].upper()}  cycle {st['cycle_count']}"
+                f"  |  {st['experiment']}:{st['symmetry_break']}"
+                f"  |  choice {format_score(st['choice_strength'])}"
+                f"  consistent {format_score(st['choice_consistency'])}"
+                f"  persist {format_score(st['overnight_persistence'])}"
+                f"  switch {format_score(st['switch_penalty'])}"
+                f"  |  basin {st['chosen_basin']}  dom {st['current_dominance']:.3f}"
+                f"  |  dayT {format_period(st['day_period_est'])}"
+                f"  nightT {format_period(st['night_period_est'])}"
+                f"  ratio {format_ratio(st['replay_period_ratio'])}"
+                f"  faithful {format_score(st['frequency_faithfulness'])}"
+                f"  |  fit {format_score(st['symmetry_fitness'])}"
+                f"  |  {fps:.0f} fps  device: {device}  N={args.N}"
+            )
+        else:
+            title_text.set_text(
+                f"Step {st['step']}  |  {st['cycle_mode'].upper()}  cycle {st['cycle_count']}"
+                f"  |  dayT {format_period(st['day_period_est'])}"
+                f"  nightT {format_period(st['night_period_est'])}"
+                f"  |  ratio {format_ratio(st['replay_period_ratio'])}"
+                f"  faithful {format_score(st['frequency_faithfulness'])}"
+                f"  |  omega {st['output_omega']:.4f}"
+                f"  replayAdv {st['output_replay_adv']:.4f}"
+                f"  |  corr {st['corr_value']:.3f}  dwell {st['best_dwell']}"
+                f"  |  {fps:.0f} fps  device: {device}  N={args.N}"
+            )
 
         try:
             fig.canvas.draw_idle()

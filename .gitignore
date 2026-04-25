@@ -2,3 +2,9 @@
 __pycache__
 bin
 .venv
+
+# Evolution runtime artifacts — only best_genome.json is canonical
+ai/experiments/python/best_genome.*.json
+ai/experiments/python/best_genome_cmaes*.json
+ai/experiments/python/cmaes_history*.json
+ai/experiments/python/cmaes_state*.pkl

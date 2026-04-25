@@ -191,24 +191,31 @@ DWELL:   Consecutive steps where correlation > threshold
 
 Success means the output node maintains its day pattern into the night. That is memory. The field held something that was never directly driven.
 
-### Current Task: Frequency-Faithful Replay
+### Current Task: Symmetry-Breaking With Replay Baseline
 
-The dwell experiment established the right next question:
+The frequency-faithful replay work established the baseline we needed:
 
 ```
-DAY:    Output node develops a rotating / oscillatory pattern driven only indirectly
+REPLAY BASELINE:
+        Output node develops a rotating / oscillatory pattern driven only indirectly
+        Night replay preserves the learned period closely enough to trust the mechanism
 
-NIGHT:  Replay begins after DRIVE is removed
+ACTIVE TASK:
+        Separate a shared day/night gate from the content signal
+        Present two competing content channels under the same gate
+        Add a tiny fixed spatial asymmetry
+        Ask whether the field chooses one basin and keeps that choice overnight
 
 MEASURE:
-        1. Does the output retain the same qualitative pattern?
-        2. Does replay preserve the learned angular velocity / period?
-        3. Or does replay collapse into a slower, larger-amplitude surrogate wave?
+        1. Does the field choose one basin decisively during day?
+        2. Does that choice remain stable rather than flip repeatedly?
+        3. Does the same basin remain dominant overnight?
+        4. Do replay period diagnostics stay healthy as a secondary check?
 ```
 
-This is a distinct experiment, not just a re-run of dwell. A replay that correlates with the day trace but changes its frequency is not yet faithful memory. It may indicate that memory strength is incorrectly scaling phase advance itself instead of only scaling persistence / amplitude.
+This is the next experiment family, not a replacement for replay. Replay now serves as the validated baseline and regression check. The new question is whether the same field can move from passive retention into asymmetric commitment.
 
-Success here means: the output node keeps a recognizable version of its day pattern into the night **without an unexplained frequency slowdown**.
+Success here means: the field selects one of two competing basins under a shared gate, maintains that selection across the day, and preserves the same dominant basin into the night.
 
 ### Drive Signal
 
@@ -316,7 +323,7 @@ Both fixes are simple and constitute v6.
 - Compare day and night replay period, not just correlation
 - Test whether replay slows because `memAvg` scales angular advance directly
 - If so, separate frequency preservation from persistence / amplitude weighting
-- Gate: no evolutionary search until replay is qualitatively honest
+- Result: replay is now treated as a validated baseline and chart-driven regression check
 
 ### v8 — Evolutionary Search (Short Term)
 - Population of 8-16 field instances
@@ -430,5 +437,5 @@ The field knows more about what it needs than we do.
 ---
 
 *End of handoff document.*
-*Version: post propagation fix, entering frequency-faithful replay experiment*
-*Next action: determine whether night replay preserves frequency or produces a slowed surrogate wave*
+*Version: symmetry_v1 framework added, replay retained as explicit baseline*
+*Next action: validate default symmetry_v1 on GPU, then run a fresh search against the new choice-and-persistence objective*

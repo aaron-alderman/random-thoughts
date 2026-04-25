@@ -1,9 +1,10 @@
 """
 evolve_cmaes.py — CMA-ES search over Field Dynamics parameters.
 
-AUTO-RESUME: if cmaes_state.pkl exists in the working directory the run
-continues from exactly where it left off — same covariance matrix, same sigma,
-same iteration count.  Run as many times as you like; it always appends.
+AUTO-RESUME: if the experiment-specific CMA-ES state file exists beside this
+script, the run continues from exactly where it left off — same covariance
+matrix, same sigma, same iteration count. Run as many times as you like; it
+always appends history for that experiment/symmetry-break pair.
 
 Use --fresh to discard the saved state and start over.
 
@@ -13,18 +14,28 @@ fitness history).
 
 Requires:  pip install cma matplotlib
 
-Usage:
-    python evolve_cmaes.py                     # auto-resume or start fresh
-    python evolve_cmaes.py --gens 20           # run 20 more iterations
-    python evolve_cmaes.py --fresh             # ignore saved state, restart
-    python evolve_cmaes.py --fresh --seed_default   # restart at v7 defaults
-    python evolve_cmaes.py --plot              # show geometry figure after run
-    python evolve_cmaes.py --B 32              # larger population (first run only)
+From the repo root:
+    python python/evolve_cmaes.py
+        # auto-resume or start fresh for symmetry_v1/spatial
+    python python/evolve_cmaes.py --gens 20
+        # run 20 more iterations for the current experiment state
+    python python/evolve_cmaes.py --fresh --seed_default
+        # restart and initialize the mean at the default parameter set
+    python python/evolve_cmaes.py --experiment replay --fresh
+        # start a separate replay-mode CMA-ES run
+    python python/evolve_cmaes.py --plot
+        # show geometry and history figures after the run
+    python python/evolve_cmaes.py --fresh --B 32 --sigma0 0.2
+        # change popsize or sigma0 when starting a new CMA-ES state
+    python python/evolve_cmaes.py --reset
+        # delete best_genome.json before running (separate from --fresh)
 
 State files written:
-    cmaes_state.pkl        full CMA-ES object (pickled)
-    cmaes_history.json     fitness + sigma per iteration (appended)
-    best_genome_cmaes.json best params found so far
+    cmaes_state.<suffix>.pkl   full CMA-ES object (pickled)
+    cmaes_history.<suffix>.json
+        fitness + sigma per iteration (appended)
+    best_genome.json
+        best params found so far (not written in replay mode)
 """
 
 import argparse
@@ -45,13 +56,23 @@ from batched_field import (
     BatchedField, PARAM_NAMES, PARAM_BOUNDS, PARAM_DEFAULTS,
     array_to_params,
 )
+from experiment_paths import (
+    SUPPORTED_EXPERIMENTS,
+    SUPPORTED_SYMMETRY_BREAKS,
+    default_cmaes_history_path,
+    default_cmaes_state_path,
+    default_genome_path,
+)
+from search_space import (
+    physical_to_search_value,
+    search_to_physical_value,
+    transform_bounds,
+)
 
 P = len(PARAM_NAMES)
 
 BASE_DIR = Path(__file__).resolve().parent
-STATE_FILE   = BASE_DIR / "cmaes_state.pkl"
-HISTORY_FILE = BASE_DIR / "cmaes_history.json"
-GENOME_FILE  = BASE_DIR / "best_genome_cmaes.json"
+SEARCH_BOUNDS = transform_bounds(PARAM_NAMES, PARAM_BOUNDS)
 
 
 # ── parameter space ↔ unit cube ───────────────────────────────────────────────
@@ -59,16 +80,18 @@ GENOME_FILE  = BASE_DIR / "best_genome_cmaes.json"
 def to_unit(row: np.ndarray) -> np.ndarray:
     out = np.empty(P, dtype=np.float64)
     for i, name in enumerate(PARAM_NAMES):
-        lo, hi = PARAM_BOUNDS[name]
-        out[i] = (row[i] - lo) / (hi - lo)
+        lo, hi = SEARCH_BOUNDS[name]
+        search_val = physical_to_search_value(name, float(row[i]))
+        out[i] = (search_val - lo) / (hi - lo)
     return out
 
 
 def from_unit(row) -> np.ndarray:
     out = np.empty(P, dtype=np.float32)
     for i, name in enumerate(PARAM_NAMES):
-        lo, hi = PARAM_BOUNDS[name]
-        out[i] = float(np.clip(row[i] * (hi - lo) + lo, lo, hi))
+        lo, hi = SEARCH_BOUNDS[name]
+        search_val = float(np.clip(row[i] * (hi - lo) + lo, lo, hi))
+        out[i] = search_to_physical_value(name, search_val)
     return out
 
 
@@ -78,20 +101,23 @@ def batch_from_unit(X) -> np.ndarray:
 
 # ── genome I/O ────────────────────────────────────────────────────────────────
 
-def save_genome(path, params_row, fitness, generation):
+def save_genome(path, params_row, fitness, generation, experiment, symmetry_break):
     with open(path, "w") as f:
         json.dump({
             "generation": generation,
             "fitness":    float(fitness),
+            "experiment": experiment,
+            "symmetry_break": symmetry_break,
             "params":     {n: float(params_row[i]) for i, n in enumerate(PARAM_NAMES)},
         }, f, indent=2)
 
 
-def ensure_genome_file(path: Path):
+def ensure_genome_file(path: Path, experiment: str, symmetry_break: str | None):
     if path.exists():
         return
     params_row = np.array([PARAM_DEFAULTS[name] for name in PARAM_NAMES], dtype=np.float32)
-    save_genome(path, params_row, fitness=-1.0, generation=-1)
+    save_genome(path, params_row, fitness=-1.0, generation=-1,
+                experiment=experiment, symmetry_break=symmetry_break)
 
 
 def load_genome(path):
@@ -101,28 +127,28 @@ def load_genome(path):
 
 # ── history (appended across runs) ───────────────────────────────────────────
 
-def load_history():
-    if HISTORY_FILE.exists():
-        with open(HISTORY_FILE) as f:
+def load_history(history_file: Path):
+    if history_file.exists():
+        with open(history_file) as f:
             return json.load(f)
     return []
 
 
-def append_history(history, entry):
+def append_history(history_file: Path, history, entry):
     history.append(entry)
-    with open(HISTORY_FILE, "w") as f:
+    with open(history_file, "w") as f:
         json.dump(history, f, indent=1)
 
 
 # ── state persistence ─────────────────────────────────────────────────────────
 
-def save_state(es, meta):
-    with open(STATE_FILE, "wb") as f:
+def save_state(state_file: Path, es, meta):
+    with open(state_file, "wb") as f:
         pickle.dump({"es": es, "meta": meta}, f)
 
 
-def load_state():
-    with open(STATE_FILE, "rb") as f:
+def load_state(state_file: Path):
+    with open(state_file, "rb") as f:
         return pickle.load(f)
 
 
@@ -141,13 +167,6 @@ def print_iteration(gen, fitness, arr, elapsed, sigma, metrics=None):
     print(f"\n=== Iteration {gen}  ({elapsed:.1f}s)  sigma={sigma:.4f} ===")
     print(f"  fitness  best={best_f:.4f}  mean={mean_f:.4f}  [{_bar(min(best_f,1.0))}]")
     if metrics:
-        corr = metrics.get("corr")
-        retention = metrics.get("retention")
-        faith = metrics.get("frequency_faithfulness")
-        day_p = metrics.get("day_period")
-        night_p = metrics.get("night_period")
-        ratio = metrics.get("period_ratio")
-
         def _fmt(arr_):
             if arr_ is None:
                 return "--"
@@ -155,16 +174,30 @@ def print_iteration(gen, fitness, arr, elapsed, sigma, metrics=None):
             return f"{val:.3f}" if np.isfinite(val) else "--"
 
         print("  best metrics:")
-        print(f"           corr = {_fmt(corr)}"
-              f"  retention = {_fmt(retention)}"
-              f"  faithful = {_fmt(faith)}")
-        print(f"         dayT = {_fmt(day_p)}"
-              f"  nightT = {_fmt(night_p)}"
-              f"  ratio = {_fmt(ratio)}")
+        if "choice_strength" in metrics:
+            print(f"         choice = {_fmt(metrics.get('choice_strength'))}"
+                  f"  consistent = {_fmt(metrics.get('choice_consistency'))}")
+            print(f"        persist = {_fmt(metrics.get('overnight_persistence'))}"
+                  f"  switch = {_fmt(metrics.get('switch_penalty'))}")
+            chosen = metrics.get("chosen_basin")
+            basin = chosen[best_idx] if chosen is not None else "--"
+            print(f"          basin = {basin}"
+                  f"  dayT = {_fmt(metrics.get('day_period'))}"
+                  f"  nightT = {_fmt(metrics.get('night_period'))}")
+            print(f"          ratio = {_fmt(metrics.get('period_ratio'))}"
+                  f"  faithful = {_fmt(metrics.get('frequency_faithfulness'))}")
+        else:
+            print(f"           corr = {_fmt(metrics.get('corr'))}"
+                  f"  retention = {_fmt(metrics.get('retention'))}"
+                  f"  faithful = {_fmt(metrics.get('frequency_faithfulness'))}")
+            print(f"         dayT = {_fmt(metrics.get('day_period'))}"
+                  f"  nightT = {_fmt(metrics.get('night_period'))}"
+                  f"  ratio = {_fmt(metrics.get('period_ratio'))}")
     print("  best params:")
     for i, name in enumerate(PARAM_NAMES):
-        lo, hi = PARAM_BOUNDS[name]
-        normed = (best_p[i] - lo) / (hi - lo)
+        lo, hi = SEARCH_BOUNDS[name]
+        search_val = physical_to_search_value(name, float(best_p[i]))
+        normed = (search_val - lo) / (hi - lo)
         print(f"    {name:>15s} = {best_p[i]:.5f}  [{_bar(normed, 15)}]")
 
 
@@ -322,6 +355,8 @@ def parse_args():
                    help="Iterations to run this session (default 20, appended to previous)")
     p.add_argument("--sigma0",  type=float, default=0.3)
     p.add_argument("--device",  default="auto")
+    p.add_argument("--experiment", choices=SUPPORTED_EXPERIMENTS, default="symmetry_v1")
+    p.add_argument("--symmetry-break", choices=SUPPORTED_SYMMETRY_BREAKS, default="spatial")
     p.add_argument("--episodes", type=int,  default=1)
     p.add_argument("--fresh",   action="store_true",
                    help="Discard saved state and start over")
@@ -329,6 +364,8 @@ def parse_args():
                    help="(fresh only) start mean at v7 default parameters")
     p.add_argument("--plot",    action="store_true",
                    help="Show geometry + history figure after run")
+    p.add_argument("--reset",   action="store_true",
+                   help="Delete best_genome.json and start from scratch (separate from --fresh)")
     return p.parse_args()
 
 
@@ -350,20 +387,34 @@ def pick_device(requested):
 def main():
     args   = parse_args()
     device = pick_device(args.device)
-    ensure_genome_file(GENOME_FILE)
+    state_file = default_cmaes_state_path(BASE_DIR, args.experiment, args.symmetry_break)
+    history_file = default_cmaes_history_path(BASE_DIR, args.experiment, args.symmetry_break)
+    genome_file = default_genome_path(BASE_DIR)
+    save_genome_enabled = args.experiment != "replay"
+    if args.reset and genome_file.exists():
+        genome_file.unlink()
+        print(f"Reset: deleted {genome_file}")
+    if save_genome_enabled:
+        ensure_genome_file(genome_file, args.experiment, args.symmetry_break)
 
-    history = load_history()
+    history = load_history(history_file)
 
     # ── load or create CMA-ES state ──────────────────────────────────────────
-    if not args.fresh and STATE_FILE.exists():
-        saved = load_state()
+    if not args.fresh and state_file.exists():
+        saved = load_state(state_file)
         es    = saved["es"]
         meta  = saved["meta"]
         B     = meta["B"]; N = meta["N"]
-        print(f"Resuming from {STATE_FILE}  "
+        meta_experiment = meta.get("experiment", "replay")
+        meta_break = meta.get("symmetry_break", None if meta_experiment == "replay" else "spatial")
+        target_break = None if args.experiment == "replay" else args.symmetry_break
+        if meta_experiment != args.experiment or meta_break != target_break:
+            print(f"Warning: resuming CMA-ES state from {meta_experiment}:{meta_break} "
+                  f"into {args.experiment}:{target_break}. Use --fresh to start clean.")
+        print(f"Resuming from {state_file}  "
               f"(iteration {meta['gen']}, best fitness {meta['best_fitness']:.4f})")
     else:
-        if not args.fresh and not STATE_FILE.exists():
+        if not args.fresh and not state_file.exists():
             print("No saved state found — starting fresh.")
         else:
             print("--fresh: discarding saved state.")
@@ -385,13 +436,29 @@ def main():
             "B": B, "N": N, "gen": 0,
             "best_fitness": -1.0,
             "best_params":  [PARAM_DEFAULTS[n] for n in PARAM_NAMES],
+            "experiment": args.experiment,
+            "symmetry_break": None if args.experiment == "replay" else args.symmetry_break,
         }
 
     print(f"\nField Dynamics — CMA-ES  "
           f"popsize={B}  grid={N}x{N}  running {args.gens} iterations  "
-          f"device={device}\n")
+          f"device={device}")
+    print(f"  experiment={args.experiment}  symmetry_break={args.symmetry_break}")
+    print(f"  state_path={state_file}")
+    print(f"  history_path={history_file}")
+    if save_genome_enabled:
+        print(f"  genome_path={genome_file}")
+    else:
+        print(f"  genome_path=none (replay mode — not saving)")
+    print()
 
-    field = BatchedField(B=B, N=N, device=device)
+    field = BatchedField(
+        B=B,
+        N=N,
+        device=device,
+        experiment=args.experiment,
+        symmetry_break=args.symmetry_break,
+    )
 
     for _ in range(args.gens):
         if es.stop():
@@ -421,7 +488,7 @@ def main():
         best_idx = int(np.argmax(fitness))
         best_f   = float(fitness[best_idx])
 
-        append_history(history, {
+        append_history(history_file, history, {
             "gen":          gen,
             "best_fitness": best_f,
             "mean_fitness": float(fitness.mean()),
@@ -431,10 +498,18 @@ def main():
         if best_f > meta["best_fitness"]:
             meta["best_fitness"] = best_f
             meta["best_params"]  = arr[best_idx].tolist()
-            save_genome(GENOME_FILE, arr[best_idx], best_f, gen)
-            print(f"  ** New best → {GENOME_FILE}")
+            if save_genome_enabled:
+                save_genome(
+                    genome_file,
+                    arr[best_idx],
+                    best_f,
+                    gen,
+                    experiment=args.experiment,
+                    symmetry_break=args.symmetry_break,
+                )
+                print(f"  ** New best → {genome_file}")
 
-        save_state(es, meta)
+        save_state(state_file, es, meta)
 
     # ── geometry readout ─────────────────────────────────────────────────────
     print_geometry(es, es.sigma)
@@ -442,9 +517,15 @@ def main():
     print(f"\nTotal iterations so far: {meta['gen']}")
     print(f"Best fitness:            {meta['best_fitness']:.4f}")
     print(f"\nTo visualise best individual:")
-    print(f"  python run.py --device {device} --load_genome {GENOME_FILE}")
+    print(
+        f"  python run.py --device {device} --experiment {args.experiment}"
+        f" --symmetry-break {args.symmetry_break} --load_genome {genome_file}"
+    )
     print(f"To continue search:")
-    print(f"  python evolve_cmaes.py --gens {args.gens}")
+    print(
+        f"  python evolve_cmaes.py --experiment {args.experiment}"
+        f" --symmetry-break {args.symmetry_break} --gens {args.gens}"
+    )
 
     if args.plot:
         plot_geometry(es, es.sigma, history)
