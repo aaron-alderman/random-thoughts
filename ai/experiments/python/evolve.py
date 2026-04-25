@@ -38,6 +38,7 @@ from experiment_paths import (
     default_genome_path,
 )
 from search_space import (
+    clamp_physical_row,
     physical_to_search_value,
     physical_matrix_to_search,
     search_matrix_to_physical,
@@ -46,6 +47,7 @@ from search_space import (
 
 BASE_DIR = Path(__file__).resolve().parent
 SEARCH_BOUNDS = transform_bounds(PARAM_NAMES, PARAM_BOUNDS)
+CANONICAL_EVAL_SLOT = 0
 
 
 # ── GA operators ──────────────────────────────────────────────────────────────
@@ -125,6 +127,10 @@ def load_genome(path: str) -> dict:
         return json.load(f)
 
 
+def genome_param(genome: dict, name: str) -> float:
+    return float(genome["params"].get(name, PARAM_DEFAULTS[name]))
+
+
 def genome_matches_run(genome: dict, experiment: str, symmetry_break: str | None) -> bool:
     genome_experiment = genome.get("experiment", "replay")
     genome_break = genome.get("symmetry_break", None if genome_experiment == "replay" else "spatial")
@@ -135,7 +141,11 @@ def genome_matches_run(genome: dict, experiment: str, symmetry_break: str | None
 def ensure_genome_file(path: Path, experiment: str, symmetry_break: str | None):
     if path.exists():
         return
-    params_row = np.array([PARAM_DEFAULTS[name] for name in PARAM_NAMES], dtype=np.float32)
+    params_row = clamp_physical_row(
+        PARAM_NAMES,
+        np.array([PARAM_DEFAULTS[name] for name in PARAM_NAMES], dtype=np.float32),
+        PARAM_BOUNDS,
+    ).astype(np.float32, copy=False)
     save_genome(path, params_row, fitness=-1.0, generation=-1,
                 experiment=experiment, symmetry_break=symmetry_break)
 
@@ -182,6 +192,7 @@ def print_generation(gen: int, gens: int, fitness: np.ndarray,
             print(f"        persist = {_fmt(metrics.get('overnight_persistence'))}"
                   f"  switch = {_fmt(metrics.get('switch_penalty'))}")
             print(f"        parity = {_fmt(metrics.get('cue_parity'))}"
+                  f"  eff = {_fmt(metrics.get('efficiency_reward'))}"
                   f"  A = {_fmt(metrics.get('a_mean'))}"
                   f"  B = {_fmt(metrics.get('b_mean'))}")
             cue_seq = metrics.get("cue_sequence", "--")
@@ -189,7 +200,8 @@ def print_generation(gen: int, gens: int, fitness: np.ndarray,
         else:
             print(f"           corr = {_fmt(metrics.get('corr'))}"
                   f"  retention = {_fmt(metrics.get('retention'))}"
-                  f"  faithful = {_fmt(metrics.get('frequency_faithfulness'))}")
+                  f"  faithful = {_fmt(metrics.get('frequency_faithfulness'))}"
+                  f"  eff = {_fmt(metrics.get('efficiency_reward'))}")
             print(f"         dayT = {_fmt(metrics.get('day_period'))}"
                   f"  nightT = {_fmt(metrics.get('night_period'))}"
                   f"  ratio = {_fmt(metrics.get('period_ratio'))}")
@@ -272,10 +284,15 @@ def main():
         lo, hi = PARAM_BOUNDS[name]
         physical_init[:, i] = np.random.uniform(lo, hi, B)
 
+    clamped_default_row = clamp_physical_row(
+        PARAM_NAMES,
+        np.array([PARAM_DEFAULTS[name] for name in PARAM_NAMES], dtype=np.float32),
+        PARAM_BOUNDS,
+    ).astype(np.float32, copy=False)
+
     if args.seed_default:
-        # Slot 0: exact v7 defaults
-        for i, name in enumerate(PARAM_NAMES):
-            physical_init[0, i] = PARAM_DEFAULTS[name]
+        # Slot 0: defaults clamped into the active search space
+        physical_init[0] = clamped_default_row
 
     seed_genome = None
     if args.resume:
@@ -283,16 +300,24 @@ def main():
         seed_genome = load_genome(resume_path)
         print(f"Resuming from {resume_path}  (gen {seed_genome['generation']}, "
               f"fitness {seed_genome['fitness']:.4f})")
-        for i, name in enumerate(PARAM_NAMES):
-            physical_init[0, i] = seed_genome["params"][name]   # seed slot 0 with best known
+        seed_row = clamp_physical_row(
+            PARAM_NAMES,
+            np.array([genome_param(seed_genome, name) for name in PARAM_NAMES], dtype=np.float32),
+            PARAM_BOUNDS,
+        ).astype(np.float32, copy=False)
+        physical_init[0] = seed_row   # seed slot 0 with best known
     elif save_genome_enabled and genome_file.exists():
         genome = load_genome(genome_file)
         if genome_matches_run(genome, args.experiment, args.symmetry_break):
             seed_genome = genome
             print(f"Seeding slot 0 from {genome_file}  (gen {genome['generation']}, "
                   f"fitness {genome['fitness']:.4f})")
-            for i, name in enumerate(PARAM_NAMES):
-                physical_init[0, i] = genome["params"][name]
+            seed_row = clamp_physical_row(
+                PARAM_NAMES,
+                np.array([genome_param(genome, name) for name in PARAM_NAMES], dtype=np.float32),
+                PARAM_BOUNDS,
+            ).astype(np.float32, copy=False)
+            physical_init[0] = seed_row
         else:
             print(f"Ignoring {genome_file} because it targets "
                   f"{genome.get('experiment')}:{genome.get('symmetry_break')} "
@@ -314,7 +339,11 @@ def main():
 
     if seed_genome is not None:
         best_fitness_ever = float(seed_genome.get("fitness", -1.0))
-        best_arr_ever = np.array([seed_genome["params"][name] for name in PARAM_NAMES], dtype=np.float32)
+        best_arr_ever = clamp_physical_row(
+            PARAM_NAMES,
+            np.array([genome_param(seed_genome, name) for name in PARAM_NAMES], dtype=np.float32),
+            PARAM_BOUNDS,
+        ).astype(np.float32, copy=False)
         best_gen_ever = int(seed_genome.get("generation", -1))
     else:
         best_fitness_ever = -1.0
@@ -329,7 +358,9 @@ def main():
         # Evaluate fitness — average over multiple episodes if requested
         fitness_acc = np.zeros(B, dtype=np.float32)
         episode_seeds = []
-        slot_ids = np.arange(B, dtype=np.int64)
+        # Evaluate every candidate on the same deterministic reset for this
+        # episode so selection pressure tracks genome quality, not batch slot.
+        slot_ids = np.full(B, CANONICAL_EVAL_SLOT, dtype=np.int64)
         for ep in range(eps):
             episode_seed = int(np.random.randint(0, 2**31 - 1))
             episode_seeds.append(episode_seed)
@@ -358,7 +389,7 @@ def main():
                     experiment=args.experiment,
                     symmetry_break=args.symmetry_break,
                     eval_episode_seeds=episode_seeds,
-                    eval_slot=best_idx,
+                    eval_slot=CANONICAL_EVAL_SLOT,
                 )
                 print(f"  ** New best saved → {genome_file}")
 

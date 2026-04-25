@@ -64,6 +64,7 @@ from experiment_paths import (
     default_genome_path,
 )
 from search_space import (
+    clamp_physical_row,
     physical_to_search_value,
     search_to_physical_value,
     transform_bounds,
@@ -73,6 +74,9 @@ P = len(PARAM_NAMES)
 
 BASE_DIR = Path(__file__).resolve().parent
 SEARCH_BOUNDS = transform_bounds(PARAM_NAMES, PARAM_BOUNDS)
+CANONICAL_EVAL_SLOT = 0
+MIN_EARLY_STOP_ITERS = 8
+DEFERRED_STOP_REASONS = {"tolfun", "tolflatfitness"}
 
 
 # ── parameter space ↔ unit cube ───────────────────────────────────────────────
@@ -130,6 +134,17 @@ def validate_unit_seed(row, physical_row: np.ndarray | None = None, source: str 
         raise SystemExit(f"{source} is out of CMA-ES bounds:\n" + "\n".join(issues))
 
 
+def active_stop_reasons(stop_dict: dict, gen: int, best_fitness: float) -> dict:
+    """Defer flat-objective stops until CMA-ES has had a few chances to explore."""
+    if not stop_dict:
+        return {}
+    filtered = dict(stop_dict)
+    if gen < MIN_EARLY_STOP_ITERS or best_fitness <= 0.0:
+        for key in DEFERRED_STOP_REASONS:
+            filtered.pop(key, None)
+    return filtered
+
+
 # ── genome I/O ────────────────────────────────────────────────────────────────
 
 def save_genome(path, params_row, fitness, generation, experiment, symmetry_break,
@@ -152,7 +167,11 @@ def save_genome(path, params_row, fitness, generation, experiment, symmetry_brea
 def ensure_genome_file(path: Path, experiment: str, symmetry_break: str | None):
     if path.exists():
         return
-    params_row = np.array([PARAM_DEFAULTS[name] for name in PARAM_NAMES], dtype=np.float32)
+    params_row = clamp_physical_row(
+        PARAM_NAMES,
+        np.array([PARAM_DEFAULTS[name] for name in PARAM_NAMES], dtype=np.float32),
+        PARAM_BOUNDS,
+    ).astype(np.float32, copy=False)
     save_genome(path, params_row, fitness=-1.0, generation=-1,
                 experiment=experiment, symmetry_break=symmetry_break)
 
@@ -160,6 +179,10 @@ def ensure_genome_file(path: Path, experiment: str, symmetry_break: str | None):
 def load_genome(path):
     with open(path) as f:
         return json.load(f)
+
+
+def genome_param(genome: dict, name: str) -> float:
+    return float(genome["params"].get(name, PARAM_DEFAULTS[name]))
 
 
 def genome_matches_run(genome: dict, experiment: str, symmetry_break: str | None) -> bool:
@@ -223,12 +246,15 @@ def print_iteration(gen, fitness, arr, elapsed, sigma, metrics=None):
                   f"  consistent = {_fmt(metrics.get('choice_consistency'))}")
             print(f"        persist = {_fmt(metrics.get('overnight_persistence'))}"
                   f"  switch = {_fmt(metrics.get('switch_penalty'))}")
+            print(f"        parity = {_fmt(metrics.get('cue_parity'))}"
+                  f"  eff = {_fmt(metrics.get('efficiency_reward'))}")
             cue_seq = metrics.get("cue_sequence", "--")
             print(f"        cueSeq = {cue_seq}")
         else:
             print(f"           corr = {_fmt(metrics.get('corr'))}"
                   f"  retention = {_fmt(metrics.get('retention'))}"
-                  f"  faithful = {_fmt(metrics.get('frequency_faithfulness'))}")
+                  f"  faithful = {_fmt(metrics.get('frequency_faithfulness'))}"
+                  f"  eff = {_fmt(metrics.get('efficiency_reward'))}")
             print(f"         dayT = {_fmt(metrics.get('day_period'))}"
                   f"  nightT = {_fmt(metrics.get('night_period'))}"
                   f"  ratio = {_fmt(metrics.get('period_ratio'))}")
@@ -467,6 +493,11 @@ def main():
         seeded_from_genome = False
         genome = None
         x0_physical = None
+        clamped_default_row = clamp_physical_row(
+            PARAM_NAMES,
+            np.array([PARAM_DEFAULTS[name] for name in PARAM_NAMES], dtype=np.float64),
+            PARAM_BOUNDS,
+        )
 
         if save_genome_enabled and genome_file.exists():
             genome = load_genome(genome_file)
@@ -474,7 +505,11 @@ def main():
                 if args.seed_default:
                     print("Existing best_genome.json found, but --seed_default overrides it for the initial mean.")
                 else:
-                    x0_physical = np.array([genome["params"][n] for n in PARAM_NAMES], dtype=np.float64)
+                    x0_physical = clamp_physical_row(
+                        PARAM_NAMES,
+                        np.array([genome_param(genome, n) for n in PARAM_NAMES], dtype=np.float64),
+                        PARAM_BOUNDS,
+                    )
                     x0 = to_unit(x0_physical)
                     seeded_from_genome = True
                     print(f"Starting mean from {genome_file}  "
@@ -485,9 +520,9 @@ def main():
                       f"instead of {args.experiment}:{args.symmetry_break}.")
 
         if args.seed_default:
-            x0_physical = np.array([PARAM_DEFAULTS[n] for n in PARAM_NAMES], dtype=np.float64)
+            x0_physical = clamped_default_row.copy()
             x0 = to_unit(x0_physical)
-            print("Starting mean at v7 default parameters.")
+            print("Starting mean at search-clamped default parameters.")
         elif not seeded_from_genome:
             x0 = [0.5] * P
             x0_physical = None
@@ -499,10 +534,14 @@ def main():
             {"popsize": B, "bounds": [[0.0]*P, [1.0]*P], "verbose": -9},
         )
         initial_best_fitness = -1.0
-        initial_best_params = [PARAM_DEFAULTS[n] for n in PARAM_NAMES]
+        initial_best_params = clamped_default_row.tolist()
         if genome is not None and genome_matches_run(genome, args.experiment, args.symmetry_break):
             initial_best_fitness = float(genome.get("fitness", -1.0))
-            initial_best_params = [float(genome["params"][n]) for n in PARAM_NAMES]
+            initial_best_params = clamp_physical_row(
+                PARAM_NAMES,
+                np.array([genome_param(genome, n) for n in PARAM_NAMES], dtype=np.float64),
+                PARAM_BOUNDS,
+            ).tolist()
         meta = {
             "B": B, "N": N, "gen": 0,
             "best_fitness": initial_best_fitness,
@@ -532,9 +571,10 @@ def main():
     )
 
     for _ in range(args.gens):
-        if es.stop():
+        stop_reasons = active_stop_reasons(es.stop(), meta["gen"], float(meta["best_fitness"]))
+        if stop_reasons:
             print("CMA-ES convergence criterion met — stopping early.")
-            print(f"  Reason: {es.stop()}")
+            print(f"  Reason: {stop_reasons}")
             break
 
         t0  = time.perf_counter()
@@ -543,7 +583,9 @@ def main():
 
         fitness_acc = np.zeros(B, dtype=np.float32)
         episode_seeds = []
-        slot_ids = np.arange(B, dtype=np.int64)
+        # CMA-ES also needs a shared evaluation seed within each episode;
+        # otherwise the optimizer learns slot-specific reset luck.
+        slot_ids = np.full(B, CANONICAL_EVAL_SLOT, dtype=np.int64)
         for _ in range(args.episodes):
             episode_seed = int(np.random.randint(0, 2**31 - 1))
             episode_seeds.append(episode_seed)
@@ -582,7 +624,7 @@ def main():
                     experiment=args.experiment,
                     symmetry_break=args.symmetry_break,
                     eval_episode_seeds=episode_seeds,
-                    eval_slot=best_idx,
+                    eval_slot=CANONICAL_EVAL_SLOT,
                 )
                 print(f"  ** New best → {genome_file}")
 

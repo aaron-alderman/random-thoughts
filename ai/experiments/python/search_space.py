@@ -2,7 +2,7 @@ import math
 import numpy as np
 
 
-LOG_PARAMS = {"W", "beta", "epsilon"}
+LOG_PARAMS = {"W", "beta", "epsilon", "edgeDecay"}
 ALPHA_GAP_PARAM = "alpha"
 
 
@@ -54,3 +54,11 @@ def physical_matrix_to_search(param_names, arr: np.ndarray) -> np.ndarray:
 
 def search_matrix_to_physical(param_names, arr: np.ndarray) -> np.ndarray:
     return np.stack([search_row_to_physical(param_names, row) for row in arr], axis=0)
+
+
+def clamp_physical_row(param_names, row: np.ndarray, param_bounds: dict) -> np.ndarray:
+    out = np.array(row, dtype=np.float64, copy=True)
+    for i, name in enumerate(param_names):
+        lo, hi = param_bounds[name]
+        out[i] = min(max(float(out[i]), float(lo)), float(hi))
+    return out

@@ -19,7 +19,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from batched_field import BatchedField, PARAM_NAMES, array_to_params
+from batched_field import BatchedField, PARAM_DEFAULTS, PARAM_NAMES, array_to_params
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -68,6 +68,10 @@ def parse_args():
 def load_genome(path: Path) -> dict:
     with open(path) as f:
         return json.load(f)
+
+
+def genome_param(genome: dict, name: str) -> float:
+    return float(genome["params"].get(name, PARAM_DEFAULTS[name]))
 
 
 def format_score(score):
@@ -153,7 +157,7 @@ def main():
     genome_path = resolve_path(args.genome)
     genome = load_genome(genome_path)
 
-    params_row = np.array([float(genome["params"][name]) for name in PARAM_NAMES], dtype=np.float32)
+    params_row = np.array([genome_param(genome, name) for name in PARAM_NAMES], dtype=np.float32)
     arr = np.repeat(params_row[None, :], args.seeds, axis=0)
     params_t = array_to_params(arr, device)
 

@@ -11,10 +11,12 @@ Roll convention: _roll_neighbor(t, dx, dy)[y, x] == t[(y+dy)%N, (x+dx)%N]
 import math
 import torch
 import numpy as np
+from batched_field import PARAM_BOUNDS
 from experiment_paths import validate_experiment
 from initial_state import build_initial_fields
 
 TWO_PI = 2.0 * math.pi
+EFFICIENCY_WEIGHT = 0.10
 
 # 8-connected neighbours: (dx, dy) in (col, row) convention matching JS nb8
 NB8 = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (1, -1), (-1, 1), (1, 1)]
@@ -55,12 +57,40 @@ def _estimate_period(trace, min_amplitude=0.05):
     return float(np.median(diffs))
 
 
+def _efficiency_term(total_steps: float, task_cycles: int, warmup_frac: float) -> tuple[float, float]:
+    """Return a soft reward and normalized cost for simulated schedule length."""
+    lo_cycle = max(2, int(round(PARAM_BOUNDS["cycleLen"][0])))
+    hi_cycle = max(lo_cycle, int(round(PARAM_BOUNDS["cycleLen"][1])))
+    lo_warmup = max(1, int(round(lo_cycle * warmup_frac)))
+    hi_warmup = max(1, int(round(hi_cycle * warmup_frac)))
+    lo_total = float(lo_warmup + task_cycles * lo_cycle)
+    hi_total = float(hi_warmup + task_cycles * hi_cycle)
+    if hi_total <= lo_total:
+        norm = 0.0
+    else:
+        norm = min(max((float(total_steps) - lo_total) / (hi_total - lo_total), 0.0), 1.0)
+    reward = 1.0 - EFFICIENCY_WEIGHT * norm
+    return reward, norm
+
+
+def _signed_match_fraction(trace, cue_sign: float, tol: float = 0.02) -> float:
+    """Fraction of decisive samples whose sign matches the target cue."""
+    arr = np.asarray(trace, dtype=np.float32)
+    decisive = np.abs(arr) > tol
+    if not np.any(decisive):
+        return 0.0
+    return float(np.mean(np.sign(arr[decisive]) == cue_sign))
+
+
 class FieldDynamics:
     def __init__(self, N=32, device="cpu", **param_overrides):
         experiment = param_overrides.pop("experiment", "symmetry_v1")
         symmetry_break = param_overrides.pop("symmetry_break", "spatial")
         self.reset_seed = param_overrides.pop("reset_seed", None)
         self.reset_slot = int(param_overrides.pop("reset_slot", 0))
+        timing_override_keys = set(param_overrides).intersection(
+            {"cycleLen", "dayFrac", "warmupFrac", "dayLen", "nightLen", "warmup"}
+        )
         self.experiment, self.symmetry_break = validate_experiment(experiment, symmetry_break)
         self.N = N
         self.device = torch.device(device)
@@ -92,6 +122,9 @@ class FieldDynamics:
             # Disabled for now: keep the hook but make it a no-op until we
             # decide whether programmed asymmetry belongs in the task.
             "spatialBias":  1.00,
+            "cycleLen":     800,
+            "dayFrac":      0.50,
+            "warmupFrac":   0.375,
             "dayLen":       400,
             "nightLen":     400,
             "corrThr":      0.5,
@@ -99,6 +132,7 @@ class FieldDynamics:
             "taskCycles":   2,
         }
         self.P.update(param_overrides)
+        self._configure_timing_params(timing_override_keys)
         self.reset()
 
     # ── helpers ──────────────────────────────────────────────────────────────
@@ -109,6 +143,28 @@ class FieldDynamics:
     def _roll(self, t, dx, dy):
         """t[y,x] → neighbour at (x+dx, y+dy) seen from each (y,x)."""
         return torch.roll(torch.roll(t, -dy, 0), -dx, 1)
+
+    def _configure_timing_params(self, timing_override_keys: set[str]):
+        cycle_len = max(2, int(round(float(self.P.get("cycleLen", self.P["dayLen"] + self.P["nightLen"])))))
+        day_frac = float(self.P.get("dayFrac", self.P["dayLen"] / max(1, cycle_len)))
+        day_frac = min(max(day_frac, 0.05), 0.95)
+        day_len = int(round(cycle_len * day_frac))
+        day_len = min(max(day_len, 1), cycle_len - 1)
+        night_len = max(1, cycle_len - day_len)
+
+        warmup_frac = float(self.P.get("warmupFrac", 0.375))
+        if {"cycleLen", "dayFrac", "warmupFrac"} & timing_override_keys:
+            warmup = max(1, int(round(cycle_len * warmup_frac)))
+        else:
+            warmup = max(1, int(round(float(self.P.get("warmup", 300)))))
+            warmup_frac = warmup / max(1, cycle_len)
+
+        self.P["cycleLen"] = cycle_len
+        self.P["dayFrac"] = day_frac
+        self.P["warmupFrac"] = warmup_frac
+        self.P["dayLen"] = day_len
+        self.P["nightLen"] = night_len
+        self.P["warmup"] = warmup
 
     # ── initialisation ───────────────────────────────────────────────────────
 
@@ -197,6 +253,9 @@ class FieldDynamics:
         self.optimizer_night_period = math.nan
         self.optimizer_period_ratio = math.nan
         self.optimizer_frequency_faithfulness = math.nan
+        self.optimizer_efficiency_reward = 1.0
+        self.optimizer_normalized_step_cost = 0.0
+        self.optimizer_total_steps = float(self.P["warmup"] + self.P["taskCycles"] * self.P["cycleLen"])
         self.optimizer_fitness = 0.0
         self.cycle_optimizer_fitness = 0.0
         self.completed_cycle_scores = []
@@ -212,6 +271,9 @@ class FieldDynamics:
         self.optimizer_choice_consistency = math.nan
         self.optimizer_overnight_persistence = math.nan
         self.optimizer_switch_penalty = math.nan
+        self.optimizer_cue_parity = math.nan
+        self.optimizer_a_mean = math.nan
+        self.optimizer_b_mean = math.nan
         self.choice_strength = math.nan
         self.choice_consistency = math.nan
         self.overnight_persistence = math.nan
@@ -320,12 +382,18 @@ class FieldDynamics:
         self.optimizer_night_period = math.nan
         self.optimizer_period_ratio = math.nan
         self.optimizer_frequency_faithfulness = math.nan
+        self.optimizer_efficiency_reward = 1.0
+        self.optimizer_normalized_step_cost = 0.0
+        self.optimizer_total_steps = float(self.P["warmup"] + self.P["taskCycles"] * self.P["cycleLen"])
         self.optimizer_fitness = 0.0
         self.cycle_optimizer_fitness = 0.0
         self.optimizer_choice_strength = math.nan
         self.optimizer_choice_consistency = math.nan
         self.optimizer_overnight_persistence = math.nan
         self.optimizer_switch_penalty = math.nan
+        self.optimizer_cue_parity = math.nan
+        self.optimizer_a_mean = math.nan
+        self.optimizer_b_mean = math.nan
         self.choice_strength = math.nan
         self.choice_consistency = math.nan
         self.overnight_persistence = math.nan
@@ -356,10 +424,16 @@ class FieldDynamics:
         self.optimizer_night_period = math.nan
         self.optimizer_period_ratio = math.nan
         self.optimizer_frequency_faithfulness = math.nan
+        self.optimizer_efficiency_reward = 1.0
+        self.optimizer_normalized_step_cost = 0.0
+        self.optimizer_total_steps = float(self.P["warmup"] + self.P["taskCycles"] * self.P["cycleLen"])
         self.optimizer_fitness = 0.0
         self.cycle_optimizer_fitness = 0.0
         self.optimizer_overnight_persistence = math.nan
         self.optimizer_switch_penalty = math.nan
+        self.optimizer_cue_parity = math.nan
+        self.optimizer_a_mean = math.nan
+        self.optimizer_b_mean = math.nan
         self.cue_label = self._current_cue_label()
 
     def _finalize_episode_cycle(self):
@@ -714,13 +788,13 @@ class FieldDynamics:
         self.chosen_probe = self._current_cue_label()
         self.chosen_basin = self.chosen_probe
         self.choice_strength = max(0.0, cue_sign * mean_dom)
-        self.choice_consistency = float(np.mean(np.sign(day_dom + 1e-6) == cue_sign))
+        self.choice_consistency = _signed_match_fraction(day_dom, cue_sign)
 
         if self.left_night_history and self.right_night_history:
             night_left = np.asarray(self.left_night_history, dtype=np.float32)
             night_right = np.asarray(self.right_night_history, dtype=np.float32)
             night_dom = (night_left - night_right) / np.maximum(night_left + night_right, 1e-6)
-            self.overnight_persistence = float(np.mean(np.sign(night_dom + 1e-6) == cue_sign))
+            self.overnight_persistence = _signed_match_fraction(night_dom, cue_sign)
             combined = np.concatenate([day_dom, night_dom])
         else:
             self.overnight_persistence = math.nan
@@ -786,6 +860,9 @@ class FieldDynamics:
                 self.optimizer_choice_consistency = math.nan
                 self.optimizer_overnight_persistence = 0.0
                 self.optimizer_switch_penalty = math.nan
+                self.optimizer_cue_parity = math.nan
+                self.optimizer_a_mean = math.nan
+                self.optimizer_b_mean = math.nan
                 self.cycle_optimizer_fitness = 0.0
                 self.optimizer_fitness = 0.0
                 return
@@ -796,15 +873,13 @@ class FieldDynamics:
             mean_dom = float(np.mean(day_dom))
             cue_sign = self._current_cue_sign()
             self.optimizer_choice_strength = max(0.0, cue_sign * mean_dom)
-            self.optimizer_choice_consistency = float(np.mean(np.sign(day_dom + 1e-6) == cue_sign))
+            self.optimizer_choice_consistency = _signed_match_fraction(day_dom, cue_sign)
 
             if self.left_night_history_first and self.right_night_history_first:
                 night_left = np.asarray(self.left_night_history_first, dtype=np.float32)
                 night_right = np.asarray(self.right_night_history_first, dtype=np.float32)
                 night_dom = (night_left - night_right) / np.maximum(night_left + night_right, 1e-6)
-                self.optimizer_overnight_persistence = float(
-                    np.mean(np.sign(night_dom + 1e-6) == cue_sign)
-                )
+                self.optimizer_overnight_persistence = _signed_match_fraction(night_dom, cue_sign)
                 combined = np.concatenate([day_dom, night_dom])
             else:
                 self.optimizer_overnight_persistence = 0.0
@@ -825,16 +900,60 @@ class FieldDynamics:
                 * max(0.0, 1.0 - self.optimizer_switch_penalty)
             )
             task_cycles = int(self.P.get("taskCycles", 1))
+            self.optimizer_total_steps = float(self.P["warmup"] + task_cycles * self.P["cycleLen"])
+            self.optimizer_efficiency_reward, self.optimizer_normalized_step_cost = _efficiency_term(
+                self.optimizer_total_steps,
+                task_cycles,
+                float(self.P.get("warmupFrac", 0.375)),
+            )
             active_scores = list(self.completed_cycle_scores[:task_cycles])
             if len(active_scores) < task_cycles:
                 active_scores.append(self.cycle_optimizer_fitness)
-            self.optimizer_fitness = float(np.mean(active_scores)) if active_scores else 0.0
+            if active_scores:
+                base_fitness = float(np.mean(active_scores))
+                a_scores = [score for i, score in enumerate(active_scores) if self._cue_label_for_cycle(i) == "A"]
+                b_scores = [score for i, score in enumerate(active_scores) if self._cue_label_for_cycle(i) == "B"]
+                if a_scores and b_scores:
+                    self.optimizer_a_mean = float(np.mean(a_scores))
+                    self.optimizer_b_mean = float(np.mean(b_scores))
+                    denom = max(self.optimizer_a_mean + self.optimizer_b_mean, 1e-6)
+                    self.optimizer_cue_parity = max(
+                        0.0,
+                        min(1.0, 2.0 * min(self.optimizer_a_mean, self.optimizer_b_mean) / denom),
+                    )
+                    self.optimizer_fitness = (
+                        base_fitness
+                        * self.optimizer_cue_parity
+                        * self.optimizer_efficiency_reward
+                    )
+                else:
+                    self.optimizer_a_mean = float(np.mean(a_scores)) if a_scores else math.nan
+                    self.optimizer_b_mean = float(np.mean(b_scores)) if b_scores else math.nan
+                    self.optimizer_cue_parity = 1.0
+                    self.optimizer_fitness = base_fitness * self.optimizer_efficiency_reward
+            else:
+                self.optimizer_cue_parity = math.nan
+                self.optimizer_a_mean = math.nan
+                self.optimizer_b_mean = math.nan
+                self.optimizer_efficiency_reward = 1.0
+                self.optimizer_normalized_step_cost = 0.0
+                self.optimizer_fitness = 0.0
             return
 
         self.optimizer_choice_strength = math.nan
         self.optimizer_choice_consistency = math.nan
         self.optimizer_overnight_persistence = math.nan
         self.optimizer_switch_penalty = math.nan
+        self.optimizer_cue_parity = math.nan
+        self.optimizer_a_mean = math.nan
+        self.optimizer_b_mean = math.nan
+        task_cycles = int(self.P.get("taskCycles", 1))
+        self.optimizer_total_steps = float(self.P["warmup"] + task_cycles * self.P["cycleLen"])
+        self.optimizer_efficiency_reward, self.optimizer_normalized_step_cost = _efficiency_term(
+            self.optimizer_total_steps,
+            task_cycles,
+            float(self.P.get("warmupFrac", 0.375)),
+        )
         self.cycle_optimizer_fitness = (
             self.optimizer_corr
             * self.optimizer_retention
@@ -844,6 +963,7 @@ class FieldDynamics:
             self.optimizer_corr
             * self.optimizer_retention
             * faithfulness_reward
+            * self.optimizer_efficiency_reward
         )
 
     def update(self):
@@ -963,6 +1083,9 @@ class FieldDynamics:
             "optimizer_night_period": self.optimizer_night_period,
             "optimizer_period_ratio": self.optimizer_period_ratio,
             "optimizer_frequency_faithfulness": self.optimizer_frequency_faithfulness,
+            "optimizer_efficiency_reward": self.optimizer_efficiency_reward,
+            "optimizer_normalized_step_cost": self.optimizer_normalized_step_cost,
+            "optimizer_total_steps": self.optimizer_total_steps,
             "optimizer_fitness": self.optimizer_fitness,
             "cycle_optimizer_fitness": self.cycle_optimizer_fitness,
             "drive_env":    self.drive_env,
@@ -987,6 +1110,9 @@ class FieldDynamics:
             "optimizer_choice_consistency": self.optimizer_choice_consistency,
             "optimizer_overnight_persistence": self.optimizer_overnight_persistence,
             "optimizer_switch_penalty": self.optimizer_switch_penalty,
+            "optimizer_cue_parity": self.optimizer_cue_parity,
+            "optimizer_a_mean": self.optimizer_a_mean,
+            "optimizer_b_mean": self.optimizer_b_mean,
             "symmetry_fitness": self.symmetry_fitness,
             "chosen_basin": self.chosen_basin,
             "chosen_probe": self.chosen_probe,

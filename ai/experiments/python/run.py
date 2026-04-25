@@ -491,6 +491,8 @@ def main():
                 f"  switch {format_score(st['switch_penalty'])}"
                 f"  |  target {st.get('chosen_probe', st['chosen_basin'])}"
                 f"  bal {st.get('current_balance', st['current_dominance']):.3f}"
+                f"  parity {format_score(st.get('optimizer_cue_parity'))}"
+                f"  eff {format_score(st.get('optimizer_efficiency_reward'))}"
                 f"  |  dayT {format_period(st['day_period_est'])}"
                 f"  nightT {format_period(st['night_period_est'])}"
                 f"  ratio {format_ratio(st['replay_period_ratio'])}"
@@ -510,6 +512,7 @@ def main():
                 f"  |  omega {st['output_omega']:.4f}"
                 f"  replayAdv {st['output_replay_adv']:.4f}"
                 f"  |  corr {st['corr_value']:.3f}  dwell {st['best_dwell']}"
+                f"  eff {format_score(st.get('optimizer_efficiency_reward'))}"
                 f"  optFit {format_score(st['optimizer_fitness'])}"
                 f"  |  {fps:.0f} fps  device: {device}  N={args.N}"
             )
