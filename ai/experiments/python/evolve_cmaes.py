@@ -187,8 +187,8 @@ def genome_param(genome: dict, name: str) -> float:
 
 def genome_matches_run(genome: dict, experiment: str, symmetry_break: str | None) -> bool:
     genome_experiment = genome.get("experiment", "replay")
-    genome_break = genome.get("symmetry_break", None if genome_experiment == "replay" else "spatial")
-    target_break = None if experiment == "replay" else symmetry_break
+    genome_break = genome.get("symmetry_break", None if genome_experiment in ("replay", "temporal_v1") else "spatial")
+    target_break = None if experiment in ("replay", "temporal_v1") else symmetry_break
     return genome_experiment == experiment and genome_break == target_break
 
 
@@ -250,6 +250,22 @@ def print_iteration(gen, fitness, arr, elapsed, sigma, metrics=None):
                   f"  eff = {_fmt(metrics.get('efficiency_reward'))}")
             cue_seq = metrics.get("cue_sequence", "--")
             print(f"        cueSeq = {cue_seq}")
+        elif "peak_S_growth_mean" in metrics:
+            print(f"          peak = {_fmt(metrics.get('peak_S_growth_mean'))}"
+                  f"  grow+ = {_fmt(metrics.get('positive_growth_mean'))}"
+                  f"  frac+ = {_fmt(metrics.get('positive_growth_fraction'))}"
+                  f"  frac* = {_fmt(metrics.get('positive_growth_fraction_score'))}")
+            print(f"        Sfinal = {_fmt(metrics.get('final_S_mass'))}"
+                  f"  Sstd = {_fmt(metrics.get('final_S_std'))}"
+                  f"  Sstd^ = {_fmt(metrics.get('peak_S_std'))}")
+            print(f"           Sf* = {_fmt(metrics.get('final_structure_score'))}"
+                  f"  Sp* = {_fmt(metrics.get('peak_structure_score'))}"
+                  f"  S* = {_fmt(metrics.get('structure_score'))}")
+            print(f"         hold = {_fmt(metrics.get('final_retention_mean'))}"
+                  f"  Rslow = {_fmt(metrics.get('final_R_slow_mean'))}")
+            print(f"         Cslow = {_fmt(metrics.get('final_C_slow_mean'))}"
+                  f"  nS = {_fmt(metrics.get('temporal_structural_samples'))}"
+                  f"  eff = {_fmt(metrics.get('efficiency_reward'))}")
         else:
             print(f"           corr = {_fmt(metrics.get('corr'))}"
                   f"  retention = {_fmt(metrics.get('retention'))}"
@@ -453,6 +469,8 @@ def pick_device(requested):
 
 def main():
     args   = parse_args()
+    if args.experiment == "temporal_v1":
+        args.symmetry_break = None
     if args.seed is not None:
         np.random.seed(args.seed)
         torch.manual_seed(args.seed)
@@ -636,10 +654,11 @@ def main():
     print(f"\nTotal iterations so far: {meta['gen']}")
     print(f"Best fitness:            {meta['best_fitness']:.4f}")
     print(f"\nTo visualise best individual:")
-    print(
-        f"  python run.py --device {device} --experiment {args.experiment}"
-        f" --symmetry-break {args.symmetry_break} --load_genome {genome_file}"
-    )
+    viz_cmd = f"python run.py --device {device} --experiment {args.experiment}"
+    if args.symmetry_break is not None:
+        viz_cmd += f" --symmetry-break {args.symmetry_break}"
+    viz_cmd += f" --load_genome {genome_file}"
+    print(f"  {viz_cmd}")
     print(f"To continue search:")
     print(
         f"  python evolve_cmaes.py --experiment {args.experiment}"

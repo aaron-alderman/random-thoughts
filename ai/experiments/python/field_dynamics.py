@@ -193,6 +193,16 @@ class FieldDynamics:
 
         self.R  = self._z()
         self.C  = self._z()
+        self.C_prev_s = self._z()
+        self.C_slow = self._z()
+        self.dC_s = self._z()
+        self.R_slow = self._z()
+        self.S_retention = self._z()
+        self.S_improve = self._z()
+        self.S_degrade = self._z()
+        self.S_surprise_gate = self._z()
+        self.S_quiet_prune = self._z()
+        self.S_growth_signal = self._z()
 
         self.AL = torch.full((N, N), P["alpha"], device=d)
         self.BL = torch.full((N, N), P["beta"],  device=d)
@@ -690,10 +700,41 @@ class FieldDynamics:
             maxC = torch.where(better, C_j, maxC)
             maxS = torch.where(better, S_j, maxS)
 
+        neighbor_spread = 0.02 * (maxS - S)
+
+        if self.experiment != "temporal_v1":
+            self.S = torch.clamp(
+                (1.0 - P["epsilon"]) * S + P["epsilon"] * (C - R) + neighbor_spread,
+                min=0.001, max=1.0
+            )
+            return
+
+        dC_s = C - self.C_slow
+        improve = torch.relu(dC_s - 0.002)
+        degrade = torch.relu(-dC_s - 0.002)
+        self.R_slow = 0.98 * self.R_slow + 0.02 * R
+        surprise_gate = torch.clamp((self.R_slow - 0.02) / 0.08, min=0.0, max=1.0)
+        quiet_prune = torch.relu(0.08 - self.R_slow)
+        # The raw improve*gate product is tiny in practice, so the experimental
+        # temporal-contiguity path needs an explicit gain to compete with the
+        # epsilon-scaled S update and neighbor spread.
+        growth_signal = 100.0 * improve * surprise_gate - 0.7 * degrade
+        retention_gate = torch.clamp(self.C_slow, min=0.0, max=1.0)
+        retained_S = (1.0 - P["epsilon"] * (1.0 - 0.8 * retention_gate)) * S
+
+        self.dC_s = dC_s
+        self.S_retention = retention_gate
+        self.S_improve = improve
+        self.S_degrade = degrade
+        self.S_surprise_gate = surprise_gate
+        self.S_quiet_prune = quiet_prune
+        self.S_growth_signal = growth_signal
         self.S = torch.clamp(
-            (1.0 - P["epsilon"]) * S + P["epsilon"] * (C - R) + 0.02 * (maxS - S),
+            retained_S + P["epsilon"] * growth_signal + neighbor_spread,
             min=0.001, max=1.0
         )
+        self.C_slow = 0.9 * self.C_slow + 0.1 * C
+        self.C_prev_s = C.clone()
 
     # ── Sedge update (every 10 steps) ─────────────────────────────────────────
 
@@ -1057,12 +1098,48 @@ class FieldDynamics:
         or_, oc = self.output_node
         output_omega = float(self.Omega[or_, oc].item())
         output_adv = float(self.ReplayAdv[or_, oc].item())
+        if self.experiment == "temporal_v1":
+            C_slow_mean = float(self.C_slow.mean().item())
+            dC_mean = float(self.dC_s.mean().item())
+            dC_pos_mean = float(torch.relu(self.dC_s).mean().item())
+            dC_neg_mean = float(torch.relu(-self.dC_s).mean().item())
+            R_slow_mean = float(self.R_slow.mean().item())
+            retention_mean = float(self.S_retention.mean().item())
+            improve_mean = float(self.S_improve.mean().item())
+            degrade_mean = float(self.S_degrade.mean().item())
+            surprise_gate_mean = float(self.S_surprise_gate.mean().item())
+            quiet_prune_mean = float(self.S_quiet_prune.mean().item())
+            S_growth_mean = float(self.S_growth_signal.mean().item())
+            S_mass = float(self.S.mean().item())
+        else:
+            C_slow_mean = math.nan
+            dC_mean = math.nan
+            dC_pos_mean = math.nan
+            dC_neg_mean = math.nan
+            R_slow_mean = math.nan
+            retention_mean = math.nan
+            improve_mean = math.nan
+            degrade_mean = math.nan
+            surprise_gate_mean = math.nan
+            quiet_prune_mean = math.nan
+            S_growth_mean = math.nan
+            S_mass = math.nan
         return {
             "Xr":        to_np(self.Xr),
             "Xi":        to_np(self.Xi),
             "S":         to_np(self.S),
             "R":         to_np(self.R),
             "C":         to_np(self.C),
+            "C_prev_s":  to_np(self.C_prev_s),
+            "C_slow":    to_np(self.C_slow),
+            "dC_s":      to_np(self.dC_s),
+            "R_slow":    to_np(self.R_slow),
+            "S_retention": to_np(self.S_retention),
+            "S_improve": to_np(self.S_improve),
+            "S_degrade": to_np(self.S_degrade),
+            "S_surprise_gate": to_np(self.S_surprise_gate),
+            "S_quiet_prune": to_np(self.S_quiet_prune),
+            "S_growth_signal": to_np(self.S_growth_signal),
             "Sedge_max": to_np(self.Sedge.max(dim=2).values),
             "Omega":     to_np(self.Omega),
             "magnitude": to_np(torch.sqrt(self.Xr**2 + self.Xi**2)),
@@ -1120,6 +1197,18 @@ class FieldDynamics:
             "current_balance": self.current_balance,
             "output_omega": output_omega,
             "output_replay_adv": output_adv,
+            "C_slow_mean": C_slow_mean,
+            "dC_mean": dC_mean,
+            "dC_pos_mean": dC_pos_mean,
+            "dC_neg_mean": dC_neg_mean,
+            "R_slow_mean": R_slow_mean,
+            "retention_mean": retention_mean,
+            "improve_mean": improve_mean,
+            "degrade_mean": degrade_mean,
+            "surprise_gate_mean": surprise_gate_mean,
+            "quiet_prune_mean": quiet_prune_mean,
+            "S_growth_mean": S_growth_mean,
+            "S_mass": S_mass,
         }
 
     # ── persistence ───────────────────────────────────────────────────────────

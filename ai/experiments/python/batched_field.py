@@ -331,6 +331,16 @@ class BatchedField:
 
         self.R  = self._z()
         self.C  = self.R.clone()
+        self.C_prev_s = self._z()
+        self.C_slow = self._z()
+        self.dC_s = self._z()
+        self.R_slow = self._z()
+        self.S_retention = self._z()
+        self.S_improve = self._z()
+        self.S_degrade = self._z()
+        self.S_surprise_gate = self._z()
+        self.S_quiet_prune = self._z()
+        self.S_growth_signal = self._z()
         self.AL = p["alpha"].expand(B, N, N).clone()
         self.BL = p["beta"].expand(B, N, N).clone()
         self.ChF = self._z()
@@ -601,10 +611,38 @@ class BatchedField:
             better = C_j > maxC
             maxC = torch.where(better, C_j, maxC)
             maxS = torch.where(better, S_j, maxS)
+        neighbor_spread = 0.02 * (maxS - S)
+
+        if self.experiment != "temporal_v1":
+            self.S = torch.clamp(
+                (1.0 - p["epsilon"]) * S + p["epsilon"] * (C - R) + neighbor_spread,
+                min=0.001, max=1.0
+            )
+            return
+
+        dC_s = C - self.C_slow
+        improve = torch.relu(dC_s - 0.002)
+        degrade = torch.relu(-dC_s - 0.002)
+        self.R_slow = 0.98 * self.R_slow + 0.02 * R
+        surprise_gate = torch.clamp((self.R_slow - 0.02) / 0.08, min=0.0, max=1.0)
+        quiet_prune = torch.relu(0.08 - self.R_slow)
+        growth_signal = 100.0 * improve * surprise_gate - 0.7 * degrade
+        retention_gate = torch.clamp(self.C_slow, min=0.0, max=1.0)
+        retained_S = (1.0 - p["epsilon"] * (1.0 - 0.8 * retention_gate)) * S
+
+        self.dC_s = dC_s
+        self.S_retention = retention_gate
+        self.S_improve = improve
+        self.S_degrade = degrade
+        self.S_surprise_gate = surprise_gate
+        self.S_quiet_prune = quiet_prune
+        self.S_growth_signal = growth_signal
         self.S = torch.clamp(
-            (1.0 - p["epsilon"]) * S + p["epsilon"] * (C - R) + 0.02 * (maxS - S),
+            retained_S + p["epsilon"] * growth_signal + neighbor_spread,
             min=0.001, max=1.0
         )
+        self.C_slow = 0.9 * self.C_slow + 0.1 * C
+        self.C_prev_s = C.clone()
 
     # ── Sedge update ──────────────────────────────────────────────────────────
 
@@ -707,6 +745,16 @@ class BatchedField:
         max_total = int(total_steps.max().item())
         total_steps_np = total_steps.cpu().numpy().astype(np.float32, copy=False)
         efficiency_reward, step_cost = efficiency_reward_np(total_steps_np, task_cycles)
+        count_steps = torch.zeros(B, dtype=torch.float32, device=d)
+        peak_growth = torch.full((B,), -1e9, dtype=torch.float32, device=d)
+        positive_count = torch.zeros(B, dtype=torch.float32, device=d)
+        positive_auc = torch.zeros(B, dtype=torch.float32, device=d)
+        final_s_mass = torch.zeros(B, dtype=torch.float32, device=d)
+        final_s_std = torch.zeros(B, dtype=torch.float32, device=d)
+        peak_s_std = torch.zeros(B, dtype=torch.float32, device=d)
+        final_retention = torch.zeros(B, dtype=torch.float32, device=d)
+        final_r_slow = torch.zeros(B, dtype=torch.float32, device=d)
+        final_c_slow = torch.zeros(B, dtype=torch.float32, device=d)
 
         for _ in range(max_total):
             active = self.cycle_count < task_cycles
@@ -715,8 +763,27 @@ class BatchedField:
 
             was_day = self.is_day()
             was_warmup = self.is_warmup()
+            s_update_tick = torch.full((B,), self.step_count % 10 == 0, dtype=torch.bool, device=d)
             cycle_idx = torch.clamp(self.cycle_count, max=task_cycles - 1)
             self.step()
+            growth_mean = self.S_growth_signal.mean(dim=(1, 2))
+            retention_mean = self.S_retention.mean(dim=(1, 2))
+            s_mass_mean = self.S.mean(dim=(1, 2))
+            s_std_mean = self.S.std(dim=(1, 2), unbiased=False)
+            r_slow_mean = self.R_slow.mean(dim=(1, 2))
+            c_slow_mean = self.C_slow.mean(dim=(1, 2))
+            score_mask = active & (~was_warmup) & s_update_tick
+            score_f = score_mask.float()
+            count_steps += score_f
+            peak_growth = torch.where(score_mask, torch.maximum(peak_growth, growth_mean), peak_growth)
+            positive_count += score_f * (growth_mean > 0.0).float()
+            positive_auc += score_f * torch.relu(growth_mean)
+            final_s_mass = torch.where(score_mask, s_mass_mean, final_s_mass)
+            final_s_std = torch.where(score_mask, s_std_mean, final_s_std)
+            peak_s_std = torch.where(score_mask, torch.maximum(peak_s_std, s_std_mean), peak_s_std)
+            final_retention = torch.where(score_mask, retention_mean, final_retention)
+            final_r_slow = torch.where(score_mask, r_slow_mean, final_r_slow)
+            final_c_slow = torch.where(score_mask, c_slow_mean, final_c_slow)
             ov = self.Xr[:, or_, oc]   # (B,)
             left_mag = torch.sqrt(self.Xr[:, lr, lc] ** 2 + self.Xi[:, lr, lc] ** 2)
             right_mag = torch.sqrt(self.Xr[:, rr, rc] ** 2 + self.Xi[:, rr, rc] ** 2)
@@ -754,6 +821,16 @@ class BatchedField:
         right_night_np = right_night.cpu().numpy()
         day_ptr_np = day_ptr.cpu().numpy()
         night_ptr_np = night_ptr.cpu().numpy()
+        count_steps_np = count_steps.cpu().numpy()
+        peak_growth_np = peak_growth.cpu().numpy()
+        positive_count_np = positive_count.cpu().numpy()
+        positive_auc_np = positive_auc.cpu().numpy()
+        final_s_mass_np = final_s_mass.cpu().numpy()
+        final_s_std_np = final_s_std.cpu().numpy()
+        peak_s_std_np = peak_s_std.cpu().numpy()
+        final_retention_np = final_retention.cpu().numpy()
+        final_r_slow_np = final_r_slow.cpu().numpy()
+        final_c_slow_np = final_c_slow.cpu().numpy()
 
         if self.experiment == "symmetry_v1":
             cycle_scores = np.zeros((task_cycles, B), dtype=np.float32)
@@ -844,6 +921,49 @@ class BatchedField:
                 "b_mean": b_mean,
                 "behavior_fitness": base_fitness,
                 "parity_fitness": parity_fitness,
+                "efficiency_reward": efficiency_reward,
+                "normalized_step_cost": step_cost,
+                "total_steps": total_steps_np,
+                "fitness": fitness,
+            }
+            return fitness_t
+
+        if self.experiment == "temporal_v1":
+            safe_count = np.maximum(count_steps_np, 1.0)
+            positive_fraction = positive_count_np / safe_count
+            positive_growth_mean = positive_auc_np / safe_count
+            peak_score = np.clip(np.maximum(peak_growth_np, 0.0) / 0.8, 0.0, 1.0)
+            growth_score = np.clip(positive_growth_mean / 0.25, 0.0, 1.0)
+            mass_score = np.clip(final_s_mass_np / 0.10, 0.0, 1.0)
+            final_structure_score = np.clip(final_s_std_np / 0.05, 0.0, 1.0)
+            peak_structure_score = np.clip(peak_s_std_np / 0.05, 0.0, 1.0)
+            structure_score = 0.5 * final_structure_score + 0.5 * peak_structure_score
+            growth_fraction_target = 0.40
+            growth_fraction_halfwidth = 0.25
+            fraction_score = np.clip(
+                1.0 - np.abs(positive_fraction - growth_fraction_target) / growth_fraction_halfwidth,
+                0.0,
+                1.0,
+            )
+            behavior_fitness = peak_score * growth_score * fraction_score * mass_score * structure_score
+            fitness = behavior_fitness * efficiency_reward
+            fitness_t = torch.tensor(fitness, dtype=torch.float32, device=d)
+            self.last_episode_metrics = {
+                "peak_S_growth_mean": peak_growth_np,
+                "positive_growth_fraction": positive_fraction,
+                "positive_growth_fraction_score": fraction_score,
+                "positive_growth_mean": positive_growth_mean,
+                "temporal_structural_samples": count_steps_np,
+                "final_S_mass": final_s_mass_np,
+                "final_S_std": final_s_std_np,
+                "peak_S_std": peak_s_std_np,
+                "final_structure_score": final_structure_score,
+                "peak_structure_score": peak_structure_score,
+                "structure_score": structure_score,
+                "final_retention_mean": final_retention_np,
+                "final_R_slow_mean": final_r_slow_np,
+                "final_C_slow_mean": final_c_slow_np,
+                "behavior_fitness": behavior_fitness,
                 "efficiency_reward": efficiency_reward,
                 "normalized_step_cost": step_cost,
                 "total_steps": total_steps_np,
