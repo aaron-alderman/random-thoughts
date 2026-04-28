@@ -8,6 +8,7 @@ This directory holds draft paper artifacts and supporting scripts. Papers should
 | --- | --- |
 | [paper1-octonionic-two-branch-transport/](paper1-octonionic-two-branch-transport/README.md) | Octonionic two-branch transport draft, source, PDF/docx, and phase portrait assets |
 | [paper2-diii-winding-number/](paper2-diii-winding-number/README.md) | DIII winding-number draft, source, PDF/docx, and numeric check |
+| [paper3/](paper3/README.md) | Dissipative Chern-plateau draft, source PDF/docx, extracted markdown notes, and figure assets |
 
 ## Claim Level
 
