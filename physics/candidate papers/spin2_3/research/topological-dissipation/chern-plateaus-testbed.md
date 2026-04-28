@@ -67,6 +67,18 @@ This paper can be used to sharpen questions already present elsewhere in the rep
 
 What this note does **not** do is identify the QWZ sectors with `T1/T2`, derive the jump operator from hidden-sector coupling, or infer that the Spin(2,3) framework already has the same response formula.
 
+## Related Experimental Landscape
+
+For a nearby experimental/control paper in the same HgTe transport neighborhood, see [hgte-qpc-anomalous-steps.md](hgte-qpc-anomalous-steps.md).
+
+That paper is useful precisely because it points to a different mechanism. It reports anomalous non-integer conductance steps in strained HgTe quantum point contacts under magnetic field, but interprets them mainly through QPC scattering, edge-channel filtering, and Landauer-Buettiker plus tight-binding modeling rather than through the present Berry-curvature-weighted Lindblad response formula.
+
+So the combined lesson is sharper than either paper alone:
+
+- the QWZ/Lindblad note gives a clean analogue model for geometry-sensitive dissipative softening;
+- the HgTe QPC paper shows that unusual plateau structure in a nearby experimental platform can also arise from constriction disorder and partial transmission;
+- therefore any future bridge to experiment needs a mechanism-discrimination step, not just a visual plateau anomaly.
+
 ## Do Not Overclaim
 
 The missing bridge steps are substantial:

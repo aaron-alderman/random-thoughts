@@ -7,6 +7,7 @@ This research track holds external or semi-external models in which topology, di
 ## Contents
 
 - [chern-plateaus-testbed.md](chern-plateaus-testbed.md) for the paper-level synthesis and framework-facing reading of the QWZ/Lindblad result set.
+- [hgte-qpc-anomalous-steps.md](hgte-qpc-anomalous-steps.md) for a nearby experimental HgTe control paper with a different mechanism for anomalous plateau structure.
 
 ## Claim Posture
 
@@ -19,6 +20,7 @@ Use this track to:
 - compare how topological response changes near gap closures under controlled dephasing;
 - sharpen language for Berry-curvature concentration, broadening mechanisms, and response observables;
 - identify candidate measurements that distinguish dissipative fingerprints from generic smearing.
+- keep nearby experimental/control papers visible when they support the same landscape but point to different mechanisms.
 
 Do not use this track to:
 
