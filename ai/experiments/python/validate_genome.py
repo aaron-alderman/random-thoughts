@@ -7,19 +7,21 @@ prints summary statistics, and can optionally show a compact heatmap.
 
 Examples:
   python validate_genome.py
-  python validate_genome.py --genome best_genome.json --seeds 24 --seed_base 123
+  python validate_genome.py --genome genomes/symmetry_v1/best_genome.json --seeds 24 --seed_base 123
   python validate_genome.py --cycles 4
   python validate_genome.py --plot
 """
 
 import argparse
-import json
 from pathlib import Path
 
 import numpy as np
 import torch
 
-from batched_field import BatchedField, PARAM_DEFAULTS, PARAM_NAMES, array_to_params
+from batched_field import BatchedField, PARAM_NAMES, array_to_params
+from experiment_paths import default_genome_path
+from genome_io import load_genome
+from parameter_policy import merged_genome_params
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -50,8 +52,8 @@ def pick_device(requested: str) -> str:
 
 def parse_args():
     p = argparse.ArgumentParser()
-    p.add_argument("--genome", default="best_genome.json",
-                   help="Path to a saved genome JSON (default: best_genome.json)")
+    p.add_argument("--genome", default=str(default_genome_path(BASE_DIR, "symmetry_v1")),
+                   help="Path to a saved genome JSON")
     p.add_argument("--device", default="auto")
     p.add_argument("--N", type=int, default=32, help="Grid size (default: 32)")
     p.add_argument("--seeds", type=int, default=16,
@@ -63,16 +65,6 @@ def parse_args():
     p.add_argument("--plot", action="store_true",
                    help="Show a compact validation heatmap if matplotlib is available")
     return p.parse_args()
-
-
-def load_genome(path: Path) -> dict:
-    with open(path) as f:
-        return json.load(f)
-
-
-def genome_param(genome: dict, name: str) -> float:
-    return float(genome["params"].get(name, PARAM_DEFAULTS[name]))
-
 
 def format_score(score):
     if score is None or not np.isfinite(score):
@@ -157,7 +149,8 @@ def main():
     genome_path = resolve_path(args.genome)
     genome = load_genome(genome_path)
 
-    params_row = np.array([genome_param(genome, name) for name in PARAM_NAMES], dtype=np.float32)
+    resolved_params = merged_genome_params(genome)
+    params_row = np.array([resolved_params[name] for name in PARAM_NAMES], dtype=np.float32)
     arr = np.repeat(params_row[None, :], args.seeds, axis=0)
     params_t = array_to_params(arr, device)
 

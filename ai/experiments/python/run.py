@@ -18,13 +18,12 @@ Controls
 Usage:
   python run.py
   python run.py --device cuda
-  python run.py --load_genome best_genome.json
+  python run.py --load_genome genomes/symmetry_v1/best_genome.json
   python run.py --experiment temporal_v1 --trace_csv temporal_trace.csv
 """
 
 import argparse
 import csv
-import json
 import math
 import time
 from pathlib import Path
@@ -37,6 +36,8 @@ from matplotlib.patches import FancyBboxPatch, Rectangle
 
 from experiment_paths import SUPPORTED_EXPERIMENTS, SUPPORTED_SYMMETRY_BREAKS
 from field_dynamics import FieldDynamics
+from genome_io import load_genome
+from parameter_policy import merged_genome_params
 
 TWO_PI = 2 * math.pi
 plt = None
@@ -424,6 +425,10 @@ def make_trace_row(st, *, wall_seconds: float, reset_count: int):
     }
 
 
+def is_temporal_structural_snapshot(step: int) -> bool:
+    return step > 0 and ((step - 1) % 10 == 0)
+
+
 def build_help_overlay(fig):
     help_text = (
         "Hotkeys\n"
@@ -460,9 +465,8 @@ def main():
     replay_slot = 0
     if args.load_genome:
         genome_path = resolve_path(args.load_genome)
-        with open(genome_path) as f:
-            genome = json.load(f)
-        genome_overrides = genome["params"]
+        genome = load_genome(genome_path)
+        genome_overrides = merged_genome_params(genome)
         replay_episode_seeds = genome.get("eval_episode_seeds")
         replay_slot = int(genome.get("eval_slot", 0))
         if replay_episode_seeds:
@@ -470,10 +474,10 @@ def main():
             genome_overrides["reset_seed"] = replay_seed
             genome_overrides["reset_slot"] = replay_slot
         args.experiment = genome.get("experiment", args.experiment)
-        args.symmetry_break = genome.get("symmetry_break", args.symmetry_break) or args.symmetry_break
+        args.symmetry_break = genome.get("symmetry_break", args.symmetry_break)
         print(f"Loaded genome from {genome_path}  "
               f"(gen {genome['generation']}, fitness {genome['fitness']:.4f}, "
-              f"{args.experiment}:{args.symmetry_break if args.experiment != 'replay' else 'baseline'})")
+              f"{args.experiment}:{args.symmetry_break if args.symmetry_break is not None else 'baseline'})")
         if replay_seed is not None:
             print(f"  replay seed = {replay_seed}  slot = {replay_slot}")
             if len(replay_episode_seeds) > 1:
@@ -483,7 +487,7 @@ def main():
         for k, v in genome_overrides.items():
             if k in ("reset_seed", "reset_slot"):
                 continue
-            print(f"  {k:>15s} = {v:.6f}")
+            print(f"  {k:>15s} = {float(v):.6f}")
 
     sim = FieldDynamics(
         N=args.N,
@@ -496,7 +500,7 @@ def main():
     trace_file = None
     trace_writer = None
     trace_path = resolve_path(args.trace_csv)
-    next_trace_step = 0
+    next_trace_step = 1 if sim.experiment == "temporal_v1" else 0
     reset_count = 0
     trace_start_time = time.perf_counter()
     if trace_path is not None:
@@ -545,7 +549,7 @@ def main():
             corr_history.clear()
             dominance_history.clear()
             reset_count += 1
-            next_trace_step = 0
+            next_trace_step = 1 if sim.experiment == "temporal_v1" else 0
         elif event.key == "d":
             sim.cycle_mode = "forceday"
             sim.cycle_step_in_phase = 0
@@ -669,19 +673,26 @@ def main():
         if not paused:
             for _ in range(args.steps_per_frame):
                 sim.update()
+                if trace_writer is not None:
+                    trace_state = sim.get_state()
+                    trace_ready = trace_state["step"] >= next_trace_step
+                    trace_aligned = (
+                        trace_state["experiment"] != "temporal_v1"
+                        or is_temporal_structural_snapshot(int(trace_state["step"]))
+                    )
+                    if trace_ready and trace_aligned:
+                        trace_writer.writerow(
+                            make_trace_row(
+                                trace_state,
+                                wall_seconds=time.perf_counter() - trace_start_time,
+                                reset_count=reset_count,
+                            )
+                        )
+                        trace_file.flush()
+                        while next_trace_step <= trace_state["step"]:
+                            next_trace_step += args.trace_every
 
         st = sim.get_state()
-        if trace_writer is not None and st["step"] >= next_trace_step:
-            trace_writer.writerow(
-                make_trace_row(
-                    st,
-                    wall_seconds=time.perf_counter() - trace_start_time,
-                    reset_count=reset_count,
-                )
-            )
-            trace_file.flush()
-            while next_trace_step <= st["step"]:
-                next_trace_step += args.trace_every
         mag = st["magnitude"]
         phase = st["phase"]
         dph = sim._current_drive_phase()

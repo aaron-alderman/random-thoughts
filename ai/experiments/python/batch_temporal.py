@@ -14,7 +14,7 @@ Examples:
   python batch_temporal.py
   python batch_temporal.py --seeds 12 --seed_base 123 --trace_every 5
   python batch_temporal.py --cycles 3 --out_dir temporal_batch_runs\trial_01
-  python batch_temporal.py --load_genome best_genome.json
+  python batch_temporal.py --load_genome genomes/temporal_v1/best_genome.json
 """
 
 import argparse
@@ -27,13 +27,17 @@ import numpy as np
 import torch
 
 from field_dynamics import FieldDynamics
+from genome_io import load_genome
+from parameter_policy import merged_genome_params
 
 BASE_DIR = Path(__file__).resolve().parent
+STRUCTURE_INTERVAL = 10
 TRACE_METRICS = [
     "C_mean",
     "C_slow_mean",
     "R_mean",
     "S_mean",
+    "S_std",
     "dC_mean",
     "dC_pos_mean",
     "dC_neg_mean",
@@ -74,6 +78,8 @@ SUMMARY_FIELDS = [
     "final_C_slow_mean",
     "final_S_mean",
     "final_S_mass",
+    "final_S_std",
+    "peak_S_std",
     "final_R_slow_mean",
 ]
 
@@ -122,20 +128,18 @@ def parse_args():
                    help="Optional genome JSON whose params should seed temporal_v1")
     return p.parse_args()
 
-
-def load_genome(path: Path) -> dict:
-    with open(path) as f:
-        return json.load(f)
-
-
 def build_param_overrides(args) -> tuple[dict, Path | None]:
-    overrides = {"taskCycles": int(args.cycles)}
+    overrides = {}
     genome_path = resolve_path(args.load_genome)
     if genome_path is None:
+        overrides["taskCycles"] = int(args.cycles)
         return overrides, None
 
     genome = load_genome(genome_path)
-    overrides.update(genome.get("params", {}))
+    if genome.get("experiment") != "temporal_v1":
+        raise SystemExit(f"{genome_path} targets {genome.get('experiment')}, not temporal_v1")
+    overrides.update(merged_genome_params(genome))
+    overrides["taskCycles"] = int(args.cycles)
     return overrides, genome_path
 
 
@@ -152,6 +156,7 @@ def make_trace_row(st: dict, seed_slot: int) -> dict:
         "C_slow_mean": st["C_slow_mean"],
         "R_mean": float(np.mean(st["R"])),
         "S_mean": float(np.mean(st["S"])),
+        "S_std": float(np.std(st["S"])),
         "dC_mean": st["dC_mean"],
         "dC_pos_mean": st["dC_pos_mean"],
         "dC_neg_mean": st["dC_neg_mean"],
@@ -173,25 +178,34 @@ def write_csv(path: Path, fieldnames: list[str], rows: list[dict]):
         writer.writerows(rows)
 
 
+def is_structural_snapshot(step: int) -> bool:
+    return step > 0 and ((step - 1) % STRUCTURE_INTERVAL == 0)
+
+
 def summarize_seed(trace_rows: list[dict], trace_every: int, total_steps: int) -> dict:
-    growth = np.asarray([float(row["S_growth_mean"]) for row in trace_rows], dtype=np.float64)
-    surprise = np.asarray([float(row["surprise_gate_mean"]) for row in trace_rows], dtype=np.float64)
-    improve = np.asarray([float(row["improve_mean"]) for row in trace_rows], dtype=np.float64)
-    degrade = np.asarray([float(row["degrade_mean"]) for row in trace_rows], dtype=np.float64)
+    score_rows = [
+        row for row in trace_rows
+        if row["cycle_mode"] != "warmup" and is_structural_snapshot(int(row["step"]))
+    ]
+    growth = np.asarray([float(row["S_growth_mean"]) for row in score_rows], dtype=np.float64)
+    surprise = np.asarray([float(row["surprise_gate_mean"]) for row in score_rows], dtype=np.float64)
+    improve = np.asarray([float(row["improve_mean"]) for row in score_rows], dtype=np.float64)
+    degrade = np.asarray([float(row["degrade_mean"]) for row in score_rows], dtype=np.float64)
+    s_std = np.asarray([float(row["S_std"]) for row in score_rows], dtype=np.float64)
 
     peak_idx = int(np.argmax(growth)) if len(growth) else 0
     pos_mask = growth > 0.0
-    final = trace_rows[-1]
+    final = score_rows[-1] if score_rows else trace_rows[-1]
     return {
         "seed_slot": final["seed_slot"],
         "total_steps": total_steps,
-        "trace_samples": len(trace_rows),
+        "trace_samples": len(score_rows),
         "peak_S_growth_mean": float(growth[peak_idx]) if len(growth) else math.nan,
-        "peak_S_growth_step": int(trace_rows[peak_idx]["step"]) if trace_rows else 0,
+        "peak_S_growth_step": int(score_rows[peak_idx]["step"]) if score_rows else 0,
         "mean_S_growth_mean": float(np.mean(growth)) if len(growth) else math.nan,
         "positive_growth_samples": int(np.count_nonzero(pos_mask)),
         "positive_growth_fraction": float(np.mean(pos_mask)) if len(growth) else math.nan,
-        "growth_auc_pos": float(np.sum(np.clip(growth, a_min=0.0, a_max=None)) * trace_every),
+        "growth_auc_pos": float(np.sum(np.clip(growth, a_min=0.0, a_max=None)) * STRUCTURE_INTERVAL),
         "final_retention_mean": float(final["retention_mean"]),
         "max_surprise_gate_mean": float(np.max(surprise)) if len(surprise) else math.nan,
         "max_improve_mean": float(np.max(improve)) if len(improve) else math.nan,
@@ -200,6 +214,8 @@ def summarize_seed(trace_rows: list[dict], trace_every: int, total_steps: int) -
         "final_C_slow_mean": float(final["C_slow_mean"]),
         "final_S_mean": float(final["S_mean"]),
         "final_S_mass": float(final["S_mass"]),
+        "final_S_std": float(final["S_std"]),
+        "peak_S_std": float(np.max(s_std)) if len(s_std) else math.nan,
         "final_R_slow_mean": float(final["R_slow_mean"]),
     }
 
@@ -234,6 +250,8 @@ def print_summary(summary_rows: list[dict]):
     frac = np.asarray([row["positive_growth_fraction"] for row in summary_rows], dtype=np.float64)
     hold = np.asarray([row["final_retention_mean"] for row in summary_rows], dtype=np.float64)
     final_s = np.asarray([row["final_S_mass"] for row in summary_rows], dtype=np.float64)
+    final_s_std = np.asarray([row["final_S_std"] for row in summary_rows], dtype=np.float64)
+    peak_s_std = np.asarray([row["peak_S_std"] for row in summary_rows], dtype=np.float64)
     final_r = np.asarray([row["final_R_slow_mean"] for row in summary_rows], dtype=np.float64)
 
     print("\nBatch summary:")
@@ -242,6 +260,8 @@ def print_summary(summary_rows: list[dict]):
     print(f"  positive fraction   mean={frac.mean():.4f}  min={frac.min():.4f}  max={frac.max():.4f}")
     print(f"  final retention     mean={hold.mean():.4f}  min={hold.min():.4f}  max={hold.max():.4f}")
     print(f"  final S_mass        mean={final_s.mean():.4f}  min={final_s.min():.4f}  max={final_s.max():.4f}")
+    print(f"  final S_std         mean={final_s_std.mean():.4f}  min={final_s_std.min():.4f}  max={final_s_std.max():.4f}")
+    print(f"  peak S_std          mean={peak_s_std.mean():.4f}  min={peak_s_std.min():.4f}  max={peak_s_std.max():.4f}")
     print(f"  final R_slow_mean   mean={final_r.mean():.4f}  min={final_r.min():.4f}  max={final_r.max():.4f}")
 
 
@@ -277,7 +297,7 @@ def main():
 
         for _ in range(total_steps):
             sim.update()
-            if sim.step % args.trace_every == 0 or sim.step >= total_steps:
+            if (sim.step > 0 and (sim.step - 1) % args.trace_every == 0) or sim.step >= total_steps:
                 seed_trace_rows.append(make_trace_row(sim.get_state(), seed_slot))
 
         trace_rows.extend(seed_trace_rows)

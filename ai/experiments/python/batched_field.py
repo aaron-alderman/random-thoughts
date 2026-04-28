@@ -27,6 +27,12 @@ import torch
 import numpy as np
 from experiment_paths import validate_experiment
 from initial_state import build_initial_fields
+from parameter_policy import (
+    FIXED_PARAM_DEFAULTS,
+    PARAM_BOUNDS,
+    PARAM_DEFAULTS,
+    PARAM_NAMES,
+)
 
 TWO_PI = 2.0 * math.pi
 
@@ -104,86 +110,16 @@ def signed_match_fraction_np(trace: np.ndarray, cue_sign: float, tol: float = 0.
         return 0.0
     return float(np.mean(np.sign(arr[decisive]) == cue_sign))
 
-# ── parameter catalogue ───────────────────────────────────────────────────────
-
-PARAM_NAMES = [
-    "W",
-    "alpha",
-    "beta",
-    "selfEx",
-    "epsilon",
-    "retain",
-    "phaseInertia",
-    "edgeGain",
-    "driveAmp",
-    "cueAmp",
-    "cycleLen",
-    "dayFrac",
-    "kAlign",
-    "persistAlpha",
-    "omegaLearn",
-    "edgeDecay",
-    "driveRamp",
-    "driveClamp",
-    "tauC",
-]
-
-PARAM_BOUNDS = {
-    "W":            (0.000005, 0.18),
-    "alpha":        (0.5,   0.9999),
-    "beta":         (0.000005,  0.80),
-    "selfEx":       (0.0001,  0.90),
-    "epsilon":      (0.0001, 0.50),
-    "retain":       (0.20,  0.95),
-    "phaseInertia": (0.30,  8.00),
-    "edgeGain":     (0.0, 20.0),
-    "driveAmp":     (0.2, 5),
-    "cueAmp":       (0.0, 3),
-    "cycleLen":     (200.0, 500),
-    "dayFrac":      (0.49, 0.51),
-    "kAlign":       (0.20, 0.80),
-    "persistAlpha": (0.10, 0.50),
-    "omegaLearn":   (0.03, 0.30),
-    "edgeDecay":    (1e-5, 5e-3),
-    "driveRamp":    (8.0, 64.0),
-    "driveClamp":   (0.20, 0.80),
-    "tauC":         (0.30, 0.60),
-}
-
-PARAM_DEFAULTS = {
-    "W":            0.0325,
-    "alpha":        0.843,
-    "beta":         0.485,
-    "selfEx":       0.06,
-    "epsilon":      0.035,
-    "retain":       0.60,
-    "phaseInertia": 1.25,
-    "edgeGain":     8.00,
-    "driveAmp":     1.00,
-    "cueAmp":       0.30,
-    "cycleLen":     800.0,
-    "dayFrac":      0.50,
-    "kAlign":       0.43,
-    "persistAlpha": 0.28,
-    "omegaLearn":   0.12,
-    "edgeDecay":    0.0008,
-    "driveRamp":    32.0,
-    "driveClamp":   0.50,
-    "tauC":         0.45,
-}
-
-# Fixed hyperparameters — not evolved. Candidate-specific task-strength knobs
-# live in PARAM_* above so search can move them per individual.
 FIXED = {
-    "phi":          0.00,
-    "triWeight":    0.52,
-    "eta":          0.00,
-    "drivePer":     80,
+    "phi":          FIXED_PARAM_DEFAULTS["phi"],
+    "triWeight":    FIXED_PARAM_DEFAULTS["triWeight"],
+    "eta":          FIXED_PARAM_DEFAULTS["eta"],
+    "drivePer":     FIXED_PARAM_DEFAULTS["drivePer"],
     # Disabled for now: keep the hook but make it a no-op until we decide
     # whether programmed asymmetry is actually part of the canonical task.
-    "spatialBias":  1.00,
-    "warmupFrac":   0.375,
-    "taskCycles":   2,
+    "spatialBias":  FIXED_PARAM_DEFAULTS["spatialBias"],
+    "warmupFrac":   FIXED_PARAM_DEFAULTS["warmupFrac"],
+    "taskCycles":   FIXED_PARAM_DEFAULTS["taskCycles"],
 }
 
 HIST = 200   # trace length used for fitness correlation
@@ -934,18 +870,21 @@ class BatchedField:
             positive_growth_mean = positive_auc_np / safe_count
             peak_score = np.clip(np.maximum(peak_growth_np, 0.0) / 0.8, 0.0, 1.0)
             growth_score = np.clip(positive_growth_mean / 0.25, 0.0, 1.0)
-            mass_score = np.clip(final_s_mass_np / 0.10, 0.0, 1.0)
-            final_structure_score = np.clip(final_s_std_np / 0.05, 0.0, 1.0)
-            peak_structure_score = np.clip(peak_s_std_np / 0.05, 0.0, 1.0)
-            structure_score = 0.5 * final_structure_score + 0.5 * peak_structure_score
+            mass_score = np.clip(final_s_mass_np / 0.18, 0.0, 1.0)
+            final_structure_score = np.clip(final_s_std_np / 0.12, 0.0, 1.0)
+            peak_structure_score = np.clip(peak_s_std_np / 0.18, 0.0, 1.0)
+            structure_score = 0.75 * final_structure_score + 0.25 * peak_structure_score
             growth_fraction_target = 0.40
-            growth_fraction_halfwidth = 0.25
-            fraction_score = np.clip(
-                1.0 - np.abs(positive_fraction - growth_fraction_target) / growth_fraction_halfwidth,
-                0.0,
-                1.0,
+            below_halfwidth = 0.30
+            above_halfwidth = 0.15
+            fraction_score = np.where(
+                positive_fraction <= growth_fraction_target,
+                1.0 - (growth_fraction_target - positive_fraction) / below_halfwidth,
+                1.0 - (positive_fraction - growth_fraction_target) / above_halfwidth,
             )
-            behavior_fitness = peak_score * growth_score * fraction_score * mass_score * structure_score
+            fraction_score = np.clip(fraction_score, 0.0, 1.0)
+            persistence_score = np.power(mass_score, 1.25) * structure_score
+            behavior_fitness = peak_score * growth_score * fraction_score * persistence_score
             fitness = behavior_fitness * efficiency_reward
             fitness_t = torch.tensor(fitness, dtype=torch.float32, device=d)
             self.last_episode_metrics = {
@@ -960,6 +899,7 @@ class BatchedField:
                 "final_structure_score": final_structure_score,
                 "peak_structure_score": peak_structure_score,
                 "structure_score": structure_score,
+                "persistence_score": persistence_score,
                 "final_retention_mean": final_retention_np,
                 "final_R_slow_mean": final_r_slow_np,
                 "final_C_slow_mean": final_c_slow_np,

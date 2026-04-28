@@ -11,9 +11,9 @@ Roll convention: _roll_neighbor(t, dx, dy)[y, x] == t[(y+dy)%N, (x+dx)%N]
 import math
 import torch
 import numpy as np
-from batched_field import PARAM_BOUNDS
 from experiment_paths import validate_experiment
 from initial_state import build_initial_fields
+from parameter_policy import FIXED_PARAM_DEFAULTS, PARAM_BOUNDS, PARAM_DEFAULTS
 
 TWO_PI = 2.0 * math.pi
 EFFICIENCY_WEIGHT = 0.10
@@ -96,40 +96,40 @@ class FieldDynamics:
         self.device = torch.device(device)
 
         self.P = {
-            "alpha":        0.843,
-            "W":            0.0325,
-            "kAlign":       0.43,
-            "edgeGain":     8.00,
-            "retain":       0.60,
-            "phaseInertia": 1.25,
-            "persistAlpha": 0.28,
-            "omegaLearn":   0.12,
-            "edgeDecay":    0.0008,
-            "beta":         0.485,
-            "phi":          0.00,
-            "triWeight":    0.52,
-            "selfEx":       0.06,
-            "epsilon":      0.035,
-            "eta":          0.00,
-            "tauC":         0.45,
-            "driveAmp":     1.00,
-            "drivePer":     80,
-            "driveRamp":    32,
-            "cueAmp":       0.30,
+            "alpha":        PARAM_DEFAULTS["alpha"],
+            "W":            PARAM_DEFAULTS["W"],
+            "kAlign":       PARAM_DEFAULTS["kAlign"],
+            "edgeGain":     PARAM_DEFAULTS["edgeGain"],
+            "retain":       PARAM_DEFAULTS["retain"],
+            "phaseInertia": PARAM_DEFAULTS["phaseInertia"],
+            "persistAlpha": PARAM_DEFAULTS["persistAlpha"],
+            "omegaLearn":   PARAM_DEFAULTS["omegaLearn"],
+            "edgeDecay":    PARAM_DEFAULTS["edgeDecay"],
+            "beta":         PARAM_DEFAULTS["beta"],
+            "phi":          FIXED_PARAM_DEFAULTS["phi"],
+            "triWeight":    FIXED_PARAM_DEFAULTS["triWeight"],
+            "selfEx":       PARAM_DEFAULTS["selfEx"],
+            "epsilon":      PARAM_DEFAULTS["epsilon"],
+            "eta":          FIXED_PARAM_DEFAULTS["eta"],
+            "tauC":         PARAM_DEFAULTS["tauC"],
+            "driveAmp":     PARAM_DEFAULTS["driveAmp"],
+            "drivePer":     FIXED_PARAM_DEFAULTS["drivePer"],
+            "driveRamp":    PARAM_DEFAULTS["driveRamp"],
+            "cueAmp":       PARAM_DEFAULTS["cueAmp"],
             "gatePer":      800,
             "signalPer":    80,
             "signalAmp":    1.00,
             # Disabled for now: keep the hook but make it a no-op until we
             # decide whether programmed asymmetry belongs in the task.
-            "spatialBias":  1.00,
-            "cycleLen":     800,
-            "dayFrac":      0.50,
-            "warmupFrac":   0.375,
+            "spatialBias":  FIXED_PARAM_DEFAULTS["spatialBias"],
+            "cycleLen":     PARAM_DEFAULTS["cycleLen"],
+            "dayFrac":      PARAM_DEFAULTS["dayFrac"],
+            "warmupFrac":   FIXED_PARAM_DEFAULTS["warmupFrac"],
             "dayLen":       400,
             "nightLen":     400,
             "corrThr":      0.5,
             "warmup":       300,
-            "taskCycles":   2,
+            "taskCycles":   FIXED_PARAM_DEFAULTS["taskCycles"],
         }
         self.P.update(param_overrides)
         self._configure_timing_params(timing_override_keys)
