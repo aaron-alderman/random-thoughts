@@ -238,10 +238,10 @@ The relationship to Σ: the J^{01} grading can be understood as the generator of
 | T₀₁ is a second T²=−1 time-reversal, independent of T₀ | structural observation | 4 | both time-reversals square to −1; T₀₁ = T₀·T₁ |
 | Weyl semimetal structural analogy (T1 nodes ↔ Weyl nodes, m ↔ gap) | structural analogy | 4–5 | maps faithfully in d=3, class DIII/AIII |
 | massive limit is class D (T₀²=−1, C²=+1, Σ broken) | derived consequence | 4 | DIII → D when mass breaks chiral symmetry |
-| W₃ = 1 implies exactly one topologically protected massless T1 mode at the m=0 transition surface | derived from DIII d=3 bulk-boundary correspondence | 3–4 | the T1/T2 transition is the natural "boundary"; mode is protected against any perturbation preserving T₀ and C |
-| the sign of W₃ correlates with the sign of κ_u: W₃ = +1 selects the constructive (κ_u > 0) transport branch | concrete candidate, calculation pending | 4 | u ↦ −u flips both κ_u and W₃; if confirmed, the orientation axiom follows from the DIII sign rather than from a readout convention |
+| W₃ = 1 implies exactly one topologically protected massless T1 channel in the minimal reduced Spin(2,3) block at the m=0 transition surface | derived from DIII d=3 bulk-boundary correspondence | 3–4 | the current computation is on the bare four-component Spin(2,3) block; extra color/generation multiplicities are not yet part of the topological calculation |
+| the sign of W₃ tracks the sign of κ_u under the common global orientation reversal once the reduced orientation dictionary is fixed | conditional equivariance statement | 4 | u ↦ −u flips κ_u, reduced orientation flip sends q ↔ q^\dagger and W₃ ↦ −W₃; this fixes the relative sign convention but does not yet derive which orientation is physical |
 | the DIII bulk topological term produces a T₀ anomaly inflow that cancels the boundary T₀ anomaly of the massless T1 sector | structural bridge candidate | 4 | standard DIII anomaly inflow mechanism; coefficient matching with `kernels/consistency.md` gauge anomaly conditions has not been done |
-| the DIII anomaly inflow condition and the matter-content anomaly cancellation are the same constraint | bridge conjecture | 4–5 | requires explicit matching of T₀ anomaly coefficient from the DIII bulk with the gauge anomaly coefficient from the T1-sector representation; specific calculation identified |
+| DIII inflow may encode a parity/global shadow of the matter-content anomaly constraints after reduction to the T1 transition surface | bridge conjecture | 4–5 | the direct 3d/4d equality claim is too strong; the live task is the reduced boundary-spectrum calculation described in `kernels/diii-anomaly-bridge.md` |
 | quantized topological response coefficient W₃ probes the DIII invariant | observable candidate | 4 | the most concrete measurable: a W₃-quantized response to external fields coupled to the T1-sector U(1) charge |
 
 ---
@@ -295,28 +295,32 @@ The analysis here identifies what class a Spin(2,3)-symmetric Hamiltonian belong
 
 ### T3. Connecting the topological invariant to observable quantities (severity: substantially reduced)
 
-**What is established.** The DIII d=3 ℤ invariant W₃ counts the algebraic number of topologically protected gapless modes on the boundary of the DIII phase, by the standard DIII bulk-boundary correspondence. For W₃ = 1 (as the natural gapped extension gives), there is exactly one protected massless mode.
+**What is established.** The DIII d=3 ℤ invariant W₃ counts the algebraic number of topologically protected gapless modes on the boundary of the DIII phase, by the standard DIII bulk-boundary correspondence. For W₃ = 1 (as the natural gapped extension gives), there is exactly one protected massless mode in the minimal reduced `Spin(2,3)` block used in the present calculation.
 
 **The boundary in this framework.** The natural "boundary" is the T1/T2 mass-transition surface: the locus where m passes through zero and the chiral symmetry Σ = CT₀ is exact. This is not a spatial boundary but a parameter-space boundary — the interface between the gapped class D phase (m ≠ 0) and the gapless class DIII phase (m = 0). The bulk-boundary correspondence says:
 
-> Exactly one massless T1-sector mode is topologically protected at this transition and cannot be removed by any perturbation that preserves the DIII symmetry (T₀ and C), without closing the gap at a distinct topological transition.
+> Exactly one massless T1-sector channel in the minimal reduced `Spin(2,3)` block is topologically protected at this transition and cannot be removed by any perturbation that preserves the DIII symmetry (T₀ and C), without closing the gap at a distinct topological transition.
 
 This is a constraint on the spectrum: any attempt to gap the massless T1 state without breaking T₀ or C requires encountering a topological transition rather than a smooth deformation.
 
 **Transport branch counting.** In the two-branch transport picture, the DIII invariant W₃ = 1 gives a topological explanation for why there is exactly one stable constructive-class fixed point in the phase portrait. The topological invariant prevents the constructive branch from splitting into two distinct transport attractors within a single DIII class — any bifurcation of the protected branch would change W₃.
 
-**The orientation link.** The sign of W₃ encodes orientation. Under u ↦ -u, the transport coupling flips κ_u ↦ -κ_u (exchange-odd, established by the associator descent). At the same time, reversing the orientation of the preferred direction is expected to flip the sign of the topological invariant: W₃ ↦ -W₃. Therefore:
+**The orientation link.** The relative sign-tracking is now closed at the convention level. Under `u ↦ -u`, the transport coupling flips `κ_u ↦ -κ_u` (exchange-odd, established by the associator descent). On the topological side, swapping the reduced orientation exchanges the chiral block `q` with `q^\dagger`, and the DIII paper already implies `W₃[q^\dagger] = -W₃[q]`. So the common global orientation reversal sends
 
-- W₃ = +1 corresponds to the κ_u > 0 (constructive) transport branch
-- W₃ = -1 would correspond to κ_u < 0 (inverted transport branch)
+$$
+(W_3,\kappa_u)\mapsto(-W_3,-\kappa_u).
+$$
 
-If this sign correlation holds, then W₃ = +1 is the topological statement that the oriented DIII phase selects the constructive readout branch. The orientation axiom (κ_u > 0) would then follow from W₃ = +1 rather than from the readout alignment convention alone.
+Therefore the sign of `W₃` and the sign of `κ_u` are not independent once the physical orientation convention is fixed. In that sense:
 
-**Calculation target.** The W₃/κ_u sign correlation is a concrete calculation: compute W₃ explicitly as the integral of the Berry curvature three-form over the T1-sector momentum-space 3-sphere, and verify that the sign matches the κ_u > 0 condition fixed by the phase-normalized constructive-readout criterion. This is a specific, finite calculation.
+- constructive and inverted transport are exchanged by the same global reversal that exchanges `W₃ = +1` and `W₃ = -1`;
+- the relative sign convention between topology and transport is fixed.
+
+What remains open is stronger: whether topology, by itself, determines which orientation is the physical readout orientation. The current topological calculation does **not** yet derive `κ_u > 0`; it only shows that once the physical branch is fixed, the `W₃` sign should be normalized consistently with it. See `kernels/w3-kappa-sign-correlation.md`.
 
 **Observable candidates (ordered by concreteness).**
 
-1. *Protected critical point.* The m = 0 transition is exactly one protected gapless T1 mode — it cannot be split or lifted without breaking DIII symmetry. Observable in principle as the exact masslessness of the T1 channel at the transition.
+1. *Protected critical point.* The m = 0 transition is exactly one protected gapless T1 channel in the minimal reduced block — it cannot be split or lifted without breaking DIII symmetry. Observable in principle as the exact masslessness of that T1 channel at the transition.
 
 2. *Quantized topological response.* In d=3 momentum space, the DIII topological term contributes a quantized response coefficient W₃ (in units of the natural coupling) to any external field coupled to the T1-sector U(1) charge. This is the most concrete measurable quantity: a quantized transport coefficient fixed by the integer W₃.
 
@@ -334,25 +338,32 @@ where `\Theta` is the topological term built from gauge field `A` and metric `g`
 
 **The boundary anomaly.** The massless T1-sector boundary theory (at m = 0) carries a T₀ anomaly of precisely the right magnitude to cancel the bulk shift. This is anomaly inflow: the bulk topological term "flows into" the boundary to make the total theory T₀-invariant.
 
-**The matter-content bridge.** The consistency domain requires the T1-sector matter content to be anomaly free from the gauge-theory side. The relevant anomaly conditions constrain which additional right-handed states are needed. The bridge conjecture is:
+**The matter-content bridge.** The consistency domain requires the T1-sector matter content to be anomaly free from the gauge-theory side. The relevant anomaly conditions constrain which additional right-handed states are needed. The comparison note `kernels/diii-anomaly-bridge.md` sharpens the bridge claim:
 
-> The DIII anomaly inflow condition and the matter-content anomaly cancellation are the same constraint expressed in different languages:
-> - Topological language: the T1-sector boundary T₀ anomaly must be cancelled by the bulk DIII term
-> - Gauge-theory language: the T1-sector gauge anomaly must be cancelled by additional matter content
+> the direct statement "DIII inflow and full 4d matter-content anomaly cancellation are the same constraint" is too strong as written.
 
-If this holds, then the spectrum forced by anomaly cancellation (from the particle-physics perspective) is exactly the spectrum of boundary modes required by topological consistency — and the DIII bulk term provides the cancellation. This would mean the matter spectrum is not merely anomaly-free by construction but topologically mandated.
+What survives is a weaker but still meaningful target:
 
-**What must be checked.** The bridge requires one explicit matching:
+> the DIII bulk may encode the `2+1`-dimensional parity/global shadow of the reduced T1 matter content at the transition surface.
 
-- Compute the T₀ anomaly coefficient of the massless T1-sector boundary theory (a number fixed by the DIII bulk data and the T1-sector representation)
-- Compute the gauge anomaly coefficient of the T1-sector matter content (from `kernels/statics.md` and `kernels/consistency.md`)
-- Check that they agree, up to the contribution of the inflow term
+In that sharpened form, the topological language and the gauge-theory language are related, but not identical:
+- Topological language: the reduced T1 boundary spectrum must have its `T₀` / parity anomaly cancelled by the bulk DIII term.
+- Gauge-theory language: the four-dimensional T1 matter completion must satisfy the usual perturbative and global anomaly conditions.
 
-If they agree, the two analyses are the same constraint. If not, the two analyses impose independent conditions, and the bridge fails in its strongest form.
+The promising overlap is the reduced/global piece, especially the weak-doublet counting obstruction. The full hypercharge-dependent anomaly polynomial remains a separate four-dimensional calculation.
 
-**Current level.** The bridge is a Level 5 candidate, not a Level 3 established result. The conceptual structure is right; the explicit coefficient matching has not been done. This matching is the specific calculation that would either close the bridge or expose an inconsistency between the topological and consistency layers.
+**What must be checked.** The bridge now requires a reduced boundary-spectrum calculation rather than a naive one-coefficient identification:
 
-**If the bridge holds.** The topological and consistency domains would no longer be parallel but mutually reinforcing: the DIII topological invariant would underwrite the anomaly-cancellation conditions, and the anomaly-cancellation conditions would confirm the DIII classification. This is the strongest possible internal consistency check available to the framework.
+- Specify the `2+1`-dimensional T1 boundary spectrum at the `m = 0` transition surface.
+- Compute its parity/global anomaly data for the retained `SU(2)`, `U(1)`, and any color sector.
+- Isolate the mod-2/global piece and compare it with the even-doublet consistency condition.
+- Only then ask whether the quadratic boundary coefficients arise from a controlled reduction of the four-dimensional anomaly polynomial.
+
+If that programme works, the topological and consistency layers are compatible shadows of one common matter sector. If not, the bridge fails in its sharpened form.
+
+**Current level.** The bridge is a Level 5 candidate, not a Level 3 established result. The direct equality claim has been sharpened downward. The first reduced comparison in `kernels/diii-anomaly-bridge.md` already shows that the weak/global `SU(2)` shadow lines up cleanly, while the color and `U(1)` pieces remain nontrivial. That same note also sharpens the mode-counting issue: the present topological calculation is most safely read as a statement about the minimal reduced `Spin(2,3)` block, before any extra color or generation multiplicities are localized onto the boundary Hamiltonian.
+
+**If the sharpened bridge holds.** The topological and consistency domains would become mutually reinforcing in a controlled way: the DIII topological invariant would underwrite the reduced parity/global consistency of the T1 boundary spectrum, while the four-dimensional anomaly calculation would still fix the hypercharge-complete matter content. That is a weaker conclusion than literal identity, but a much safer one.
 
 ---
 
@@ -398,4 +409,4 @@ Steps 1–4 are at Level 3–4. Step 5, as a full structural identification, is 
 
 The two timelike directions are responsible for both the chiral structure (via T₀) and the second independent T²=−1 symmetry (T₀₁). The S²=−1 issue is resolved: it arose from composing C with T₀₁ (full time reversal, both timelike directions) rather than T₀ (partial, direction 0 only). Both square to −1, but only C·T₀ = Σ.
 
-T3 is substantially advanced: W₃ = 1 implies one protected T1 mode; observable candidates are identified; the sign correlation W₃ ↔ κ_u sign is a named concrete calculation. T4 is advanced to a bridge candidate: the DIII anomaly inflow mechanism is identified and a specific coefficient-matching calculation is named. The main remaining open obligations are T2 (physical material realization) and the two identified calculations (W₃/κ_u sign, anomaly coefficient matching).
+T3 is substantially advanced: W₃ = 1 implies one protected T1 channel in the minimal reduced block; observable candidates are identified; the relative sign-tracking between `W₃` and `κ_u` is now closed at the convention level. T4 is still a bridge candidate, but now in a sharper form: `kernels/diii-anomaly-bridge.md` shows that the weak/global `SU(2)` shadow works, while the color and `U(1)` pieces remain localization-dependent. The main remaining open obligations are T2 (physical material realization), the stronger orientation-selection question of why the constructive branch is physical, and the sharpened anomaly-bridge question of which extra internal sectors are actually present in the boundary Hamiltonian.

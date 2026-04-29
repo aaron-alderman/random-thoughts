@@ -35,6 +35,8 @@ One concrete candidate for the missing sign-sensitive stability functional is th
 
 If EM/readout coupling is taken to be axis-aligned (defined only after `u` is selected, e.g. gauge-fix `u=e1`) and to sample the conjugate-sum channel, then the D1 gate reduces to `Re_u(AB)|_*>0` and the orientation rule `\kappa_u>0` follows immediately from the fixed-point identity in `kernels/dynamics.md`.
 
+This means D1 is now **conditionally closed at the algebraic level**: once the conjugate-sum readout channel is granted, the remaining implication to `\kappa_u > 0` is immediate. What remains open is the physical justification for that readout channel.
+
 ## Route D2: Ambient Scale/Readout Selector Descent
 
 Assume there is an ambient selector (scale-flow / readout generator) upstream of the reduced slice (for example in `SO(2,4)`), whose induced reduced image fixes the forward/readout orientation.

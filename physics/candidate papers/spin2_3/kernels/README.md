@@ -13,6 +13,9 @@ Kernel files are the domain-level working documents for the framework. They are 
 | [interpretation.md](interpretation.md) | Safe and stronger interpretive readings |
 | [phenomenology.md](phenomenology.md) | Candidate observables and prediction-readiness |
 | [topological.md](topological.md) | Tenfold/DIII/topological transition track |
+| [diii-anomaly-bridge.md](diii-anomaly-bridge.md) | Focused comparison of the DIII boundary anomaly with the matter-content anomaly constraints |
+| [w3-kappa-sign-correlation.md](w3-kappa-sign-correlation.md) | Fixes the relative sign tracking between the DIII winding number `W3` and the transport coupling `kappa_u` |
+| [g2-spin23-intersection.md](g2-spin23-intersection.md) | Fixes the literal compact overlap `G2 cap Spin(2,3)` and records its `U(2)`-level irrep content |
 | [open-problems.md](open-problems.md) | Proof debts, blockers, and priority order |
 | [u-selector-bracketing.md](u-selector-bracketing.md) | Brackets the status of the octonionic selector `u` (kinematic vs dynamical) and lists where each reading is required |
 | [kappa_u-moment-map-lemma.md](kappa_u-moment-map-lemma.md) | Formalizes the uniqueness of the exchange-odd cross-coupling slot `-\kappa_u Im_u(AB)` on branch space |

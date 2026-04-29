@@ -42,7 +42,8 @@ This file indexes the claim level of major claims in the Spin(2,3) programme.
 | Hypercharge uniqueness is forced | 5 | Plausible but future work | Needs sharper proof structure. |
 | Exactly three physical generations are forced | 5 | Plausible but future work | Strong proof burden remains. |
 | A fourth generation is physically excluded | 5 | Plausible but future work | Not publication-safe as a theorem. |
-| `G2 cap Spin(2,3)` produces the phenomenologically relevant common symmetry | 5 | Plausible but future work | Explicit calculation needed. |
+| Under the current compact-level bridge assumptions, `G2 cap Spin(2,3)` is the compact overlap `K = U(1) x SU(2)` in repo convention, equivalently `U(2)` up to common center | 4 | Being established in this paper | Follows because the intersection is compact, contains the reduced maximal compact subgroup `K`, and `K` is maximal compact in `Spin(2,3)`. See `kernels/g2-spin23-intersection.md`. |
+| The useful representation structure must be read from the pair `Stab_{G2}(u)=SU(3)` and `K`, not from the literal intersection alone | 4 | Being established in this paper | The literal overlap only sees the compact `U(2)` restriction of the octonionic carrier; it does not itself contain an independent `SU(3) x SU(2) x U(1)`. |
 
 ## Reduction And Dynamics Claims
 
@@ -75,7 +76,8 @@ This file indexes the claim level of major claims in the Spin(2,3) programme.
 | `omega` is the `U(1)` moment-map value on branch space | 4 | Being established in this paper | Reduced Hamiltonian/moment-map identification. |
 | `gamma > 0` is forced by full hidden-sector coupling under `Gamma > 0` and injective `K` | 4 | Being established in this paper | Sign result; magnitude still needs hidden correlator derivation. |
 | `kappa_u > 0` is the orientation rule (operational axiom) with geometric content | 4 | Being established in this paper | [K/D] Final operational sign rule unless derived from the bulk (deriving the sign is a [D] upgrade; using it as a named readout orientation rule is [K/D]). |
-| The orientation rule `kappa_u > 0` follows from an EM/readout interference functional aligned with `u` (e.g. sampling `|A+bar(B)|^2`) | 5 | Plausible but future work | [D1] Candidate derivation route: if the readout channel is the conjugate-sum `Psi_rd = A + bar(B)` then its intensity contains `2 Re_u(AB)` and constructive readout implies `Re_u(AB)|_* > 0`, hence `kappa_u > 0` via the fixed-point identity. See `kernels/orientation-d1-bulk-stability.md`. |
+| Under the conjugate-sum readout assumption `Psi_rd = A + bar(B)`, constructive persistent readout implies `kappa_u > 0` | 4 | Being established in this paper | [D1] Conditional algebraic closure: once the readout functional is fixed, the sign implication follows immediately from `Re_u(AB)|_* = R^2 gamma / kappa_u`. See `kernels/orientation-d1-bulk-stability.md`. |
+| The physical readout channel is the conjugate-sum `Psi_rd = A + bar(B)` aligned with `u` (or an equivalent sign-sensitive observable) | 5 | Plausible but future work | This is now the remaining D1 burden. If justified, the conditional D1 implication upgrades to a physical sign-selection argument. |
 | The two-branch evolution equations are the minimal Spin(2,3)-compatible ansatz | 4 | Being established in this paper | Coupling term is symmetry-constrained; full parent action remains open. |
 | Exact reduction to `(R, rho, Phi)` and effective coupling `kappa_eff = kappa_u cosh(2rho)` | 4 | Being established in this paper | Exact once the two-branch equations are adopted. |
 | Four transport classes are forced by locking and persistence boundaries | 4 | Being established in this paper | Paper-local theorem imported as framework-level claim. |
@@ -112,10 +114,10 @@ This file indexes the claim level of major claims in the Spin(2,3) programme.
 | Corrected anti-unitary structure gives DIII for the massless sector | 4 | Being established in this paper | Based on explicit `T0`, `C`, and `Sigma = C T0` calculation. |
 | Massive limit gives class D after chiral symmetry is broken | 4 | Being established in this paper | DIII to D under mass/mixing. |
 | Mass generation, chiral symmetry breaking, and topological gap opening are the same mathematical event in the reduced model | 4 | Being established in this paper | Structural identification, not yet a material realization. |
-| `W3 = 1` implies one protected massless T1 mode at the transition surface | 4 | Being established in this paper | Uses DIII bulk-boundary correspondence and the proposed transition-surface reading. |
-| Sign of `W3` correlates with sign of `kappa_u` | 5 | Plausible but future work | Concrete calculation pending. |
+| `W3 = 1` implies one protected massless T1 channel in the minimal reduced Spin(2,3) block at the transition surface | 4 | Being established in this paper | Uses DIII bulk-boundary correspondence on the bare four-component block; extra color/generation multiplicities are not yet included. |
+| Sign of `W3` tracks sign of `kappa_u` under the common global orientation reversal once the reduced orientation dictionary is fixed | 4 | Being established in this paper | Closed at the convention/equivariance level; this does not yet derive which orientation is physically selected. See `kernels/w3-kappa-sign-correlation.md`. |
 | DIII anomaly inflow cancels the boundary `T0` anomaly of the massless T1 sector | 5 | Plausible but future work | Structural bridge candidate; coefficient matching not done. |
-| DIII anomaly inflow and matter-content anomaly cancellation are the same constraint | 5 | Plausible but future work | Requires explicit anomaly coefficient matching. |
+| DIII inflow may encode a parity/global shadow of the matter-content anomaly constraints after reduction to the T1 transition surface | 5 | Plausible but future work | Stronger literal-identity wording is too strong; the live task is the reduced boundary-spectrum comparison in `kernels/diii-anomaly-bridge.md`. |
 | A physical material Hamiltonian realizing the Spin(2,3) topological class is known | 6 | Significant issue | Material realization remains open; not a live claim. |
 
 ## Research Track Claims

@@ -142,6 +142,45 @@ which (via the fixed-point identity already used above) forces `\kappa_u > 0` fo
 
 This is not yet a derivation, because it still assumes that the correct readout functional is built from `A+\bar B` rather than from a different bulk observable. But it does identify a concrete, algebraically natural candidate for the missing D1 link, and it explains why `\Phi_*=0` is the distinguished phase normalization: it is the phase alignment of `A` with `\bar B` in the readout channel.
 
+## Conditional Closure Under Conjugate-Sum Readout
+
+At this point the D1 route can be stated as a clean conditional proposition rather than as a loose heuristic.
+
+**Assumptions.**
+
+1. the physical readout channel is the conjugate-sum amplitude
+   $$
+   \Psi_{\mathrm{rd}} = A + \bar B;
+   $$
+2. the physically realized persistent readout branch must have constructive interference in that channel, equivalently
+   $$
+   \mathrm{Re}_u(AB)\big|_* > 0;
+   $$
+3. the branch is evaluated at the locked/persistent fixed point where
+   $$
+   \mathrm{Re}_u(AB)\big|_* = \frac{R^2\,\gamma}{\kappa_u}.
+   $$
+
+**Conclusion.**
+
+Because `R^2 > 0` and `\gamma > 0` on the persistent branch, the sign of `\mathrm{Re}_u(AB)|_*` is exactly the sign of `1/\kappa_u`. So the three assumptions imply
+$$
+\kappa_u > 0.
+$$
+
+This closes the algebraic part of D1.
+
+### What D1 still owes
+
+After the conditional proposition above, D1 no longer owes a transport-space sign calculation. It owes only the physical identification of the readout functional:
+
+- why the direct observable channel is really `\Psi_{\mathrm{rd}} = A + \bar B` or an equivalent sign-sensitive observable;
+- why the physical readout criterion requires constructive interference in that channel.
+
+So the D1 burden has been reduced to:
+
+> justify the readout functional, not the sign algebra once that functional is granted.
+
 ## If EM Readout Settles On The Selected Axis (`u` / `e1`), D1 Closes
 
 You can now see the precise point where the "path dependence" intuition becomes a sign selection.

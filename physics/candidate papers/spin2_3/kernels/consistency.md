@@ -188,6 +188,8 @@ What it does **not** automatically do:
 
 That distinction is crucial. Consistency constraints can force completion of a spectrum without thereby proving that the missing states arise from the same geometric mechanism.
 
+The topological comparison should also be phrased carefully. The DIII boundary story may capture a lower-dimensional parity/global shadow of the same `T1` matter content, but it does not by itself replace the full four-dimensional gauge-anomaly calculation. See `kernels/diii-anomaly-bridge.md`.
+
 ---
 
 ## Hypercharge and uniqueness
