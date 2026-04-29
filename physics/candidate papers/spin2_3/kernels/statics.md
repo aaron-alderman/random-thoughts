@@ -308,8 +308,96 @@ What can be said cleanly at this level:
 - that is a constrained fitting problem inside the chosen static ansatz
 - the ansatz is more compelling if the octonionic grading is attached to the same selected direction that later defines the massless interaction channel
 
+The new branching note `kernels/t1-3plus1-branching.md` makes this more explicit on the bare left-handed seed
+$$
+T1 \otimes (\mathbf 3 \oplus \mathbf 1).
+$$
+If one takes `Q7` to be the natural `SU(3)`-invariant traceless grading on `\mathbf 3 \oplus \mathbf 1`,
+$$
+Q7 = \mathrm{diag}\!\left(\frac13,\frac13,\frac13,-1\right),
+$$
+then matching the usual left-handed quark and lepton doublet charges gives
+$$
+Y\big|_{T1 \otimes (\mathbf 3 \oplus \mathbf 1)} = \frac12\,Q7.
+$$
+So on that restricted seed, the `J^{01}` term is not yet an independent fit parameter: it is constant across all states because `J^{01} = -1/2` on `T1`.
+
+The next obvious trial is then to add the opposite `J^{01}` sector and ask whether
+$$
+(T1 \oplus T2) \otimes (\mathbf 3 \oplus \mathbf 1)
+$$
+already supplies the right-handed completion. The new note `kernels/right-handed-completion-screening.md` shows that it does not: under the current `SU(3) \times K` reading, every state in that doubled carrier is still a weak doublet, and once the left-handed `T1` charges are fixed it still forces `a=0`, `b=1/2`. So `T2` duplication alone is too small to make `J^{01}` nontrivial or to generate the right-handed singlet slots.
+
+The next minimal repair is to add one more weak doublet factor `S_{\mathrm{aux}}`. Then
+$$
+T1 \otimes S_{\mathrm{aux}} = (\mathbf 1,-1/2) \oplus (\mathbf 3,-1/2),
+\qquad
+T2 \otimes S_{\mathrm{aux}} = (\mathbf 1,+1/2) \oplus (\mathbf 3,+1/2),
+$$
+so weak singlet slots finally appear. The new note `kernels/minimal-right-handed-singlet-candidate.md` shows that on the singlet part of
+$$
+(T1 \oplus T2) \otimes S_{\mathrm{aux}} \otimes (\mathbf 3 \oplus \mathbf 1),
+$$
+the standard one-generation right-handed charges are reproduced exactly by
+$$
+Y = J^{01} + \frac12 Q7
+$$
+up to the global orientation reversal.
+
+This is the first point where `J^{01}` becomes genuinely useful in hypercharge matching. But it also exposes the next obstruction immediately: the bare left-handed seed wanted `Y = (1/2)Q7`, while the minimal singlet candidate wants `Y = J^{01} + (1/2)Q7`. So the remaining problem is now a unified-embedding problem, not a bare charge-fitting problem.
+
+The next natural unified test is
+$$
+(T1 \oplus T2) \otimes (\mathbf 1 \oplus S_{\mathrm{aux}}) \otimes (\mathbf 3 \oplus \mathbf 1),
+$$
+which contains both doublet and singlet slots at once. The new note `kernels/unified-carrier-hypercharge-test.md` shows that this still fails if `S_{\mathrm{aux}}` is neutral under `J^{01}` and `Q7`: the left-handed doublet sector still forces `a=0`, `b=1/2`, while the right-handed singlet sector still forces `a=\pm 1`, `b=1/2`. So the current two-generator hypercharge slot survives every local fit, but the smallest unified neutral carrier does not.
+
+The next repair is then minimal and very specific. Because `S_{\mathrm{aux}}` is an irreducible weak doublet, any `SU(2)`-commuting operator on `S_{\mathrm{aux}}` alone is scalar. So the first nontrivial auxiliary operator lives not on `S_{\mathrm{aux}}` by itself but on the reducible block `\mathbf 1 \oplus S_{\mathrm{aux}}`: the projector `P_{\mathrm{aux},0}` onto the trivial summand. The new note `kernels/unified-carrier-projector-fix.md` shows that
+$$
+Y = J^{01} + \frac12 Q7 + \frac12 P_{\mathrm{aux},0}
+$$
+then reproduces the full one-generation left-handed and right-handed charges exactly on a selected slot assignment in the current orientation.
+
+The next note `kernels/even-line-exotic-branch-obstruction.md` then sharpens the status of that fit. The same auxiliary even line that gives the desired `T1` left-handed doublets also carries the complementary `T2` branch, and that branch gives exotic weak doublets
+$$
+(\mathbf 3,\mathbf 2)_{7/6}
+\oplus
+(\mathbf 1,\mathbf 2)_{1/2}.
+$$
+So the projector repair is not yet a full static spectrum. It is a successful selected-slot fit plus a residual even-branch problem.
+
+So the hypercharge obstruction has changed character again. The missing ingredient is no longer "another slot somewhere." It is a principled explanation of why the projector onto the auxiliary trivial summand should belong in the physical charge operator.
+
+The follow-up note `kernels/auxiliary-projector-casimir-rewrite.md` sharpens this one step further: if the auxiliary block is genuinely the reducible `SU(2)` module `\mathbf 1 \oplus \mathbf 2`, then
+$$
+P_{\mathrm{aux},0} = \mathbf 1 - \frac43 C_{\mathrm{aux}}
+$$
+is exactly the Casimir-zero projector. So the new ingredient is not merely a basis projector. It is a canonical projector onto the `j=0` auxiliary sector.
+
+The next screen note `kernels/quaternionic-auxiliary-block-screening.md` now checks whether the current parent-side quaternionic slice `H(u,v)` already supplies that auxiliary block. It does not. Under the natural visible `SU(2)` action from left multiplication, `H(u,v)` is the irreducible complex doublet `\mathbf 2`, so it contains no nontrivial equivariant projector. The tempting scalar-plus-imaginary split of quaternions belongs instead to a different real adjoint action and gives `\mathbf 1 \oplus \mathbf 3`, not the needed complex `\mathbf 1 \oplus \mathbf 2`.
+
+The next candidate note `kernels/auxiliary-vacuum-doublet-candidate.md` then gives the best current positive route after that negative screen. Starting from the same quaternionic doublet `V \cong \mathbf 2`, its standard fermionic completion gives
+$$
+\Lambda^\bullet V \cong \mathbf 1 \oplus \mathbf 2 \oplus \mathbf 1,
+$$
+so the low-occupancy sector
+$$
+\Lambda^0 V \oplus \Lambda^1 V \cong \mathbf 1 \oplus \mathbf 2
+$$
+is exactly the auxiliary block needed by the successful hypercharge repair. In that reading the fitted projector becomes the vacuum projector, not a bare bookkeeping term.
+
+The follow-up note `kernels/full-fock-auxiliary-obstruction.md` then shows why the low-occupancy restriction cannot simply be ignored. If one keeps the full completion `\Lambda^\bullet V`, the top wedge `\Lambda^2 V` contributes extra weak doublets, not extra singlets, and those doublets carry the right-handed-style hypercharge values `-1/3,-1` on the `T1` branch and `2/3,0` on the `T2` branch. So the full completion places the right hypercharge values on the wrong `SU(2)` type, in addition to the already-existing complementary even-branch problem.
+
+The next note `kernels/minimal-physical-subcarrier-candidate.md` then packages the current best fix as a genuine correlated subcarrier rather than a slot choice, and `kernels/branch-casimir-superselection-candidate.md` rewrites that subcarrier as observable-branch selection on the even line plus minimal total weak-spin selection on the odd line. The further refinement `kernels/odd-sector-epsilon-channel.md` then shows that the odd selector is not merely a low-Casimir preference: it is exactly the antisymmetric `SU(2)`-invariant `\epsilon` channel on `\mathbf 2 \otimes \mathbf 2`.
+
+So the hypercharge obstruction has changed character again. The missing ingredient is no longer "another slot somewhere," and not even "some arbitrary projector." It is a principled explanation of why the physical auxiliary carrier should obey observable-branch selection on the even line together with antisymmetric scalar-pairing selection on the odd line, rather than the naive full tensor-product / full-Fock carrier.
+
 What still needs care:
 
+- where a genuinely nontrivial `J^{01}` contribution first enters beyond the bare `T1` seed
+- what larger carrier supplies the first viable right-handed singlet completion
+- how the left-handed and right-handed sectors fit into one carrier with one global hypercharge operator
+- whether the auxiliary reducible `SU(2)` block `\mathbf 1 \oplus \mathbf 2` and its Casimir-zero projector have a genuine parent-side or dynamical origin, given that the current quaternionic slice supplies only the irreducible visible doublet, the best current positive candidate uses observable-branch selection on the even line and antisymmetric pairing on the odd line, and the larger completions introduce extra exotic sectors
 - whether this construction is unique in the strong sense
 - whether `Q7` is the only natural internal grading with the right properties
 - how much of the charge story is truly derived and how much is selected by matching
@@ -360,7 +448,7 @@ This section records the main static claims in kernel form.
 | the physically relevant octonionic direction should align with the zero-mass traversal direction | central framework proposal | 4 | connects internal selection to observable structure |
 | the hidden complement is carried locally by a quaternionic `H` slice as complex-plane data | working proposal | 4 | important new bridge statement, not yet theorem |
 | `T1 \otimes (3 + 1)` matches quark/lepton doublet slots | derived inside the representation ansatz | 4 | useful but still framework-internal |
-| hypercharge can be built from `J^{01}` and `Q7` | structural ansatz | 4 | worth sharpening later |
+| hypercharge can be built from `J^{01}` and `Q7` | structural ansatz | 4 | on the bare left-handed `T1 \otimes (3 + 1)` seed, matching gives `Y = (1/2)Q7`; adding `T2` alone still does not make `J^{01}` independently necessary, adding one more weak doublet factor does on the singlet candidate, the smallest unified neutral carrier still fails globally, and the minimal successful unified repair is to add the Casimir-zero projector term `+(1/2)P_{\mathrm{aux},0}` on `1 \oplus S_{\mathrm{aux}}`; but that repair is only a selected-slot fit, because the complementary even `T2` branch survives exotically, the current quaternionic slice does not yet derive the needed auxiliary reducible block under its natural visible action, and the best current positive candidate is now a correlated subcarrier governed by observable-branch selection on the even line and antisymmetric `SU(2)`-invariant pairing on the odd line |
 | anomaly conditions constrain the remaining matter content | consistency consequence | 3 | belongs partly to the consistency layer |
 | `J3(O)` naturally supplies three slots | derived structural observation | 3 | safe and useful |
 | exactly three physical generations follow | strong claim under development | 5 | needs careful control |
