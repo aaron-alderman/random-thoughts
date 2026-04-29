@@ -16,18 +16,20 @@ This is the live work order for the Spin(2,3) programme. Strong bridges can be e
    - Primary sources: `core/master-framework.md`, `core/spin23-compendium.md`, and the kernel files.
    - Main burden: sharpen the ambient-to-observable reduction and the reduced dynamics without letting secondary bridges inflate the claim level.
 
-2. Advance the topological/anomaly calculation.
-   - Primary sources: `kernels/topological.md`, `kernels/consistency.md`, and `kernels/open-problems.md`.
-   - Current note: `kernels/diii-anomaly-bridge.md` shows that a direct 3d/4d coefficient identification is too strong as stated.
-   - First bookkeeping pass: the reduced `T1` seed reproduces the even-doublet/global `SU(2)` shadow cleanly, while the color and `U(1)` parity data remain nontrivial.
-   - Clarification now in place: the current `W_3` result is most safely a statement about one protected channel in the minimal reduced `Spin(2,3)` block, before color/generation factors are localized onto the boundary Hamiltonian.
-   - Default corpus reading: Scenario A is the established topological statement; Scenario D is the leading bridge extension; Scenarios B/C require a new Hamiltonian-level calculation before they can be promoted.
-   - Next calculation: use the Scenario A/B/C/D split in `kernels/diii-anomaly-bridge.md` to decide which extra internal sectors are actually present in the boundary Hamiltonian as spectator copies, localized protected channels, or non-topological bulk structure; then recompute the boundary parity data under that sharper rule.
+2. Make the upstream selector the active proof target.
+   - Primary sources: `kernels/upstream-selector-program.md`, `kernels/orientation-rule-upgrades.md`, `kernels/epistemics.md`, and `kernels/conditional-static-spectrum-closure.md`.
+   - Current status: the static carrier line is paused at conditional one-generation closure. The remaining burden is now upstream: justify the observable/readout projector `P_obs`, justify the auxiliary low-occupancy rule, and decide whether those come from one parent mechanism or two.
+   - Highest-yield route: D2 ambient selector descent. D1 bulk/readout stability remains a valid side route for the orientation sign, but D2 is the only current route that might close both the observable branch and the auxiliary rule in one parent language.
+   - Next calculations:
+     - identify the minimal parent selector data (`D_amb`, `P_{Pi,-}`, or equivalent);
+     - prove its reduced image is the even-line observable projector;
+     - test whether the same parent object also induces the auxiliary even/odd or low-occupancy split.
 
 3. Keep research tracks explicitly marked.
    - Spectral transition supplies general operator/projector language.
    - Faddeev/Efimov remains a quantitative test target for the threshold SO(2,1) idea.
    - Representation theory should now treat the literal `G2 cap Spin(2,3)` overlap as the compact `U(2)` sector and focus on how the full octonionic `SU(3)` stabilizer couples to the reduced `K = U(1) x SU(2)` action across the reduction map.
+   - The topological/anomaly branch is still live, but it is no longer the default next move. Its current safe reading remains Scenario A as established and Scenario D as bridge extension until a larger boundary Hamiltonian is specified.
 
 ## Later
 
@@ -43,4 +45,4 @@ This is the live work order for the Spin(2,3) programme. Strong bridges can be e
 
 ## One-Line Rule
 
-Keep the core spine disciplined; let research tracks explore, but make their assumptions visible.
+Keep the core spine disciplined; push the upstream selector before reopening local carrier bookkeeping.

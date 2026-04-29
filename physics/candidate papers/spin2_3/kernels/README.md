@@ -25,6 +25,8 @@ Kernel files are the domain-level working documents for the framework. They are 
 | [minimal-physical-subcarrier-candidate.md](minimal-physical-subcarrier-candidate.md) | Defines the first explicit operator-level candidate for the physical static subspace by projecting onto the `T1` even line and the odd weak-singlet channel |
 | [branch-casimir-superselection-candidate.md](branch-casimir-superselection-candidate.md) | Rewrites the explicit physical-subcarrier projector as observable-branch selection on the even line plus minimal total weak-spin selection on the odd line |
 | [odd-sector-epsilon-channel.md](odd-sector-epsilon-channel.md) | Sharpens the odd half of the superselection rule by showing that the weak-singlet selector is exactly the antisymmetric `SU(2)`-invariant `epsilon` channel |
+| [even-sector-observable-projector-descent.md](even-sector-observable-projector-descent.md) | Sharpens the even half of the superselection rule by identifying it with the reduced observable/readout-sector projector already built into the ambient scaffold |
+| [conditional-static-spectrum-closure.md](conditional-static-spectrum-closure.md) | Packages the current static line into an explicit conditional proposition: under the current observable-branch and auxiliary-sector rules, the reduced one-generation spectrum is exactly reproduced |
 | [auxiliary-projector-casimir-rewrite.md](auxiliary-projector-casimir-rewrite.md) | Rewrites the projector term as the Casimir-zero projector on the reducible auxiliary `SU(2)` block `1 + 2`, making the fix basis-independent |
 | [quaternionic-auxiliary-block-screening.md](quaternionic-auxiliary-block-screening.md) | Screens the existing quaternionic slice as a source of the auxiliary `1 + 2` block and shows that its natural visible `SU(2)` action gives only the irreducible complex doublet |
 | [auxiliary-vacuum-doublet-candidate.md](auxiliary-vacuum-doublet-candidate.md) | Records the best current positive candidate for the auxiliary `1 + 2` block: the vacuum-plus-single-occupancy sector of a standard fermionic completion of the existing quaternionic doublet |
@@ -35,6 +37,7 @@ Kernel files are the domain-level working documents for the framework. They are 
 | [discrete-symmetries.md](discrete-symmetries.md) | Ledger of the distinct `Z2` flips (u reversal, reduced orientation, exchange, branch sign) to prevent concept mixing |
 | [orientation-rule-upgrades.md](orientation-rule-upgrades.md) | Clean upgrade routes for deriving the operational orientation rule `\kappa_u > 0` (bulk stability vs ambient selector vs readout coupling) |
 | [orientation-d1-bulk-stability.md](orientation-d1-bulk-stability.md) | Focused D1 attempt: why reduced linear stability cannot fix the sign and what a bulk stability principle would have to add |
+| [upstream-selector-program.md](upstream-selector-program.md) | Packages the current pivot: the static branch is paused at conditional closure, and the live burden is now to derive the observable projector and auxiliary rule from an upstream selector |
 
 ## Claim Level
 

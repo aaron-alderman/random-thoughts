@@ -312,6 +312,14 @@ P_{\epsilon}
 $$
 So the odd-sector rule is no longer best read as an arbitrary low-spin preference. It is the standard invariant antisymmetric scalar-pairing channel. This makes the odd selector much less mysterious than the even one.
 
+The next refinement note `kernels/even-sector-observable-projector-descent.md` does the analogous cleanup on the even side. The even-line selector in the physical-subcarrier candidate is not a new hypercharge-specific branch rule. It is exactly the reduced observable/readout-sector projector already built into the ambient scaffold:
+$$
+\mathcal R_{\mathrm{op}}(P_{\Pi,-}) = P_{\mathrm{obs}},
+\qquad
+P_{\mathrm{obs}} = P_{T1}
+$$
+once the physical orientation is fixed. So the even half of the carrier proposal is already the same one-sided support rule the zero-mass/readout descent programme needed independently.
+
 The follow-up note `kernels/auxiliary-projector-casimir-rewrite.md` makes that projector less ad hoc. If the auxiliary block truly carries the reducible `SU(2)` representation `\mathbf 1 \oplus \mathbf 2`, then
 $$
 P_{\mathrm{aux},0} = \mathbf 1 - \frac43 C_{\mathrm{aux}}
@@ -336,7 +344,7 @@ $$
 $$
 inside the current hypercharge fit, the top wedge `\Lambda^2 V` does not produce extra singlets. It produces extra weak doublets, and those doublets carry the right-handed-style hypercharge values `-1/3,-1` on the `T1` branch and `2/3,0` on the `T2` branch. So the full completion places the right hypercharge values on the wrong `SU(2)` representation type.
 
-So the live burden has changed again. It is no longer to find any algebraic fix, or even to rewrite the fix canonically. It is to justify why the physical auxiliary sector should obey that branch/antisymmetric-pairing superselection rule, or some principled enlargement closely related to it, rather than the naive full tensor-product / full-Fock carrier.
+So the live burden has changed again. It is no longer to find any algebraic fix, or even to rewrite the fix canonically. It is to justify the upstream observable/readout selector and the low-occupancy auxiliary rule, because the carrier-level branch/antisymmetric-pairing structure itself is now comparatively disciplined.
 
 So there are three different levels:
 

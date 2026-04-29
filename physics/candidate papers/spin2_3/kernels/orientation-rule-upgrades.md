@@ -6,6 +6,8 @@ Separately, the programme keeps a **derivation target**: explain why the physica
 
 This note lists the clean upgrade routes and what they would have to assume.
 
+After the recent static cleanup, these routes now matter in a more specific way than before. The even-sector selector in the current one-generation static closure is already the observable/readout projector `P_obs`, so any successful D1-D3 upgrade no longer settles only an orientation convention. It also controls whether the present static closure remains merely conditional or becomes part of a more unified parent-level derivation.
+
 See also:
 
 - `kernels/dynamics.md` (orientation rule and its geometric content)
@@ -78,3 +80,13 @@ Until one of D1–D3 is completed, statements should be written in one of two ex
 
 - **Operational rule:** "we adopt `\kappa_u > 0` to fix the forward/readout orientation."
 - **Derivation target:** "we aim to derive `\kappa_u > 0` from {bulk stability / ambient selector / readout coupling}."
+
+## Current Priority
+
+The routes are not all equally valuable at the current stage.
+
+- D1 is the sharpest route for the sign itself.
+- D2 is the highest-leverage route overall, because it may explain both the observable projector and the static branch selection in one parent language.
+- D3 remains a valid physical-coupling route, but unless it also explains the auxiliary rule it will likely leave the static conditional closure only partially upgraded.
+
+So the current default next move should be: pursue D2 first, use D1 as a side route for orientation-sign closure, and keep D3 available if the readout physics becomes concrete sooner than the parent selector.
